@@ -26,11 +26,10 @@ TODO:
 *  Field test!
 *  Add normalized model (see comments in app/model/SiteEvaluation.js)
 
-Note: You will need to configure the global URL variables for the AJAX calls in the configuraiton file app.js (not included in this repository, but necessary to run the application. App.js configuration is listed below). You can also use this file for other sensitive configuration data storage. 
-
-app.js
+Note: You will need to configure the global URL variables for the AJAX calls in the configuraiton file app.js (not included in this repository, but necessary to run the application. app.js configuration is listed below). You can also use this file for other sensitive configuration data storage. 
 
 
+    // app.js
 	Ext.Loader.setPath({
 		'Ext': '../../src'
 	});
