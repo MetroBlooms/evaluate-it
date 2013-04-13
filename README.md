@@ -2,7 +2,9 @@ Cross platform mobile app built using Sencha Touch 2.1.1 framework
 
 **This project obsoletes evaluate-it-jqm.**
 
-Use: Garden evaluation tool developed for use by <a href="http://www.metroblooms.org">Metro Blooms</a>
+Use: Garden/Raingarden evaluation tool developed for use by <a href="http://www.metroblooms.org">Metro Blooms</a>
+
+Credits:<a href="http://dev.sencha.com/deploy/touch/examples/production/kitchensink/">Sencha Touch KitchenSink</a>  
 
 Test Platform: Web (see TODO)
 
