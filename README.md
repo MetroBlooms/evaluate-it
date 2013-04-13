@@ -4,7 +4,7 @@ Cross platform mobile app built using Sencha Touch 2.1.1 framework
 
 Use: Garden/Raingarden evaluation tool developed for use by <a href="http://www.metroblooms.org">Metro Blooms</a>
 
-Credits:<a href="http://dev.sencha.com/deploy/touch/examples/production/kitchensink/">Sencha Touch KitchenSink</a>  
+Credits: <a href="http://dev.sencha.com/deploy/touch/examples/production/kitchensink/">Sencha Touch Kitchensink</a>  
 
 Test Platform: Web (see TODO)
 
