@@ -1,3 +1,5 @@
+// TODO: add remaining evaluation eementss (based on requirements)
+
 Ext.define('EvaluateIt.view.SiteEvaluationEdit', {
 	extend: 'Ext.form.Panel',
 	alias : 'widget.siteEvaluationEdit',
@@ -67,7 +69,7 @@ Ext.define('EvaluateIt.view.SiteEvaluationEdit', {
 				xtype: 'checkboxfield',
 				itemId: 'noLongerExists',
 				name: 'noLongerExists',
-				label: 'Site no longer exists!',
+				label: 'Site no longer exists!'
 			},  
 			{
 				xtype: 'selectfield',
@@ -153,13 +155,13 @@ Ext.define('EvaluateIt.view.SiteEvaluationEdit', {
 				xtype: 'checkboxfield',
 				itemId: 'rainGarden',
 				name: 'rainGarden',
-				label: 'There is a raingarden',
+				label: 'There is a raingarden'
 			},  
 			{
 				xtype: 'checkboxfield',
 				itemId: 'rainBarrel',
 				name: 'rainBarrel',
-				label: 'There is a rain barrel',
+				label: 'There is a rain barrel'
 			},	
 			{	
        			xtype: 'textfield',

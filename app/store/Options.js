@@ -1,3 +1,8 @@
+/**
+ * Menu structure of app using tree store data structure
+ * Roots are defined by function; leaves are end points for navigating to specified views 
+**/
+
 (function () {
 
     var root = {
@@ -20,15 +25,8 @@
                         leaf: true,
                         id: 'geolocation',
             			category: 'geolocations'
-                    },
+                    }
 		
-
-					//{
-                    //    text: 'GeolocationEdit',
-                    //    leaf: true,
-                    //    id: 'GeolocationEdit'
-                    //}
-
                 ]
             }
         ]

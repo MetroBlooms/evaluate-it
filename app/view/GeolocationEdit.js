@@ -35,7 +35,7 @@ Ext.define('EvaluateIt.view.GeolocationEdit', {
 			{
 				xtype: 'datepickerfield',
 				destroyPickerOnHide: true,
-				name : 'datOfEvaluatione',
+				name : 'datOfEvaluation',
 				label: 'Date of evaluation',
 				value: new Date(),
 				picker: {
@@ -52,24 +52,21 @@ Ext.define('EvaluateIt.view.GeolocationEdit', {
 			// TODO: add Google maps and write gelocation to data store, using Ext.getCmp(id).
 			{	
        			xtype: 'textfield',
-		   		//name: 'latitude',
 		   		label: 'Latitude',
 		   		itemId: 'latitude',
-				//id: 'latitude',
+				id: 'latitude',
 			 	value: sessionStorage.latitude 			
 			},
 			{	
        			xtype: 'textfield',
-		   		//name: 'longitude',
 		   		label: 'Longitude',
-		   		itemId: 'longitude',
+		   		id: 'longitude',
 			 	value: sessionStorage.longitude
 			},
 			{	
        			xtype: 'textfield',
-		   		//name: 'accuracy',
 		   		label: 'Accuracy',
-		   		itemId: 'accuracy',
+		   		id: 'accuracy',
 			 	value: sessionStorage.accuracy
 			},
 			{

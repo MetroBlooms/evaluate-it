@@ -51,7 +51,7 @@ Ext.define('EvaluateIt.controller.Main', {
     },
 
     /**
-     * Finds a given view by ID and shows it. End-point of the "option/:id" route
+     * Finds a given view by ID and shows it. End-point of the "option/:id" route (viz., leaf in tree store)
      */
     showViewById: function (id, category) {
         var nav = this.getNav(),
@@ -61,32 +61,36 @@ Ext.define('EvaluateIt.controller.Main', {
 		console.log('category: ' + category);
 		console.log('view ' + id);
 
-		// control view selction based on category passed from routing call
-		if (category === 'evaluations') { // was vegetable
+		// control view selection based on category passed from routing call
+		if (category === 'evaluations' || category === 'push' || category === 'geolocation') {
 
-			var listStore = Ext.data.StoreManager.lookup('SiteEvaluations'); // was List
+			console.log('what it is: ' + category);
+
+			// create filter based on filtered use case	
+			var listStore = Ext.data.StoreManager.lookup('SiteEvaluations'); 
 			listStore.clearFilter();
-			
+		
 			if (category === 'push') {
+				console.log('we are in: ' + category);
 				var pushFilter = new Ext.util.Filter({
-						property: 'dateOfEvaluation', 
-						value: null, 
+						property: 'zipcode', // replace with actual filter when ready
+						value: '55405', 
 						anyMatch: false,
 						caseSensitive: true,
 						root: 'data'
 				});
 				listStore.filter(pushFilter);
 			}
-			if (category === 'evaluate') { // was vegetable
-				Ext.Msg.alert('We are in!');
-				var	evaluationFilter = new Ext.util.Filter({ // was VegetableList
-						property: 'dateOfEvaluation', 
-						value: null, 
+			if (category === 'evaluations') { 
+				console.log('we are in: ' + category);
+				var	evaluationFilter = new Ext.util.Filter({ 
+						property: 'zipcode',  // replace with actual filter when ready
+						value: '55405', 
 						anyMatch: false,
 						caseSensitive: true,
 						root: 'data'
 				});
-				listStore.filter(evaluationFilter); // was vegetable
+				listStore.filter(evaluationFilter);
 			}
 
 		}
@@ -98,38 +102,6 @@ Ext.define('EvaluateIt.controller.Main', {
         this.hideSheets();
 
     },
-
-    /**
-     * Shows the source code for the {@link #currentOption} in an overlay
-     */
-    /*onSourceTap: function () {
-        var overlay = this.getSourceOverlay(),
-            option = this.getCurrentOption();
-
-        if (!overlay.getParent()) {
-            Ext.Viewport.add(overlay);
-        }
-
-        overlay.show();
-
-        overlay.setMasked({
-            xtype: 'loadmask',
-            message: 'Loading...'
-        });
-
-        if (option) {
-            Ext.Ajax.request({
-                url: 'app/view/' + (option.get('view') || option.get('text')) + '.js',
-
-                callback: function (request, success, response) {
-                    setTimeout(function() {
-                        overlay.unmask();
-                        overlay.setHtml(response.responseText);
-                    }, 500);
-                }
-            });
-        }
-    },*/
 
     /**
      * @private

@@ -7,12 +7,6 @@ Ext.define('EvaluateIt.store.Evaluations', {
     config:{
         model: 'EvaluateIt.model.Evaluation',
 	//	storeId: 'evaluations',
-    	autoLoad: true,
-/*,
-	proxy: {
-           type: "sql",
-           database: 'Yo'
-        },
-        autoLoad: true*/
+    	autoLoad: true
     }
 });

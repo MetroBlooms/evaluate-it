@@ -13,9 +13,6 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 				activate: 'onActivate',
 				itemtap: 'onSelectGeolocation'
 			},
-			'container button[itemId=addGeolocation]' : {
-				tap : 'onAddGeolocation' 
-			},
 			'geolocationEdit button[itemId=save]' : {
 				tap : 'onSaveGeolocation' 
 			}
@@ -26,17 +23,6 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 	onActivate: function() {
   		console.log('Main container is active');
  	},
-
-	onAddGeolocation: function(button) {
-		console.log('Button Click');
-		var geolocationForm = Ext.Viewport.down('geolocationEdit');
-		//create the geolocation edit window if it doesn't exists
-		if(!geolocationForm){
-			geolocationForm = Ext.widget('geolocationEdit');
-		} 
-		geolocationForm.reset();
-		geolocationForm.showBy(button);
-	},
 
 	onSaveGeolocation: function(button) {
 		console.log('Button Click for Save');
@@ -60,6 +46,7 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 
 	},
 
+	// TODO: add Google map
 	onSelectGeolocation: function(view, index, target, record, event) {
 		console.log('Selected a Geolocation from the list');
 		var geolocationForm = Ext.Viewport.down('geolocationEdit');

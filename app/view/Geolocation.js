@@ -1,4 +1,9 @@
-// http://stackoverflow.com/questions/14352356/global-variable-in-sencha
+/**
+ * Create a list of sites for which to grab a geolocation.
+ * First create a SiteEvaluation model with defined fields, then create a store to contain
+ * the data, finally create the list itself, which gets its filtered data (evaluationFilter in Main.js) from the store
+ */
+
 Ext.define('EvaluateIt.view.Geolocation', {
 		extend: 'Ext.Container',
       	fullscreen: true,
@@ -7,17 +12,7 @@ Ext.define('EvaluateIt.view.Geolocation', {
 			items: [
 				{
 					xtype : 'toolbar',
-					docked: 'top',
-					items: [
-						{
-							xtype: 'button',
-							itemId: 'addGeolocation',
-							text: 'Add a Thing',
-							iconCls: 'arrow_right',
-							iconMask: true 
-						}
-
-					]
+					docked: 'top'
 				},
 				{
 					flex: 1,
@@ -28,6 +23,7 @@ Ext.define('EvaluateIt.view.Geolocation', {
 		}
 });
 
+// get geolocation using device; write to sessionStorage for session persistance
 Ext.device.Geolocation.getCurrentPosition({
 	success: function(position) {
 		var coordinates = position.coords,

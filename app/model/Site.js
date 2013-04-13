@@ -13,13 +13,7 @@ Ext.define('EvaluateIt.model.Site', {
            	{name: 'remoteSiteId', type: 'int'}
         ],
 		proxy: {
-        	type: "localstorage",
-		//	reader      : {
-        //    	type : 'json',
-        //    	root : 'data'
-        // 	}
-
-           //database: 'Yo'
+        	type: "localstorage"
         },
         hasMany: [
 			{ 

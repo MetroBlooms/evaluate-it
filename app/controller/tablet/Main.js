@@ -18,9 +18,8 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
 
         if (record.isLeaf()) {
 			
+			// append category parameter for use in selection of proper view to render in route through use of filter 
 			console.log('url to route: ' + ' ' + record.toUrl() + '\/' + record.get('category'));
-			
-			// append category parameter for use in selction of proper view to render in route 
             record =  record.toUrl() + '\/' + record.get('category'); 			
 			
 			// call route with model instance name and parameters

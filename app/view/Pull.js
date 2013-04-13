@@ -1,6 +1,5 @@
- /* Demonstrates loading data over AJAX. See http://docs.sencha.com/touch/2-0/#!/guide/ajax for more
- * background on Sencha Touch 2's AJAX capabilities
- */
+// Load remote data via AJAX: dispaly reuslt in view
+ 
 Ext.define('EvaluateIt.view.Pull', {
     extend: 'Ext.Container',
     config: {
@@ -18,24 +17,19 @@ Ext.define('EvaluateIt.view.Pull', {
                     {
                         text: 'Load data from remote',
                         handler: function() {
-                            var panel = Ext.getCmp('Pull');
+                            var panel = Ext.getCmp('Pull'),
+								json = [];
 
                             panel.getParent().setMasked({
                                 xtype: 'loadmask',
                                 message: 'Loading...'
                             });
 
-							var	url,
-								json = [],
-								//webServer = 'http://metroblooms.org',
-								//collectionDevelopment = 'app',
-								//evaluator_id = 265, // need variable evaluator_id!! // becky = 216
-								//callback = 'evaluations.php?evaluator_id=';
-
-							// assemble url with callback for Ajax request: Need to keep this in unversioned file for security
-							url = EvaluateIt.config.webServer + '/' + EvaluateIt.config.collectionDevelopment + '/' +  EvaluateIt.config.callback +  EvaluateIt.config.evaluator_id;
-							//url = webServer + '/' + collectionDevelopment + '/' +  callback +  evaluator_id;
-
+							// assemble url with callback for Ajax request: Configuration kept in non-versioned file, app.js 
+							url = EvaluateIt.config.webServer + '/'; 
+							url += EvaluateIt.config.collectionDevelopment + '/';  
+							url += EvaluateIt.config.callback;
+							url += EvaluateIt.config.evaluator_id;
 							console.log(url);
 
 							// make cors request for cross domain access for data
@@ -67,40 +61,39 @@ function parseJson (json) {
 
 	var i,
 		max,
-		Evaluators = Ext.create('EvaluateIt.store.Evaluators'),
-		Evaluations = Ext.create('EvaluateIt.store.Evaluations'),
-		Sites = Ext.create('EvaluateIt.store.Sites'),
-		Addresses = Ext.create('EvaluateIt.store.Addresses'),
-		Evaluator,
-		Evaluation,
-		//Site = Ext.create('EvaluateIt.model.Site', {id: 1}),
-		evaluators,
-		//evaluations,
-		site,
-		evaluation,
-		//address = new EvaluateIt.model.Address(),
-		evaluator = new EvaluateIt.model.Evaluator(),
-		sites, //= Ext.getStore(myStore),
-		addresses,
-		newAddress, // = Ext.getStore(Adresses);
 		newEvaluator,
+		Evaluators = Ext.create('EvaluateIt.store.Evaluators'),
 		SiteEvaluations =  Ext.create('EvaluateIt.store.SiteEvaluations'),
 		siteEvaluation;
+		// needed for normalized data model, once implemented
+		//Evaluations = Ext.create('EvaluateIt.store.Evaluations'),
+		//evaluators,
+		//evaluator = new EvaluateIt.model.Evaluator(),
+		//Evaluator,
+		//Sites = Ext.create('EvaluateIt.store.Sites'),
+		//Addresses = Ext.create('EvaluateIt.store.Addresses'),
+		//Evaluation,
+		//Site = Ext.create('EvaluateIt.model.Site', {id: 1}),
+		//evaluations,
+		//site,
+		//evaluation,
+		//address = new EvaluateIt.model.Address(),
+		//sites, //= Ext.getStore(myStore),
+		//addresses,
+		//newAddress, // = Ext.getStore(Adresses);
 	
 	//console.log('n: ' + json.length);
 
 	// clear for testing only!
 	localStorage.clear();
 
-
 	for (i = 0, max = json.length; i < max; i += 1) {
-
 
 		// a creeate a psuedu-nested JSON store until issues with association have been resolved
 
-		//siteEvaluation = Ext.create('EvaluateIt.model.SiteEvaluation', {id: i});
 		siteEvaluations = Ext.getStore(SiteEvaluations);
 
+		// TODO: add matching criteria to ensure unique records; for testing, clear local storage to guarantee unique records; 		
 		siteEvaluations.add([{
 			site_id: i, 
 			remoteSiteId: json[i].garden.garden_id, 
@@ -132,6 +125,16 @@ function parseJson (json) {
 		}]);
 		siteEvaluations.sync();
 
+		// insert evaluators for evaluation: n practice, an evaluator has many evaluations; however, assume that only one evaluator uses the device, 
+		// and thus, no direct association is needed between models
+	
+		// TODO: add check that record does not already exist	
+		if (i === 0) {
+			newEvaluator = {remoteEvaluatorId: json[i].evaluator.evaluator_id, firstName: json[i].evaluator.firstname, lastName: json[i].evaluator.lastname, email: json[i].evaluator.email};
+			Evaluators.add(newEvaluator);
+			Evaluators.sync();
+
+		}
 		//console.log('test mapping out: ');
 		
 		//site =  Ext.create('EvaluateIt.model.Site', {id: i}),
@@ -229,7 +232,7 @@ function parseJson (json) {
 		}
 
 
-		// insert evaluators for evaluation: ieally, an evaluator has many evaluations; however, assume that only one evaluator uses the device, and thus, no direct association is needed between models
+		// insert evaluators for evaluation: really, an evaluator has many evaluations; however, assume that only one evaluator uses the device, and thus, no direct association is needed between models
 
 		//evaluator.getEvaluation( function(evaluation, operation){
 		//		console.log('tried to load evaluation. this.evaluation is now set to the evaluation');

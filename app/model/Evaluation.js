@@ -23,13 +23,7 @@ Ext.define('EvaluateIt.model.Evaluation', {
 			{name: 'site_id', type: 'int'}	
         ],
 		proxy: {
-        	type: "localstorage",
-		//	reader      : {
-        //    	type : 'json',
-        //    	root : 'data'
-        //	}
-
-           //database: 'Yo'
+        	type: "localstorage"
         },
 
 

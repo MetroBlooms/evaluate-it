@@ -6,22 +6,11 @@ Ext.define('EvaluateIt.view.Push', {
 			items: [
 				{
 					xtype : 'toolbar',
-					docked: 'top',
-					/*items: [
-						{
-							xtype: 'button',
-							itemId: 'addPush',
-							text: 'Add a Thing',
-							iconCls: 'arrow_right',
-							iconMask: true 
-						}
-
-					]*/
+					docked: 'top'
 				},
 				{
 					flex: 1,
 					xtype: 'pushList'
-
 				}
 			]
 		}

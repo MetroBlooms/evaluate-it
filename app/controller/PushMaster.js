@@ -60,7 +60,7 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 
 	},
 
-// select object to load to remote
+// Assemble selected object to load to remote
 
 /* What object should look like:
 
@@ -93,7 +93,8 @@ test: {"evaluation_id": 44214,
 		}
 	} */
 
-	// TODO: complete object, split into separate functions; add image uploade using native or Cordova method
+	// TODO: complete object, split into separate functions; add image uploade using native or Cordova method; add awards (awating further requirements)
+
 	onSelectPush: function(view, index, target, record, event) {
 		console.log('Selected a Push from the list ' + index + ' ' + record.data.address);
 		var pushForm = Ext.Viewport.down('pushForm'),
@@ -119,7 +120,7 @@ test: {"evaluation_id": 44214,
 			accuracy = record.data.accuracy,
 			date_of_evaluation = record.data.dateOfEvaluation,
 			obj = {},
-			url = EvaluateIt.config.webServer, 
+			url = EvaluateIt.config.webServer; 
 	
 			obj = {
 				evaluation_id : record.data.evaluation_id,
@@ -159,8 +160,8 @@ test: {"evaluation_id": 44214,
 						latitude : latitude,
 						longitude : longitude,
 						accuracy : accuracy
-					},
-				},
+					}
+				}
 			};
 		
 			console.log('Assembled object to push: ' + Ext.encode(obj));	
@@ -170,15 +171,15 @@ test: {"evaluation_id": 44214,
 			//	geolocationForm.setRecord(record);
 			pushForm.showBy(target);
 	
-			// POST to server
-			url = url + '/' +  EvaluateIt.config.collectionDevelopment;
-
-			url = url + '/' +  EvaluateIt.config.testHttpResponse;
+			// POST to server; config variables from app.json
+			url +=  '/' +  EvaluateIt.config.collectionDevelopment;
+			url +=  '/' +  EvaluateIt.config.testHttpResponse;
 
 			console.log('new url: ' + url);
 
+			// AJAX post
 			Ext.Ajax.request({
-				type : "POST",
+				//type : "POST",
 				url : url,
 				params : obj,
 				success : function (response) {

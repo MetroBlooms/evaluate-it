@@ -27,9 +27,6 @@
     "appCache": {
         "cache": [
             "index.html",
-            "carregions.json",
-            "test.json",
-            "userData.json",
             "resources/images/circle-touch.png",
             "resources/images/circle-performance.png",
             "resources/images/circle-architecture.png",
@@ -45,12 +42,8 @@
         "fallback": []
     },
     "extras": [
-        "carregions.json",
-        "test.json",
-        "userData.json",
         "resources/images",
-        "resources/icons",
-        "resources/loading"
+        "resources/icons"
     ],
     "archivePath": "archive",
     "buildPaths": {
