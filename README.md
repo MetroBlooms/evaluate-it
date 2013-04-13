@@ -6,8 +6,7 @@ Use: Garden evaluation tool developed for use by <a href="http://www.metroblooms
 
 Test Platform: Web (see TODO)
 
-Deployment instructions: mkdir evaluate-it in ./touch-2.x/examples folder; 
-    build using touch-2.x/examples/evalaute-it/sencha app build
+Deployment instructions: mkdir evaluate-it in ./touch-2.x/examples folder; build using './touch-2.x/examples/evalaute-it/sencha app build'
 
 Testing: Start script localHttpServerStart.sh in ./touch-2.x/folder and connect via URL http://localhost:8000/examples/evaluate-it (you can set this in examples/examples.json)
 
