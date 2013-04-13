@@ -11,7 +11,7 @@ Test Platform: Web (see TODO)
 Deployment instructions: 
 *  'mkdir evaluate-it' in ./touch-2.x/examples folder
 *  clone repo here 
-*  build using './touch-2.x/examples/evalaute-it/sencha app build'
+*  build using './touch-2.x/examples/evaluate-it/sencha app build'
 
 Testing: Start script localHttpServerStart.sh (simple Python Web server) in ./touch-2.x/folder and connect via URL http://localhost:8000/examples/evaluate-it (you can set this in ./touch-2.x/examples/examples.json)
 
