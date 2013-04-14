@@ -8,18 +8,22 @@ Credits: <a href="http://dev.sencha.com/deploy/touch/examples/production/kitchen
 
 Test Platform: Web (see TODO)
 
-Deployment instructions: 
-*  'mkdir evaluate-it' in ./touch-2.x/examples folder
-*  clone repo here 
+Deployment instructions:
+*  <a href="http://www.sencha.com/products/touch/download/">Download and install Sencha Touch SDK</a>
+*  <a href="http://www.sencha.com/products/sencha-cmd/download">Download and install Sencha command utility</a>
+*  cd ./touch-2.x/examples   
+*  mkdir evaluate-it
+*  cd ./touch-2.x/examples/evaluate-it
+*  clone repo 
 *  build using './touch-2.x/examples/evaluate-it/sencha app build'
 
-Testing: Start script localHttpServerStart.sh (simple Python Web server) in ./touch-2.x/folder and connect via URL http://localhost:8000/examples/evaluate-it (you can set this in ./touch-2.x/examples/examples.json)
+Testing: Start script localHttpServerStart.sh (simple Python Web server) in ./touch-2.x folder and connect via URL http://localhost:8000/examples/evaluate-it (you can set this in ./touch-2.x/examples/examples.json)
 
 TODO: 
 *  Add detailed description 
 *  Add geolocation Google maps view, with ability to save coordinates
 *  Add cookie auth for remote data push/pull 
-*  Remove dependency on path in touch-2.x/examples 
+*  Remove dependency on path in ./touch-2.x/examples 
 *  Add Phonegap framework for file upload API for image gallery selection/upload;
 *  Add unit and integration tests (using Jasmine)
 *  Bundle Phonegap builds for Android/iOS deployment
