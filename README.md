@@ -12,10 +12,10 @@ Deployment instructions:
 *  <a href="http://www.sencha.com/products/touch/download/">Download and install Sencha Touch SDK</a>
 *  <a href="http://www.sencha.com/products/sencha-cmd/download">Download and install Sencha command utility</a>
 *  cd ./touch-2.x/examples   
-*  mkdir evaluate-it
-*  cd ./touch-2.x/examples/evaluate-it
-*  clone repo 
-*  build using './touch-2.x/examples/evaluate-it/sencha app build'
+*  clone repo   
+*  sencha generate app EvaluateIt evaluate-it
+*  cd evaluate-it
+*  sencha app build testing
 
 Testing: Start script localHttpServerStart.sh (simple Python Web server) in ./touch-2.x folder and connect via URL http://localhost:8000/examples/evaluate-it (you can set this in ./touch-2.x/examples/examples.json)
 
