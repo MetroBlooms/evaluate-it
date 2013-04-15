@@ -15,6 +15,7 @@ Deployment instructions:
 *  clone repo   
 *  sencha generate app EvaluateIt evaluate-it
 *  cd evaluate-it
+*  vi app.js (modify as per below)
 *  sencha app build testing
 
 Testing: Start script localHttpServerStart.sh (simple Python Web server) in ./touch-2.x folder and connect via URL http://localhost:8000/examples/evaluate-it (you can set this in ./touch-2.x/examples/examples.json)
