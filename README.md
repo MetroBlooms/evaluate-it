@@ -19,6 +19,8 @@ Deployment instructions:
 
 Testing: Start script localHttpServerStart.sh (simple Python Web server) in ./touch-2.x folder and connect via URL http://localhost:8000/examples/evaluate-it (you can set this in ./touch-2.x/examples/examples.json)
 
+*Any time significant changes have been made to the code base, run 'sencha app build testing' to check for errors or warnings
+
 TODO: 
 *  Add detailed description 
 *  Add geolocation Google maps view, with ability to save coordinates
@@ -30,7 +32,7 @@ TODO:
 *  Field test!
 *  Add normalized model (see comments in app/model/SiteEvaluation.js)
 
-Note: You will need to configure the global URL variables for the AJAX calls in the configuraiton file app.js (not included in this repository, but necessary to run the application. app.js configuration is listed below). You can also use this file for other sensitive configuration data storage. 
+Note: You will need to configure the global URL variables for the AJAX calls in the configuration file app.js (not included in this repository, but necessary to run the application. app.js configuration is listed below). You can also use this file for other sensitive configuration data storage. 
 
 
     // app.js
