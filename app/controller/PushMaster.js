@@ -98,86 +98,61 @@ test: {"evaluation_id": 44214,
 	onSelectPush: function(view, index, target, record, event) {
 		console.log('Selected a Push from the list ' + index + ' ' + record.data.address);
 		var pushForm = Ext.Viewport.down('pushForm'),
-			evaluation_id= record.data.remoteEvaluationId,
-			garden_id = record.data.remoteSiteId,
-			evaluator_id = record.data.remoteEvaluatorId,
-			address = record.data.address,
-			city = record.data.city,
-			state = record.data.state,
-			zipcode = record.data.zipcode,
-			neighborhood = record.data.neighborhood,
-			county = record.data.county,
 			score,
-			color = record.data.useOfColor,
-			plant_variety = record.data.varietyAndHealth,
-			design = record.data.design,
-			maintenance = record.data.maintenance,
-			environmental_stewardship = record.data.environmentalStewardship,
-			name = record.data.name,
-			general_comments = record.data.comments,
-			no_longer_exists = record.data.noLongerExists,
-			latitude = record.data.latitude,
-			longitude = record.data.longitude,
-			accuracy = record.data.accuracy,
-			rain_garden = record.data.rainGarden,
-		    rain_barrel = record.data.rainBarrel,
-			award_id = record.data.awardId,
-			special_specified =  record.data.special_award_specified,
-			best_of, 
+			award,
+			rating,
 			nate_siegel_award,
 			currentYear = (new Date()).getFullYear(),
-			date_of_evaluation = record.data.dateOfEvaluation,
 			obj = {},
-			rating,
 			url = EvaluateIt.config.webServer; 
 
 			// get rating
-			score = color + plant_variety + design + maintenance + environmental_stewardship;
+			score = record.data.color + record.data.plantVariety + record.data.design + record.data.maintenance + record.data.environmentalStewardship;
 			rating = evaluation_rating(score);
 			console.log("rating" + rating);	
 			
 			// get award
-			best_of = evaluation_award(award_id);
-			console.log("award" + best_of);	
+			award = evaluation_award(record.data.awardId);
+			console.log("award" + award.best_of + ' ' + award.nate_seigel);	
 
 			obj = {
-				evaluation_id : evaluation_id,
+				evaluation_id : record.data.remoteEvaluationId,
 				score : score,
 				rating : rating,
 				rating_year : currentYear,
-				best_of : best_of,
-				special_award_specified : special_specified,
-				nate_siegel_award : nate_siegel_award,
+				best_of : award.best_of,
+				special_award_specified :  record.data.specialAwardSpecified,
+				nate_siegel_award : award.nate_seigel,
 				score_card : {
-					color : color,
-					plant_variety : plant_variety,
-					design : design,
-					maintenance : maintenance,
-					environmental_stewardship : environmental_stewardship
+					color :  record.data.color,
+					plant_variety :  record.data.plantVariety,
+					design :  record.data.design,
+					maintenance :  record.data.maintenance,
+					environmental_stewardship :  record.data.environmentalStewardship
 				},
-				date_evaluated : date_of_evaluation, // was:
+				date_evaluated : record.data.dateOfEvaluation, // was:
 				// date_entered_on_device_by_evaluator,
-				general_comments : general_comments,
+				general_comments : record.data.comments,
 				evaluator : {
-					evaluator_id : '265',
-					completed_by : '265'
+					evaluator_id : record.data.remoteEvaluatorId,
+					completed_by : record.data.remoteEvaluatorId
 				},
-				rainbarrel : rain_barrel,
-				raingarden : rain_garden,
+				rainbarrel : record.data.rainBarrel,
+				raingarden : record.data.rainGarden,
 				garden : {
-					garden_id : garden_id,
-					no_longer_exists : no_longer_exists,
+					garden_id : record.data.remoteSiteId,
+					no_longer_exists :  record.data.noLongerExists,
 					address : {
-						neighborhood : neighborhood,
-						county : 'Hennepin'
+						neighborhood : record.data.neighborhood,
+						county : record.data.county
 					},
 					gardener : {
-						name : name
+						name :  record.data.name
 					},
 					geolocation : {
-						latitude : latitude,
-						longitude : longitude,
-						accuracy : accuracy
+						latitude :  record.data.latitude,
+						longitude :  record.data.longitude,
+						accuracy :  record.data.accuracy
 					}
 				}
 			};
@@ -232,6 +207,8 @@ function evaluation_rating (score)	{
 // awards based on MEtro Blooms evaluation form
 function evaluation_award (award_id) {
 
+	var nate_siegel = 0;
+
 	switch (award_id) {
 		case 1:
 			best_of = 'Residential';
@@ -268,7 +245,7 @@ function evaluation_award (award_id) {
 			break;
 		case 12:
 			best_of = 'NateSiegel';
-			nate_siegel_award = 1;
+			nate_siegel = 1;
 			break;
 		case 13:
 			best_of = 'Special';
@@ -278,6 +255,9 @@ function evaluation_award (award_id) {
 			break;
 	}
 	
-	return best_of;
+	return {
+        'best_of': best_of,
+        'nate_seigel': nate_siegel
+    }; 
 }
 
