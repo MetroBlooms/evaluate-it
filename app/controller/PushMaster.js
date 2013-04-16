@@ -68,7 +68,7 @@ test: {"evaluation_id": 44214,
 	"score": 20, // computed, but stored value
 	"rating": "EG", // computed by range (see function assembleDataToPost)
 	"rating_year": 2012, // computed
-	"bestof": "Special", // from evaluation_award
+	"best_of": "Special", // from evaluation_award
 	"special_award_specified": "Absolute bestest ever!", // from evaluation_award; code stored. lookup via JSON object Award
 	"nate_siegel_award": 0, // from evaluation_award
 	"score_card": {"color": 4,  // from evaluation_factor, lookup via JSON object Factor
@@ -93,7 +93,7 @@ test: {"evaluation_id": 44214,
 		}
 	} */
 
-	// TODO: complete object, split into separate functions; add image uploade using native or Cordova method; add awards (awating further requirements)
+	// TODO: add missing atributes to form; add image uploade using native or Cordova method
 
 	onSelectPush: function(view, index, target, record, event) {
 		console.log('Selected a Push from the list ' + index + ' ' + record.data.address);
@@ -107,6 +107,7 @@ test: {"evaluation_id": 44214,
 			zipcode = record.data.zipcode,
 			neighborhood = record.data.neighborhood,
 			county = record.data.county,
+			score,
 			color = record.data.useOfColor,
 			plant_variety = record.data.varietyAndHealth,
 			design = record.data.design,
@@ -118,18 +119,35 @@ test: {"evaluation_id": 44214,
 			latitude = record.data.latitude,
 			longitude = record.data.longitude,
 			accuracy = record.data.accuracy,
+			rain_garden = record.data.rainGarden,
+		    rain_barrel = record.data.rainBarrel,
+			award_id = record.data.awardId,
+			special_specified =  record.data.special_award_specified,
+			best_of, 
+			nate_siegel_award,
+			currentYear = (new Date()).getFullYear(),
 			date_of_evaluation = record.data.dateOfEvaluation,
 			obj = {},
+			rating,
 			url = EvaluateIt.config.webServer; 
-	
+
+			// get rating
+			score = color + plant_variety + design + maintenance + environmental_stewardship;
+			rating = evaluation_rating(score);
+			console.log("rating" + rating);	
+			
+			// get award
+			best_of = evaluation_award(award_id);
+			console.log("award" + best_of);	
+
 			obj = {
-				evaluation_id : record.data.evaluation_id,
-				//score : record.data.sum_rating,
-				//rating : rating,
-				//rating_year : currentYear,
-				//bestof : bestof,
-				//special_award_specified : record.data.special_award_specified,
-				//nate_siegel_award : nateSiegelAward,
+				evaluation_id : evaluation_id,
+				score : score,
+				rating : rating,
+				rating_year : currentYear,
+				best_of : best_of,
+				special_award_specified : special_specified,
+				nate_siegel_award : nate_siegel_award,
 				score_card : {
 					color : color,
 					plant_variety : plant_variety,
@@ -144,8 +162,8 @@ test: {"evaluation_id": 44214,
 					evaluator_id : '265',
 					completed_by : '265'
 				},
-				//rainbarrel : rain_barrel,
-				//raingarden : rain_garden,
+				rainbarrel : rain_barrel,
+				raingarden : rain_garden,
 				garden : {
 					garden_id : garden_id,
 					no_longer_exists : no_longer_exists,
@@ -173,7 +191,7 @@ test: {"evaluation_id": 44214,
 	
 			// POST to server; config variables from app.json
 			url +=  '/' +  EvaluateIt.config.collectionDevelopment;
-			url +=  '/' +  EvaluateIt.config.testHttpResponse;
+			url +=  '/' +  EvaluateIt.config.postResults;//testHttpResponse;
 
 			console.log('new url: ' + url);
 
@@ -190,7 +208,76 @@ test: {"evaluation_id": 44214,
 				}
 			}); 
 	}			
-			
-	
 
 });
+
+// rating based on Metro Blooms evaluation form
+function evaluation_rating (score)	{
+
+	if (score >= 18) {
+		rating = 'EG';
+	} else if (score >= 14 && score < 18) {
+		rating = 'GD';
+	} else if (score >= 9 && score < 14) {
+		rating = 'GM';
+	} else if (score >= 5 && score < 9) {
+		rating = 'CA';
+	} else {
+		rating = 'NADA'; //'';
+	}
+
+	return rating;
+}
+
+// awards based on MEtro Blooms evaluation form
+function evaluation_award (award_id) {
+
+	switch (award_id) {
+		case 1:
+			best_of = 'Residential';
+			break;
+		case 2:
+			best_of = 'Residential Raingarden';
+			break;
+		case 3:
+			best_of = 'Boulevard';
+			break;
+		case 4:
+			best_of = 'Business';
+			break;
+		case 5:
+			best_of = 'Business Raingarrden';
+			break;
+		case 6:
+			best_of = 'Apartment';
+			break;
+		case 7:
+			best_of = 'Community';
+			break;
+		case 8:
+			best_of = 'Public';
+			break;
+		case 9:
+			best_of = 'School';
+			break;
+		case 10:
+			best_of = 'Congregation';
+			break;
+		case 11:
+			best_of = 'Windowbox/container';
+			break;
+		case 12:
+			best_of = 'NateSiegel';
+			nate_siegel_award = 1;
+			break;
+		case 13:
+			best_of = 'Special';
+			break;
+		default:
+			best_of = 'NADA!';//null;
+			break;
+	}
+	
+	return best_of;
+}
+

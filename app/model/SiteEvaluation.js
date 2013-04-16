@@ -75,7 +75,13 @@ Ext.define('EvaluateIt.model.SiteEvaluation', {
 			{name: 'latitude', mapping: 'geolocation.latitude', type: 'float'},
             {name: 'longitude', mapping: 'geolocation.longitude', type: 'float'},
             {name: 'accuracy', mapping: 'geolocation.accuracy', type: 'float'},
-            {name: 'datestamp', mapping:  'geolocation.datestamp', type: 'string'}
+            {name: 'datestamp', mapping:  'geolocation.datestamp', type: 'string'},
+
+            {name: 'awardId', mapping:  'evaluationAward.rainGarden', type: 'string'},
+            {name: 'specialAwardSpecified', mapping:  'evaluationAward.specialAwardSpecified', type: 'string'},
+            
+			{name: 'rainGarden', mapping:  'evaluationFeature.rainGarden', type: 'string'},
+            {name: 'rainBarrel', mapping:  'evaluationFeaturerainBarrel', type: 'string'}
 
         ],
 		proxy: {
