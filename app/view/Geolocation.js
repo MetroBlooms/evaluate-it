@@ -23,27 +23,3 @@ Ext.define('EvaluateIt.view.Geolocation', {
 		}
 });
 
-// get geolocation using device; write to sessionStorage for session persistance
-Ext.device.Geolocation.getCurrentPosition({
-	success: function(position) {
-		var coordinates = position.coords,
-			location = "Longitude " + coordinates.longitude + " Latitude " + coordinates.latitude + " Accuracy " + coordinates.accuracy,
-			latitude = coordinates.longitude,
-			longitude =  coordinates.latitude,
-			accuracy = coordinates.accuracy;
-			
-		console.log('coords ' + location);
-
-		sessionStorage.clear();
-		// add data to sessionStorage 
-		sessionStorage.latitude = latitude;
-		sessionStorage.longitude = longitude;
-		sessionStorage.accuracy = accuracy;	
-	
-		console.log('latitude ' + sessionStorage.latitude);
-	},
-	failure: function() {
-		console.log('something went wrong!');
-	}
-});
-

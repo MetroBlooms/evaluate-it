@@ -73,10 +73,80 @@ Ext.define('EvaluateIt.view.GeolocationEdit', {
 				xtype: 'button',
 				itemId: 'save',
 				text: 'Save'
+			},
+			{
+
+				xtype: 'map',
+
+				useCurrentLocation: true,
+				listeners: {
+					maprender : function(comp, map){
+
+						setTimeout(function() {
+							var marker = new google.maps.Marker({
+								position: map.center,
+								title : 'testing',
+								map: map
+								
+							});
+
+							console.log("test" + map.center.lat() + ' ' + map.center.lng());
+						}, 100);
+					}
+				}
+
 			}
             
         ]
     }
+});
+
+/*Ext.Viewport.add({
+
+	xtype: 'map',
+
+	useCurrentLocation: true,
+    listeners: {
+        maprender : function(comp, map){
+
+			setTimeout(function() {
+				var marker = new google.maps.Marker({
+					position: map.center,
+					title : 'testing',
+					map: map
+					
+				});
+
+				console.log("test" + map.center.lat() + ' ' + map.center.lng());
+			}, 100);
+        }
+    }
+
+});*/
+
+// For comparison to coordinates deriveed from Google maps API above
+// get geolocation using device; write to sessionStorage for session persistance
+Ext.device.Geolocation.getCurrentPosition({
+	success: function(position) {
+		var coordinates = position.coords,
+			location = "Longitude " + coordinates.longitude + " Latitude " + coordinates.latitude + " Accuracy " + coordinates.accuracy,
+			latitude = coordinates.longitude,
+			longitude =  coordinates.latitude,
+			accuracy = coordinates.accuracy;
+			
+		console.log('coords ' + location);
+
+		sessionStorage.clear();
+		// add data to sessionStorage 
+		sessionStorage.latitude = latitude;
+		sessionStorage.longitude = longitude;
+		sessionStorage.accuracy = accuracy;	
+	
+		console.log('latitude ' + sessionStorage.latitude);
+	},
+	failure: function() {
+		console.log('something went wrong!');
+	}
 });
 
 
