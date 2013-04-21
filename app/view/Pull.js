@@ -56,6 +56,74 @@ Ext.define('EvaluateIt.view.Pull', {
     }
 });
 
+
+/* TODO: implement new data structure
+
+{
+    evaluation: {
+        evaluation_id: record.data.remoteEvaluationId,   
+        garden_id: record.data.remoteSiteId,
+        scoresheet:{
+            color : record.data.color,
+            plant_variety : record.data.plantVariety,
+            design : record.data.design,
+            maintenance : record.data.maintenance,
+            environmental_stewardship : record.data.environmentalStewardship
+        },
+        evalType: new feature, this may be "garden evaluation", "2nd round garden evaluation,"and "voluntary raingarden evaluation", we’ll need to discuss this
+        score: score    
+        rating: rating   
+        ratingyear : currentYear,
+        bestof : award.best_of,
+        special_award_specified: record.data.specialAwardSpecified,
+        evaluator_id: record.data.remoteEvaluatorId,
+        nateSiegelAward : award.nate_seigel,
+        rainbarrel : record.data.rainBarrel,
+        downspouts_redirected: (“1” or “0”),  
+        date_evaluated: record.data.dateOfEvaluation,
+        comments : record.data.comments,
+        revisit :  (send “1” or “0” whether the evaluator thinks the garden should be revisited) 
+    },
+    garden: {
+        garden_id: record.data.remoteSiteId, 
+        name:   record.data.name, (name of gardener)
+        address: (street address of garden),    
+        city: (city of garden),
+        state: (state of garden),
+        zip: (zip of garden),
+        neighborhood: record.data.neighborhood,
+        county: record.data.county        boulevard_garden: (“1” or “0”),  
+        raingarden: record.data.rainGarden,       
+        name_of_garden: (name of the garden),         
+        rainbarrel: record.data.rainBarrel, 
+        no_longer_exists: record.data.noLongerExists,
+        noteworthy_features: (This is typically created by the person who nominated the garden),    
+        uploadedImage: (URL of uploaded image),
+        alley_garden: (“1” or “0”),
+        residential_garden: (“1” or “0”),
+        business_garden: (“1” or “0”),
+        community: (“1” or “0”),
+        church: (“1” or “0”),
+        public_building: (“1” or “0”),
+        apartment_or_condo: (“1” or “0”),
+        container_windowbox: (“1” or “0”), 
+        downspouts_redirected: (“1” or “0”),
+       gardener_email : (email of gardener),  
+        gardener_phone : (name of gardener), 
+        not_publically_visible: (“1” or “0”),
+    },
+    geolocation: {
+        latitude :  record.data.latitude,
+        longitude :  record.data.longitude,
+        accuracy: record.data.accuracy       
+        altitude:
+        altitudeAccuracy:
+        heading:
+        speed:
+        timestamp:
+    }
+
+*/
 // parse object into model
 function parseJson (json) {
 
@@ -97,16 +165,22 @@ function parseJson (json) {
 		siteEvaluations.add([{
 			site_id: i, 
 			remoteSiteId: json[i].garden.garden_id, 
+			//address: json[i].garden.address,
 			address: json[i].garden.address.address,
+			//city: json[i].garden.city,
 			city: json[i].garden.address.city,
+			//state: json[i].garden.state,
 			state: json[i].garden.address.state,
+			//zipcode: json[i].garden.zip,
 			zipcode: json[i].garden.address.zip,
+			//neighborhood: json[i].garden.neighborhood,
 			neighborhood: json[i].garden.address.neighborhood,
+			//remoteEvaluatorId: json[i].evaluator_id,
 			remoteEvaluatorId: json[i].evaluator.evaluator_id,
  			evaluationType: 1,
  			remoteEvaluationId: json[i].evaluation_id, 
 			dateOfEvaluation: null,
-			remoteEvaluatorId: json[i].evaluator.evaluator_id,
+			//name:  json[i].garden.name
 			name:  json[i].garden.gardener.name0
 
 /*			'address.address': json[i].garden.address.address,
