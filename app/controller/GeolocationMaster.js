@@ -89,7 +89,6 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 			docked: 'top',
 			alias : 'widget.geolocationToolbar',
 			ui: 'light',
-			title: 'Test',
 			defaults: {
 				iconMask: true
 			},
@@ -144,6 +143,12 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 					xtype: 'button',
 					itemId: 'save',
 					text: 'Save Location'
+				},
+				{	
+					xtype: 'textfield', 
+					name: 'address',
+					itemId: 'address',
+					readOnly: true
 				}
 			]
 		});
@@ -200,12 +205,10 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 		var panel = new Ext.form.Panel({
 			fullscreen: true,
 			layout: 'fit',
-			items: [toolbar, mapdemo],
-			itemTpl: [
-				'<div><strong>{address}</strong></div> '
-			]
+			items: [toolbar, mapdemo]
 
 		});
+		panel.setRecord(record);
 
 		panel.show();
 
