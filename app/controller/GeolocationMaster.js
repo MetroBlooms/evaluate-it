@@ -28,13 +28,18 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 
 	// spawns a new form panel with Google map centered on current location 
 	onSelectGeolocation: function(view, index, target, record, event) {
+
 		console.log('Selected a Geolocation from the list');
 
 		// grab geolocation coordinates from device API
 		get_location();
+		console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
 
 		// Google maps API stuff here
-		var position = new google.maps.LatLng(44.9616427, -93.33537489999999),  
+		var 	latitude = sessionStorage.latitude, 
+		    	longitude = sessionStorage.longitude,
+
+			position = new google.maps.LatLng(latitude, longitude),  
 
 			infowindow = new google.maps.InfoWindow({
 				content: 'EvaluateIt!'
@@ -164,7 +169,7 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 			alias : 'widget.whereAmI',
 
 			mapOptions : {
-				center : new google.maps.LatLng(44.9616427, -93.33537489999999),
+				center : new google.maps.LatLng(latitude, longitude),
 				zoom : 12,
 				mapTypeId : google.maps.MapTypeId.ROADMAP,
 				navigationControl: true,
@@ -210,6 +215,8 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 		});
 
 		var geo_panel = new Ext.form.Panel({
+			useCurrentLocation: true,
+
 			fullscreen: true,
 			layout: 'fit',
 			items: [toolbar, google_map]
@@ -227,8 +234,8 @@ function get_location() {
 		success: function(position) {
 			var coordinates = position.coords,
 				location = "Longitude " + coordinates.longitude + " Latitude " + coordinates.latitude + " Accuracy " + coordinates.accuracy,
-				latitude = coordinates.longitude,
-				longitude =  coordinates.latitude,
+				latitude = coordinates.latitude,
+				longitude =  coordinates.longitude,
 				accuracy = coordinates.accuracy;
 				
 			console.log('coords ' + location);
