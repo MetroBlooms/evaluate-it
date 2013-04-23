@@ -108,6 +108,8 @@ Ext.define('EvaluateIt.controller.phone.Main', {
      * "View Source" button as we do no want to see that when we are in the NestedList itself
      */
     onBackTap: function(nestedList, node) {
+
+		console.log('We are back tappin!');
         //this means we just hit back out of a detail card
         if (node.isLeaf()) {
             this.getSourceButton().setHidden(true);

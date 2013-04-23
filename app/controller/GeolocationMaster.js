@@ -16,6 +16,7 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 			'geolocationEdit button[itemId=save]' : {
 				tap : 'onSaveGeolocation' 
 			}
+
 		}	  
 
  	},
@@ -24,136 +25,142 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
   		console.log('Main container is active');
  	},
 
-	onSaveGeolocation: function(button) {
-		console.log('Button Click for Save');
-		var form = button.up('panel');
-		//get the record 
-		var record = form.getRecord();
-		//get the form values
-		var values = form.getValues();
-		//if a new geolocation
-		if(!record){
-			var newRecord = new EvaluateIt.model.Contact(values);
-			Ext.getStore('SiteEvaluations').add(newRecord);
-		}
-		//existing geolocation
-		else {
-			record.set(values);
-		}
-		form.hide();
-		//save the data to the Web local Storage
-		Ext.getStore('SiteEvaluations').sync();
 
-	},
-
-	// TODO: add Google map
+	// spawns a new form panel with Google map centered on current location 
 	onSelectGeolocation: function(view, index, target, record, event) {
 		console.log('Selected a Geolocation from the list');
-		//var geolocationForm = Ext.Viewport.down('geolocationEdit');
 
-		// Google maps stuff here: TODO make and external function
+		// grab geolocation coordinates from device API
+		get_location();
 
+		// Google maps API stuff here
 		var position = new google.maps.LatLng(44.9616427, -93.33537489999999),  
 
-		infowindow = new google.maps.InfoWindow({
-			content: 'EvaluateIt!'
-		}),
+			infowindow = new google.maps.InfoWindow({
+				content: 'EvaluateIt!'
+			}),
 
-		//Tracking Marker Image
-		image = new google.maps.MarkerImage(
-			'resources/images/point.png',
-			new google.maps.Size(32, 31),
-			new google.maps.Point(0, 0),
-			new google.maps.Point(16, 31)
-		),
+			//Tracking Marker Image
+			image = new google.maps.MarkerImage(
+				'resources/images/point.png',
+				new google.maps.Size(32, 31),
+				new google.maps.Point(0, 0),
+				new google.maps.Point(16, 31)
+			),
 
-		shadow = new google.maps.MarkerImage(
-			'resources/images/shadow.png',
-			new google.maps.Size(64, 52),
-			new google.maps.Point(0, 0),
-			new google.maps.Point(-5, 42)
-		),
+			shadow = new google.maps.MarkerImage(
+				'resources/images/shadow.png',
+				new google.maps.Size(64, 52),
+				new google.maps.Point(0, 0),
+				new google.maps.Point(-5, 42)
+			),
 
-		trackingButton = Ext.create('Ext.Button', {
-			iconMask: true,
-			iconCls: 'locate'
-		}),
+			trackingButton = Ext.create('Ext.Button', {
+				iconMask: true,
+				iconCls: 'locate'
+			}),
 
-		trafficButton = Ext.create('Ext.Button', {
-			iconMask: true,
-			pressed: false,
-			iconCls: 'maps'
-		}),
-
-		toolbar = Ext.create('Ext.Toolbar', {
-			docked: 'top',
-			alias : 'widget.geolocationToolbar',
-			ui: 'light',
-			defaults: {
-				iconMask: true
-			},
-			items: [
-				{
-					iconCls: 'home',
-					handler: function() {
-						//disable tracking
-						var segmented = Ext.getCmp('segmented'),
-							pressedButtons = segmented.getPressedButtons(),
-							trafficIndex = pressedButtons.indexOf(trafficButton),
-							newPressed = (trafficIndex != -1) ? [trafficButton] : [];
-						segmented.setPressedButtons(newPressed);
-						mapdemo.getMap().panTo(position);
-					}
+			trafficButton = Ext.create('Ext.Button', {
+				iconMask: true,
+				pressed: false,
+				iconCls: 'maps'
+			}),
+			
+			toolbar = Ext.create('Ext.Toolbar', {
+				docked: 'top',
+				alias : 'widget.geolocationToolbar',
+				ui: 'light',
+				defaults: {
+					iconMask: true
 				},
-				{
-					id: 'segmented',
-					xtype: 'segmentedbutton',
-					allowMultiple: true,
-					listeners: {
-						toggle: function(buttons, button, active) {
-							if (button == trafficButton) {
-								mapdemo.getPlugins()[1].setHidden(!active);
-							}
-							else if (button == trackingButton) {
-								var tracker = mapdemo.getPlugins()[0],
-									marker = tracker.getMarker();
-								marker.setVisible(active);
-								if (active) {
-									tracker.setTrackSuspended(false);
-									Ext.defer(function() {
-										tracker.getHost().on('centerchange', function() {
-											marker.setVisible(false);
-											tracker.setTrackSuspended(true);
-											var segmented = Ext.getCmp('segmented'),
-												pressedButtons = segmented.getPressedButtons(),
-												trafficIndex = pressedButtons.indexOf(trafficButton),
-												newPressed = (trafficIndex != -1) ? [trafficButton] : [];
-											segmented.setPressedButtons(newPressed);
-										}, this, {single: true});
-									}, 50, this);
-								}
-							}
+				items: [
+					{
+						xtype: "button",
+         				ui: "back",
+         				text: "Home",
+						// destroy form.Panel overlay to return to tree store view 
+						handler: function() {
+							geo_panel.destroy();						
+						}
+            		},
+					{
+						iconCls: 'home',
+						handler: function() {
+							//disable tracking
+							var segmented = Ext.getCmp('segmented'),
+								pressedButtons = segmented.getPressedButtons(),
+								trafficIndex = pressedButtons.indexOf(trafficButton),
+								newPressed = (trafficIndex != -1) ? [trafficButton] : [];
+							segmented.setPressedButtons(newPressed);
+							google_map.getMap().panTo(position);
 						}
 					},
-					items: [
-						trackingButton, trafficButton
-					]
-				},
-				{
-					xtype: 'button',
-					itemId: 'save',
-					text: 'Save Location'
-				},
-				{	
-					xtype: 'textfield', 
-					name: 'address',
-					itemId: 'address',
-					readOnly: true
-				}
-			]
-		});
+					{
+						id: 'segmented',
+						xtype: 'segmentedbutton',
+						allowMultiple: true,
+						listeners: {
+							toggle: function(buttons, button, active) {
+								if (button == trafficButton) {
+									google_map.getPlugins()[1].setHidden(!active);
+								}
+								else if (button == trackingButton) {
+									var tracker = google_map.getPlugins()[0],
+										marker = tracker.getMarker();
+									marker.setVisible(active);
+									if (active) {
+										tracker.setTrackSuspended(false);
+										Ext.defer(function() {
+											tracker.getHost().on('centerchange', function() {
+												marker.setVisible(false);
+												tracker.setTrackSuspended(true);
+												var segmented = Ext.getCmp('segmented'),
+													pressedButtons = segmented.getPressedButtons(),
+													trafficIndex = pressedButtons.indexOf(trafficButton),
+													newPressed = (trafficIndex != -1) ? [trafficButton] : [];
+												segmented.setPressedButtons(newPressed);
+											}, this, {single: true});
+										}, 50, this);
+									}
+								}
+							}
+						},
+						items: [
+							trackingButton, trafficButton
+						]
+					},
+					// display selected address
+					{	
+						xtype: 'textfield', 
+						name: 'address',
+						itemId: 'address',
+						readOnly: true
+					},
+					// save geolocation data
+					{
+						xtype: 'button',
+						itemId: 'save',
+						text: 'Save location',
+						handler: function() {
+						
+							// get record associated with model bound to form 	
+							var record = geo_panel.getRecord();
+				
+							// set geolocation values			
+							record.set('latitude',sessionStorage.latitude);
+							record.set('longitude',sessionStorage.longitude);
+							record.set('accuracy',sessionStorage.accuracy);
 
-		var mapdemo = Ext.create('Ext.Map', {
+							// update store with new values	
+							Ext.getStore('SiteEvaluations').sync();
+
+						}
+					}
+
+				]
+			});
+
+		var google_map = Ext.create('Ext.Map', {
 			alias : 'widget.whereAmI',
 
 			mapOptions : {
@@ -202,21 +209,42 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 			}
 		});
 
-		var panel = new Ext.form.Panel({
+		var geo_panel = new Ext.form.Panel({
 			fullscreen: true,
 			layout: 'fit',
-			items: [toolbar, mapdemo]
+			items: [toolbar, google_map]
 
 		});
-		panel.setRecord(record);
+		geo_panel.setRecord(record);
+		geo_panel.show();
 
-		panel.show();
-
-		//if(!geolocationForm){
-		//	geolocationForm = Ext.widget('geolocationEdit');
-		//}	 
-		//geolocationForm.setRecord(record);
-		//geolocationForm.showBy(target);
 	}
 
 });
+
+function get_location() {
+	Ext.device.Geolocation.getCurrentPosition({
+		success: function(position) {
+			var coordinates = position.coords,
+				location = "Longitude " + coordinates.longitude + " Latitude " + coordinates.latitude + " Accuracy " + coordinates.accuracy,
+				latitude = coordinates.longitude,
+				longitude =  coordinates.latitude,
+				accuracy = coordinates.accuracy;
+				
+			console.log('coords ' + location);
+
+			// initialize sessionStorage
+			sessionStorage.clear();
+			// add data to sessionStorage 
+			sessionStorage.latitude = latitude;
+			sessionStorage.longitude = longitude;
+			sessionStorage.accuracy = accuracy;	
+		
+			console.log('latitude ' + sessionStorage.latitude);
+		},
+		failure: function() {
+			console.log('something went wrong!');
+		}
+	});
+};
+

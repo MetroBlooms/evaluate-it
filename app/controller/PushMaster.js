@@ -61,6 +61,8 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 	},
 
 // Assemble selected object to load to remote
+// add uploaded_image
+// add eval_type
 
 /* What object should look like:
 
@@ -109,11 +111,11 @@ test: {"evaluation_id": 44214,
         evalType: new feature, this may be "garden evaluation", "2nd round garden evaluation,"and "voluntary raingarden evaluation", we’ll need to discuss this
         score: score    
         rating: rating   
-        ratingyear: currentYear,
-        bestof: award.best_of,
+        rating_year: currentYear,
+        best_of: award.best_of,
         special_award_specified: record.data.specialAwardSpecified,
         evaluator_id: record.data.remoteEvaluatorId,
-        nateSiegelAward: award.nate_seigel,
+        nate_siegel_award: award.nate_seigel,
         rainbarrel: record.data.rainBarrel,
         downspouts_redirected: (“1” or “0”),  
         date_evaluated: record.data.dateOfEvaluation,
@@ -144,7 +146,7 @@ test: {"evaluation_id": 44214,
         apartment_or_condo: (“1” or “0”),
         container_windowbox: (“1” or “0”), 
         downspouts_redirected: (“1” or “0”),
-       gardener_email: (email of gardener),  
+       	gardener_email: (email of gardener),  
         gardener_phone: (name of gardener), 
         not_publically_visible: (“1” or “0”),
     },
@@ -187,13 +189,10 @@ test: {"evaluation_id": 44214,
 				evaluation_id: record.data.remoteEvaluationId,
 				score: score,
 				rating: rating,
-			    //ratingyear: rating,	
 				rating_year: currentYear,
-				//bestof: award.best_of,
 				best_of: award.best_of,
 				special_award_specified:  record.data.specialAwardSpecified,
 				//evaluator_id: record.data.remoteEvaluatorId,
-				//nateSiegalAward: award.nate_seigel,
 				nate_siegel_award: award.nate_seigel,
 				//scoresheet:
 				score_card: {

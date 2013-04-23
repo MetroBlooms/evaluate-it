@@ -39,6 +39,7 @@ Ext.define('EvaluateIt.controller.Main', {
 
         routes: {
             'option/:id/:category': 'showViewById',
+			':previousButtonName/:id': 'showViewById',
             'menu/:id': 'showMenuById'
         },
 

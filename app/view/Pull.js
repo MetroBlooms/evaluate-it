@@ -56,8 +56,9 @@ Ext.define('EvaluateIt.view.Pull', {
     }
 });
 
-
 /* TODO: implement new data structure
+// add uploaded_image
+// add eval_type
 
 {
     evaluation: {
@@ -73,11 +74,11 @@ Ext.define('EvaluateIt.view.Pull', {
         evalType: new feature, this may be "garden evaluation", "2nd round garden evaluation,"and "voluntary raingarden evaluation", we’ll need to discuss this
         score: score    
         rating: rating   
-        ratingyear : currentYear,
-        bestof : award.best_of,
+        rating_year : currentYear,
+        best_of : award.best_of,
         special_award_specified: record.data.specialAwardSpecified,
         evaluator_id: record.data.remoteEvaluatorId,
-        nateSiegelAward : award.nate_seigel,
+        nate_siegel_ward : award.nate_seigel,
         rainbarrel : record.data.rainBarrel,
         downspouts_redirected: (“1” or “0”),  
         date_evaluated: record.data.dateOfEvaluation,
@@ -199,7 +200,7 @@ function parseJson (json) {
 		}]);
 		siteEvaluations.sync();
 
-		// insert evaluators for evaluation: n practice, an evaluator has many evaluations; however, assume that only one evaluator uses the device, 
+		// insert evaluators for evaluation: in practice, an evaluator has many evaluations; however, assume that only one evaluator uses the device, 
 		// and thus, no direct association is needed between models
 	
 		// TODO: add check that record does not already exist	
@@ -210,6 +211,8 @@ function parseJson (json) {
 
 		}
 		//console.log('test mapping out: ');
+		
+		// TODO: parses into relational model - see SiteEvaluation.js for spefics
 		
 		//site =  Ext.create('EvaluateIt.model.Site', {id: i}),
 
