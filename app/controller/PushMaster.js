@@ -256,6 +256,7 @@ test: {"evaluation_id": 44214,
 				//type: "POST",
 				url: url,
 				params: obj,
+				useDefaultXhrHeader: false,
 				success: function (response) {
 					console.log('success: ' + response.responseText);
 				},

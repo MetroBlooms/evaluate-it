@@ -36,8 +36,8 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 		console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
 
 		// Google maps API stuff here
-		var 	latitude = sessionStorage.latitude, 
-		    	longitude = sessionStorage.longitude,
+		var latitude = sessionStorage.latitude, 
+		    longitude = sessionStorage.longitude,
 
 			position = new google.maps.LatLng(latitude, longitude),  
 
