@@ -25,7 +25,7 @@ Deployment instructions:
 
 *note: I am running version 2.5.0 for this project, since it was the most stable version at the time of testing. Version 2.6.0 had several issues that would break the application, and 2.7.0 was an unknown. You will need to install the appropriate cordova library based on your mobile OS (See http://docs.phonegap.com/en/2.7.0/guide_getting-started_index.md.html#Getting%20Started%20Guides for platform specific details).
 
-Testing via browser: Start script localHttpServerStart.sh (simple Python Web server) in ./evaluate-it folder and connect via URL http://localhost:8000/examples/evaluate-it (note: Sencha Touch does not support Firefox)
+Testing via browser: Start script localHttpServerStart.sh (simple Python Web server) in ./evaluate-it folder and connect via URL http://localhost:8000 (note: Sencha Touch does not support Firefox)
 
 *Any time significant changes have been made to the code base, run 'sencha app build testing' to check for errors or warnings
 
