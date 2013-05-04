@@ -247,7 +247,7 @@ test: {"evaluation_id": 44214,
 	
 			// POST to server; config variables from app.json
 			url +=  '/' +  EvaluateIt.config.collectionDevelopment;
-			url +=  '/' +  EvaluateIt.config.postResults;//testHttpResponse;
+			url +=  '/' +  EvaluateIt.config.testHttpResponse;//postResults;
 
 			console.log('new url: ' + url);
 
@@ -259,9 +259,13 @@ test: {"evaluation_id": 44214,
 				useDefaultXhrHeader: false,
 				success: function (response) {
 					console.log('success: ' + response.responseText);
+
+					alert('success: ' + response.responseText);
+
 				},
 				fail: function (e, jqxhr, settings, exception) {
 					console.log(e);
+					alert(e);
 				}
 			}); 
 	}			

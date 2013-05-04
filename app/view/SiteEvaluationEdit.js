@@ -30,8 +30,10 @@ Ext.define('EvaluateIt.view.SiteEvaluationEdit', {
 		hideOnMaskTap: true,
 
 		// Set the width and height of the panel
-		width: 400,
-		height: 330,
+		//width: 400,
+		//height: 330,
+		width: Ext.os.deviceType == 'Phone' ?  screen.width : 300,
+		height: Ext.os.deviceType == 'Phone' ?  screen.height : 500,
 		scrollable: true,
 	 	layout: {
 			type: 'vbox'

@@ -1,10 +1,25 @@
 Ext.define('EvaluateIt.profile.Base', {
     extend: 'Ext.app.Profile',
+	requires: ['EvaluateIt.controller.GeolocationMaster'],
 
     launch: function() {
         var isBenchmarking = window.location.search.match(/(\?|&)bm/);
 
-        if (isBenchmarking) {
+		get_location();
+
+		//alert('Device hath phyred - base!');
+		//Wait for PhoneGap to load
+		//document.addEventListener("deviceready", onDeviceReady, false);
+	
+		// wait till Phonegap has loaded
+		//function onDeviceReady() {
+
+		//	alert('Device hath phyred!'); 
+		//	get_location();
+
+		//}
+        
+		if (isBenchmarking) {
             Ext.Animator.on({
                 animationend: 'onAnimationEnd',
                 scope: this

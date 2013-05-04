@@ -2,6 +2,15 @@
 <project name="evaluate-it" default=".help">
     <import file="${basedir}/.sencha/app/build-impl.xml"/>
 
+	
+	<target name="-after-build">
+		<delete dir="${build.dir}/android/assets/www" />
+
+		<copy todir="${build.dir}/android/assets/www">
+           	<fileset dir="${build.dir}/package"/>
+		</copy>
+	</target>
+
     <!--
     The following targets can be provided to inject logic before and/or after key steps
     of the build process:

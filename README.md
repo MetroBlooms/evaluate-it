@@ -10,40 +10,58 @@ Test Platform: Web (see TODO)
 
 Deployment instructions:
 *  <a href="http://www.sencha.com/products/touch/download/">Download and install Sencha Touch SDK</a>
-*  <a href="http://www.sencha.com/products/sencha-cmd/download">Download and install Sencha command utility</a>
-*  cd ./touch-2.x/examples   
-*  clone repo   
+*  <a href="http://www.sencha.com/products/sencha-cmd/download">Download and install Sencha command utility</a>   
+*  clone repo in directory of your choice (/path/to/app/)
+*  cd to Sencha Touch SDK directory  
 *  sencha generate app EvaluateIt evaluate-it
-*  cd evaluate-it
+*  cd /path/to/app/evaluate-it
 *  vi app.js (modify as per below)
-*  sencha app build testing
+*  vi .sencha/app/sencha.cfg (add '${app.dir}/lib/plugin' to app.classpath as per line below)
 
-Testing: Start script localHttpServerStart.sh (simple Python Web server) in ./touch-2.x folder and connect via URL http://localhost:8000/examples/evaluate-it (you can set this in ./touch-2.x/examples/examples.json)
+    app.classpath=${app.dir}/app.js,${app.dir}/app,${app.dir}/lib/plugin
+
+*  sencha app build testing
+*  Download <a href="http://phonegap.com/download/#">Phonegap</a>
+
+*note: I am running version 2.5.0 for this project, since it was the most stable version at the time of testing. Version 2.6.0 had several issues that would break the application, and 2.7.0 was an unknown. You will need to install the appropriate cordova library based on your mobile OS (See http://docs.phonegap.com/en/2.7.0/guide_getting-started_index.md.html#Getting%20Started%20Guides for platform specific details).
+
+Testing via browser: Start script localHttpServerStart.sh (simple Python Web server) in ./evaluate-it folder and connect via URL http://localhost:8000/examples/evaluate-it (note: Sencha Touch does not support Firefox)
 
 *Any time significant changes have been made to the code base, run 'sencha app build testing' to check for errors or warnings
 
 TODO: 
 *  Add detailed description 
-*  Add geolocation Google maps view, with ability to save coordinates
-*  Add cookie auth for remote data push/pull 
-*  Remove dependency on path in ./touch-2.x/examples 
-*  Add Phonegap framework for file upload API for image gallery selection/upload;
+*  Add cookie auth for remote data push/pull
+*  Add directions for bundling Phonegap builds for Android/iOS deployment 
+*  Add separate branches for Android and iOS
+*  Add Phonegap API for image gallery selection/upload
 *  Add unit and integration tests (using Jasmine)
-*  Bundle Phonegap builds for Android/iOS deployment
 *  Field test!
 *  Add normalized model (see comments in app/model/SiteEvaluation.js)
 
 Note: You will need to configure the global URL variables for the AJAX calls in the configuration file app.js (not included in this repository, but necessary to run the application. app.js configuration is listed below). You can also use this file for other sensitive configuration data storage. 
 
+	// app.js
 
-    // app.js
 	Ext.Loader.setPath({
-		'Ext': '../../src'
+		'Ext': 'touch/src',
+		'Ext.plugin': 'lib/plugin'
 	});
 
+	/**
+	 * Ext.application is the heart of your app. It sets the application name, can specify the icon and startup images to
+	 * use when your app is added to the home screen, and sets up your application's dependencies - usually the models,
+	 * views and controllers that your app uses.
+	 */
 	Ext.application({
-		name: 'EvaluateIt', //'EvaluateIt',
-		requires: ['EvaluateIt.view.ColorPatterns', 'Ext.device.Geolocation'], // ['EvaluateIt.view.ColorPatterns']
+		name: 'EvaluateIt', 
+		requires: [
+				'EvaluateIt.view.ColorPatterns', 
+				'Ext.device.Geolocation',
+				'Ext.Map',
+				'Ext.plugin.google.Traffic',
+				'Ext.plugin.google.Tracker'
+		],
 
 		launch : function() {
 			EvaluateIt.config = {
@@ -89,7 +107,6 @@ Note: You will need to configure the global URL variables for the AJAX calls in 
 			'EvaluationList',
 			'Geolocation', 
 			'GeolocationList',
-			'GeolocationEdit',
 			'Pull',
 			'Push',
 			'PushList',
@@ -145,4 +162,5 @@ Note: You will need to configure the global URL variables for the AJAX calls in 
 		
 		]
 	});
+
 

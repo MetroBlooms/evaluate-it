@@ -2,8 +2,10 @@ Ext.define('EvaluateIt.model.Evaluator', {
     extend: 'Ext.data.Model',
     
     config: {
-        //idProperty: 'id', // use with proxy.SQL 
-	identifier: 'uuid', // use with proxy.localstorage 
+    idProperty: 'id', // use with proxy.SQL 
+	// TODO: need to add require for use of uuid
+	// 'Ext.data.identifier.Uuid'
+	//identifier: 'uuid', // use with proxy.localstorage 
         fields: [
             {name: 'remoteEvaluatorId', type: 'int'},
             {name: 'firstName', type: 'auto'},

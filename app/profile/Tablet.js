@@ -1,5 +1,7 @@
 Ext.define('EvaluateIt.profile.Tablet', {
     extend: 'EvaluateIt.profile.Base',
+	requires: ['EvaluateIt.controller.GeolocationMaster'],
+
 
     config: {
         controllers: ['Main'],
@@ -11,6 +13,19 @@ Ext.define('EvaluateIt.profile.Tablet', {
     },
 
     launch: function() {
+
+		//Wait for PhoneGap to load
+		//document.addEventListener("deviceready", onDeviceReady, false);
+	
+		// wait till Phonegap has loaded
+		//function onDeviceReady() {
+
+		//	alert('Device hath phyred!'); 
+		//	get_location();
+
+		//}
+
+
         Ext.create('EvaluateIt.view.tablet.Main');
 
         this.callParent();

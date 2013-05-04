@@ -42,7 +42,11 @@ Ext.define('EvaluateIt.controller.phone.Main', {
 		console.log('bbb ' + record);
 
         if (record.isLeaf()) {
+			// append category parameter for use in selection of proper view to render in route through use of filter 
+			console.log('url to route: ' + ' ' + record.toUrl() + '\/' + record.get('category'));
+            record =  record.toUrl() + '\/' + record.get('category'); 			
             this.redirectTo(record);
+
         } else {
             this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
                 url: 'menu/' + record.get('id')

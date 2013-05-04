@@ -8,7 +8,8 @@ Ext.define('EvaluateIt.view.Evaluation', {
 		extend: 'Ext.Container',
       	fullscreen: true,
 		config: {
-			layout: 'vbox',
+			//layout: 'vbox',
+			layout: 'fit',
 			items: [
 				{
 					xtype : 'toolbar',

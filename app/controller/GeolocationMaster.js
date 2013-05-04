@@ -1,5 +1,6 @@
 Ext.define('EvaluateIt.controller.GeolocationMaster', {
 	extend : 'Ext.app.Controller',
+	requires: ['Ext.device.Geolocation'],
 
 	config: {
 		profile: Ext.os.deviceType.toLowerCase(),
@@ -31,15 +32,25 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 
 		console.log('Selected a Geolocation from the list');
 
+		// Google maps API stuff here
+		console.log('Selected a Geolocation from the list');
+
+		var longitude = -93.33539329999999,
+
+		latitude = 44.9616164; 
+
 		// grab geolocation coordinates from device API
 		get_location();
 		console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
 
-		// Google maps API stuff here
-		var latitude = sessionStorage.latitude, 
-		    longitude = sessionStorage.longitude,
+		//alert("Coords " +  + sessionStorage.latitude + ' ' + sessionStorage.longitude);
 
-			position = new google.maps.LatLng(latitude, longitude),  
+		// Google maps API stuff here
+		//var latitude = sessionStorage.latitude, 
+		//    longitude = sessionStorage.longitude,
+		
+
+		var	position = new google.maps.LatLng(latitude, longitude),  
 
 			infowindow = new google.maps.InfoWindow({
 				content: 'EvaluateIt!'
@@ -216,10 +227,14 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 
 		var geo_panel = new Ext.form.Panel({
 			useCurrentLocation: true,
+			//config: {
+			//	width: Ext.os.deviceType == 'Phone' ?  screen.width : 300,
+			//	height: Ext.os.deviceType == 'Phone' ?  screen.height : 500,
 
-			fullscreen: true,
-			layout: 'fit',
-			items: [toolbar, google_map]
+				fullscreen: true,
+				layout: 'fit',
+				items: [toolbar, google_map]
+			//}
 
 		});
 		geo_panel.setRecord(record);
@@ -231,6 +246,11 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 
 function get_location() {
 	Ext.device.Geolocation.getCurrentPosition({
+
+		allowHighAccuracy: true,
+		maximumAge: 3000, 
+		timeout: 5000,
+
 		success: function(position) {
 			var coordinates = position.coords,
 				location = "Longitude " + coordinates.longitude + " Latitude " + coordinates.latitude + " Accuracy " + coordinates.accuracy,
@@ -254,4 +274,6 @@ function get_location() {
 		}
 	});
 };
+
+
 
