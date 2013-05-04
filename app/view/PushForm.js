@@ -34,11 +34,11 @@ Ext.define('EvaluateIt.view.PushForm', {
 			labelWrap: true
 		},
 		items: [
-			{	
-       			xtype: 'textfield',
-		   		name: 'address',
-		   		label: 'Address',
-		   		itemId: 'address' 
+			{
+				xtype: 'textfield', 
+				name: 'address',
+				itemId: 'address',
+				readOnly: true
 			},
 			{
 				xtype: 'checkboxfield',

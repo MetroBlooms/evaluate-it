@@ -47,7 +47,7 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 		var values = form.getValues();
 		//if a new push
 		if(!record){
-			var newRecord = new EvaluateIt.model.Contact(values);
+			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
 			Ext.getStore('SiteEvaluations').add(newRecord);
 		}
 		//existing push
@@ -166,6 +166,16 @@ test: {"evaluation_id": 44214,
 	// TODO: add missing atributes to form; add image uploade using native or Cordova method
 
 	onSelectPush: function(view, index, target, record, event) {
+
+		console.log('Selected a SiteEvaluation from the list');
+		var pushForm = Ext.Viewport.down('pushForm');
+
+		if(!pushForm){
+			pushForm = Ext.widget('pushForm');
+		}	 
+		pushForm.setRecord(record);
+		pushForm.showBy(target);
+
 		console.log('Selected a Push from the list ' + index + ' ' + record.data.address);
 		var pushForm = Ext.Viewport.down('pushForm'),
 			score,
@@ -237,14 +247,10 @@ test: {"evaluation_id": 44214,
 				}*/
 
 			};
-		
-			console.log('Assembled object to push: ' + Ext.encode(obj));	
-			if(!pushForm){
-				pushForm = Ext.widget('pushForm');
-			}	 
-			//	geolocationForm.setRecord(record);
-			pushForm.showBy(target);
 	
+	
+			console.log('Assembled object to push: ' + Ext.encode(obj));	
+				
 			// POST to server; config variables from app.json
 			url +=  '/' +  EvaluateIt.config.collectionDevelopment;
 			url +=  '/' +  EvaluateIt.config.testHttpResponse;//postResults;

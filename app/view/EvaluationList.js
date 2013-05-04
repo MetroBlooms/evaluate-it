@@ -11,7 +11,7 @@ Ext.define('EvaluateIt.view.EvaluationList', {
 		xtype: 'list',
 		store: 'SiteEvaluations', //getRange(0, 9),
 		itemTpl: [
-			'<div><strong>siteid: {site_id}</strong> remoteSiteId:{remoteSiteId}, remoteEvaluationId: {remoteEvaluationId}</div> '
+			'<div><strong>Address: {address}</strong></div> '
 		],
 		variableHeights: false
     }
