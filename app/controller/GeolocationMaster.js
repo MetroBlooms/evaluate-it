@@ -1,6 +1,6 @@
 Ext.define('EvaluateIt.controller.GeolocationMaster', {
 	extend : 'Ext.app.Controller',
-	requires: ['Ext.device.Geolocation'],
+	requires: ['Ext.device.Geolocation','Ext.Toolbar'],
 
 	config: {
 		profile: Ext.os.deviceType.toLowerCase(),
@@ -32,22 +32,18 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 
 		console.log('Selected a Geolocation from the list');
 
-		// Google maps API stuff here
-		console.log('Selected a Geolocation from the list');
-
-		var longitude = -93.33539329999999,
-
-		latitude = 44.9616164; 
-
 		// grab geolocation coordinates from device API
+
+		// Google maps API stuff here
+		var latitude = sessionStorage.latitude, //44.9616164; 
+		    longitude = sessionStorage.longitude; //-93.33539329999999,
+
 		get_location();
 		console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
 
 		//alert("Coords " +  + sessionStorage.latitude + ' ' + sessionStorage.longitude);
 
-		// Google maps API stuff here
-		//var latitude = sessionStorage.latitude, 
-		//    longitude = sessionStorage.longitude,
+	
 		
 
 		var	position = new google.maps.LatLng(latitude, longitude),  
@@ -93,7 +89,7 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 					{
 						xtype: "button",
          				ui: "back",
-         				text: "Home",
+         				text: "Back",
 						// destroy form.Panel overlay to return to tree store view 
 						handler: function() {
 							geo_panel.destroy();						
@@ -111,7 +107,7 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 							google_map.getMap().panTo(position);
 						}
 					},
-					{
+				/*	{
 						id: 'segmented',
 						xtype: 'segmentedbutton',
 						allowMultiple: true,
@@ -144,14 +140,14 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 						items: [
 							trackingButton, trafficButton
 						]
-					},
+					},*/
 					// display selected address
-					{	
+					/*{	
 						xtype: 'textfield', 
 						name: 'address',
 						itemId: 'address',
 						readOnly: true
-					},
+					},*/
 					// save geolocation data
 					{
 						xtype: 'button',
@@ -244,6 +240,7 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 
 });
 
+// buggy in Safari desktop, 5.1.9: works when it feels like it!
 function get_location() {
 	Ext.device.Geolocation.getCurrentPosition({
 
@@ -259,6 +256,8 @@ function get_location() {
 				accuracy = coordinates.accuracy;
 				
 			console.log('coords ' + location);
+			alert('Got coords!' + location);
+
 
 			// initialize sessionStorage
 			sessionStorage.clear();

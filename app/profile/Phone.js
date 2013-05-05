@@ -13,6 +13,9 @@ Ext.define('EvaluateIt.profile.Phone', {
 
     launch: function() {
 
+		get_location();
+
+
 		//Wait for PhoneGap to load
 		//document.addEventListener("deviceready", onDeviceReady, false);
 	
