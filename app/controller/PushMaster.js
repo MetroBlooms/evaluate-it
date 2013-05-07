@@ -38,6 +38,7 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 		pushForm.showBy(button);
 	},
 
+	// TODO: implement file upload method (see http://docs.phonegap.com/en/2.7.0/cordova_camera_camera.md.html#camera.getPicture)
 	onSavePush: function(button) {
 		console.log('Button Click for Save');
 		var form = button.up('panel');
@@ -57,6 +58,9 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 		form.hide();
 		//save the data to the Web local Storage
 		Ext.getStore('SiteEvaluations').sync();
+
+		// assemble record 
+		assemble_evaluation(record);
 
 	},
 
@@ -177,106 +181,88 @@ test: {"evaluation_id": 44214,
 		pushForm.showBy(target);
 
 		console.log('Selected a Push from the list ' + index + ' ' + record.data.address);
-		var pushForm = Ext.Viewport.down('pushForm'),
-			score,
-			award,
-			rating,
-			nate_siegel_award,
-			currentYear = (new Date()).getFullYear(),
-			obj = {},
-			url = EvaluateIt.config.webServer; 
-
-			// get rating
-			score = record.data.color + record.data.plantVariety + record.data.design + record.data.maintenance + record.data.environmentalStewardship;
-			rating = evaluation_rating(score);
-			console.log("rating" + rating);	
-			
-			// get award
-			award = evaluation_award(record.data.awardId);
-			console.log("award" + award.best_of + ' ' + award.nate_seigel);	
-
-			obj = {
-				evaluation_id: record.data.remoteEvaluationId,
-				score: score,
-				rating: rating,
-				rating_year: currentYear,
-				best_of: award.best_of,
-				special_award_specified:  record.data.specialAwardSpecified,
-				//evaluator_id: record.data.remoteEvaluatorId,
-				nate_siegel_award: award.nate_seigel,
-				//scoresheet:
-				score_card: {
-					color:  record.data.color,
-					plant_variety:  record.data.plantVariety,
-					design:  record.data.design,
-					maintenance:  record.data.maintenance,
-					environmental_stewardship:  record.data.environmentalStewardship
-				},
-				date_evaluated: record.data.dateOfEvaluation, // was:
-				// date_entered_on_device_by_evaluator,
-				general_comments: record.data.comments,
-				evaluator: {
-					evaluator_id: record.data.remoteEvaluatorId,
-					completed_by: record.data.remoteEvaluatorId
-				},
-				rainbarrel: record.data.rainBarrel,
-				raingarden: record.data.rainGarden,
-				garden: {
-					garden_id: record.data.remoteSiteId,
-					no_longer_exists:  record.data.noLongerExists,
-					address: {
-						neighborhood: record.data.neighborhood,
-						county: record.data.county
-					},
-					//neighborhood: record.data.neighborhood,
-					//county: record.data.county
-					gardener: {
-						name:  record.data.name
-					},
-					//name:  record.data.name
-					geolocation: {
-						latitude:  record.data.latitude,
-						longitude:  record.data.longitude,
-						accuracy:  record.data.accuracy
-					}
-				}
-				/*geolocation: {
-					latitude:  record.data.latitude,
-					longitude:  record.data.longitude,
-					accuracy:  record.data.accuracy
-				}*/
-
-			};
-	
-	
-			console.log('Assembled object to push: ' + Ext.encode(obj));	
-				
-			// POST to server; config variables from app.json
-			url +=  '/' +  EvaluateIt.config.collectionDevelopment;
-			url +=  '/' +  EvaluateIt.config.testHttpResponse;//postResults;
-
-			console.log('new url: ' + url);
-
-			// AJAX post
-			Ext.Ajax.request({
-				//type: "POST",
-				url: url,
-				params: obj,
-				useDefaultXhrHeader: false,
-				success: function (response) {
-					console.log('success: ' + response.responseText);
-
-					alert('success: ' + response.responseText);
-
-				},
-				fail: function (e, jqxhr, settings, exception) {
-					console.log(e);
-					alert(e);
-				}
-			}); 
 	}			
 
 });
+
+// assemble record and make Ajax call
+
+function assemble_evaluation(record) {
+
+	var //pushForm = Ext.Viewport.down('pushForm'),
+		score,
+		award,
+		rating,
+		nate_siegel_award,
+		currentYear = (new Date()).getFullYear(),
+		obj = {};
+
+		// get rating
+		score = record.data.color + record.data.plantVariety + record.data.design + record.data.maintenance + record.data.environmentalStewardship;
+		rating = evaluation_rating(score);
+		console.log("rating" + rating);	
+		
+		// get award
+		award = evaluation_award(record.data.awardId);
+		console.log("award" + award.best_of + ' ' + award.nate_seigel);	
+
+		obj = {
+			evaluation_id: record.data.remoteEvaluationId,
+			score: score,
+			rating: rating,
+			rating_year: currentYear,
+			best_of: award.best_of,
+			special_award_specified:  record.data.specialAwardSpecified,
+			//evaluator_id: record.data.remoteEvaluatorId,
+			nate_siegel_award: award.nate_seigel,
+			//scoresheet:
+			score_card: {
+				color:  record.data.color,
+				plant_variety:  record.data.plantVariety,
+				design:  record.data.design,
+				maintenance:  record.data.maintenance,
+				environmental_stewardship:  record.data.environmentalStewardship
+			},
+			date_evaluated: record.data.dateOfEvaluation, // was:
+			// date_entered_on_device_by_evaluator,
+			general_comments: record.data.comments,
+			evaluator: {
+				evaluator_id: record.data.remoteEvaluatorId,
+				completed_by: record.data.remoteEvaluatorId
+			},
+			rainbarrel: record.data.rainBarrel,
+			raingarden: record.data.rainGarden,
+			garden: {
+				garden_id: record.data.remoteSiteId,
+				no_longer_exists:  record.data.noLongerExists,
+				address: {
+					neighborhood: record.data.neighborhood,
+					county: record.data.county
+				},
+				//neighborhood: record.data.neighborhood,
+				//county: record.data.county
+				gardener: {
+					name:  record.data.name
+				},
+				//name:  record.data.name
+				geolocation: {
+					latitude:  record.data.latitude,
+					longitude:  record.data.longitude,
+					accuracy:  record.data.accuracy
+				}
+			}
+			/*geolocation: {
+				latitude:  record.data.latitude,
+				longitude:  record.data.longitude,
+				accuracy:  record.data.accuracy
+			}*/
+
+		};
+
+		console.log('Assembled object to push: ' + Ext.encode(obj));	
+		post_to_remote(obj);
+			
+}
 
 // rating based on Metro Blooms evaluation form
 function evaluation_rating (score)	{
@@ -353,3 +339,31 @@ function evaluation_award (award_id) {
     }; 
 }
 
+// Ajax to remote Webserver
+function post_to_remote(obj) {
+
+	var url = EvaluateIt.config.webServer;
+	// POST to server; config variables from app.json
+	url +=  '/' +  EvaluateIt.config.collectionDevelopment;
+	url +=  '/' +  EvaluateIt.config.testHttpResponse;//postResults;
+
+	console.log('new url: ' + url);
+
+	// AJAX post
+	Ext.Ajax.request({
+		//type: "POST",
+		url: url,
+		params: obj,
+		useDefaultXhrHeader: false,
+		success: function (response) {
+			console.log('success: ' + response.responseText);
+
+			alert('success: ' + response.responseText);
+
+		},
+		fail: function (e, jqxhr, settings, exception) {
+			console.log(e);
+			alert(e);
+		}
+	}); 
+}
