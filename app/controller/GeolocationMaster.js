@@ -1,6 +1,6 @@
 Ext.define('EvaluateIt.controller.GeolocationMaster', {
 	extend : 'Ext.app.Controller',
-	requires: ['Ext.device.Geolocation','Ext.Toolbar'],
+	requires: ['Ext.Toolbar'],
 
 	config: {
 		profile: Ext.os.deviceType.toLowerCase(),
@@ -39,6 +39,7 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 		    longitude = sessionStorage.longitude; //-93.33539329999999,
 
 		get_location();
+		//getCurrentPosition();
 		console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
 
 		//alert("Coords " +  + sessionStorage.latitude + ' ' + sessionStorage.longitude);
@@ -240,13 +241,14 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 
 });
 
-// buggy in Safari desktop, 5.1.9: works when it feels like it!
+// Sencha implementation: buggy in Safari desktop, 5.1.9: works when it feels like it!
 function get_location() {
 	Ext.device.Geolocation.getCurrentPosition({
 
-		allowHighAccuracy: true,
-		maximumAge: 3000, 
-		timeout: 5000,
+		maximumAge: 0, 
+		timeout: 15000,
+		enableHighAccuracy: true,
+		//frequency: 3000,
 
 		success: function(position) {
 			var coordinates = position.coords,
@@ -256,7 +258,7 @@ function get_location() {
 				accuracy = coordinates.accuracy;
 				
 			console.log('coords ' + location);
-			alert('Got coords!' + location);
+			//alert('Got coords!' + location);
 
 
 			// initialize sessionStorage
@@ -274,5 +276,43 @@ function get_location() {
 	});
 };
 
+/*
+function getCurrentPosition() {
+	navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, {desiredAccuracy:20, maxWait:15000});
+
+	//navigator.geolocation.getCurrentPosition(geoLocSuccess, geoLocError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+}
 
 
+
+function onSuccess(position) {
+	var element = document.getElementById('geolocation'),
+		timeStamp = new Date(position.timestamp),
+		latitude = position.coords.latitude, 
+		longitude = position.coords.longitude,
+		accuracy = position.coords.accuracy;
+		
+	alert('success!');
+
+	//element.innerHTML = 'Latitude: ' + position.coords.latitude + '<br />'
+	//	+ 'Longitude: ' + position.coords.longitude + '<br />'
+	//	+ 'Altitude: ' + position.coords.altitude + '<br />' 
+	//	+ 'Accuracy: ' + position.coords.accuracy + '<br />'
+	//	+ 'Timestamp: ' + new Date(position.timestamp) + '<br />';
+
+
+	// initialize
+	localStorage.clear();
+	// add data to localStorage 
+	localStorage.latitude = latitude;
+	localStorage.longitude = longitude;
+	localStorage.accuracy = accuracy;
+	localStorage.timeStamp = timeStamp;
+
+}
+
+// onError Callback receives a PositionError object
+function onError(error) {
+	alert('error!' );
+}
+*/

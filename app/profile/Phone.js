@@ -14,6 +14,28 @@ Ext.define('EvaluateIt.profile.Phone', {
     launch: function() {
 
 		get_location();
+		//getCurrentPosition();
+
+		/*Ext.device.Geolocation.watchPosition({
+			//frequency: 3000,
+			scope: this,
+			callback: function(position) {
+				get_location();
+
+			//	Ext.device.Notification.show({
+			//		title: 'Geolocation',
+			//		message: 'GPS found.'
+			//	});
+			},
+			failure: function() {
+				Ext.device.Notification.show({
+					title: 'Geolocation',
+					message: 'Something went wrong.'
+				});
+			}
+    	});*/
+
+
 
 
 		//Wait for PhoneGap to load

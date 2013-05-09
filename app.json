@@ -39,19 +39,22 @@
      *      }
      */
     "js": [
-           {
-           "path": "touch/sencha-touch.js",
-           "x-bootstrap": true
-           },
-           {
-           "path": "cordova-2.5.0.js"
-           },
-           {
-           "path": "app.js",
-           "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
-           "update": "delta"
-           }
-           ],
+			{
+				"path": "cordova-2.5.0.js"
+			},
+			{
+				"path": "touch/sencha-touch.js",
+				"x-bootstrap": true
+			},
+			{
+				"path": "geo.js"
+			},
+			{
+				"path": "app.js",
+				"bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
+				"update": "delta"
+			}
+],
     
     /**
      * List of all CSS assets in the right inclusion order.
