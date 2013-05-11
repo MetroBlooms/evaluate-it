@@ -16,7 +16,7 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
 			'container button[itemId=addSiteEvaluation]' : {
 				tap : 'onAddSiteEvaluation' 
 			},
-			'siteEvaluationEdit button[itemId=save]' : {
+			'siteEvaluationForm button[itemId=save]' : {
 				tap : 'onSaveSiteEvaluation' 
 			}
 		}	  
@@ -29,10 +29,10 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
 
 	onAddSiteEvaluation: function(button) {
 		console.log('Button Click');
-		var siteEvaluationForm = Ext.Viewport.down('siteEvaluationEdit');
+		var siteEvaluationForm = Ext.Viewport.down('siteEvaluationForm');
 		//create the siteEvaluation edit window if it doesn't exists
 		if(!siteEvaluationForm){
-			siteEvaluationForm = Ext.widget('siteEvaluationEdit');
+			siteEvaluationForm = Ext.widget('siteEvaluationForm');
 		} 
 		siteEvaluationForm.reset();
 		siteEvaluationForm.showBy(button);
@@ -62,10 +62,10 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
 
 	onSelectSiteEvaluation: function(view, index, target, record, event) {
 		console.log('Selected a SiteEvaluation from the list');
-		var siteEvaluationForm = Ext.Viewport.down('siteEvaluationEdit');
+		var siteEvaluationForm = Ext.Viewport.down('siteEvaluationForm');
 
 		if(!siteEvaluationForm){
-			siteEvaluationForm = Ext.widget('siteEvaluationEdit');
+			siteEvaluationForm = Ext.widget('siteEvaluationForm');
 		}	 
 		siteEvaluationForm.setRecord(record);
 		siteEvaluationForm.showBy(target);

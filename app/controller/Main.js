@@ -62,7 +62,7 @@ Ext.define('EvaluateIt.controller.Main', {
 		console.log('view ' + id);
 
 		// control view selection based on category passed from routing call
-		if (category === 'evaluations' || category === 'push' || category === 'geolocation') {
+		if (category === 'evaluations' || category === 'push') {
 
 			console.log('what it is: ' + category);
 

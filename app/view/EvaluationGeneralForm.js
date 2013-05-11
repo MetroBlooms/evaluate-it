@@ -1,8 +1,8 @@
 // TODO: add remaining evaluation eementss (based on requirements)
 
-Ext.define('EvaluateIt.view.SiteEvaluationEdit', {
+Ext.define('EvaluateIt.view.EvaluationGeneralForm', {
 	extend: 'Ext.form.Panel',
-	alias : 'widget.siteEvaluationEdit',
+	alias : 'widget.evaluationGeneralForm',
 	requires: [
         'Ext.form.Panel',
         'Ext.form.FieldSet',
@@ -72,86 +72,6 @@ Ext.define('EvaluateIt.view.SiteEvaluationEdit', {
 				itemId: 'noLongerExists',
 				name: 'noLongerExists',
 				label: 'Site no longer exists!'
-			},  
-			{
-				xtype: 'selectfield',
-				itemId: 'useOfColor',
-				name: 'useOfColor',
-				label: 'Use of color',
-				autoSelect: false,
-				placeHolder: 'Select a score',
-				options: [
-					{text: ''},
-					{text: '0',  value: '1'},
-					{text: '1',  value: '2'},
-					{text: '2',  value: '3'},
-					{text: '3',  value: '4'},
-					{text: '4',  value: '5'}
-				]
-			},  
-			{
-				xtype: 'selectfield',
-				itemId: 'varietyAndHealth',
-				name: 'varietyAndHealth',
-				label: 'Plant variety and health',
-				autoSelect: false,
-				placeHolder: 'Select a score',
-				options: [
-					{text: ''},
-					{text: '0',  value: '1'},
-					{text: '1',  value: '2'},
-					{text: '2',  value: '3'},
-					{text: '3',  value: '4'},
-					{text: '4',  value: '5'}
-				]
-			},  
-			{
-				xtype: 'selectfield',
-				itemId: 'design',
-				name: 'design',
-				label: 'Design',
-				autoSelect: false,
-				placeHolder: 'Select a score',
-				options: [
-					{text: ''},
-					{text: '0',  value: '1'},
-					{text: '1',  value: '2'},
-					{text: '2',  value: '3'},
-					{text: '3',  value: '4'},
-					{text: '4',  value: '5'}
-				]
-			},  
-			{
-				xtype: 'selectfield',
-				itemId: 'maintenance',
-				name: 'maintenance',
-				label: 'Maintenance',
-				autoSelect: false,
-				placeHolder: 'Select a score',
-				options: [
-					{text: ''},
-					{text: '0',  value: '1'},
-					{text: '1',  value: '2'},
-					{text: '2',  value: '3'},
-					{text: '3',  value: '4'},
-					{text: '4',  value: '5'}
-				]
-			},  
-			{
-				xtype: 'selectfield',
-				itemId: 'environmentalStewardship',
-				name: 'environmentalStewardship',
-				label: 'Environmental Stewardship',
-				autoSelect: false,
-				placeHolder: 'Select a score',
-				options: [
-					{text: ''},
-					{text: '0',  value: '1'},
-					{text: '1',  value: '2'},
-					{text: '2',  value: '3'},
-					{text: '3',  value: '4'},
-					{text: '4',  value: '5'}
-				]
 			},  
 			{
 				xtype: 'checkboxfield',

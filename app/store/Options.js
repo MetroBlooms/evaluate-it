@@ -19,12 +19,24 @@
                         leaf: true,
                         id: 'evaluation',
             			category: 'evaluations'
+                    },
+					{
+                        text: 'General',
+                        leaf: true,
+                        id: 'general',
+            			category: 'evaluations'
                     }, 
+					{
+                        text: 'Award',
+                        leaf: true,
+                        id: 'award',
+            			category: 'evaluations'
+                    },  
                     {
                         text: 'Geolocation',
                         leaf: true,
                         id: 'geolocation',
-            			category: 'geolocations'
+            			category: 'evaluations'
                     }
 		
                 ]
