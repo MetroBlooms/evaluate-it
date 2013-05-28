@@ -73,6 +73,20 @@ Note: You will need to configure the global URL variables for the AJAX calls in 
 				// variables for use in POST/GET method to web server
 				// do not publish as part of project
 
+				// new API
+	
+				protocol: 'http://',
+				domain: 'ip_name_here',
+				dev: '/api/dev', // choose dev or live 
+				live: '/api/live',
+				apiView: '/api/evaluation',
+				pullCriterion: '/evaluator_id/', // pull from http response when login is initiate
+				test: 'staging.', // choose test or live environment to POST/GET
+				live: 'www.',
+				action: '/update',	
+
+				// old RESTful calls
+
 				webServer: 'http://ip_name_here',
 				collectionDevelopment: 'app', // set on server to use development database 
 				collectionProduction: 'applive', // set on server to use live database

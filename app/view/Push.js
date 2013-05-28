@@ -1,19 +1,72 @@
 Ext.define('EvaluateIt.view.Push', {
 		extend: 'Ext.Container',
       	fullscreen: true,
+		//requires: ['Ext.TitleBar'],
+		alias: 'widget.pushview',
+		
 		config: {
 			//layout: 'vbox',
 			layout: 'fit',
+			//id: 'pushview',
 			items: [
 				{
-					xtype : 'toolbar',
-					docked: 'top'
+					xtype: 'toolbar',
+				//	title: 'Push data to server',
+					docked: 'top',
+				//},
+				//toolbar = Ext.create('Ext.Toolbar', {
+				//	docked: 'top',
+				//	alias : 'widget.geolocationToolbar',
+				//	ui: 'light',
+				//	defaults: {
+				//		iconMask: true
+				//	},
+
+					items: [
+						{
+							xtype: 'button',
+							itemId: 'loginButton',
+							text: 'Login',
+							iconCls: 'arrow_right',
+							iconMask: true 
+						},
+						{
+							xtype: 'button',
+							itemId: 'logOutButton',
+							text: 'Logout',
+							iconCls: 'arrow_right',
+							iconMask: true 
+            			}
+
+					]
+
 				},
 				{
 					flex: 1,
 					xtype: 'pushList'
 				}
-			]
-		}
+			
+			//listeners: [{
+			//	delegate: '#logOffButton',
+			//	event: 'tap',
+			//	fn: 'onLogOffButtonTap'
+			//}]
+			//}
+
+		],
+        listeners: [{
+            delegate: '#logOutButton',
+            event: 'tap',
+            fn: 'onLogOutButtonTap'
+        }]
+    },
+    onLogOutButtonTap: function () {
+        this.fireEvent('onSignOffCommand');
+    }
+
+		//onLogOffButtonTap: function () {
+		//	this.fireEvent('onSignOffCommand');
+		//}
+	
 });
 

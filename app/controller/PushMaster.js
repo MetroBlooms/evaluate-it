@@ -18,14 +18,48 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 			},
 			'pushForm button[itemId=save]': {
 				tap: 'onSavePush' 
+			},
+			'container button[itemId=loginButton]': {
+				tap: 'onLoginPush' 
+			},
+			'container button[itemId=logoutPush]': {
+				tap: 'onLogoutPush' 
 			}
+
+
 		}	  
 
  	},
 
 	onActivate: function() {
   		console.log('Main container is active');
+		// check for active token
+		//test_token(); 
+		
  	},
+
+	onLoginPush: function(button) {
+		console.log('Button Click');
+		var loginForm = Ext.Viewport.down('login');
+		//create the siteEvaluation edit window if it doesn't exists
+		if(!loginForm){
+			loginForm = Ext.widget('loginview');
+		} 
+		loginForm.reset();
+		loginForm.showBy(button);
+	},
+
+	/*onLogoutPush: function(button) {
+		console.log('Button Click');
+		var logoutForm = Ext.Viewport.down('logout');
+		//create the siteEvaluation edit window if it doesn't exists
+		if(!logoutForm){
+			logoutForm = Ext.widget('logoutview');
+		} 
+		logoutForm.reset();
+		logoutForm.showBy(button);
+	},*/
+
 
 	onAddPush: function(button) {
 		console.log('Button Click');
@@ -185,77 +219,73 @@ test: {"evaluation_id": 44214,
 
 });
 
-// assemble record and make Ajax call
-
+// assemble json and make Ajax call
 function assemble_evaluation(record) {
 
-	var //pushForm = Ext.Viewport.down('pushForm'),
-		score,
+	var	score,
 		award,
 		rating,
 		nate_siegel_award,
 		currentYear = (new Date()).getFullYear(),
 		obj = {};
 
-		// get rating
+		// compute score		
 		score = record.data.color + record.data.plantVariety + record.data.design + record.data.maintenance + record.data.environmentalStewardship;
+		// get rating for given score
 		rating = evaluation_rating(score);
 		console.log("rating" + rating);	
 		
-		// get award
+		// get award if given
 		award = evaluation_award(record.data.awardId);
 		console.log("award" + award.best_of + ' ' + award.nate_seigel);	
 
 		obj = {
 			evaluation_id: record.data.remoteEvaluationId,
-			score: score,
-			rating: rating,
-			rating_year: currentYear,
-			best_of: award.best_of,
-			special_award_specified:  record.data.specialAwardSpecified,
-			//evaluator_id: record.data.remoteEvaluatorId,
-			nate_siegel_award: award.nate_seigel,
-			//scoresheet:
-			score_card: {
+			garden_id: record.data.remoteSiteId,
+			scoresheet: {
 				color:  record.data.color,
 				plant_variety:  record.data.plantVariety,
 				design:  record.data.design,
 				maintenance:  record.data.maintenance,
 				environmental_stewardship:  record.data.environmentalStewardship
 			},
-			date_evaluated: record.data.dateOfEvaluation, // was:
+			eval_type: null, // change!
+			score: score,
+			rating: rating,
+			rating_year: currentYear,
+			best_of: award.best_of,
+			special_award_specified:  record.data.specialAwardSpecified,
+			evaluator_id: record.data.remoteEvaluatorId,
+			nate_siegel_award: award.nate_seigel,
+			rainbarrel: record.data.rainBarrel,
+			date_evaluated: record.data.dateOfEvaluation, 
 			// date_entered_on_device_by_evaluator,
-			general_comments: record.data.comments,
+			comments: record.data.comments,
 			evaluator: {
 				evaluator_id: record.data.remoteEvaluatorId,
 				completed_by: record.data.remoteEvaluatorId
 			},
-			rainbarrel: record.data.rainBarrel,
-			raingarden: record.data.rainGarden,
 			garden: {
 				garden_id: record.data.remoteSiteId,
+				name:  record.data.name,
 				no_longer_exists:  record.data.noLongerExists,
-				address: {
-					neighborhood: record.data.neighborhood,
-					county: record.data.county
-				},
+				raingarden: record.data.rainGarden,
+				//address: {
+				//	neighborhood: record.data.neighborhood,
+				//	county: record.data.county
+				//},
 				//neighborhood: record.data.neighborhood,
 				//county: record.data.county
-				gardener: {
-					name:  record.data.name
-				},
+				//gardener: {
+				//	name:  record.data.name
+				//},
 				//name:  record.data.name
-				geolocation: {
-					latitude:  record.data.latitude,
-					longitude:  record.data.longitude,
-					accuracy:  record.data.accuracy
-				}
-			}
-			/*geolocation: {
+			},
+			geolocation: {
 				latitude:  record.data.latitude,
 				longitude:  record.data.longitude,
 				accuracy:  record.data.accuracy
-			}*/
+			}
 
 		};
 
@@ -342,16 +372,29 @@ function evaluation_award (award_id) {
 // Ajax to remote Webserver
 function post_to_remote(obj) {
 
-	var url = EvaluateIt.config.webServer;
+	var //url = EvaluateIt.config.webServer;
 	// POST to server; config variables from app.json
-	url +=  '/' +  EvaluateIt.config.collectionDevelopment;
-	url +=  '/' +  EvaluateIt.config.testHttpResponse;//postResults;
+	//url +=  '/' +  EvaluateIt.config.collectionDevelopment;
+	//url +=  '/' +  EvaluateIt.config.testHttpResponse;//postResults;
+
+	//http://staging.metroblooms.org/api/evaluation/update
+
+	//url = 'http://staging.metroblooms.org/api/evaluation/evaluator_id/265?token={TOKEN}',
+					
+	// use new API with authorization token
+	url =  EvaluateIt.config.protocol;
+	url += EvaluateIt.config.test;
+	url += EvaluateIt.config.domain;
+	url += EvaluateIt.config.apiView;
+	url += EvaluateIt.config.action 
+	url += '?token=' + sessionStorage.sessionToken
 
 	console.log('new url: ' + url);
 
 	// AJAX post
 	Ext.Ajax.request({
 		//type: "POST",
+		cors: true,
 		url: url,
 		params: obj,
 		useDefaultXhrHeader: false,

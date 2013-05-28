@@ -13,8 +13,14 @@ Ext.define('EvaluateIt.profile.Phone', {
 
     launch: function() {
 
-		get_location();
-		//getCurrentPosition();
+		//get_location();
+	//	getCurrentPosition();
+		
+	//	function watchPosition() {
+	//        // Update every 3 seconds
+    //	    var options = { frequency: 3000 };
+    //    	watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);            
+	//	}
 
 		/*Ext.device.Geolocation.watchPosition({
 			//frequency: 3000,

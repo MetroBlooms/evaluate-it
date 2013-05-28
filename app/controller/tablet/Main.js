@@ -34,6 +34,7 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
      */
     showView: function(item) {
         var nav  = this.getNav(),
+			title  = item.get('text'),
             view = this.createView(item),
             main = this.getMain(),
             anim = item.get('animation'),
@@ -58,9 +59,24 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
             }, this, { single: true });
         }
 
-		console.log('title: ' + item.get('text'));
+		// if exists: get evaluator name for display
+		var evaluators = Ext.create('EvaluateIt.store.Evaluators');
 
-        this.getToolbar().setTitle(item.get('text'));
+		evaluators.queryBy(function(record,id){
+			evaluators = Ext.getStore(evaluators);
+
+			if (evaluators.getCount() > 0) {
+				name = record.get('firstName') + ' ' + record.get('lastName');
+
+				title = title + ': Evaluator - ' + name
+				console.log('WhoamI: '  + title);
+			}
+		});
+	
+		var title = item.get('text') + ': Evaluator - ' + name;	
+		console.log('title: ' + title);
+
+        this.getToolbar().setTitle(title);
         // this.getSourceButton().setHidden(false); commented out
 //        nav.goToNode(item.parentNode);
 //        nav.goToLeaf(item);

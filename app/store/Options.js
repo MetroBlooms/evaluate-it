@@ -37,6 +37,12 @@
                         leaf: true,
                         id: 'geolocation',
             			category: 'evaluations'
+                    },
+					{
+                        text: 'Geoposition',
+                        leaf: true,
+                        id: 'geoposition',
+            			category: 'evaluations'
                     }
 		
                 ]
@@ -49,7 +55,7 @@
         id: 'data',
 		card: false,
         items: [
-            {
+			{
                 text: 'Pull',
                 leaf: true,
                 id: 'pull'

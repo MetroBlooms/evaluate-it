@@ -18,14 +18,7 @@ Ext.define('EvaluateIt.controller.Main', {
         refs: {
             nav: '#mainNestedList',
             main: 'mainview',
-            toolbar: '#mainNavigationBar'/*,
-            sourceButton: 'button[action=viewSource]',
-
-            sourceOverlay: {
-                selector: 'sourceoverlay',
-                xtype: 'sourceoverlay',
-                autoCreate: true 
-            }  commented out source button */
+            toolbar: '#mainNavigationBar',
         },
 
         control: {
@@ -56,11 +49,22 @@ Ext.define('EvaluateIt.controller.Main', {
     showViewById: function (id, category) {
         var nav = this.getNav(),
 			type,
-            view = nav.getStore().getNodeById(id);
+            view = nav.getStore().getNodeById(id),
+			name;
 
 		console.log('category: ' + category);
 		console.log('view ' + id);
 
+		// if exists: get evaluator name for display
+/*		var evaluators = Ext.create('EvaluateIt.store.Evaluators');
+
+		evaluators.queryBy(function(record,id){
+			evaluators = Ext.getStore(evaluators);
+
+			name = record.get('firstName') + ' ' + record.get('lastName');
+			console.log('WhoamI: ' +  name +  EvaluateIt.config.name);
+		});
+*/
 		// control view selection based on category passed from routing call
 		if (category === 'evaluations' || category === 'push') {
 

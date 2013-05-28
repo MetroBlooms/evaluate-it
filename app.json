@@ -47,9 +47,6 @@
 				"x-bootstrap": true
 			},
 			{
-				"path": "geo.js"
-			},
-			{
 				"path": "app.js",
 				"bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
 				"update": "delta"

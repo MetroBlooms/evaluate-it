@@ -86,6 +86,22 @@ Ext.define('EvaluateIt.controller.phone.Main', {
             initialAnim = layout.getAnimation(),
             newAnim;
 
+		// if exists: get evaluator name for display
+		var evaluators = Ext.create('EvaluateIt.store.Evaluators');
+
+		evaluators.queryBy(function(record,id){
+			evaluators = Ext.getStore(evaluators);
+
+			if (evaluators.getCount() > 0) {
+				name = record.get('firstName') + ' ' + record.get('lastName');
+
+				title = title + ': Evaluator - ' + name
+				console.log('WhoamI: '  + title);
+			}
+		});
+		
+		
+
 		console.log('title: ' + title);
 
         if (anim) {
@@ -104,7 +120,7 @@ Ext.define('EvaluateIt.controller.phone.Main', {
         }
 
         this.getToolbar().setTitle(title);
-        this.getSourceButton().setHidden(false);
+        //this.getSourceButton().setHidden(false);
     },
 
     /**
@@ -115,9 +131,9 @@ Ext.define('EvaluateIt.controller.phone.Main', {
 
 		console.log('We are back tappin!');
         //this means we just hit back out of a detail card
-        if (node.isLeaf()) {
-            this.getSourceButton().setHidden(true);
-        }
+        //if (node.isLeaf()) {
+            //this.getSourceButton().setHidden(true);
+        //}
 
         this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
             url: 'menu/' + node.parentNode.get('id')

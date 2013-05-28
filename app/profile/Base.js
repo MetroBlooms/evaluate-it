@@ -6,6 +6,7 @@ Ext.define('EvaluateIt.profile.Base', {
         var isBenchmarking = window.location.search.match(/(\?|&)bm/);
 
 		//get_location();
+		//getCurrentPosition();
 
 		/*Ext.device.Geolocation.watchPosition({
 			//frequency: 3000,

@@ -26,6 +26,9 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
   		console.log('Main container is active');
  	},
 
+//	onSelectGeolocation: function() {
+//		getCurrentPosition();
+//	},
 
 	// spawns a new form panel with Google map centered on current location 
 	onSelectGeolocation: function(view, index, target, record, event) {
@@ -38,13 +41,14 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 		var latitude = sessionStorage.latitude, //44.9616164; 
 		    longitude = sessionStorage.longitude; //-93.33539329999999,
 
-		get_location();
+		//get_location();
 		//getCurrentPosition();
 		console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
 
-		//alert("Coords " +  + sessionStorage.latitude + ' ' + sessionStorage.longitude);
+		//alert('Coords ' +  + sessionStorage.latitude + ' ' + sessionStorage.longitude);
 
-	
+
+		
 		
 
 		var	position = new google.maps.LatLng(latitude, longitude),  
@@ -88,9 +92,9 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 				},
 				items: [
 					{
-						xtype: "button",
-         				ui: "back",
-         				text: "Back",
+						xtype: 'button',
+         				ui: 'back',
+         				text: 'Back',
 						// destroy form.Panel overlay to return to tree store view 
 						handler: function() {
 							geo_panel.destroy();						
@@ -100,11 +104,11 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 						iconCls: 'home',
 						handler: function() {
 							//disable tracking
-							var segmented = Ext.getCmp('segmented'),
-								pressedButtons = segmented.getPressedButtons(),
-								trafficIndex = pressedButtons.indexOf(trafficButton),
-								newPressed = (trafficIndex != -1) ? [trafficButton] : [];
-							segmented.setPressedButtons(newPressed);
+							//var // segmented = Ext.getCmp('segmented'),
+								//pressedButtons = segmented.getPressedButtons();
+								//trafficIndex = pressedButtons.indexOf(trafficButton),
+								//newPressed = (trafficIndex != -1) ? [trafficButton] : [];
+							//segmented.setPressedButtons(newPressed);
 							google_map.getMap().panTo(position);
 						}
 					},
@@ -245,28 +249,29 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 function get_location() {
 	Ext.device.Geolocation.getCurrentPosition({
 
-		maximumAge: 0, 
-		timeout: 15000,
+		maximumAge: 30, 
+		timeout: 5000,
 		enableHighAccuracy: true,
-		//frequency: 3000,
+		frequency: 3000,
 
 		success: function(position) {
 			var coordinates = position.coords,
-				location = "Longitude " + coordinates.longitude + " Latitude " + coordinates.latitude + " Accuracy " + coordinates.accuracy,
+				location = 'Longitude ' + coordinates.longitude + ' Latitude ' + coordinates.latitude + ' Accuracy ' + coordinates.accuracy,
 				latitude = coordinates.latitude,
 				longitude =  coordinates.longitude,
 				accuracy = coordinates.accuracy;
 				
-			console.log('coords ' + location);
+			//alert('util coords ' + location);
 			//alert('Got coords!' + location);
 
 
 			// initialize sessionStorage
-			sessionStorage.clear();
+			//sessionStorage.clear();
 			// add data to sessionStorage 
 			sessionStorage.latitude = latitude;
 			sessionStorage.longitude = longitude;
 			sessionStorage.accuracy = accuracy;	
+			sessionStorage.position = position;
 		
 			console.log('latitude ' + sessionStorage.latitude);
 		},
@@ -276,23 +281,62 @@ function get_location() {
 	});
 };
 
-/*
-function getCurrentPosition() {
-	navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, {desiredAccuracy:20, maxWait:15000});
 
-	//navigator.geolocation.getCurrentPosition(geoLocSuccess, geoLocError, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+/*
+
+var geo = Ext.create('Ext.util.Geolocation', {
+    autoUpdate: false,
+	enableHighAccuracy: true,
+	//allowHighAccuracy: true,
+    listeners: {
+        locationupdate: function(geo) {
+            //alert('device: ' + geo.getAccuracy());
+			sessionStorage.latitude = geo.getLatitude();
+			sessionStorage.longitude = geo.getLongitude();
+			sessionStorage.accuracy = geo.getAccuracy();	
+
+        },
+        locationerror: function(geo, bTimeout, bPermissionDenied, bLocationUnavailable, message) {
+            if(bTimeout){
+                alert('Timeout occurred.');
+            } else {
+                alert('Error occurred.');
+            }
+        }
+    }
+});
+geo.updateLocation();
+
+Ext.device.Geolocation.watchPosition({
+    frequency: 10000, // Update every 3 seconds
+	enableHighAccuracy: true,
+    callback: function(position) {
+        alert('Position updated!' + position.coords.accuracy);
+    },
+    failure: function() {
+        console.log('something went wrong!');
+    }
+});
+*/
+
+
+function getCurrentPosition() {
+	//navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, {desiredAccuracy:30, maxWait:15000});
+
+	navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge: 30, timeout: 5000, enableHighAccuracy: true });
 }
 
 
 
 function onSuccess(position) {
-	var element = document.getElementById('geolocation'),
+	var coordinates = position.coords,
+		location = 'Longitude ' + coordinates.longitude + ' Latitude ' + coordinates.latitude + ' Accuracy ' + coordinates.accuracy,
 		timeStamp = new Date(position.timestamp),
-		latitude = position.coords.latitude, 
-		longitude = position.coords.longitude,
-		accuracy = position.coords.accuracy;
+		latitude = coordinates.latitude,
+		longitude =  coordinates.longitude,
+		accuracy = coordinates.accuracy;
 		
-	alert('success!');
+	alert('success! geoLocation is ready to use!' + ' accuracy ' + accuracy);
 
 	//element.innerHTML = 'Latitude: ' + position.coords.latitude + '<br />'
 	//	+ 'Longitude: ' + position.coords.longitude + '<br />'
@@ -302,12 +346,12 @@ function onSuccess(position) {
 
 
 	// initialize
-	localStorage.clear();
+	//sessionStorage.clear();
 	// add data to localStorage 
-	localStorage.latitude = latitude;
-	localStorage.longitude = longitude;
-	localStorage.accuracy = accuracy;
-	localStorage.timeStamp = timeStamp;
+	sessionStorage.latitude = latitude;
+	sessionStorage.longitude = longitude;
+	sessionStorage.accuracy = accuracy;
+	sessionStorage.timeStamp = timeStamp;
 
 }
 
@@ -315,4 +359,6 @@ function onSuccess(position) {
 function onError(error) {
 	alert('error!' );
 }
-*/
+
+
+
