@@ -60,6 +60,7 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
         }
 
 		// if exists: get evaluator name for display
+		// TODO: put label in better place!
 		var evaluators = Ext.create('EvaluateIt.store.Evaluators');
 
 		evaluators.queryBy(function(record,id){
@@ -72,11 +73,12 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
 				console.log('WhoamI: '  + title);
 			}
 		});
+		
 	
-		var title = item.get('text') + ': Evaluator - ' + name;	
+		var title = item.get('text') + ' - ' + name;	
 		console.log('title: ' + title);
 
-        this.getToolbar().setTitle(title);
+        this.getToolbar().setTitle(item.get('text') + '- ' + name);
         // this.getSourceButton().setHidden(false); commented out
 //        nav.goToNode(item.parentNode);
 //        nav.goToLeaf(item);

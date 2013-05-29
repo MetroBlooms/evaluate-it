@@ -87,6 +87,7 @@ Ext.define('EvaluateIt.controller.phone.Main', {
             newAnim;
 
 		// if exists: get evaluator name for display
+		// TODO: put label in better place!
 		var evaluators = Ext.create('EvaluateIt.store.Evaluators');
 
 		evaluators.queryBy(function(record,id){
@@ -95,7 +96,7 @@ Ext.define('EvaluateIt.controller.phone.Main', {
 			if (evaluators.getCount() > 0) {
 				name = record.get('firstName') + ' ' + record.get('lastName');
 
-				title = title + ': Evaluator - ' + name
+				title = title + ' - ' + name
 				console.log('WhoamI: '  + title);
 			}
 		});

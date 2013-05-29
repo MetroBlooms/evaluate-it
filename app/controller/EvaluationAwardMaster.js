@@ -27,7 +27,7 @@ Ext.define('EvaluateIt.controller.EvaluationAwardMaster', {
   		console.log('Main container is active');
  	},
 
-	onAddAwardMaster: function(button) {
+	/*onAddAwardMaster: function(button) {
 		console.log('Button Click');
 		var evaluationAwardForm = Ext.Viewport.down('evaluationAwardForm');
 		//create the siteEvaluation edit window if it doesn't exists
@@ -36,7 +36,7 @@ Ext.define('EvaluateIt.controller.EvaluationAwardMaster', {
 		} 
 		evaluationAwardForm.reset();
 		evaluationAwardForm.showBy(button);
-	},
+	},*/
 
 	onSaveAwardMaster: function(button) {
 		console.log('Button Click for Save');
@@ -47,7 +47,7 @@ Ext.define('EvaluateIt.controller.EvaluationAwardMaster', {
 		var values = form.getValues();
 		//if a new siteEvaluation
 		if(!record){
-			var newRecord = new EvaluateIt.model.Contact(values);
+			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
 			Ext.getStore('SiteEvaluations').add(newRecord);
 		}
 		//existing siteEvaluation

@@ -110,7 +110,7 @@ function parseJson (json) {
 
 	for (i = 0, max = json.length; i < max; i += 1) {
 
-		// a creeate a psuedu-nested JSON store until issues with association have been resolved
+		// a create a psuedu-nested JSON store until issues with association have been resolved
 
 		siteEvaluations = Ext.getStore(SiteEvaluations);
 

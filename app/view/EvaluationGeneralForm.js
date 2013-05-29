@@ -62,10 +62,40 @@ Ext.define('EvaluateIt.view.EvaluationGeneralForm', {
 			},   
 			{	
        			xtype: 'textfield',
+		   		name: 'city',
+		   		label: 'City',
+		   		itemId: 'city' 
+			},  
+			{ 
+       			xtype: 'textfield',
+		   		name: 'state',
+		   		label: 'State',
+		   		itemId: 'state' 
+			},
+			{   
+       			xtype: 'textfield',
+		   		name: 'zipcode',
+		   		label: 'Zipcode',
+		   		itemId: 'zipcode' 
+			},   
+			{   
+       			xtype: 'textfield',
+		   		name: 'neighborhood',
+		   		label: 'Neighborhood',
+		   		itemId: 'neighborhood' 
+			},   
+			{   
+       			xtype: 'textfield',
+		   		name: 'county',
+		   		label: 'County',
+		   		itemId: 'county' 
+			},   
+			{	
+       			xtype: 'textfield',
 		   		name: 'name',
 		   		label: 'Gardener name',
-		   		itemId: 'name',
-				value: 'Me!' 
+		   		itemId: 'name'
+				//value: 'Me!' 
 			},  
 			{
 				xtype: 'checkboxfield',

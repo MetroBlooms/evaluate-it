@@ -219,6 +219,28 @@ test: {"evaluation_id": 44214,
 
 });
 
+/*
+
+{"evaluation":{
+"evaluation_id":44216,
+"garden_id":37288,
+"scoresheet":{"color":1,"plant_variety":2,"design":3,"maintenance":4,"environmental_stewardship":5},
+"eval_type":null,
+"score":15,
+"rating":"GD",
+"rating_year":2013
+,"best_of":"NADA!",
+"special_award_specified":
+null,"evaluator_id":"265",
+"nate_siegel_award":0
+,"rainbarrel":null,
+"date_evaluated":"1969-12-31T18:00:00","comments":""},
+"garden":{"garden_id":37288,"name":"Larry Opelt","no_longer_exists":null,"raingarden":null},
+"geolocation":{"latitude":44.9615709,"longitude":-93.3353673,"accuracy":25}} 
+
+*/
+
+
 // assemble json and make Ajax call
 function assemble_evaluation(record) {
 
@@ -230,7 +252,7 @@ function assemble_evaluation(record) {
 		obj = {};
 
 		// compute score		
-		score = record.data.color + record.data.plantVariety + record.data.design + record.data.maintenance + record.data.environmentalStewardship;
+		score = record.data.useOfColor + record.data.varietyAndHealth + record.data.design + record.data.maintenance + record.data.environmentalStewardship;
 		// get rating for given score
 		rating = evaluation_rating(score);
 		console.log("rating" + rating);	
@@ -240,36 +262,38 @@ function assemble_evaluation(record) {
 		console.log("award" + award.best_of + ' ' + award.nate_seigel);	
 
 		obj = {
-			evaluation_id: record.data.remoteEvaluationId,
-			garden_id: record.data.remoteSiteId,
-			scoresheet: {
-				color:  record.data.color,
-				plant_variety:  record.data.plantVariety,
-				design:  record.data.design,
-				maintenance:  record.data.maintenance,
-				environmental_stewardship:  record.data.environmentalStewardship
-			},
-			eval_type: null, // change!
-			score: score,
-			rating: rating,
-			rating_year: currentYear,
-			best_of: award.best_of,
-			special_award_specified:  record.data.specialAwardSpecified,
-			evaluator_id: record.data.remoteEvaluatorId,
-			nate_siegel_award: award.nate_seigel,
-			rainbarrel: record.data.rainBarrel,
-			date_evaluated: record.data.dateOfEvaluation, 
-			// date_entered_on_device_by_evaluator,
-			comments: record.data.comments,
-			evaluator: {
+			evaluation: {
+				evaluation_id: record.data.remoteEvaluationId,
+				garden_id: record.data.remoteSiteId,
+				eval_type: 1,// null, // change!
+				score: score,
+				rating: rating,
+				rating_year: currentYear,
+				best_of: award.best_of,
+				special_award_specified:  record.data.specialAwardSpecified,
 				evaluator_id: record.data.remoteEvaluatorId,
-				completed_by: record.data.remoteEvaluatorId
+				nate_siegel_award: award.nate_seigel,
+				rainbarrel: 0, //record.data.rainBarrel,
+				date_evaluated: record.data.dateOfEvaluation, 
+				// date_entered_on_device_by_evaluator,
+				comments: record.data.comments,
+				scoresheet: {
+					color:  record.data.useOfColor,
+					plant_variety:  record.data.varietyAndHealth,
+					design:  record.data.design,
+					maintenance:  record.data.maintenance,
+					environmental_stewardship:  record.data.environmentalStewardship
+				}
+				/*evaluator: {
+					evaluator_id: record.data.remoteEvaluatorId,
+					completed_by: record.data.remoteEvaluatorId
+				}*/
 			},
 			garden: {
 				garden_id: record.data.remoteSiteId,
 				name:  record.data.name,
-				no_longer_exists:  record.data.noLongerExists,
-				raingarden: record.data.rainGarden,
+				no_longer_exists:  0, //record.data.noLongerExists,
+				raingarden: 0,// record.data.rainGarden,
 				//address: {
 				//	neighborhood: record.data.neighborhood,
 				//	county: record.data.county

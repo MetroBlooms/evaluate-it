@@ -14,6 +14,12 @@
                 id: 'ui',
                 cls: 'launchscreen',
                 items: [
+					{
+                        text: 'General',
+                        leaf: true,
+                        id: 'general',
+            			category: 'evaluations'
+                    }, 
                     {
                         text: 'Evaluation',
                         leaf: true,
@@ -21,27 +27,21 @@
             			category: 'evaluations'
                     },
 					{
-                        text: 'General',
-                        leaf: true,
-                        id: 'general',
-            			category: 'evaluations'
-                    }, 
-					{
                         text: 'Award',
                         leaf: true,
                         id: 'award',
             			category: 'evaluations'
                     },  
-                    {
-                        text: 'Geolocation',
-                        leaf: true,
-                        id: 'geolocation',
-            			category: 'evaluations'
-                    },
 					{
                         text: 'Geoposition',
                         leaf: true,
                         id: 'geoposition',
+            			category: 'evaluations'
+                    },
+                    {
+                        text: 'Geolocation',
+                        leaf: true,
+                        id: 'geolocation',
             			category: 'evaluations'
                     }
 		

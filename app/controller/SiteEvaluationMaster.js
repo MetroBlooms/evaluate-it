@@ -27,7 +27,7 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
   		console.log('Main container is active');
  	},
 
-	onAddSiteEvaluation: function(button) {
+	/*onAddSiteEvaluation: function(button) {
 		console.log('Button Click');
 		var siteEvaluationForm = Ext.Viewport.down('siteEvaluationForm');
 		//create the siteEvaluation edit window if it doesn't exists
@@ -36,7 +36,7 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
 		} 
 		siteEvaluationForm.reset();
 		siteEvaluationForm.showBy(button);
-	},
+	},*/
 
 	onSaveSiteEvaluation: function(button) {
 		console.log('Button Click for Save');

@@ -15,7 +15,7 @@ Ext.define('EvaluateIt.view.Evaluation', {
 					xtype : 'toolbar',
 					docked: 'top',
 					// add an Ad Hoc evaluation: requirements pending
-					items: [
+					/*items: [
 						{
 							xtype: 'button',
 							itemId: 'addSiteEvaluation',
@@ -24,7 +24,7 @@ Ext.define('EvaluateIt.view.Evaluation', {
 							iconMask: true 
 						}
 
-					]
+					]*/
 				},
 				{
 					flex: 1,

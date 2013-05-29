@@ -47,7 +47,7 @@ Ext.define('EvaluateIt.controller.EvaluationGeneralMaster', {
 		var values = form.getValues();
 		//if a new siteEvaluation
 		if(!record){
-			var newRecord = new EvaluateIt.model.Contact(values);
+			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
 			Ext.getStore('SiteEvaluations').add(newRecord);
 		}
 		//existing siteEvaluation

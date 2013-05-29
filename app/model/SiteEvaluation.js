@@ -2,14 +2,16 @@
 
 Ext.define('EvaluateIt.model.SiteEvaluation', {
     extend: 'Ext.data.Model',
-
+	requires: [
+		'Ext.data.identifier.Uuid'
+	],
 	// TO DO: this is a temporary kludge until the following is implemented in its entirety: http://appointsolutions.com/2012/07/using-model-associations-in-sencha-touch-2-and-ext-js-4/
 
     //extend: 'EvaluateIt.model.Abstract',
     
     config: {
-        idProperty: 'id', // use with proxy.SQL 
-	//identifier: 'uuid', // use with proxy.localstorage 
+        //idProperty: 'id', // use with proxy.SQL 
+		identifier: 'uuid', // use with proxy.localstorage 
         fields: [
 	
 			{name: 'site_id', type: 'int'},	
@@ -86,10 +88,10 @@ Ext.define('EvaluateIt.model.SiteEvaluation', {
         ],
 		proxy: {
         	type: "localstorage",  //"sql"
-			reader : {
+			/*reader : {
             	type : 'json',
             	root : 'data'
-        	}
+        	}*/
 
            //database: 'Yo'
         }
