@@ -221,22 +221,41 @@ test: {"evaluation_id": 44214,
 
 /*
 
-{"evaluation":{
-"evaluation_id":44216,
-"garden_id":37288,
-"scoresheet":{"color":1,"plant_variety":2,"design":3,"maintenance":4,"environmental_stewardship":5},
-"eval_type":null,
-"score":15,
-"rating":"GD",
-"rating_year":2013
-,"best_of":"NADA!",
-"special_award_specified":
-null,"evaluator_id":"265",
-"nate_siegel_award":0
-,"rainbarrel":null,
-"date_evaluated":"1969-12-31T18:00:00","comments":""},
-"garden":{"garden_id":37288,"name":"Larry Opelt","no_longer_exists":null,"raingarden":null},
-"geolocation":{"latitude":44.9615709,"longitude":-93.3353673,"accuracy":25}} 
+{
+	"evaluation": {
+		"evaluation_id":44216,
+		"garden_id":37288,
+		"eval_type":1,
+		"score":15,
+		"rating":"GD",
+		"rating_year":2013,
+		"best_of":"NADA!",
+		"special_award_specified":null,
+		"evaluator_id":"265",
+		"nate_siegel_award":0,
+		"rainbarrel":0,
+		"date_evaluated":"1969-12-31T18:00:00",
+		"comments":"",
+		"scoresheet":{
+			"color":1,
+			"plant_variety":2,
+			"design":3,
+			"maintenance":4,
+			"environmental_stewardship":5
+		}
+	},
+	"garden":{
+		"garden_id":37288,
+		"name":"Larry Opelt",
+		"no_longer_exists":0,
+		"raingarden":0
+	},
+	"geolocation":{
+		"latitude":44.9615709,
+		"longitude":-93.3353673,
+		"accuracy":25
+	}
+} 
 
 */
 
@@ -417,11 +436,11 @@ function post_to_remote(obj) {
 
 	// AJAX post
 	Ext.Ajax.request({
-		//type: "POST",
-		cors: true,
+		type: 'POST',
+		//cors: true,
 		url: url,
-		params: obj,
-		useDefaultXhrHeader: false,
+		jsonData: obj,
+		//useDefaultXhrHeader: false,
 		success: function (response) {
 			console.log('success: ' + response.responseText);
 
