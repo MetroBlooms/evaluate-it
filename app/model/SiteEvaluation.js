@@ -83,7 +83,9 @@ Ext.define('EvaluateIt.model.SiteEvaluation', {
             {name: 'specialAwardSpecified', mapping:  'evaluationAward.specialAwardSpecified', type: 'string'},
             
 			{name: 'rainGarden', mapping:  'evaluationFeature.rainGarden', type: 'string'},
-            {name: 'rainBarrel', mapping:  'evaluationFeaturerainBarrel', type: 'string'}
+            {name: 'rainBarrel', mapping:  'evaluationFeature.rainBarrel', type: 'string'},
+		
+			{name: 'imageUri', mapping: 'siteImage.imageUri', type: 'string'}
 
         ],
 		proxy: {

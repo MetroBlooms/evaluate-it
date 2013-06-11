@@ -2,6 +2,7 @@
 
 Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 	extend: 'Ext.form.Panel',
+	id: 'evaluationId',
 	alias : 'widget.siteEvaluationForm',
 	requires: [
         'Ext.form.Panel',
@@ -129,7 +130,17 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 					{text: '3',  value: '4'},
 					{text: '4',  value: '5'}
 				]
-			},  
+			},
+			{
+				xtype: 'hiddenfield',
+				name: 'imageUri',
+				itemId: 'imageId' 
+			}, 
+			{
+                 xtype: 'button',
+                 itemId: 'siteImage',
+                 text: 'Select Photo'
+            }, 
 			{
 				xtype: 'button',
 				itemId: 'save',

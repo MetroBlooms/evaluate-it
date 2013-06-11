@@ -30,7 +30,7 @@ Ext.define('EvaluateIt.view.Pull', {
 						iconMask: true 
 					},
                     {
-                        text: 'Load data from remote',
+                        text: 'Pull data',
                         handler: function() {
                             var panel = Ext.getCmp('Pull'),
 								json = [];

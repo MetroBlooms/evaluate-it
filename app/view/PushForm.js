@@ -40,16 +40,16 @@ Ext.define('EvaluateIt.view.PushForm', {
 				itemId: 'address',
 				readOnly: true
 			},
-			{
+			/*{
 				xtype: 'checkboxfield',
 				id: 'addImage',
 				label: 'Upload Image'
-			},
+			},*/
 
 			{
 				xtype: 'button',
 				itemId: 'save',
-				text: 'Save'
+				text: 'Push to server'
 			}
             
         ]

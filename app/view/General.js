@@ -19,7 +19,7 @@ Ext.define('EvaluateIt.view.General', {
 						{
 							xtype: 'button',
 							itemId: 'addEvaluationGeneral',
-							text: 'Add a Thing',
+							text: 'Add evaluation',
 							iconCls: 'arrow_right',
 							iconMask: true 
 						}

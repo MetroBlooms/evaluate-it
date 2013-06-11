@@ -94,112 +94,10 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 		Ext.getStore('SiteEvaluations').sync();
 
 		// assemble record 
-		assemble_evaluation(record);
+		//assemble_evaluation(record);
+		get_image(record);
 
 	},
-
-// Assemble selected object to load to remote
-// add uploaded_image
-// add eval_type
-
-/* What object should look like:
-
-test: {"evaluation_id": 44214,
-	"score": 20, // computed, but stored value
-	"rating": "EG", // computed by range (see function assembleDataToPost)
-	"rating_year": 2012, // computed
-	"best_of": "Special", // from evaluation_award
-	"special_award_specified": "Absolute bestest ever!", // from evaluation_award; code stored. lookup via JSON object Award
-	"nate_siegel_award": 0, // from evaluation_award
-	"score_card": {"color": 4,  // from evaluation_factor, lookup via JSON object Factor
-		"plant_variety": 4,
-		"design": 4,
-		"maintenance": 4,
-		"environmental_stewardship": 4},
-	"date_evaluated":"2012-08-01", // entered
-	"general_comments":"This is a test", // evaluation
-	"evaluator": {"evaluator_id":"265", // evaluation; id from remote db
-		"completed_by": "265"},
-	"rainbarrel":1, //evaluation_factor; lookup via JSON object Factor
-	"raingarden":1,
-	"garden": {"garden_id": 39439, // remote id maps to site_id
-		"no_longer_exists": 0, // bit value
-		"address": {"neighborhood": "Lake Forest", 
-			"county": "Hennepin"},
-		"gardener": {"name":"Greg The Marvelous"}, // maps to site_maintainer
-		"geolocation": {"latitude": 44.9267,
-			"longitude": -93.405282,
-			"accuracy":"24000"}
-		}
-	} */
-
-/* TODO: implement new data structure
-
-{
-    evaluation: {
-        evaluation_id: record.data.remoteEvaluationId,   
-        garden_id: record.data.remoteSiteId,
-        scoresheet:{
-            color: record.data.color,
-            plant_variety: record.data.plantVariety,
-            design: record.data.design,
-            maintenance: record.data.maintenance,
-            environmental_stewardship: record.data.environmentalStewardship
-        },
-        evalType: new feature, this may be "garden evaluation", "2nd round garden evaluation,"and "voluntary raingarden evaluation", we’ll need to discuss this
-        score: score    
-        rating: rating   
-        rating_year: currentYear,
-        best_of: award.best_of,
-        special_award_specified: record.data.specialAwardSpecified,
-        evaluator_id: record.data.remoteEvaluatorId,
-        nate_siegel_award: award.nate_seigel,
-        rainbarrel: record.data.rainBarrel,
-        downspouts_redirected: (“1” or “0”),  
-        date_evaluated: record.data.dateOfEvaluation,
-        comments: record.data.comments,
-        revisit:  (send “1” or “0” whether the evaluator thinks the garden should be revisited) 
-    },
-    garden: {
-        garden_id: record.data.remoteSiteId, 
-        name:   record.data.name, (name of gardener)
-        address: (street address of garden),    
-        city: (city of garden),
-        state: (state of garden),
-        zip: (zip of garden),
-        neighborhood: record.data.neighborhood,
-        county: record.data.county        boulevard_garden: (“1” or “0”),  
-        raingarden: record.data.rainGarden,       
-        name_of_garden: (name of the garden),         
-        rainbarrel: record.data.rainBarrel, 
-        no_longer_exists: record.data.noLongerExists,
-        noteworthy_features: (This is typically created by the person who nominated the garden),    
-        uploadedImage: (URL of uploaded image),
-        alley_garden: (“1” or “0”),
-        residential_garden: (“1” or “0”),
-        business_garden: (“1” or “0”),
-        community: (“1” or “0”),
-        church: (“1” or “0”),
-        public_building: (“1” or “0”),
-        apartment_or_condo: (“1” or “0”),
-        container_windowbox: (“1” or “0”), 
-        downspouts_redirected: (“1” or “0”),
-       	gardener_email: (email of gardener),  
-        gardener_phone: (name of gardener), 
-        not_publically_visible: (“1” or “0”),
-    },
-    geolocation: {
-        latitude:  record.data.latitude,
-        longitude:  record.data.longitude,
-        accuracy: record.data.accuracy       
-        altitude:
-        altitudeAccuracy:
-        heading:
-        speed:
-        timestamp:
-    }
-
-*/
 
 	// TODO: add missing atributes to form; add image uploade using native or Cordova method
 
@@ -219,7 +117,7 @@ test: {"evaluation_id": 44214,
 
 });
 
-/*
+/* Test json to POST
 
 {
 	"evaluation": {
@@ -258,6 +156,41 @@ test: {"evaluation_id": 44214,
 } 
 
 */
+
+function get_image(record) {
+
+	var uri,
+		url;
+
+	// use new API with authorization token
+	url =  EvaluateIt.config.protocol;
+	url += EvaluateIt.config.test;
+	url += EvaluateIt.config.domain;
+	url += EvaluateIt.config.dev;
+	url += EvaluateIt.config.file_response;
+
+// http://staging.metroblooms.org/api/dev/show_post_data
+
+	
+/*			protocol: 'http://',
+			domain: 'metroblooms.org',
+			dev: '/api/dev',
+			live: '/api/live',
+			apiView: '/api/evaluation',
+			pullCriterion: '/evaluator_id/',
+		    test: 'staging.',
+			live: 'www.',
+			action: '/update',
+			response: 'show_post_data',			
+*/
+
+	uri = record.data.imageUri;
+   
+	console.log('uri: ' + uri + 'url: ' + url); 
+
+	post_image(uri, url);
+}
+	
 
 
 // assemble json and make Ajax call
@@ -452,4 +385,46 @@ function post_to_remote(obj) {
 			alert(e);
 		}
 	}); 
+}
+
+// Phonegap file transfer
+function post_image(imageUri, url) {
+    var options = new FileUploadOptions(),
+        ft = new FileTransfer();
+
+	// get username for use in fielName
+
+	//var evaluators = Ext.create('EvaluateIt.store.Evaluators');
+
+/*	
+	evaluators.queryBy(function(record,id){
+		evaluators = Ext.getStore(evaluators);
+
+		if (evaluators.getCount() > 0) {
+			name = record.get('firstName') + ' ' + record.get('username');
+
+			//title = title + ' - ' + name
+			alert('WhoamI: '  + username);
+		}
+	});
+*/
+    
+    options.fileKey = 'userfile';
+    //options.fileName = imageUri.substr(imageUri.lastIndexOf('/') + 1);
+    options.mimeType = 'image/jpeg';
+    options.chunkedMode = false;
+
+    ft.upload(imageUri, encodeURI(url), post_success, post_error, options);
+}
+
+function post_success(r) {
+    console.log("Code = " + r.responseCode);
+    console.log("Response = " + r.response);
+    console.log("Sent = " + r.bytesSent);
+    alert(r.response);
+    updateWhenPosted(id);
+}
+
+function post_error(error) {
+    alert("An error has occurred: Code = " + error.code);
 }

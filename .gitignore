@@ -43,6 +43,8 @@ Thumbs.db
 *.sencha
 *.senchasdk
 
+build.xml
+
 # Files with information that should not be made available to the public #
 ######################
 app.js
