@@ -72,7 +72,6 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 		pushForm.showBy(button);
 	},
 
-	// TODO: implement file upload method (see http://docs.phonegap.com/en/2.7.0/cordova_camera_camera.md.html#camera.getPicture)
 	onSavePush: function(button) {
 		console.log('Button Click for Save');
 		var form = button.up('panel');
@@ -95,7 +94,7 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 
 		// assemble record 
 		//assemble_evaluation(record);
-		get_image(record);
+		initialize_image_post(record, values);
 
 	},
 
@@ -157,7 +156,7 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 
 */
 
-function get_image(record) {
+function initialize_image_post(record) {
 
 	var uri,
 		url;
@@ -166,10 +165,12 @@ function get_image(record) {
 	url =  EvaluateIt.config.protocol;
 	url += EvaluateIt.config.test;
 	url += EvaluateIt.config.domain;
-	url += EvaluateIt.config.dev;
-	url += EvaluateIt.config.file_response;
+	// url += EvaluateIt.config.dev; // ev environment
+	// url += EvaluateIt.config.file_response;  // needed for POST echo
+	url += EvaluateIt.config.apiViewNomination;
+	url += EvaluateIt.config.file_upload;
+	url += '?token=' + sessionStorage.sessionToken;
 
-// http://staging.metroblooms.org/api/dev/show_post_data
 
 	
 /*			protocol: 'http://',
@@ -184,7 +185,7 @@ function get_image(record) {
 			response: 'show_post_data',			
 */
 
-	uri = record.data.imageUri;
+	uri = record.data.imageUri; // local path to image
    
 	console.log('uri: ' + uri + 'url: ' + url); 
 
@@ -361,9 +362,9 @@ function post_to_remote(obj) {
 	url =  EvaluateIt.config.protocol;
 	url += EvaluateIt.config.test;
 	url += EvaluateIt.config.domain;
-	url += EvaluateIt.config.apiView;
+	url += EvaluateIt.config.apiViewEvaluation;
 	url += EvaluateIt.config.action 
-	url += '?token=' + sessionStorage.sessionToken
+	url += '?token=' + sessionStorage.sessionToken;
 
 	console.log('new url: ' + url);
 
@@ -422,7 +423,12 @@ function post_success(r) {
     console.log("Response = " + r.response);
     console.log("Sent = " + r.bytesSent);
     alert(r.response);
-    updateWhenPosted(id);
+
+	var response = Ext.JSON.decode(r.response);
+
+	alert(response.imageData.file_name);
+
+    //updateWhenPosted(id);
 }
 
 function post_error(error) {
