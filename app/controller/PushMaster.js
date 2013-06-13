@@ -94,7 +94,22 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 
 		// assemble record 
 		//assemble_evaluation(record);
-		initialize_image_post(record, values);
+
+		
+		var function post_success(r) {
+			console.log("Code = " + r.responseCode);
+			console.log("Response = " + r.response);
+			console.log("Sent = " + r.bytesSent);
+			alert(r.response);
+
+			var response = Ext.JSON.decode(r.response);
+
+			alert(response.imageData.file_name);
+
+			//updateWhenPosted(id);
+		}
+
+		initialize_image_post(record, values, post_success);
 
 	},
 
@@ -155,44 +170,6 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 } 
 
 */
-
-function initialize_image_post(record) {
-
-	var uri,
-		url;
-
-	// use new API with authorization token
-	url =  EvaluateIt.config.protocol;
-	url += EvaluateIt.config.test;
-	url += EvaluateIt.config.domain;
-	// url += EvaluateIt.config.dev; // ev environment
-	// url += EvaluateIt.config.file_response;  // needed for POST echo
-	url += EvaluateIt.config.apiViewNomination;
-	url += EvaluateIt.config.file_upload;
-	url += '?token=' + sessionStorage.sessionToken;
-
-
-	
-/*			protocol: 'http://',
-			domain: 'metroblooms.org',
-			dev: '/api/dev',
-			live: '/api/live',
-			apiView: '/api/evaluation',
-			pullCriterion: '/evaluator_id/',
-		    test: 'staging.',
-			live: 'www.',
-			action: '/update',
-			response: 'show_post_data',			
-*/
-
-	uri = record.data.imageUri; // local path to image
-   
-	console.log('uri: ' + uri + 'url: ' + url); 
-
-	post_image(uri, url);
-}
-	
-
 
 // assemble json and make Ajax call
 function assemble_evaluation(record) {
@@ -388,28 +365,47 @@ function post_to_remote(obj) {
 	}); 
 }
 
+function initialize_image_post(record) {
+
+	var uri,
+		url;
+
+	// use new API with authorization token
+	url =  EvaluateIt.config.protocol;
+	url += EvaluateIt.config.test;
+	url += EvaluateIt.config.domain;
+	// url += EvaluateIt.config.dev; // ev environment
+	// url += EvaluateIt.config.file_response;  // needed for POST echo
+	url += EvaluateIt.config.apiViewNomination;
+	url += EvaluateIt.config.file_upload;
+	url += '?token=' + sessionStorage.sessionToken;
+
+
+	
+/*			protocol: 'http://',
+			domain: 'metroblooms.org',
+			dev: '/api/dev',
+			live: '/api/live',
+			apiView: '/api/evaluation',
+			pullCriterion: '/evaluator_id/',
+		    test: 'staging.',
+			live: 'www.',
+			action: '/update',
+			response: 'show_post_data',			
+*/
+
+	uri = record.data.imageUri; // local path to image
+   
+	console.log('uri: ' + uri + 'url: ' + url); 
+
+	post_image(uri, url);
+}
+
 // Phonegap file transfer
 function post_image(imageUri, url) {
     var options = new FileUploadOptions(),
         ft = new FileTransfer();
 
-	// get username for use in fielName
-
-	//var evaluators = Ext.create('EvaluateIt.store.Evaluators');
-
-/*	
-	evaluators.queryBy(function(record,id){
-		evaluators = Ext.getStore(evaluators);
-
-		if (evaluators.getCount() > 0) {
-			name = record.get('firstName') + ' ' + record.get('username');
-
-			//title = title + ' - ' + name
-			alert('WhoamI: '  + username);
-		}
-	});
-*/
-    
     options.fileKey = 'userfile';
     //options.fileName = imageUri.substr(imageUri.lastIndexOf('/') + 1);
     options.mimeType = 'image/jpeg';
@@ -418,6 +414,7 @@ function post_image(imageUri, url) {
     ft.upload(imageUri, encodeURI(url), post_success, post_error, options);
 }
 
+/*
 function post_success(r) {
     console.log("Code = " + r.responseCode);
     console.log("Response = " + r.response);
@@ -430,6 +427,7 @@ function post_success(r) {
 
     //updateWhenPosted(id);
 }
+*/
 
 function post_error(error) {
     alert("An error has occurred: Code = " + error.code);
