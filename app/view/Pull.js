@@ -50,7 +50,7 @@ Ext.define('EvaluateIt.view.Pull', {
 							url =  EvaluateIt.config.protocol;
 							url += EvaluateIt.config.test;
 							url += EvaluateIt.config.domain;
-							url += EvaluateIt.config.apiView;
+							url += EvaluateIt.config.apiViewEvaluation;
 							url += EvaluateIt.config.pullCriterion;
 							url += sessionStorage.evaluator_id;
 							url += '?token=' + sessionStorage.sessionToken
@@ -100,8 +100,8 @@ function parseJson (json) {
 		max,
 		newEvaluator,
 		Evaluators = Ext.create('EvaluateIt.store.Evaluators'),
-		SiteEvaluations =  Ext.create('EvaluateIt.store.SiteEvaluations'),
-		siteEvaluation;
+		SiteEvaluations =  Ext.create('EvaluateIt.store.SiteEvaluations');
+		//siteEvaluation;
 	
 	//console.log('n: ' + json.length);
 
