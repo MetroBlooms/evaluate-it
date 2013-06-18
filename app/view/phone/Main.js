@@ -21,7 +21,7 @@ Ext.define('EvaluateIt.view.phone.Main', {
             id: 'mainNavigationBar',
             xtype : 'titlebar',
             docked: 'top',
-            title : 'EvaluateIt!',
+            title : 'EvaluateIt!'
 
         }
     }

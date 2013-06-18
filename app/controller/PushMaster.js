@@ -25,8 +25,6 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 			'container button[itemId=logoutPush]': {
 				tap: 'onLogoutPush' 
 			}
-
-
 		}	  
 
  	},
@@ -93,10 +91,9 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 		Ext.getStore('SiteEvaluations').sync();
 
 		// assemble record 
-		//assemble_evaluation(record);
-
+		assemble_evaluation(record);
 		
-		initialize_image_post(record);
+		//initialize_image_post(record);
 
 	},
 
@@ -158,6 +155,75 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 
 */
 
+/* Ad hoc nomination
+
+This JSON struction is identical to the structure for adding a garden evaluation, with the addition of the "nomination" object.
+The "garden" object that you might send with an evaluation update is not necessary here because garden information is sent along with the nomination. (in an evaluation, the 'garden' object is also optional, but could be send it you want to permanantly update informtion about the garden)
+
+{
+    nomination: {  
+        'nominator_id': '1930', 
+        'nominator_name': 'Paul Stroot', 
+        'nominator_email': 'test@dancingpaul.com', 
+        'name_of_garden': 'Metroblooms Test Garden Extrordinaire',
+        'gardener_name': 'Paul Stroot',
+        'gardener_email': 'paul@dancingpaul.com',
+        'address': '3516 Blaisdell Ave', 
+        'city': 'Minneapolis', 
+        'state': 'MN', 
+        'zip': '55408', 
+        'neighborhood': 'Kingfield', 
+        'county': 'Hennepin', 
+        'boulevard_garden': '0', 
+        'raingarden': '0',
+        'residential_garden': '0', 
+        'business_garden': '0', 
+        'community': '0', 
+        'church': '0', 
+        'public_building': '0', 
+        'apartment_or_condo': '0', 
+        'container_windowbox': '0', 
+        'rainbarrel': '0', 
+        'downspouts_redirected': '1', 
+        'not_publically_visible': '0', 
+        'noteworthy_features': 'THIS IS A TEST', 
+        'uploaded_image': 'n/a',               
+    },
+    evaluation: {    
+        eval_type: 'garden evaluation',
+        score: '14',    
+        rating: 'GM',   
+        rating_year : '2013',
+        best_of : 'Best Test Garden',
+        special_award_specified: 'SuperSpecial Award',
+        evaluator_id: '265',
+        nate_siegel_award : 0,
+        rainbarrel : 1,
+        downspouts_redirected: 1,   
+        date_evaluated: '2013-04-15 12:30:00',
+        comments : 'This is a test submission',
+        revisit :  0, 
+        scoresheet:{
+            color : 1,
+            plant_variety : 2,
+            design : 3,
+            maintenance : 4,
+            environmental_stewardship : 5
+        }       
+    },
+    geolocation: {
+        latitude :  '43.6544',
+        longitude :  '76.3322',
+        accuracy: '45',    
+        altitude: '56',
+        altitudeAccuracy: '54',
+        heading: '45',
+        speed:'45'
+    },
+    garden:{}
+}
+
+*/
 // assemble json and make Ajax call
 function assemble_evaluation(record) {
 
@@ -166,31 +232,49 @@ function assemble_evaluation(record) {
 		rating,
 		nate_siegel_award,
 		currentYear = (new Date()).getFullYear(),
-		obj = {};
+		obj = {},
+		core = {},
+		existing = {},
+		ad_hoc = {};
 
-		// compute score		
-		score = record.data.useOfColor + record.data.varietyAndHealth + record.data.design + record.data.maintenance + record.data.environmentalStewardship;
-		// get rating for given score
-		rating = evaluation_rating(score);
-		console.log("rating" + rating);	
-		
+		// compute score: TODO: check for null/isInt!
+		if (!record.data.useOfColor 
+				|| record.data.varietyAndHealth 
+				|| record.data.design 
+				|| record.data.maintenance 
+				|| record.data.environmentalStewardship) {
+			
+			score = null;
+			rating = null;
+		}
+		else {
+			score = record.data.useOfColor  
+					+ record.data.varietyAndHealth 
+					+ record.data.design  
+					+ record.data.maintenance 
+					+ record.data.environmentalStewardship;
+
+			// get rating for given score
+			rating = evaluation_rating(score);
+			console.log("rating" + rating);	
+		}
+	
 		// get award if given
 		award = evaluation_award(record.data.awardId);
 		console.log("award" + award.best_of + ' ' + award.nate_seigel);	
 
-		obj = {
+		core = {
 			evaluation: {
-				evaluation_id: record.data.remoteEvaluationId,
+				//evaluation_id: record.data.remoteEvaluationId,
 				garden_id: record.data.remoteSiteId,
 				eval_type: 1,// null, // change!
 				score: score,
 				rating: rating,
 				rating_year: currentYear,
 				best_of: award.best_of,
-				special_award_specified:  record.data.specialAwardSpecified,
-				evaluator_id: record.data.remoteEvaluatorId,
+				special_award_specified: record.data.specialAwardSpecified,
+				evaluator_id: sessionStorage.evaluator_id, // would use remoteEvaluatorId, but if ad hoc this will not exist
 				nate_siegel_award: award.nate_seigel,
-				rainbarrel: 0, //record.data.rainBarrel,
 				date_evaluated: record.data.dateOfEvaluation, 
 				// date_entered_on_device_by_evaluator,
 				comments: record.data.comments,
@@ -201,37 +285,65 @@ function assemble_evaluation(record) {
 					maintenance: record.data.maintenance,
 					environmental_stewardship: record.data.environmentalStewardship
 				}
-				/*evaluator: {
-					evaluator_id: record.data.remoteEvaluatorId,
-					completed_by: record.data.remoteEvaluatorId
-				}*/
 			},
+			geolocation: {
+				latitude: record.data.latitude,
+				longitude: record.data.longitude,
+				accuracy: record.data.accuracy
+			}
+
+		};
+
+		console.log('Assembled core to push: ' + Ext.encode(core));	
+
+		// existing nomination
+		existing = {
 			garden: {
 				garden_id: record.data.remoteSiteId,
 				name:  record.data.name,
 				no_longer_exists:  0, //record.data.noLongerExists,
 				raingarden: 0// record.data.rainGarden,
-				//address: {
-				//	neighborhood: record.data.neighborhood,
-				//	county: record.data.county
-				//},
-				//neighborhood: record.data.neighborhood,
-				//county: record.data.county
-				//gardener: {
-				//	name:  record.data.name
-				//},
-				//name:  record.data.name
-			},
-			geolocation: {
-				latitude:  record.data.latitude,
-				longitude:  record.data.longitude,
-				accuracy:  record.data.accuracy
 			}
+		}; 
 
+		console.log('Assembled existing to push: ' + Ext.encode(existing));	
+				
+		// new nomination
+		ad_hoc = {  
+			nominator_id: sessionStorage.evaluator_id,  
+			nominator_name: sessionStorage.firstname + ' ' + sessionStorage.lastname,
+			nominator_email: sessionStorage.lastname,
+			gardener_name: record.data.name,
+			address: record.data.address, 
+			city: record.data.city, 
+			state: record.data.state, 
+			zip: record.data.zipcode, 
+			neighborhood: record.data.neighborhood, 
+			county: record.data.county, 
+			uploaded_image: record.data.fileName,
+			garden: {}               
 		};
+		
+		console.log('Assembled ad_hoc to push: ' + Ext.encode(ad_hoc));	
 
-		console.log('Assembled object to push: ' + Ext.encode(obj));	
-		post_to_remote(obj);
+		// create json for submission
+
+		// existing:
+		if (record.data.remoteSiteId && record.data.remoteEvaluationId && record.data.remoteEvaluatorId) {
+			obj = Ext.Object.merge(core, existing);
+			obj.evaluation.evaluation_id = record.data.remoteEvaluationId;
+			console.log('existing');
+		}
+		// new
+		else {
+			obj = Ext.Object.merge(core, ad_hoc);
+			obj.evaluation.uuid = record.data.id; // new usees uuid as linking id
+			console.log('new');
+		}
+
+		console.log('Assembled object to push: ' + Ext.encode(obj));
+			
+		post_to_remote(obj, record);
 			
 }
 
@@ -285,7 +397,7 @@ function evaluation_award (award_id) {
 			best_of = 'Special';
 			break;
 		default:
-			best_of = 'NADA!';//null;
+			best_of = null;
 			break;
 	}
 	
@@ -296,9 +408,9 @@ function evaluation_award (award_id) {
 }
 
 // Ajax to remote Webserver
-function post_to_remote(obj) {
+function post_to_remote(obj, record) {
 
-	var url //url = EvaluateIt.config.webServer;
+	var url, //url = EvaluateIt.config.webServer;
 	// POST to server; config variables from app.json
 	//url +=  '/' +  EvaluateIt.config.collectionDevelopment;
 	//url +=  '/' +  EvaluateIt.config.testHttpResponse;//postResults;
@@ -314,7 +426,7 @@ function post_to_remote(obj) {
 	console.log('new url: ' + url);
 
 	// AJAX post
-	Ext.Ajax.request({
+/*	Ext.Ajax.request({
 		type: 'POST',
 		//cors: true,
 		url: url,
@@ -323,20 +435,27 @@ function post_to_remote(obj) {
 		success: function (response) {
 			console.log('success: ' + response.responseText);
 
-			alert('success: ' + response.responseText);
+			alert('Successfully uploaded: '+ response.responseText);
 
 		},
 		fail: function (e, jqxhr, settings, exception) {
 			console.log(e);
 			alert(e);
 		}
-	}); 
+	}); */
+
+	// check if image exists in store
+	if (record.get('imageUri') === null || record.get('imageUri') === '') {
+		initialize_image_post(record)
+	}
+ 
 }
 
 function initialize_image_post(record) {
 
 	var uri,
-		url;
+		url,
+		evaluation_kvp = {};
 
 	// use new API with authorization token
 	url =  EvaluateIt.config.protocol;
@@ -347,7 +466,6 @@ function initialize_image_post(record) {
 	url += EvaluateIt.config.apiViewNomination;
 	url += EvaluateIt.config.file_upload;
 	url += '?token=' + sessionStorage.sessionToken;
-
 
 	
 /*			protocol: 'http://',
@@ -366,11 +484,24 @@ function initialize_image_post(record) {
    
 	console.log('uri: ' + uri + 'url: ' + url); 
 
-	post_image(uri, url);
+	console.log('evaluation_id, uuid ' + record.data.remoteEvaluationId + ', ' + record.data.id );
+
+	// assemble key value pair for use in file transfer object for: existing evaluation
+	if (record.data.remoteEvaluationId !== null) {
+		evaluation_kvp = {evaluation_id: record.data.remoteEvaluationId};
+		console.log('evaluation_id ' + evaluation_kvp);
+	}
+	// new nomination/evaluation
+	else {
+		evaluation_kvp = {uuid: record.data.id}
+		console.log('uuid ' + evaluation_kvp);
+	}
+	
+	// post_image(uri, url, eval_kvp);
 }
 
 // Phonegap file transfer
-function post_image(imageUri, url) {
+function post_image(imageUri, urli, evaluation_kvp) {
     var options = new FileUploadOptions(),
         ft = new FileTransfer();
 
@@ -378,6 +509,7 @@ function post_image(imageUri, url) {
     //options.fileName = imageUri.substr(imageUri.lastIndexOf('/') + 1);
     options.mimeType = 'image/jpeg';
     options.chunkedMode = false;
+	options.params = evaluation_kvp; // attached key value pair
 
     ft.upload(imageUri, encodeURI(url), post_success, post_error, options);
 }

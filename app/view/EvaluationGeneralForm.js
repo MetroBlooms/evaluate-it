@@ -109,12 +109,6 @@ Ext.define('EvaluateIt.view.EvaluationGeneralForm', {
 				name: 'rainGarden',
 				label: 'There is a raingarden'
 			},  
-			{
-				xtype: 'checkboxfield',
-				itemId: 'rainBarrel',
-				name: 'rainBarrel',
-				label: 'There is a rain barrel'
-			},	
 			{	
        			xtype: 'textfield',
 		   		name: 'comments',

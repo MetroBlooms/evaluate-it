@@ -87,7 +87,7 @@ Ext.define('EvaluateIt.controller.phone.Main', {
             newAnim;
 
 		// if exists: get evaluator name for display
-		var evaluators = Ext.create('EvaluateIt.store.Evaluators');
+		/*var evaluators = Ext.create('EvaluateIt.store.Evaluators');
 
 		evaluators.queryBy(function(record,id){
 			evaluators = Ext.getStore(evaluators);
@@ -96,9 +96,9 @@ Ext.define('EvaluateIt.controller.phone.Main', {
 				name = record.get('firstName') + ' ' + record.get('lastName');
 
 				//title = title + ' - ' + name
-				alert('WhoamI: '  + title);
+				//alert('WhoamI: '  + title);
 			}
-		});
+		});*/
 		
 		
 

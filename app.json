@@ -40,7 +40,7 @@
      */
     "js": [
 			{
-				"path": "cordova-2.7.0.js"
+				"path": "cordova-2.5.0.js"
 			},
 			{
 				"path": "touch/sencha-touch.js",

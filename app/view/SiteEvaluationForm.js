@@ -2,7 +2,7 @@
 
 Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 	extend: 'Ext.form.Panel',
-	id: 'evaluationId',
+	//id: 'evaluationId',
 	alias : 'widget.siteEvaluationForm',
 	requires: [
         'Ext.form.Panel',
@@ -60,11 +60,11 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
-					{text: '0',  value: '1'},
-					{text: '1',  value: '2'},
-					{text: '2',  value: '3'},
-					{text: '3',  value: '4'},
-					{text: '4',  value: '5'}
+					{text: '0',  value: '0'},
+					{text: '1',  value: '1'},
+					{text: '2',  value: '2'},
+					{text: '3',  value: '3'},
+					{text: '4',  value: '4'}
 				]
 			},  
 			{
@@ -76,11 +76,11 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
-					{text: '0',  value: '1'},
-					{text: '1',  value: '2'},
-					{text: '2',  value: '3'},
-					{text: '3',  value: '4'},
-					{text: '4',  value: '5'}
+					{text: '0',  value: '0'},
+					{text: '1',  value: '1'},
+					{text: '2',  value: '2'},
+					{text: '3',  value: '3'},
+					{text: '4',  value: '4'}
 				]
 			},  
 			{
@@ -92,11 +92,11 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
-					{text: '0',  value: '1'},
-					{text: '1',  value: '2'},
-					{text: '2',  value: '3'},
-					{text: '3',  value: '4'},
-					{text: '4',  value: '5'}
+					{text: '0',  value: '0'},
+					{text: '1',  value: '1'},
+					{text: '2',  value: '2'},
+					{text: '3',  value: '3'},
+					{text: '4',  value: '4'}
 				]
 			},  
 			{
@@ -108,11 +108,11 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
-					{text: '0',  value: '1'},
-					{text: '1',  value: '2'},
-					{text: '2',  value: '3'},
-					{text: '3',  value: '4'},
-					{text: '4',  value: '5'}
+					{text: '0',  value: '0'},
+					{text: '1',  value: '1'},
+					{text: '2',  value: '2'},
+					{text: '3',  value: '3'},
+					{text: '4',  value: '4'}
 				]
 			},  
 			{
@@ -124,11 +124,11 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
-					{text: '0',  value: '1'},
-					{text: '1',  value: '2'},
-					{text: '2',  value: '3'},
-					{text: '3',  value: '4'},
-					{text: '4',  value: '5'}
+					{text: '0',  value: '0'},
+					{text: '1',  value: '1'},
+					{text: '2',  value: '2'},
+					{text: '3',  value: '3'},
+					{text: '4',  value: '4'}
 				]
 			},
 			{

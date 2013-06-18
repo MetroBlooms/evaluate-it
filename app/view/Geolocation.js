@@ -8,8 +8,8 @@ Ext.define('EvaluateIt.view.Geolocation', {
 		extend: 'Ext.Container',
       	fullscreen: true,
 		config: {
-			//layout: 'vbox',
-			layout: 'fit',
+			layout: 'vbox',
+			//layout: 'fit',
 			items: [
 				{
 					xtype : 'toolbar',

@@ -37,8 +37,9 @@ Ext.define('EvaluateIt.view.Login', {
         items: [
             {
                 xtype: 'image',
-                //src: Ext.Viewport.getOrientation() == 'portrait' ? 'mb.gif' : 'mb.gif',
-                //style: Ext.Viewport.getOrientation() == 'portrait' ? 'width:80px;height:80px;margin:auto' : 'width:40px;height:40px;margin:auto'
+                src: '/resources/images/mb.gif',
+                height: 80, 
+				width: '100%' 
             },
             {
                 xtype: 'label',
@@ -87,21 +88,21 @@ Ext.define('EvaluateIt.view.Login', {
                 text: 'Log In'
             },
 			{
-			xtype: "button",
-				ui: "close",
-				text: "Close",
+				xtype: 'button',
+				ui: 'close',
+				text: 'Close',
 				// destroy form.Panel overlay to return to tree store view 
 				handler: function() {
 					Ext.getCmp('loginView').destroy();						
 				}
-			},
+			}
 
-         ],
-        listeners: [{
-            delegate: '#logInButton',
-            event: 'tap',
-            fn: 'onLogInButtonTap'
-        }]
+        ],
+		listeners: [{
+			delegate: '#logInButton',
+			event: 'tap',
+			fn: 'onLogInButtonTap'
+		}]
     },
 
     onLogInButtonTap: function () {

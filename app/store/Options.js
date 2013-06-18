@@ -35,8 +35,7 @@
 					{
                         text: 'Geoposition',
                         leaf: true,
-                        id: 'geoposition',
-            			category: 'evaluations'
+                        id: 'geoposition'
                     },
                     {
                         text: 'Geolocation',

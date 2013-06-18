@@ -247,6 +247,7 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 });
 
 // Sencha implementation: buggy in Safari desktop, 5.1.9: works when it feels like it!
+/*
 function get_location() {
 	Ext.device.Geolocation.getCurrentPosition({
 
@@ -281,8 +282,7 @@ function get_location() {
 		}
 	});
 };
-
-
+*/
 /*
 
 var geo = Ext.create('Ext.util.Geolocation', {
@@ -324,12 +324,10 @@ Ext.device.Geolocation.watchPosition({
 function getCurrentPosition() {
 	//navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, {desiredAccuracy:30, maxWait:15000});
 
-	navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge: 30, timeout: 5000, enableHighAccuracy: true });
+	navigator.geolocation.getCurrentPosition(geo_success, geo_error, { maximumAge: 30, timeout: 5000, enableHighAccuracy: true });
 }
 
-
-
-function onSuccess(position) {
+function geo_success(position) {
 	var coordinates = position.coords,
 		location = 'Longitude ' + coordinates.longitude + ' Latitude ' + coordinates.latitude + ' Accuracy ' + coordinates.accuracy,
 		timeStamp = new Date(position.timestamp),
@@ -357,7 +355,7 @@ function onSuccess(position) {
 }
 
 // onError Callback receives a PositionError object
-function onError(error) {
+function geo_error(error) {
 	alert('error!' );
 }
 

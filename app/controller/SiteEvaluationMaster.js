@@ -40,8 +40,8 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
 
 	onSaveSiteEvaluation: function(button) {
 		console.log('Button Click for Save');
-		//var form = button.up('panel');
-		var form = Ext.getCmp('evaluationId');
+		var form = button.up('panel');
+		//var form = Ext.getCmp('evaluationId');
 		//get the record 
 		var record = form.getRecord();
 		//get the form values

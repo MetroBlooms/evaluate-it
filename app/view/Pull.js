@@ -110,35 +110,52 @@ function parseJson (json) {
 
 	for (i = 0, max = json.length; i < max; i += 1) {
 
-		// a create a psuedu-nested JSON store until issues with association have been resolved
+		// a create a psuedo-nested JSON store until issues with association have been resolved
 
-		siteEvaluations = Ext.getStore(SiteEvaluations);
+		//if (json[i].completed === 0) {
+			siteEvaluations = Ext.getStore(SiteEvaluations);
+					
+			// need to see if evaluation exists in store 
+			var match = siteEvaluations.find('remoteEvaluationId', json[i].garden.evaluation_id);
 
-		// TODO: add matching criteria to ensure unique records; for testing, clear local storage to guarantee unique records; 		
-		siteEvaluations.add([{
-			site_id: i, 
-			remoteSiteId: json[i].garden.garden_id, 
-			//address: json[i].garden.address,
-			address: json[i].garden.address.address,
-			//city: json[i].garden.city,
-			city: json[i].garden.address.city,
-			//state: json[i].garden.state,
-			state: json[i].garden.address.state,
-			//zipcode: json[i].garden.zip,
-			zipcode: json[i].garden.address.zip,
-			//neighborhood: json[i].garden.neighborhood,
-			neighborhood: json[i].garden.address.neighborhood,
-			//remoteEvaluatorId: json[i].evaluator_id,
-			remoteEvaluatorId: json[i].evaluator.evaluator_id,
- 			evaluationType: 1,
- 			remoteEvaluationId: json[i].evaluation_id, 
-			dateOfEvaluation: null,
-			//name:  json[i].garden.name
-			name:  json[i].garden.gardener.name0
+			console.log(siteEvaluations.find('remoteEvaluationeId', json[i].garden.evaluation_id)); 
+					  
+			if (match === -1) {
+				console.log('Adding site!');
+				
+				siteEvaluations.add([{
+					site_id: i, 
+					remoteSiteId: json[i].garden.garden_id, 
+					//address: json[i].garden.address,
+					address: json[i].garden.address.address,
+					//city: json[i].garden.city,
+					city: json[i].garden.address.city,
+					//state: json[i].garden.state,
+					state: json[i].garden.address.state,
+					//zipcode: json[i].garden.zip,
+					zipcode: json[i].garden.address.zip,
+					//neighborhood: json[i].garden.neighborhood,
+					neighborhood: json[i].garden.address.neighborhood,
+					//remoteEvaluatorId: json[i].evaluator_id,
+					remoteEvaluatorId: json[i].evaluator.evaluator_id,
+					evaluationType: 1,
+					remoteEvaluationId: json[i].evaluation_id, 
+					dateOfEvaluation: null,
+					//name:  json[i].garden.name
+					name: json[i].garden.gardener.name0
 
-		}]);
-		siteEvaluations.sync();
+				}]);
+				siteEvaluations.sync(); // update proxy
 
+			}
+			else { 
+				// sites.removeAt(i);
+				console.log('Evaluation exists!');
+			} 
+
+		// } // end if
+
+   		// ---------------------------------
 		// insert evaluators for evaluation: in practice, an evaluator has many evaluations; however, assume that only one evaluator uses the device, 
 		// and thus, no direct association is needed between models
 	

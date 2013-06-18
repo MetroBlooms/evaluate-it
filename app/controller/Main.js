@@ -18,7 +18,7 @@ Ext.define('EvaluateIt.controller.Main', {
         refs: {
             nav: '#mainNestedList',
             main: 'mainview',
-            toolbar: '#mainNavigationBar',
+            toolbar: '#mainNavigationBar'
         },
 
         control: {
@@ -73,29 +73,57 @@ Ext.define('EvaluateIt.controller.Main', {
 			// create filter based on filtered use case	
 			var listStore = Ext.data.StoreManager.lookup('SiteEvaluations'); 
 			listStore.clearFilter();
-		
+
+			if (category === 'evaluations') { 
+				//listStore.clearFilter();
+				console.log('we are in: ' + category);
+
+				var reg = new RegExp('[A-Za-z0-9_]','i');
+				listStore.filterBy(function(record, id) {
+
+					var address = record.get('address');
+   	 				if (reg.test(address)) {
+        				return true;
+					}
+				});
+
+				/*var evaluationFilter = new Ext.util.Filter({
+						property: 'zipcode', // replace with actual filter when ready
+						value: '554', 
+						anyMatch: true,
+						root: 'data'
+				});*/
+
+				//listStore.filter('zipcode','55405');
+
+				/*var reg = new RegExp('^55','i');
+				listStore.queryBy(function(record) {
+					var site = record.get('site_id'),
+						address = record.get('address');
+					if(site == null) {
+						return true;
+					}
+				});*/
+				
+				//listStore.filter(evaluationFilter);
+			}
+			// only display those evaluations deemed as "complete"
 			if (category === 'push') {
 				console.log('we are in: ' + category);
-				var pushFilter = new Ext.util.Filter({
-						property: 'zipcode', // replace with actual filter when ready
-						value: '55405', 
-						anyMatch: false,
-						caseSensitive: true,
-						root: 'data'
+				// nothing to evaluate
+
+				listStore.filterBy(function(record, id) {
+   	 				if (record.get('noLongerExists') === true || 
+						(record.get('useOfColor') !== null 
+						&& record.get('varietyAndHealth') !== null 
+						&& record.get('design') !== null 
+						&& record.get('maintenance') !== null 
+						&& record.get('environmentalStewardship') !== null)) {
+        					return true;
+						}
 				});
-				listStore.filter(pushFilter);
 			}
-			if (category === 'evaluations') { 
-				console.log('we are in: ' + category);
-				var	evaluationFilter = new Ext.util.Filter({ 
-						property: 'zipcode',  // replace with actual filter when ready
-						value: '55405', 
-						anyMatch: false,
-						caseSensitive: true,
-						root: 'data'
-				});
-				listStore.filter(evaluationFilter);
-			}
+		
 
 		}
 	

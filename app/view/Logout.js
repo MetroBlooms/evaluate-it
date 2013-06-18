@@ -47,7 +47,7 @@ Ext.define('EvaluateIt.view.Logout', {
 					handler: function() {
 						Ext.getCmp('logoutView').destroy();						
 					}
-				},
+				}
 
             ]
         }],

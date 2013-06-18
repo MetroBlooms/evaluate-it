@@ -16,6 +16,7 @@ Ext.define('EvaluateIt.model.SiteEvaluation', {
 	
 			{name: 'site_id', type: 'int'},	
            	{name: 'remoteSiteId', type: 'int'},
+
 /*
  			{name: 'address.address', mapping: 'address.address', type: 'string'},
             {name: 'address.city', mapping: 'address.city', type: 'string'},
@@ -83,13 +84,14 @@ Ext.define('EvaluateIt.model.SiteEvaluation', {
             {name: 'specialAwardSpecified', mapping:  'evaluationAward.specialAwardSpecified', type: 'string'},
             
 			{name: 'rainGarden', mapping:  'evaluationFeature.rainGarden', type: 'string'},
-            {name: 'rainBarrel', mapping:  'evaluationFeature.rainBarrel', type: 'string'},
+            //{name: 'rainBarrel', mapping:  'evaluationFeature.rainBarrel', type: 'string'},
 		
-			{name: 'imageUri', mapping: 'siteImage.imageUri', type: 'string'}
+			{name: 'imageUri', mapping: 'siteImage.imageUri', type: 'string'}, // local path to image
+			{name: 'fileName', mapping: 'siteImage.fileName', type: 'string'} // remote file name: response.imageData.file_name			
 
         ],
 		proxy: {
-        	type: "localstorage",  //"sql"
+        	type: "localstorage"  //"sql"
 			/*reader : {
             	type : 'json',
             	root : 'data'

@@ -59,7 +59,7 @@ Ext.define('EvaluateIt.view.Geoposition', {
 						iconMask: true,
 						handler: function() {
 				
-							getPosition();
+							geo_position();
 							
 						}
 					}
@@ -70,18 +70,18 @@ Ext.define('EvaluateIt.view.Geoposition', {
 
 });
 
-function getPosition() {
+function get_position() {
 	//navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, {desiredAccuracy:30, maxWait:15000});
 
 	//navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge: 30, timeout: 5000, enableHighAccuracy: true });
 
 	var options = { frequency: 10000, enableHighAccuracy: true };
-        watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+        watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
 
 	
 }
 
-function onSuccess(position) {
+function geo_success(position) {
 	var coordinates = position.coords,
 		location = 'Longitude ' + coordinates.longitude + ' Latitude ' + coordinates.latitude + ' Accuracy ' + coordinates.accuracy,
 		timeStamp = new Date(position.timestamp),
@@ -91,7 +91,7 @@ function onSuccess(position) {
 		
 	//alert('success! geoLocation is ready to use!' + ' accuracy ' + accuracy);
 
-	alert('watchin...');
+	alert('watchin...' + ' accuracy is ' + accuracy);
 	console.log(' accuracy ' + accuracy);
 
 	if (accuracy <= 30) {
@@ -111,7 +111,7 @@ function onSuccess(position) {
 }
 
 // onError Callback receives a PositionError object
-function onError(error) {
+function geo_error(error) {
 	alert('error!' );
 }
 

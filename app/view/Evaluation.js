@@ -8,12 +8,12 @@ Ext.define('EvaluateIt.view.Evaluation', {
 		extend: 'Ext.Container',
       	fullscreen: true,
 		config: {
-			//layout: 'vbox',
-			layout: 'fit',
+			layout: 'vbox',
+			//layout: 'fit',
 			items: [
 				{
 					xtype : 'toolbar',
-					docked: 'top',
+					docked: 'top'
 					// add an Ad Hoc evaluation: requirements pending
 					/*items: [
 						{

@@ -60,7 +60,7 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
         }
 
 		// if exists: get evaluator name for display
-		var evaluators = Ext.create('EvaluateIt.store.Evaluators');
+	/*	var evaluators = Ext.create('EvaluateIt.store.Evaluators');
 
 		evaluators.queryBy(function(record,id){
 			evaluators = Ext.getStore(evaluators);
@@ -69,15 +69,15 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
 				name = record.get('firstName') + ' ' + record.get('lastName');
 
 				//title = title + ': Evaluator - ' + name
-				alert('WhoamI: '  + title);
+				//alert('WhoamI: '  + title);
 			}
-		});
+		}); */
 		
 	
-		var title = item.get('text') + ' - ' + name;	
+		//var title = item.get('text') + ' - ' + name;	
 		console.log('title: ' + title);
 
-        this.getToolbar().setTitle(item.get('text') + '- ' + name);
+        this.getToolbar().setTitle(item.get('text'));
         // this.getSourceButton().setHidden(false); commented out
 //        nav.goToNode(item.parentNode);
 //        nav.goToLeaf(item);
