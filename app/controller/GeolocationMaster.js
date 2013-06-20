@@ -170,7 +170,7 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 
 							// update store with new values	
 							Ext.getStore('SiteEvaluations').sync();
-							alert('Location was aved successfully!');
+							alert('Location was saved successfully!');
 
 						}
 					}

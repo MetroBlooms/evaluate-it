@@ -59,7 +59,7 @@ Ext.define('EvaluateIt.view.Geoposition', {
 						iconMask: true,
 						handler: function() {
 				
-							geo_position();
+							get_position();
 							
 						}
 					}

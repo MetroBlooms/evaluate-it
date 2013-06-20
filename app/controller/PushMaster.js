@@ -125,7 +125,7 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 		"score":15,
 		"rating":"GD",
 		"rating_year":2013,
-		"best_of":"NADA!",
+		"bestof":"NADA!",
 		"special_award_specified":null,
 		"evaluator_id":"265",
 		"nate_siegel_award":0,
@@ -194,7 +194,7 @@ The "garden" object that you might send with an evaluation update is not necessa
         score: '14',    
         rating: 'GM',   
         rating_year : '2013',
-        best_of : 'Best Test Garden',
+        bestof : 'Best Test Garden',
         special_award_specified: 'SuperSpecial Award',
         evaluator_id: '265',
         nate_siegel_award : 0,
@@ -235,19 +235,16 @@ function assemble_evaluation(record) {
 		obj = {},
 		core = {},
 		existing = {},
-		ad_hoc = {};
+		ad_hoc = {},
+		eval_type;
 
 		// compute score: TODO: check for null/isInt!
-		if (!record.data.useOfColor 
-				|| record.data.varietyAndHealth 
-				|| record.data.design 
-				|| record.data.maintenance 
-				|| record.data.environmentalStewardship) {
+		if (record.data.useOfColor !== null 
+				&& !record.data.varietyAndHealth !== null 
+				&& !record.data.design !== null 
+				&& !record.data.maintenance !== null 
+				&& !record.data.environmentalStewardship !== null) {
 			
-			score = null;
-			rating = null;
-		}
-		else {
 			score = record.data.useOfColor  
 					+ record.data.varietyAndHealth 
 					+ record.data.design  
@@ -258,10 +255,16 @@ function assemble_evaluation(record) {
 			rating = evaluation_rating(score);
 			console.log("rating" + rating);	
 		}
+		else {
+			
+			score = null;
+			rating = null;
+
+		}
 	
 		// get award if given
 		award = evaluation_award(record.data.awardId);
-		console.log("award" + award.best_of + ' ' + award.nate_seigel);	
+		console.log("award" + award.bestof + ' ' + award.nate_seigel);	
 
 		core = {
 			evaluation: {
@@ -271,7 +274,7 @@ function assemble_evaluation(record) {
 				score: score,
 				rating: rating,
 				rating_year: currentYear,
-				best_of: award.best_of,
+				bestof: award.bestof,
 				special_award_specified: record.data.specialAwardSpecified,
 				evaluator_id: sessionStorage.evaluator_id, // would use remoteEvaluatorId, but if ad hoc this will not exist
 				nate_siegel_award: award.nate_seigel,
@@ -309,18 +312,19 @@ function assemble_evaluation(record) {
 		console.log('Assembled existing to push: ' + Ext.encode(existing));	
 				
 		// new nomination
-		ad_hoc = {  
-			nominator_id: sessionStorage.evaluator_id,  
-			nominator_name: sessionStorage.firstname + ' ' + sessionStorage.lastname,
-			nominator_email: sessionStorage.lastname,
-			gardener_name: record.data.name,
-			address: record.data.address, 
-			city: record.data.city, 
-			state: record.data.state, 
-			zip: record.data.zipcode, 
-			neighborhood: record.data.neighborhood, 
-			county: record.data.county, 
-			uploaded_image: record.data.fileName,
+		ad_hoc = {
+			nomination: {  
+				nominator_id: sessionStorage.evaluator_id,  
+				nominator_name: sessionStorage.firstname + ' ' + sessionStorage.lastname,
+				nominator_email: sessionStorage.email,
+				gardener_name: record.data.name,
+				address: record.data.address, 
+				city: record.data.city, 
+				state: record.data.state, 
+				zip: record.data.zipcode, 
+				neighborhood: record.data.neighborhood, 
+				county: record.data.county 
+			},
 			garden: {}               
 		};
 		
@@ -333,17 +337,19 @@ function assemble_evaluation(record) {
 			obj = Ext.Object.merge(core, existing);
 			obj.evaluation.evaluation_id = record.data.remoteEvaluationId;
 			console.log('existing');
+			eval_type = 'existing';
 		}
 		// new
 		else {
 			obj = Ext.Object.merge(core, ad_hoc);
 			obj.evaluation.uuid = record.data.id; // new usees uuid as linking id
 			console.log('new');
+			eval_type = 'new';
 		}
 
 		console.log('Assembled object to push: ' + Ext.encode(obj));
 			
-		post_to_remote(obj, record);
+		post_to_remote(obj, record, eval_type);
 			
 }
 
@@ -359,7 +365,7 @@ function evaluation_rating (score)	{
 	} else if (score >= 5 && score < 9) {
 		rating = 'CA';
 	} else {
-		rating = 'NADA'; //'';
+		rating = ''; //'';
 	}
 
 	return rating;
@@ -372,43 +378,43 @@ function evaluation_award (award_id) {
 
 	switch (award_id) {
 		case 1:
-			best_of = 'Boulevard Garden';
+			bestof = 'Boulevard Garden';
 			break;
 		case 2:
-			best_of = 'Business Garden or Raingarden';
+			bestof = 'Business Garden or Raingarden';
 			break;
 		case 3:
-			best_of = 'Container/WindowBox Garden';
+			bestof = 'Container/WindowBox Garden';
 			break;
 		case 4:
-			best_of = 'Congregation Garden or Raingarden';
+			bestof = 'Congregation Garden or Raingarden';
 			break;
 		case 5:
-			best_of = 'Public & Schoolyard Garden or Raingarden';
+			bestof = 'Public & Schoolyard Garden or Raingarden';
 			break;
 		case 6:
-			best_of = 'Nate Siegel';
+			bestof = 'Nate Siegel';
 			break;
 		case 12:
-			best_of = 'NateSiegel';
+			bestof = 'NateSiegel';
 			nate_siegel = 1;
 			break;
 		case 13:
-			best_of = 'Special';
+			bestof = 'Special';
 			break;
 		default:
-			best_of = null;
+			bestof = null;
 			break;
 	}
 	
 	return {
-        'best_of': best_of,
+        'bestof': bestof,
         'nate_seigel': nate_siegel
     }; 
 }
 
 // Ajax to remote Webserver
-function post_to_remote(obj, record) {
+function post_to_remote(obj, record, eval_type) {
 
 	var url, //url = EvaluateIt.config.webServer;
 	// POST to server; config variables from app.json
@@ -419,14 +425,23 @@ function post_to_remote(obj, record) {
 	url =  EvaluateIt.config.protocol;
 	url += EvaluateIt.config.test;
 	url += EvaluateIt.config.domain;
-	url += EvaluateIt.config.apiViewEvaluation;
-	url += EvaluateIt.config.action; 
+	
+	if (eval_type === 'existing') {
+		url += EvaluateIt.config.apiViewEvaluation;
+		url += EvaluateIt.config.action;
+	}
+
+	if (eval_type === 'new') {
+		url += EvaluateIt.config.apiViewNomination;
+		url += EvaluateIt.config.ad_hoc;
+	}
+
 	url += '?token=' + sessionStorage.sessionToken;
 
 	console.log('new url: ' + url);
 
 	// AJAX post
-/*	Ext.Ajax.request({
+	Ext.Ajax.request({
 		type: 'POST',
 		//cors: true,
 		url: url,
@@ -442,12 +457,12 @@ function post_to_remote(obj, record) {
 			console.log(e);
 			alert(e);
 		}
-	}); */
+	}); 
 
 	// check if image exists in store
-	if (record.get('imageUri') === null || record.get('imageUri') === '') {
+	//if (record.get('imageUri') !== null && record.get('imageUri') !== '') {
 		initialize_image_post(record)
-	}
+	//}
  
 }
 
@@ -463,45 +478,32 @@ function initialize_image_post(record) {
 	url += EvaluateIt.config.domain;
 	// url += EvaluateIt.config.dev; // ev environment
 	// url += EvaluateIt.config.file_response;  // needed for POST echo
-	url += EvaluateIt.config.apiViewNomination;
+	url += EvaluateIt.config.apiViewEvaluation;
 	url += EvaluateIt.config.file_upload;
 	url += '?token=' + sessionStorage.sessionToken;
 
-	
-/*			protocol: 'http://',
-			domain: 'metroblooms.org',
-			dev: '/api/dev',
-			live: '/api/live',
-			apiView: '/api/evaluation',
-			pullCriterion: '/evaluator_id/',
-		    test: 'staging.',
-			live: 'www.',
-			action: '/update',
-			response: 'show_post_data',			
-*/
-
 	uri = record.data.imageUri; // local path to image
    
-	console.log('uri: ' + uri + 'url: ' + url); 
+	console.log('upload uri: ' + uri + 'url: ' + url); 
 
 	console.log('evaluation_id, uuid ' + record.data.remoteEvaluationId + ', ' + record.data.id );
 
 	// assemble key value pair for use in file transfer object for: existing evaluation
 	if (record.data.remoteEvaluationId !== null) {
-		evaluation_kvp = {evaluation_id: record.data.remoteEvaluationId};
-		console.log('evaluation_id ' + evaluation_kvp);
+		evaluation_kvp.evaluation_id = record.data.remoteEvaluationId;
+		console.log('evaluation_id ' + Ext.encode(evaluation_kvp));
 	}
-	// new nomination/evaluation
+	// new nomination/evaluation: use localStorage uuid as identifier
 	else {
-		evaluation_kvp = {uuid: record.data.id}
-		console.log('uuid ' + evaluation_kvp);
+		evaluation_kvp.uuid = record.data.id;
+		console.log('uuid ' + Ext.encode(evaluation_kvp));
 	}
 	
-	// post_image(uri, url, eval_kvp);
+	post_image(uri, url, evaluation_kvp);
 }
 
 // Phonegap file transfer
-function post_image(imageUri, urli, evaluation_kvp) {
+function post_image(imageUri, url, evaluation_kvp) {
     var options = new FileUploadOptions(),
         ft = new FileTransfer();
 
@@ -519,13 +521,15 @@ function post_success(r) {
     console.log("Response = " + r.response);
     console.log("Sent = " + r.bytesSent);
     alert(r.response);
+	console.log(r.response);
 
 	var response = Ext.JSON.decode(r.response);
-
 	alert(response.imageData.file_name);
 
 }
 
 function post_error(error) {
     alert("An error has occurred: Code = " + error.code);
+	console.log("An error has occurred: Code = " + error.code);
+
 }
