@@ -65,7 +65,7 @@ Ext.define('EvaluateIt.model.SiteEvaluation', {
             {name: 'comments', mapping: 'evaluation.comments', type: 'string'},
             {name: 'evaluationType', mapping: 'evaluation.evaluationType', type: 'int'},
 
-			{name: 'useOfColor', mapping: 'evaluationFactorScorecard.useOfColor', type: 'int'},
+			{name: 'visualImpact', mapping: 'evaluationFactorScorecard.useOfColoisualImpact', type: 'int'},
 			{name: 'varietyAndHealth', mapping: 'evaluationFactorScorecard.varietyAndHealth', type: 'int'},
 			{name: 'design', mapping: 'evaluationFactorScorecard.design', type: 'int'},
 			{name: 'maintenance', mapping: 'evaluationFactorScorecard.maintenance', type: 'int'},
@@ -86,8 +86,7 @@ Ext.define('EvaluateIt.model.SiteEvaluation', {
 			{name: 'rainGarden', mapping:  'evaluationFeature.rainGarden', type: 'string'},
             //{name: 'rainBarrel', mapping:  'evaluationFeature.rainBarrel', type: 'string'},
 		
-			{name: 'imageUri', mapping: 'siteImage.imageUri', type: 'string'}, // local path to image
-			{name: 'fileName', mapping: 'siteImage.fileName', type: 'string'} // remote file name: response.imageData.file_name			
+			{name: 'imageUri', mapping: 'siteImage.imageUri', type: 'string'} // local path to image
 
         ],
 		proxy: {

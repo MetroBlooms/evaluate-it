@@ -27,6 +27,12 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
   		console.log('Main container is active');
  	},
 
+	doCalculateTotals: function() {
+		console.log('Main container is active');
+		// add logic here:
+
+	},
+
 	/*onAddSiteEvaluation: function(button) {
 		console.log('Button Click');
 		var siteEvaluationForm = Ext.Viewport.down('siteEvaluationForm');
@@ -40,14 +46,45 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
 
 	onSaveSiteEvaluation: function(button) {
 		console.log('Button Click for Save');
-		var form = button.up('panel');
+		var form = button.up('panel'),
 		//var form = Ext.getCmp('evaluationId');
 		//get the record 
-		var record = form.getRecord();
+		    record = form.getRecord(),
 		//get the form values
 		//var values = form.getValues();
 		// return a clone for updating of values
-		var values = Ext.clone(form.getValues());
+		    values = Ext.clone(form.getValues()),
+			sumRating;
+
+		// calculatee sum of factor ratings: TODO: display on form
+		if (form.getValues().visualImpact !== null 
+			&& form.getValues().varietyAndHealth !== null 
+			&& form.getValues().design !== null 
+			&& form.getValues().maintenance !== null 
+			&& form.getValues().environmentalStewardship !== null) {
+
+			sumRating = parseInt(form.getValues().visualImpact) + 
+						parseInt(form.getValues().varietyAndHealth) +
+						parseInt(form.getValues().design) + 
+						parseInt(form.getValues().maintenance) + 
+						parseInt(form.getValues().environmentalStewardship);
+						
+			alert('SumRating: ' + sumRating);
+
+			form.setValues({
+				sumRating: sumRating 
+			})
+
+			values = form.getValues();
+
+			record = form.getRecord();
+
+
+		}
+		else {
+			alert('missing factor rating!');
+		}
+
 		//if a new siteEvaluation
 		if(!record){
 			var newRecord = new EvaluateIt.model.SiteEvaluation(values);

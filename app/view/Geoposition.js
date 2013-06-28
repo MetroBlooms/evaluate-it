@@ -62,7 +62,21 @@ Ext.define('EvaluateIt.view.Geoposition', {
 							get_position();
 							
 						}
+					},
+
+					{
+						xtype: 'button',
+						itemId: 'stopWatch',
+						text: 'StopWatch',
+						iconCls: 'arrow_right',
+						iconMask: true,
+						handler: function() {
+				
+							clearWatch();
+							
+						}
 					}
+
                 ]
             }
         ]
@@ -81,6 +95,14 @@ function get_position() {
 	
 }
 
+function clearWatch() {
+	if (watchID != null) {
+		navigator.geolocation.clearWatch(watchID);
+		watchID = null;
+		alert('GPS stopped!');
+	}
+}
+
 function geo_success(position) {
 	var coordinates = position.coords,
 		location = 'Longitude ' + coordinates.longitude + ' Latitude ' + coordinates.latitude + ' Accuracy ' + coordinates.accuracy,
@@ -94,7 +116,7 @@ function geo_success(position) {
 	alert('watchin...' + ' accuracy is ' + accuracy);
 	console.log(' accuracy ' + accuracy);
 
-	if (accuracy <= 30) {
+	if (accuracy <= 150) {
 		alert('success! geoLocation is ready to use!' + ' accuracy ' + accuracy);
 		// initialize
 		//sessionStorage.clear();

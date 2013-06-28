@@ -1,6 +1,6 @@
 // TODO: add remaining evaluation eementss (based on requirements)
 
-Ext.define('EvaluateIt.view.SiteEvaluationForm', {
+var formPanel = Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 	extend: 'Ext.form.Panel',
 	//id: 'evaluationId',
 	alias : 'widget.siteEvaluationForm',
@@ -53,10 +53,11 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 			},   
 			{
 				xtype: 'selectfield',
-				itemId: 'useOfColor',
-				name: 'useOfColor',
-				label: 'Use of color',
+				itemId: 'visualImpact',
+				name: 'visualImpact',
+				label: 'Visual impact',
 				autoSelect: false,
+				//blur : doCalculateTotals(),
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
@@ -73,6 +74,7 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 				name: 'varietyAndHealth',
 				label: 'Plant variety and health',
 				autoSelect: false,
+				//blur : doCalculateTotals(),
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
@@ -89,6 +91,7 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 				name: 'design',
 				label: 'Design',
 				autoSelect: false,
+				//blur : doCalculateTotals(),
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
@@ -105,6 +108,7 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 				name: 'maintenance',
 				label: 'Maintenance',
 				autoSelect: false,
+				//blur : doCalculateTotals(),
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
@@ -121,6 +125,7 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 				name: 'environmentalStewardship',
 				label: 'Environmental Stewardship',
 				autoSelect: false,
+				//blur : doCalculateTotals(),
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
@@ -132,10 +137,24 @@ Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 				]
 			},
 			{
+				xtype: 'textfield',
+				label: 'Total score:',
+				name: 'sumRating'
+			},  
+			{
 				xtype: 'hiddenfield',
 				name: 'imageUri',
 				itemId: 'imageId' 
 			}, 
+			/*{
+				xtype: 'button',
+        		text: 'Sum factors',
+        		handler: function(btn){
+    				//console.log(Ext.getCmp('design'));	//console.log(form value);
+					console.log(Ext.getCmp('design').getValue());
+					
+        		}
+    		},*/
 			{
                  xtype: 'button',
                  itemId: 'siteImage',

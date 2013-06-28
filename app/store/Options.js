@@ -54,17 +54,26 @@
         id: 'data',
 		card: false,
         items: [
+			// GET remote
 			{
                 text: 'Pull',
                 leaf: true,
                 id: 'pull'
             },
+			// POST data to remote
 		 	{
                 text: 'Push',
                 leaf: true,
                 id: 'push',
 				category: 'push'
-            }
+            },
+			// clear data store
+			{
+                text: 'Clear',
+                leaf: true,
+                id: 'clear'
+            },
+
 
         ]
     });

@@ -106,7 +106,7 @@ function parseJson (json) {
 	//console.log('n: ' + json.length);
 
 	// clear for testing only!
-	localStorage.clear();
+	//localStorage.clear();
 
 	for (i = 0, max = json.length; i < max; i += 1) {
 
