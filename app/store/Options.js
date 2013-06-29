@@ -72,7 +72,7 @@
                 text: 'Clear',
                 leaf: true,
                 id: 'clear'
-            },
+            }
 
 
         ]

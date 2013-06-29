@@ -1,4 +1,4 @@
-Ext.define('EvaluateIt.controller.PushMaster', {
+Ext.define('EvaluateIt.controller.Push', {
 	extend: 'Ext.app.Controller',
 
 	config: {
@@ -12,9 +12,6 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 			'pushList': {
 				activate: 'onActivate',
 				itemtap: 'onSelectPush'
-			},
-			'container button[itemId=addPush]': {
-				tap: 'onAddPush' 
 			},
 			'pushForm button[itemId=save]': {
 				tap: 'onSavePush' 
@@ -31,43 +28,18 @@ Ext.define('EvaluateIt.controller.PushMaster', {
 
 	onActivate: function() {
   		console.log('Main container is active');
-		// check for active token
-		//test_token(); 
 		
  	},
 
 	onLoginPush: function(button) {
 		console.log('Button Click');
 		var loginForm = Ext.Viewport.down('login');
-		//create the siteEvaluation edit window if it doesn't exists
+		//create widget if it doesn't exist
 		if(!loginForm){
 			loginForm = Ext.widget('loginview');
 		} 
 		loginForm.reset();
 		loginForm.showBy(button);
-	},
-
-	/*onLogoutPush: function(button) {
-		console.log('Button Click');
-		var logoutForm = Ext.Viewport.down('logout');
-		//create the siteEvaluation edit window if it doesn't exists
-		if(!logoutForm){
-			logoutForm = Ext.widget('logoutview');
-		} 
-		logoutForm.reset();
-		logoutForm.showBy(button);
-	},*/
-
-
-	onAddPush: function(button) {
-		console.log('Button Click');
-		var pushForm = Ext.Viewport.down('pushForm');
-		//create the push edit window if it doesn't exists
-		if(!pushForm){
-			pushForm = Ext.widget('pushForm');
-		} 
-		pushForm.reset();
-		pushForm.showBy(button);
 	},
 
 	onSavePush: function(button) {
@@ -239,13 +211,13 @@ function assemble_evaluation(record) {
 		eval_type;
 
 		// compute score: TODO: check for null/isInt!
-		if (record.data.useOfColor !== null 
+		if (record.data.visualImpact !== null 
 				&& !record.data.varietyAndHealth !== null 
 				&& !record.data.design !== null 
 				&& !record.data.maintenance !== null 
 				&& !record.data.environmentalStewardship !== null) {
 			
-			score = record.data.useOfColor  
+			score = record.data.visualImpact  
 					+ record.data.varietyAndHealth 
 					+ record.data.design  
 					+ record.data.maintenance 
@@ -282,7 +254,7 @@ function assemble_evaluation(record) {
 				// date_entered_on_device_by_evaluator,
 				comments: record.data.comments,
 				scoresheet: {
-					color: record.data.useOfColor,
+					color: record.data.visualImpact,
 					plant_variety: record.data.varietyAndHealth,
 					design: record.data.design,
 					maintenance: record.data.maintenance,
@@ -460,9 +432,9 @@ function post_to_remote(obj, record, eval_type) {
 	}); 
 
 	// check if image exists in store
-	//if (record.get('imageUri') !== null && record.get('imageUri') !== '') {
+	if (record.get('imageUri') !== null && record.get('imageUri') !== '') {
 		initialize_image_post(record)
-	//}
+	}
  
 }
 

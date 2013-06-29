@@ -1,4 +1,4 @@
-Ext.define('EvaluateIt.controller.EvaluationGeneralMaster', {
+Ext.define('EvaluateIt.controller.EvaluationGeneral', {
 	extend : 'Ext.app.Controller',
 
 	config: {

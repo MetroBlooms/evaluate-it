@@ -1,44 +1,9 @@
 Ext.define('EvaluateIt.profile.Base', {
     extend: 'Ext.app.Profile',
-	requires: ['EvaluateIt.controller.GeolocationMaster', 'Ext.device.Geolocation', 'Ext.device.Notification'],
+	requires: ['Ext.device.Geolocation', 'Ext.device.Notification'],
 
     launch: function() {
         var isBenchmarking = window.location.search.match(/(\?|&)bm/);
-
-		//get_location();
-		//getCurrentPosition();
-
-		/*Ext.device.Geolocation.watchPosition({
-			//frequency: 3000,
-			scope: this,
-			callback: function(position) {
-				get_location();
-
-			//	Ext.device.Notification.show({
-			//		title: 'Geolocation',
-			//		message: 'GPS found.'
-			//	});
-			},
-			failure: function() {
-				Ext.device.Notification.show({
-					title: 'Geolocation',
-					message: 'Something went wrong.'
-				});
-			}
-    	});*/
-
-
-		//alert('Device hath phyred - base!');
-		//Wait for PhoneGap to load
-		//document.addEventListener("deviceready", onDeviceReady, false);
-	
-		// wait till Phonegap has loaded
-		//function onDeviceReady() {
-
-		//	alert('Device hath phyred!'); 
-		//	get_location();
-
-		//}
         
 		if (isBenchmarking) {
             Ext.Animator.on({

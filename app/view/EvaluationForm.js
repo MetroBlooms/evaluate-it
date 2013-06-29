@@ -1,6 +1,6 @@
 // TODO: add remaining evaluation eementss (based on requirements)
 
-var formPanel = Ext.define('EvaluateIt.view.SiteEvaluationForm', {
+var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
 	extend: 'Ext.form.Panel',
 	//id: 'evaluationId',
 	alias : 'widget.siteEvaluationForm',
@@ -8,17 +8,8 @@ var formPanel = Ext.define('EvaluateIt.view.SiteEvaluationForm', {
         'Ext.form.Panel',
         'Ext.form.FieldSet',
         'Ext.field.Number',
-        'Ext.field.Spinner',
-        'Ext.field.Password',
-        'Ext.field.Email',
-        'Ext.field.Url',
-        'Ext.field.DatePicker',
         'Ext.field.Select',
-        'Ext.field.Hidden',
-        'Ext.field.Radio',
-        'Ext.field.Slider',
-        'Ext.field.Toggle',
-        'Ext.field.Search'
+        'Ext.field.Hidden'
     ],
 	config: {
 	 
@@ -139,7 +130,8 @@ var formPanel = Ext.define('EvaluateIt.view.SiteEvaluationForm', {
 			{
 				xtype: 'textfield',
 				label: 'Total score:',
-				name: 'sumRating'
+				name: 'sumRating',
+				readOnly: true
 			},  
 			{
 				xtype: 'hiddenfield',

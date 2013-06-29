@@ -9,22 +9,10 @@ Ext.define('EvaluateIt.view.Evaluation', {
       	fullscreen: true,
 		config: {
 			layout: 'vbox',
-			//layout: 'fit',
 			items: [
 				{
 					xtype : 'toolbar',
 					docked: 'top'
-					// add an Ad Hoc evaluation: requirements pending
-					/*items: [
-						{
-							xtype: 'button',
-							itemId: 'addSiteEvaluation',
-							text: 'Add a Thing',
-							iconCls: 'arrow_right',
-							iconMask: true 
-						}
-
-					]*/
 				},
 				{
 					flex: 1,

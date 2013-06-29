@@ -55,16 +55,6 @@ Ext.define('EvaluateIt.controller.Main', {
 		console.log('category: ' + category);
 		console.log('view ' + id);
 
-		// if exists: get evaluator name for display
-/*		var evaluators = Ext.create('EvaluateIt.store.Evaluators');
-
-		evaluators.queryBy(function(record,id){
-			evaluators = Ext.getStore(evaluators);
-
-			name = record.get('firstName') + ' ' + record.get('lastName');
-			console.log('WhoamI: ' +  name +  EvaluateIt.config.name);
-		});
-*/
 		// control view selection based on category passed from routing call
 		if (category === 'evaluations' || category === 'push') {
 
@@ -87,25 +77,6 @@ Ext.define('EvaluateIt.controller.Main', {
 					}
 				});
 
-				/*var evaluationFilter = new Ext.util.Filter({
-						property: 'zipcode', // replace with actual filter when ready
-						value: '554', 
-						anyMatch: true,
-						root: 'data'
-				});*/
-
-				//listStore.filter('zipcode','55405');
-
-				/*var reg = new RegExp('^55','i');
-				listStore.queryBy(function(record) {
-					var site = record.get('site_id'),
-						address = record.get('address');
-					if(site == null) {
-						return true;
-					}
-				});*/
-				
-				//listStore.filter(evaluationFilter);
 			}
 			// only display those evaluations deemed as "complete"
 			if (category === 'push') {

@@ -59,58 +59,11 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
             }, this, { single: true });
         }
 
-		// if exists: get evaluator name for display
-	/*	var evaluators = Ext.create('EvaluateIt.store.Evaluators');
-
-		evaluators.queryBy(function(record,id){
-			evaluators = Ext.getStore(evaluators);
-
-			if (evaluators.getCount() > 0) {
-				name = record.get('firstName') + ' ' + record.get('lastName');
-
-				//title = title + ': Evaluator - ' + name
-				//alert('WhoamI: '  + title);
-			}
-		}); */
-		
 	
 		//var title = item.get('text') + ' - ' + name;	
 		console.log('title: ' + title);
 
         this.getToolbar().setTitle(item.get('text'));
-        // this.getSourceButton().setHidden(false); commented out
-//        nav.goToNode(item.parentNode);
-//        nav.goToLeaf(item);
-//    },
-//
-//    /**
-//     * This is how the view above should look once the animation is fixed
-//     */
-//    XshowView: function(item) {
-//        var nav  = this.getNav(),
-//            view = this.createView(this.getViewName(item));
-//
-//        nav.setDetailCard(view);
-//        nav.goToNode(item.parentNode);
-//        nav.goToLeaf(item);
-//        nav.getCurrentList().select(item);
-//
-//        this.getToolbar().setTitle(item.get('text'));
-//        this.getSourceButton().setHidden(false);
-//    },
-//
-//    /**
-//     * Ideally, even that could be reduced to this by implementing an ensureVisible function onto List
-//     * and NestedList
-//     */
-//    XshowView: function(item) {
-//        var nav = this.getNav();
-//
-//        nav.ensureVisible(item);
-//        nav.setDetailCard(this.createOptionView(item));
-//
-//        this.getToolbar().setTitle(item.get('text'));
-//        this.getSourceButton().setHidden(false);
     },
 
     showMenuById: Ext.emptyFn

@@ -5,23 +5,13 @@ Ext.define('EvaluateIt.view.Push', {
 		alias: 'widget.pushview',
 		
 		config: {
-			//layout: 'vbox',
+			layout: 'vbox',
 			layout: 'fit',
 			//id: 'pushview',
 			items: [
 				{
 					xtype: 'toolbar',
-				//	title: 'Push data to server',
 					docked: 'top',
-				//},
-				//toolbar = Ext.create('Ext.Toolbar', {
-				//	docked: 'top',
-				//	alias : 'widget.geolocationToolbar',
-				//	ui: 'light',
-				//	defaults: {
-				//		iconMask: true
-				//	},
-
 					items: [
 						{
 							xtype: 'button',
@@ -46,13 +36,6 @@ Ext.define('EvaluateIt.view.Push', {
 					xtype: 'pushList'
 				}
 			
-			//listeners: [{
-			//	delegate: '#logOffButton',
-			//	event: 'tap',
-			//	fn: 'onLogOffButtonTap'
-			//}]
-			//}
-
 		],
         listeners: [{
             delegate: '#logOutButton',
@@ -63,10 +46,6 @@ Ext.define('EvaluateIt.view.Push', {
     onLogOutButtonTap: function () {
         this.fireEvent('onSignOffCommand');
     }
-
-		//onLogOffButtonTap: function () {
-		//	this.fireEvent('onSignOffCommand');
-		//}
 	
 });
 

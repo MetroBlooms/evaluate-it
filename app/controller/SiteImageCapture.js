@@ -16,9 +16,9 @@ Ext.define('EvaluateIt.controller.SiteImageCapture',{
     openCamera: function(button,eve){
         Ext.device.Camera.capture({
             success: this.onCaptureSuccess,
-			//failure: this.onCaptureFailure,
+			failure: this.onCaptureFailure,
             scope: this,
-            quality : 50,//for testing having this at 50 does faster uploads
+            quality: 50,//for testing having this at 50 does faster uploads
             source: 'library',
             destination: 'file'
         });

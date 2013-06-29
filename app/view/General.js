@@ -9,7 +9,6 @@ Ext.define('EvaluateIt.view.General', {
       	fullscreen: true,
 		config: {
 			layout: 'vbox',
-			//layout: 'fit',
 			items: [
 				{
 					xtype : 'toolbar',

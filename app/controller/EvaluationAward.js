@@ -1,4 +1,4 @@
-Ext.define('EvaluateIt.controller.EvaluationAwardMaster', {
+Ext.define('EvaluateIt.controller.EvaluationAward', {
 	extend : 'Ext.app.Controller',
 
 	config: {
@@ -13,9 +13,6 @@ Ext.define('EvaluateIt.controller.EvaluationAwardMaster', {
 				activate: 'onActivate',
 				itemtap: 'onSelectAwardMaster'
 			},
-			'container button[itemId=addAwardMaster]' : {
-				tap : 'onAddAwardMaster' 
-			},
 			'evaluationAwardForm button[itemId=save]' : {
 				tap : 'onSaveAwardMaster' 
 			}
@@ -26,17 +23,6 @@ Ext.define('EvaluateIt.controller.EvaluationAwardMaster', {
 	onActivate: function() {
   		console.log('Main container is active');
  	},
-
-	/*onAddAwardMaster: function(button) {
-		console.log('Button Click');
-		var evaluationAwardForm = Ext.Viewport.down('evaluationAwardForm');
-		//create the siteEvaluation edit window if it doesn't exists
-		if(!evaluationAwardForm){
-			evaluationAwardForm = Ext.widget('evaluationAwardForm');
-		} 
-		evaluationAwardForm.reset();
-		evaluationAwardForm.showBy(button);
-	},*/
 
 	onSaveAwardMaster: function(button) {
 		console.log('Button Click for Save');

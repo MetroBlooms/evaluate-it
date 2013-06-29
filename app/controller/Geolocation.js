@@ -1,4 +1,4 @@
-Ext.define('EvaluateIt.controller.GeolocationMaster', {
+Ext.define('EvaluateIt.controller.Geolocation', {
 	extend : 'Ext.app.Controller',
 	requires: ['Ext.Toolbar'],
 
@@ -26,9 +26,6 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
   		console.log('Main container is active');
  	},
 
-//	onSelectGeolocation: function() {
-//		getCurrentPosition();
-//	},
 
 	// spawns a new form panel with Google map centered on current location 
 	onSelectGeolocation: function(view, index, target, record, event) {
@@ -41,15 +38,9 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 		var latitude = sessionStorage.latitude, //44.9616164; 
 		    longitude = sessionStorage.longitude; //-93.33539329999999,
 
-		//get_location();
-		//getCurrentPosition();
 		console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
 
 		//alert('Coords ' +  + sessionStorage.latitude + ' ' + sessionStorage.longitude);
-
-
-		
-		
 
 		var	position = new google.maps.LatLng(latitude, longitude),  
 
@@ -103,49 +94,9 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 					{
 						iconCls: 'home',
 						handler: function() {
-							//disable tracking
-							//var // segmented = Ext.getCmp('segmented'),
-								//pressedButtons = segmented.getPressedButtons();
-								//trafficIndex = pressedButtons.indexOf(trafficButton),
-								//newPressed = (trafficIndex != -1) ? [trafficButton] : [];
-							//segmented.setPressedButtons(newPressed);
 							google_map.getMap().panTo(position);
 						}
 					},
-				/*	{
-						id: 'segmented',
-						xtype: 'segmentedbutton',
-						allowMultiple: true,
-						listeners: {
-							toggle: function(buttons, button, active) {
-								if (button == trafficButton) {
-									google_map.getPlugins()[1].setHidden(!active);
-								}
-								else if (button == trackingButton) {
-									var tracker = google_map.getPlugins()[0],
-										marker = tracker.getMarker();
-									marker.setVisible(active);
-									if (active) {
-										tracker.setTrackSuspended(false);
-										Ext.defer(function() {
-											tracker.getHost().on('centerchange', function() {
-												marker.setVisible(false);
-												tracker.setTrackSuspended(true);
-												var segmented = Ext.getCmp('segmented'),
-													pressedButtons = segmented.getPressedButtons(),
-													trafficIndex = pressedButtons.indexOf(trafficButton),
-													newPressed = (trafficIndex != -1) ? [trafficButton] : [];
-												segmented.setPressedButtons(newPressed);
-											}, this, {single: true});
-										}, 50, this);
-									}
-								}
-							}
-						},
-						items: [
-							trackingButton, trafficButton
-						]
-					},*/
 					// display selected address
 					/*{	
 						xtype: 'textfield', 
@@ -245,80 +196,6 @@ Ext.define('EvaluateIt.controller.GeolocationMaster', {
 	}
 
 });
-
-// Sencha implementation: buggy in Safari desktop, 5.1.9: works when it feels like it!
-/*
-function get_location() {
-	Ext.device.Geolocation.getCurrentPosition({
-
-		maximumAge: 30, 
-		timeout: 5000,
-		enableHighAccuracy: true,
-		frequency: 3000,
-
-		success: function(position) {
-			var coordinates = position.coords,
-				location = 'Longitude ' + coordinates.longitude + ' Latitude ' + coordinates.latitude + ' Accuracy ' + coordinates.accuracy,
-				latitude = coordinates.latitude,
-				longitude =  coordinates.longitude,
-				accuracy = coordinates.accuracy;
-				
-			//alert('util coords ' + location);
-			//alert('Got coords!' + location);
-
-
-			// initialize sessionStorage
-			//sessionStorage.clear();
-			// add data to sessionStorage 
-			sessionStorage.latitude = latitude;
-			sessionStorage.longitude = longitude;
-			sessionStorage.accuracy = accuracy;	
-			sessionStorage.position = position;
-		
-			console.log('latitude ' + sessionStorage.latitude);
-		},
-		failure: function() {
-			console.log('something went wrong!');
-		}
-	});
-};
-*/
-/*
-
-var geo = Ext.create('Ext.util.Geolocation', {
-    autoUpdate: false,
-	enableHighAccuracy: true,
-	//allowHighAccuracy: true,
-    listeners: {
-        locationupdate: function(geo) {
-            //alert('device: ' + geo.getAccuracy());
-			sessionStorage.latitude = geo.getLatitude();
-			sessionStorage.longitude = geo.getLongitude();
-			sessionStorage.accuracy = geo.getAccuracy();	
-
-        },
-        locationerror: function(geo, bTimeout, bPermissionDenied, bLocationUnavailable, message) {
-            if(bTimeout){
-                alert('Timeout occurred.');
-            } else {
-                alert('Error occurred.');
-            }
-        }
-    }
-});
-geo.updateLocation();
-
-Ext.device.Geolocation.watchPosition({
-    frequency: 10000, // Update every 3 seconds
-	enableHighAccuracy: true,
-    callback: function(position) {
-        alert('Position updated!' + position.coords.accuracy);
-    },
-    failure: function() {
-        console.log('something went wrong!');
-    }
-});
-*/
 
 
 function getCurrentPosition() {

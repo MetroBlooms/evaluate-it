@@ -1,4 +1,4 @@
-Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
+Ext.define('EvaluateIt.controller.Evaluation', {
 	extend : 'Ext.app.Controller',
 
 	config: {
@@ -11,13 +11,10 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
 		control: {
 			'evaluationList': {
 				activate: 'onActivate',
-				itemtap: 'onSelectSiteEvaluation'
-			},
-			'container button[itemId=addSiteEvaluation]' : {
-				tap : 'onAddSiteEvaluation' 
+				itemtap: 'onSelectEvaluation'
 			},
 			'siteEvaluationForm button[itemId=save]' : {
-				tap : 'onSaveSiteEvaluation' 
+				tap : 'onSaveEvaluation' 
 			}
 		}	  
 
@@ -27,24 +24,7 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
   		console.log('Main container is active');
  	},
 
-	doCalculateTotals: function() {
-		console.log('Main container is active');
-		// add logic here:
-
-	},
-
-	/*onAddSiteEvaluation: function(button) {
-		console.log('Button Click');
-		var siteEvaluationForm = Ext.Viewport.down('siteEvaluationForm');
-		//create the siteEvaluation edit window if it doesn't exists
-		if(!siteEvaluationForm){
-			siteEvaluationForm = Ext.widget('siteEvaluationForm');
-		} 
-		siteEvaluationForm.reset();
-		siteEvaluationForm.showBy(button);
-	},*/
-
-	onSaveSiteEvaluation: function(button) {
+	onSaveEvaluation: function(button) {
 		console.log('Button Click for Save');
 		var form = button.up('panel'),
 		//var form = Ext.getCmp('evaluationId');
@@ -113,8 +93,6 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
 
 					// update store with URI
 
-					//var SiteEvaluations =  Ext.create('EvaluateIt.store.SiteEvaluations');
-
 					var siteId = record.get('site_id');
 
 
@@ -143,7 +121,7 @@ Ext.define('EvaluateIt.controller.SiteEvaluationMaster', {
 
 	},
 
-	onSelectSiteEvaluation: function(view, index, target, record, event) {
+	onSelectEvaluation: function(view, index, target, record, event) {
 
 		// clear content from image queue stor to initialize
 		var lostor = Ext.getStore('theImageQueue');

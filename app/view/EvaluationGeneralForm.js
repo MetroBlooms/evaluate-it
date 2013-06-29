@@ -7,17 +7,8 @@ Ext.define('EvaluateIt.view.EvaluationGeneralForm', {
         'Ext.form.Panel',
         'Ext.form.FieldSet',
         'Ext.field.Number',
-        'Ext.field.Spinner',
-        'Ext.field.Password',
-        'Ext.field.Email',
-        'Ext.field.Url',
-        'Ext.field.DatePicker',
         'Ext.field.Select',
-        'Ext.field.Hidden',
-        'Ext.field.Radio',
-        'Ext.field.Slider',
-        'Ext.field.Toggle',
-        'Ext.field.Search'
+        'Ext.field.Hidden'
     ],
 	config: {
 	 
