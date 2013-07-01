@@ -1,8 +1,8 @@
 // TODO: add remaining evaluation eementss (based on requirements)
 
-Ext.define('EvaluateIt.view.EvaluationGeneralForm', {
+Ext.define('EvaluateIt.view.SiteGeneralForm', {
 	extend: 'Ext.form.Panel',
-	alias : 'widget.evaluationGeneralForm',
+	alias : 'widget.siteGeneralForm',
 	requires: [
         'Ext.form.Panel',
         'Ext.form.FieldSet',

@@ -5,7 +5,7 @@ Ext.define('EvaluateIt.store.Evaluators', {
     //requires: ['Ext.data.proxy.SQL','EvaluateIt.model.Evaluation'],
     config:{
         model: 'EvaluateIt.model.Evaluator',
-		storeId: 'evaluators', 
+		//storeId: 'evaluators', 
 	    autoLoad: true/*,
 	proxy: {
            type: "sql",

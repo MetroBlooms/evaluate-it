@@ -1,10 +1,10 @@
 /**
  * Create a list of sites to enter general information.
  * First create a SiteEvaluation model with defined fields, then create a store to contain
- * the data, finally create the list itself, which gets its filtered data (evaluationFilter in Main.js) from the store
+ * the data, finally create the list itself, which gets its filtered data (on category = 'evaluations' by regex for existing address in Main.js) from the store
  */
 
-Ext.define('EvaluateIt.view.General', {
+Ext.define('EvaluateIt.view.SiteGeneral', {
 		extend: 'Ext.Container',
       	fullscreen: true,
 		config: {
@@ -17,7 +17,7 @@ Ext.define('EvaluateIt.view.General', {
 					items: [
 						{
 							xtype: 'button',
-							itemId: 'addEvaluationGeneral',
+							itemId: 'addSiteGeneral',
 							text: 'Add evaluation',
 							iconCls: 'arrow_right',
 							iconMask: true 
@@ -27,7 +27,7 @@ Ext.define('EvaluateIt.view.General', {
 				},
 				{
 					flex: 1,
-					xtype: 'generalList' //widget reference to EvaluateIt.view.EvaluationList
+					xtype: 'siteGeneralList' //widget reference to EvaluateIt.view.EvaluationList
 
 				}
 			]

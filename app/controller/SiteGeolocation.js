@@ -1,4 +1,4 @@
-Ext.define('EvaluateIt.controller.Geolocation', {
+Ext.define('EvaluateIt.controller.SiteGeolocation', {
 	extend : 'Ext.app.Controller',
 	requires: ['Ext.Toolbar'],
 
@@ -7,17 +7,13 @@ Ext.define('EvaluateIt.controller.Geolocation', {
   		stores : ['SiteEvaluations'],
   		models : ['SiteEvaluation'],
   		refs: {
-   			myGeolocationList: 'geolocationList'
+   			mySiteGeolocationList: 'siteGeolocationList'
   		},
 		control: {
-			'geolocationList': {
+			'siteGeolocationList': {
 				activate: 'onActivate',
-				itemtap: 'onSelectGeolocation'
-			},
-			'geolocationEdit button[itemId=save]' : {
-				tap : 'onSaveGeolocation' 
+				itemtap: 'onSelectSiteGeolocation'
 			}
-
 		}	  
 
  	},
@@ -28,7 +24,7 @@ Ext.define('EvaluateIt.controller.Geolocation', {
 
 
 	// spawns a new form panel with Google map centered on current location 
-	onSelectGeolocation: function(view, index, target, record, event) {
+	onSelectSiteGeolocation: function(view, index, target, record, event) {
 
 		console.log('Selected a Geolocation from the list');
 

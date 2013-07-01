@@ -1,11 +1,10 @@
 /**
- * Widget, with template to render displayed sites to grab geolocation 
+ * Widget, with template to render displayed sites to evaluate 
 */
 
-
-Ext.define('EvaluateIt.view.GeolocationList', {
+Ext.define('EvaluateIt.view.EvaluationAwardList', {
     extend: 'Ext.dataview.List', //'Ext.tab.Panel',
-	alias : 'widget.geolocationList',
+	alias : 'widget.evaluationAwardList',
     config: {
 		width: Ext.os.deviceType == 'Phone' ? null : 300,
 		height: Ext.os.deviceType == 'Phone' ? null : 500,
@@ -18,6 +17,5 @@ Ext.define('EvaluateIt.view.GeolocationList', {
     }
 
 }); 
-
 
 

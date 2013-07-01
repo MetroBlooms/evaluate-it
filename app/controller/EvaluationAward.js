@@ -6,15 +6,15 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
   		stores : ['SiteEvaluations'],
   		models : ['SiteEvaluation'],
 		refs: {
-   			myawardList: 'awardList'
+   			myEvaluationAwardList: 'evaluationAwardList'
   		},
 		control: {
-			'awardList': {
+			'evaluationAwardList': {
 				activate: 'onActivate',
-				itemtap: 'onSelectAwardMaster'
+				itemtap: 'onSelectEvaluationAward'
 			},
 			'evaluationAwardForm button[itemId=save]' : {
-				tap : 'onSaveAwardMaster' 
+				tap : 'onSaveEvaluationAward' 
 			}
 		}	  
 
@@ -24,7 +24,7 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
   		console.log('Main container is active');
  	},
 
-	onSaveAwardMaster: function(button) {
+	onSaveEvaluationAward: function(button) {
 		console.log('Button Click for Save');
 		var form = button.up('panel');
 		//get the record 
@@ -46,8 +46,8 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
 
 	},
 
-	onSelectAwardMaster: function(view, index, target, record, event) {
-		console.log('Selected a AwardMaster from the list');
+	onSelectEvaluationAward: function(view, index, target, record, event) {
+		console.log('Selected a Award from the list');
 		var evaluationAwardForm = Ext.Viewport.down('evaluationAwardForm');
 
 		if(!evaluationAwardForm){

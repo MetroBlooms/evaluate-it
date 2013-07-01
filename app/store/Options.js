@@ -15,9 +15,9 @@
                 cls: 'launchscreen',
                 items: [
 					{
-                        text: 'General',
+                        text: 'SiteGeneral',
                         leaf: true,
-                        id: 'general',
+                        id: 'siteGeneral',
             			category: 'evaluations'
                     }, 
                     {
@@ -27,9 +27,9 @@
             			category: 'evaluations'
                     },
 					{
-                        text: 'Award',
+                        text: 'EvaluationAward',
                         leaf: true,
-                        id: 'award',
+                        id: 'evaluationAward',
             			category: 'evaluations'
                     },  
 					{
@@ -38,10 +38,15 @@
                         id: 'geoposition'
                     },
                     {
-                        text: 'Geolocation',
+                        text: 'SiteGeolocation',
                         leaf: true,
-                        id: 'geolocation',
+                        id: 'siteGeolocation',
             			category: 'evaluations'
+                    },
+                    {
+                        text: 'EvaluationCriteria',
+                        leaf: true,
+                        id: 'evaluationCriteria'
                     }
 		
                 ]
@@ -69,12 +74,15 @@
             },
 			// clear data store
 			{
-                text: 'Clear',
+                text: 'ClearAll',
                 leaf: true,
-                id: 'clear'
+                id: 'clearAll'
+            },
+			{
+                text: 'RemoveRecord',
+                leaf: true,
+                id: 'removeRecord'
             }
-
-
         ]
     });
 

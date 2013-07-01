@@ -1,6 +1,6 @@
-// clear data store
+// clear data stores
  
-Ext.define('EvaluateIt.view.Clear', {
+Ext.define('EvaluateIt.view.ClearAll', {
     extend: 'Ext.Container',
 	alias: 'widget.clearview',
     config: {
@@ -29,17 +29,20 @@ Ext.define('EvaluateIt.view.Clear', {
 								//animateTarget: 'mb4',
 								//icon: Ext.MessageBox.WARNING,
 								fn: function(buttonId) {
-									//alert('You pressed the "' + buttonId + '" button.');
 								
 									if (buttonId === 'yes') {
-										var evaluationsStore = Ext.getStore('SiteEvaluations');
-										evaluationsStore.removeAll();
-										evaluationsStore.sync();
-										alert('All gone!');
+										var //evaluationsStore = Ext.getStore('SiteEvaluations');
+											evaluatorsStore = Ext.getStore('Evaluators');
+
+										//evaluationsStore.removeAll();
+										evaluatorsStore.removeAll();
+										//evaluationsStore.sync();
+										evaluatorsStore.sync();
+										alert('Data gone!');
 
 									}
 									else {
-										alert('Unscathed!');
+										alert('Data unscathed!');
 									}	
 								}	
 					    	});
