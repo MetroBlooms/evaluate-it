@@ -46,7 +46,8 @@ Ext.define('EvaluateIt.controller.RemoveRecord', {
 					evaluationStore.sync();
 					alert('It is gone!');
 
-					Ext.getStore(evaluationStore).load();
+            		Ext.StoreMgr.get('SiteEvaluations').load();
+					
 
 				}
 				else {

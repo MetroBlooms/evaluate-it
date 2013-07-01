@@ -90,11 +90,10 @@ Ext.define('EvaluateIt.model.SiteEvaluation', {
 
         ],
 		proxy: {
-        	type: "localstorage"  //"sql"
-			/*reader : {
-            	type : 'json',
-            	root : 'data'
-        	}*/
+        	type: "localstorage",  //"sql"
+			reader : {
+            	type : 'json'
+        	}
 
            //database: 'Yo'
         }

@@ -31,12 +31,12 @@ Ext.define('EvaluateIt.view.ClearAll', {
 								fn: function(buttonId) {
 								
 									if (buttonId === 'yes') {
-										var //evaluationsStore = Ext.getStore('SiteEvaluations');
+										var evaluationsStore = Ext.getStore('SiteEvaluations');
 											evaluatorsStore = Ext.getStore('Evaluators');
 
-										//evaluationsStore.removeAll();
+										evaluationsStore.removeAll();
 										evaluatorsStore.removeAll();
-										//evaluationsStore.sync();
+										evaluationsStore.sync();
 										evaluatorsStore.sync();
 										alert('Data gone!');
 

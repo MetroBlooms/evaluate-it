@@ -147,12 +147,17 @@ function parseJson (json) {
 				}]);
 				siteEvaluations.sync(); // update proxy
 
+
+
 			}
 			else { 
 				// sites.removeAt(i);
 				console.log('Evaluation exists!');
 			} 
 
+			// reload store to show up-to-date data 
+           	Ext.StoreMgr.get('SiteEvaluations').load();
+		
 		// } // end if
 
    		// ---------------------------------
@@ -168,6 +173,5 @@ function parseJson (json) {
 		}
 	 
 	}
-
 }
 
