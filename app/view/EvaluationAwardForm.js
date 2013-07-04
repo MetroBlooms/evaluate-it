@@ -23,7 +23,7 @@ Ext.define('EvaluateIt.view.EvaluationAwardForm', {
 		// Set the width and height of the panel
 		//width: 400,
 		//height: 330,
-		width: Ext.os.deviceType == 'Phone' ?  screen.width : 300,
+		width: Ext.os.deviceType == 'Phone' ?  screen.width : 350,
 		height: Ext.os.deviceType == 'Phone' ?  screen.height : 500,
 		scrollable: true,
 	 	layout: {
@@ -38,8 +38,7 @@ Ext.define('EvaluateIt.view.EvaluationAwardForm', {
 			{	
        			xtype: 'textfield',
 		   		name: 'address',
-		   		label: 'Address',
-		   		itemId: 'address' 
+		   		readOnly: true 
 			},   
 			{
 				xtype: 'selectfield',
@@ -54,9 +53,11 @@ Ext.define('EvaluateIt.view.EvaluationAwardForm', {
 					{text: 'Business Garden or Raingarden',  value: '2'},
 					{text: 'Container/WindowBox Garden',  value: '3'},
 					{text: 'Congregation Garden or Raingarden',  value: '4'},
-					{text: 'Public & Schoolyard Garden or Raingarden',  value: '5'},
-					{text: 'Nate Siegel',  value: '12'},
-					{text: 'Special',  value: '13'}
+					{text: 'Residential Garden or Raingarden',  value: '5'},
+					{text: 'Alley Garden',  value: '6'},
+					{text: 'Public & Schoolyard Garden or Raingarden',  value: '7'},
+					{text: 'Nate Siegel',  value: '8'},
+					{text: 'Special',  value: '9'}
 				]
 			},  
 			{	

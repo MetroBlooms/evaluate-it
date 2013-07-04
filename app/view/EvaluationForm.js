@@ -24,7 +24,7 @@ var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
 		// Set the width and height of the panel
 		//width: 400,
 		//height: 330,
-		width: Ext.os.deviceType == 'Phone' ?  screen.width : 300,
+		width: Ext.os.deviceType == 'Phone' ?  screen.width : 350,
 		height: Ext.os.deviceType == 'Phone' ?  screen.height : 500,
 		scrollable: true,
 	 	layout: {
@@ -39,8 +39,7 @@ var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
 			{	
        			xtype: 'textfield',
 		   		name: 'address',
-		   		label: 'Address',
-		   		itemId: 'address' 
+		   		readOnly: true 
 			},   
 			{
 				xtype: 'selectfield',

@@ -362,16 +362,19 @@ function evaluation_award (award_id) {
 			bestof = 'Congregation Garden or Raingarden';
 			break;
 		case 5:
-			bestof = 'Public & Schoolyard Garden or Raingarden';
+			bestof = 'Residential Garden or Raingarden';
 			break;
 		case 6:
-			bestof = 'Nate Siegel';
+			bestof = 'Alley Garden';
 			break;
-		case 12:
+		case 7:
+			bestof = 'Public & Schoolyard Garden or Raingarden';
+			break;
+		case 8:
 			bestof = 'NateSiegel';
 			nate_siegel = 1;
 			break;
-		case 13:
+		case 9:
 			bestof = 'Special';
 			break;
 		default:
@@ -395,7 +398,15 @@ function post_to_remote(obj, record, eval_type) {
 					
 	// new API with authorization token
 	url =  EvaluateIt.config.protocol;
-	url += EvaluateIt.config.test;
+	
+	// select mode of API access
+	if (EvaluateIt.config.mode === 'test') {
+		url += EvaluateIt.config.test;
+	}
+	if (EvaluateIt.config.mode === 'live') {
+		url += EvaluateIt.config.production;
+	}
+	
 	url += EvaluateIt.config.domain;
 	
 	if (eval_type === 'existing') {
@@ -446,7 +457,15 @@ function initialize_image_post(record) {
 
 	// use new API with authorization token
 	url =  EvaluateIt.config.protocol;
-	url += EvaluateIt.config.test;
+	
+	// select mode of API access
+	if (EvaluateIt.config.mode === 'test') {
+		url += EvaluateIt.config.test;
+	}
+	if (EvaluateIt.config.mode === 'live') {
+		url += EvaluateIt.config.production;
+	}
+
 	url += EvaluateIt.config.domain;
 	// url += EvaluateIt.config.dev; // ev environment
 	// url += EvaluateIt.config.file_response;  // needed for POST echo

@@ -22,7 +22,7 @@ Ext.define('EvaluateIt.view.PushForm', {
 		// Set the width and height of the panel
 		//width: 400,
 		//height: 330,
-		width: Ext.os.deviceType == 'Phone' ?  screen.width : 300,
+		width: Ext.os.deviceType == 'Phone' ?  screen.width : 350,
 		height: Ext.os.deviceType == 'Phone' ?  screen.height : 500,
 		scrollable: true,
 	 	layout: {
@@ -37,7 +37,6 @@ Ext.define('EvaluateIt.view.PushForm', {
 			{
 				xtype: 'textfield', 
 				name: 'address',
-				itemId: 'address',
 				readOnly: true
 			},
 			/*{

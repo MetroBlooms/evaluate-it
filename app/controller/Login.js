@@ -1,3 +1,4 @@
+// Handle login session tokens
 // from http://miamicoder.com/2012/adding-a-login-screen-to-a-sencha-touch-application-part-2/
 
 Ext.define('EvaluateIt.controller.Login', {
@@ -40,7 +41,21 @@ Ext.define('EvaluateIt.controller.Login', {
         console.log('Username: ' + username + '\n' + 'Password: ' + password);
 
         var me = this,
-            loginView = me.getLoginView();
+            loginView = me.getLoginView(),
+			url =  EvaluateIt.config.protocol;
+
+		// select mode of API access
+		if (EvaluateIt.config.mode === 'test') {
+			url += EvaluateIt.config.test;
+		}
+		if (EvaluateIt.config.mode === 'live') {
+			url += EvaluateIt.config.production;
+		}
+
+		url += EvaluateIt.config.domain;
+		url += EvaluateIt.config.login;
+
+		console.log('url: ' + url);
 
         if (username.length === 0 || password.length === 0) {
 
@@ -57,8 +72,8 @@ Ext.define('EvaluateIt.controller.Login', {
 
 			cors: true,
 			useDefaultXhrHeader: false,
-            url: 'http://staging.metroblooms.org/api/auth/login', 
-            method: 'post',
+            url: url,
+			method: 'post',
             params: {
                 user: username,
                 pwd: password
@@ -99,13 +114,9 @@ Ext.define('EvaluateIt.controller.Login', {
 
     signInSuccess: function (message) {
         console.log('Signed in.');
-		// test login using token
-		//test_token();
         var loginView = this.getLoginView();
-		//pushView = this.getPushView();
 		loginView.showSignInSucceededMessage(message);
         loginView.setMasked(false);
-		//Ext.Viewport.animateActiveItem(pushView, this.getSlideLeftTransition());
 
     },
 
@@ -117,31 +128,42 @@ Ext.define('EvaluateIt.controller.Login', {
     },
 
     onSignOffCommand: function () {
+		var	url =  EvaluateIt.config.protocol;
 
+		// select mode of API access
+		if (EvaluateIt.config.mode === 'test') {
+			url += EvaluateIt.config.test;
+		}
+		if (EvaluateIt.config.mode === 'live') {
+			url += EvaluateIt.config.production;
+		}
+
+		url += EvaluateIt.config.domain;
+		url += EvaluateIt.config.logout;
+		url += '?token=';
+		
+		
         var me = this;
 
         Ext.Ajax.request({
 			cors: true,
 			useDefaultXhrHeader: false,
-            url: 'http://staging.metroblooms.org/api/auth/logout?token=' + sessionStorage.sessionToken,
-            method: 'get',
+            url: url + sessionStorage.sessionToken,
+			method: 'get',
             //params: {
             //    sessionToken: me.sessionToken
             //},
             success: function (response) {
 				
-				var loginResponse = Ext.JSON.decode(response.responseText);
+				var logoutResponse = Ext.JSON.decode(response.responseText);
 
-				alert('Logoff!!' + loginResponse.success + ' ' + loginResponse.message);
-                // todo: remove from localstorage
+				alert('Logoff!!' + logoutResponse.success + ' ' + logoutResponse.message);
             },
             failure: function (response) {
-
-                // todo: give error!
+				alert('Error in logoff!!' + logoutResponse.success + ' ' + logoutResponse.message);
             }
         });
 
-        //Ext.Viewport.animateActiveItem(this.getLoginView(), this.getSlideRightTransition());
     }
 });
 

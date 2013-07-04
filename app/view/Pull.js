@@ -48,7 +48,15 @@ Ext.define('EvaluateIt.view.Pull', {
 					
 							// use new API with authorization token
 							url =  EvaluateIt.config.protocol;
-							url += EvaluateIt.config.test;
+
+							// select mode of API access
+							if (EvaluateIt.config.mode === 'test') {
+								url += EvaluateIt.config.test;
+							}
+							if (EvaluateIt.config.mode === 'live') {
+								url += EvaluateIt.config.production;
+							}
+
 							url += EvaluateIt.config.domain;
 							url += EvaluateIt.config.apiViewEvaluation;
 							url += EvaluateIt.config.pullCriterion;
@@ -112,7 +120,7 @@ function parseJson (json) {
 
 		// a create a psuedo-nested JSON store until issues with association have been resolved
 
-		//if (json[i].completed === 0) {
+		if (json[i].completed === 0) {
 			siteEvaluations = Ext.getStore(SiteEvaluations);
 					
 			// need to see if evaluation exists in store 
@@ -147,8 +155,6 @@ function parseJson (json) {
 				}]);
 				siteEvaluations.sync(); // update proxy
 
-
-
 			}
 			else { 
 				// sites.removeAt(i);
@@ -158,14 +164,23 @@ function parseJson (json) {
 			// reload store to show up-to-date data 
            	Ext.StoreMgr.get('SiteEvaluations').load();
 		
-		// } // end if
+		} // end if
 
    		// ---------------------------------
 		// insert evaluators for evaluation: in practice, an evaluator has many evaluations; however, assume that only one evaluator uses the device, 
 		// and thus, no direct association is needed between models
 	
-		// TODO: add check that record does not already exist	
-		if (i === 0) {
+		Evaluators = Ext.getStore(Evaluators);
+				
+		// need to see if evaluation exists in store 
+		var match = Evaluators.find('remoteEvaluatorId',  json[i].evaluator.evaluator_id);
+
+		console.log(Evaluators.find('remoteEvaluatorId', + json[i].evaluator.evaluator_id)); 
+				  
+		if (match === -1) {
+			console.log('Adding Evaluator!');
+		
+			
 			newEvaluator = {remoteEvaluatorId: json[i].evaluator.evaluator_id, firstName: json[i].evaluator.firstname, lastName: json[i].evaluator.lastname, email: json[i].evaluator.email};
 			Evaluators.add(newEvaluator);
 			Evaluators.sync();
