@@ -23,7 +23,7 @@ Ext.define('EvaluateIt.view.SiteGeneralForm', {
 		// Set the width and height of the panel
 		//width: 400,
 		//height: 330,
-		width: Ext.os.deviceType == 'Phone' ?  screen.width : 300,
+		width: Ext.os.deviceType == 'Phone' ?  screen.width : 350,
 		height: Ext.os.deviceType == 'Phone' ?  screen.height : 500,
 		scrollable: true,
 	 	layout: {
@@ -31,7 +31,7 @@ Ext.define('EvaluateIt.view.SiteGeneralForm', {
 		},
 		defaults: {
 			margin: '0 0 5 0',
-			labelWidth: '40%',
+			labelWidth: '45%',
 			labelWrap: true
 		},
 		items: [

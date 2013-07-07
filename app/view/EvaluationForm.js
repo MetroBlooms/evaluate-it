@@ -32,7 +32,7 @@ var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
 		},
 		defaults: {
 			margin: '0 0 5 0',
-			labelWidth: '40%',
+			labelWidth: '50%',
 			labelWrap: true
 		},
 		items: [
