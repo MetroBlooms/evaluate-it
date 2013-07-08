@@ -120,11 +120,11 @@ function parseJson (json) {
 
 		// a create a psuedo-nested JSON store until issues with association have been resolved
 
-		if (json[i].completed === 0) {
+		if (json[i].completed === '0') {
 			siteEvaluations = Ext.getStore(SiteEvaluations);
 					
 			// need to see if evaluation exists in store 
-			var match = siteEvaluations.find('remoteEvaluationId', json[i].garden.evaluation_id);
+			var match = siteEvaluations.find('address', json[i].garden.address.address);
 
 			console.log(siteEvaluations.find('remoteEvaluationeId', json[i].garden.evaluation_id)); 
 					  
@@ -161,11 +161,11 @@ function parseJson (json) {
 				console.log('Evaluation exists!');
 			} 
 
-			// reload store to show up-to-date data 
-           	Ext.StoreMgr.get('SiteEvaluations').load();
 		
 		} // end if
 
+		// reload store to show up-to-date data 
+        Ext.StoreMgr.get('SiteEvaluations').load();
    		// ---------------------------------
 		// insert evaluators for evaluation: in practice, an evaluator has many evaluations; however, assume that only one evaluator uses the device, 
 		// and thus, no direct association is needed between models

@@ -78,7 +78,7 @@ function geo_success(position) {
 	alert('watchin...' + ' accuracy is ' + accuracy);
 	console.log(' accuracy ' + accuracy);
 
-	if (accuracy <= 150) {
+	if (accuracy <= 15) {
 		alert('success! geoLocation is ready to use!' + ' accuracy ' + accuracy);
 		// initialize
 		//sessionStorage.clear();
