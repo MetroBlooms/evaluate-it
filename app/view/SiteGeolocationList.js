@@ -12,7 +12,7 @@ Ext.define('EvaluateIt.view.SiteGeolocationList', {
 		xtype: 'list',
 		store: 'SiteEvaluations', //getRange(0, 9),
 		itemTpl: [
-			'<div><strong>Address: {address}</strong></div> '
+			'<div><strong>{accuracy}-Address: {address}</strong></div> '
 		],
 		variableHeights: false
     }

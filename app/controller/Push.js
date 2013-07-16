@@ -250,7 +250,7 @@ function assemble_evaluation(record) {
 				special_award_specified: record.data.specialAwardSpecified,
 				evaluator_id: sessionStorage.evaluator_id, // would use remoteEvaluatorId, but if ad hoc this will not exist
 				nate_siegel_award: award.nate_seigel,
-				date_evaluated: record.data.dateOfEvaluation, 
+				date_evaluated: Ext.Date.format(record.data.dateOfEvaluation, 'm/d/Y'), // formatted as mm/dd/yyyy 
 				// date_entered_on_device_by_evaluator,
 				comments: record.data.comments,
 				scoresheet: {
@@ -276,8 +276,8 @@ function assemble_evaluation(record) {
 			garden: {
 				garden_id: record.data.remoteSiteId,
 				name:  record.data.name,
-				no_longer_exists:  0, //record.data.noLongerExists,
-				raingarden: 0// record.data.rainGarden,
+				no_longer_exists: record.data.noLongerExists,
+				raingarden: record.data.rainGarden
 			}
 		}; 
 
@@ -321,7 +321,7 @@ function assemble_evaluation(record) {
 
 		console.log('Assembled object to push: ' + Ext.encode(obj));
 			
-		post_to_remote(obj, record, eval_type);
+		//post_to_remote(obj, record, eval_type);
 			
 }
 

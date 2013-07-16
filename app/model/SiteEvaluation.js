@@ -60,7 +60,7 @@ Ext.define('EvaluateIt.model.SiteEvaluation', {
             {name: 'dateloadedToDevice', mapping: 'evaluation.dateloadedToDevice', type: 'date'},
             {name: 'datePostedToRemote', mapping: 'evaluation.datePostedToRemote', type: 'date'},
             {name: 'dateUpdated', mapping: 'evaluation.dateUpdated', type: 'date'},
-            {name: 'dateOfEvaluation', mapping: 'evaluation.dateOfEvaluation', type: 'date'},
+            {name: 'dateOfEvaluation', mapping: 'evaluation.dateOfEvaluation', type: 'date'}, 
             {name: 'noLongerExists', mapping: 'evaluation.noLongerExists', type: 'boolean'},
             {name: 'comments', mapping: 'evaluation.comments', type: 'string'},
             {name: 'evaluationType', mapping: 'evaluation.evaluationType', type: 'int'},
@@ -78,9 +78,9 @@ Ext.define('EvaluateIt.model.SiteEvaluation', {
 			{name: 'latitude', mapping: 'geolocation.latitude', type: 'float'},
             {name: 'longitude', mapping: 'geolocation.longitude', type: 'float'},
             {name: 'accuracy', mapping: 'geolocation.accuracy', type: 'float'},
-            {name: 'datestamp', mapping:  'geolocation.datestamp', type: 'string'},
-
-            {name: 'awardId', mapping:  'evaluationAward.rainGarden', type: 'string'},
+            {name: 'datestamp', mapping:  'geolocation.datestamp', type: 'string'},             
+			
+			{name: 'awardId', mapping:  'evaluationAward.rainGarden', type: 'string'},
             {name: 'specialAwardSpecified', mapping:  'evaluationAward.specialAwardSpecified', type: 'string'},
             
 			{name: 'rainGarden', mapping:  'evaluationFeature.rainGarden', type: 'string'},
