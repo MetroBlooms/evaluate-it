@@ -38,7 +38,7 @@ Ext.define('EvaluateIt.view.SiteGeneralForm', {
 			{
 				xtype: 'datepickerfield',
 				destroyPickerOnHide: true,
-				name : 'dateOfEvaluation', //KLUDGE: see app/model/SiteEvaluation.js model for explanation
+				name : 'dateOfEvaluation', 
 				label: 'Date of evaluation',
 				dateFormat: 'm/d/Y',
 				value: new Date(),
