@@ -203,6 +203,8 @@ function assemble_evaluation(record) {
 		award,
 		rating,
 		nate_siegel_award,
+		rain_garden = 0,
+		no_longer_exists = 0,
 		currentYear = (new Date()).getFullYear(),
 		obj = {},
 		core = {},
@@ -236,7 +238,15 @@ function assemble_evaluation(record) {
 	
 		// get award if given
 		award = evaluation_award(record.data.awardId);
-		console.log("award" + award.bestof + ' ' + award.nate_seigel);	
+		console.log("award" + award.bestof + ' ' + award.nate_seigel);
+
+		if (record.data.noLongerExists === 'true' || record.data.noLongerExists === true) {
+			no_longer_exists = 1;
+		}
+
+		if (record.data.rainGarden === 'true' || record.data.rainGarden === true) {
+			rain_garden = 1;
+		}
 
 		core = {
 			evaluation: {
@@ -276,8 +286,8 @@ function assemble_evaluation(record) {
 			garden: {
 				garden_id: record.data.remoteSiteId,
 				name:  record.data.name,
-				no_longer_exists: record.data.noLongerExists,
-				raingarden: record.data.rainGarden
+				no_longer_exists: no_longer_exists,
+				raingarden: rain_garden
 			}
 		}; 
 

@@ -11,9 +11,11 @@ Ext.define('EvaluateIt.view.SiteGeolocationList', {
 		height: Ext.os.deviceType == 'Phone' ? null : 500,
 		xtype: 'list',
 		store: 'SiteEvaluations', //getRange(0, 9),
-		itemTpl: [
-			'<div><strong>{accuracy}-Address: {address}</strong></div> '
-		],
+		itemTpl:  new Ext.XTemplate(//[
+			//'<div><strong>{accuracy}-Address: {address}</strong></div> '
+			'<tpl if="values.accuracy !== null"> {accuracy} m for:</tpl>' +
+			' Address: {address}'
+		),//],
 		variableHeights: false
     }
 
