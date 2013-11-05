@@ -331,7 +331,7 @@ function assemble_evaluation(record) {
 
 		console.log('Assembled object to push: ' + Ext.encode(obj));
 			
-		post_to_remote(obj, record, eval_type);
+	//	post_to_remote(obj, record, eval_type);
 			
 }
 

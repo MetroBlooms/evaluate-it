@@ -24,7 +24,7 @@ Deployment instructions:
 *  Download and install <a href="http://phonegap.com/download/#">Phonegap</a> for your desired environment
 *  Configure your native development environment
 
-**note: I am running version 2.5.0 for this project, since it was the most stable version at the time of testing. Version 2.6.0 had several issues that would break the application, and 2.7.0 was an unknown. You will need to install the appropriate cordova library based on your mobile OS (See http://docs.phonegap.com/en/2.7.0/guide_getting-started_index.md.html#Getting%20Started%20Guides for platform specific details).**
+**note: I am running Cordova version 2.5.0 for this project, since it was the most stable version at the time of testing. Version 2.6.0 had several issues that would break the application, and 2.7.0 was an unknown. You will need to install the appropriate cordova library based on your mobile OS (See http://docs.phonegap.com/en/2.7.0/guide_getting-started_index.md.html#Getting%20Started%20Guides for platform specific details).**
 
 Testing via browser: Start script localHttpServerStart.sh (simple Python Web server) in ./evaluate-it folder and connect via URL http://localhost:8000 (note: Sencha Touch does not support Firefox)
 
@@ -32,16 +32,18 @@ Testing via browser: Start script localHttpServerStart.sh (simple Python Web ser
 
 TODO: 
 *  Add detailed description 
-*  Add cookie auth for remote data push/pull
 *  Add directions for bundling Phonegap builds for Android/iOS deployment
 
 **Currently using kludge for Android and iOS; implement and test more uniform solution: https://github.com/bricemason/sencha-cordova-builder**
 
-*  Add separate branches for Android and iOS
-*  Add Phonegap API for image gallery selection/upload
 *  Add unit and integration tests (using Jasmine)
-*  Field test!
-*  Add normalized model (see comments in app/model/SiteEvaluation.js)
+*  Add normalized model (see comments in app/model/SiteEvaluation.js)a
+*  Switch to Nokia maps API
+*  Fix image upload issues on iOS
+*  Add multi-image binding to single evluation
+*  Improve style and form flow
+*  Add user selected geopositioning ccuracy
+*  Etc.
 
 Note: You will need to configure the global URL variables for the AJAX calls in the configuration file app.js (not included in this repository, but necessary to run the application. app.js configuration is listed below). You can also use this file for other sensitive configuration data storage. 
 
@@ -73,27 +75,32 @@ Note: You will need to configure the global URL variables for the AJAX calls in 
 				// variables for use in POST/GET method to web server
 				// do not publish as part of project
 
-				// new API
+				// new API variables
 	
+				// TODO: add switch for app to go between dev and prod environments: 
+				//       Both in local app db, and via API calls to Web server
+				//
+				// TODO: document Web API summary of calls
+				// ----------------------------
+
 				protocol: 'http://',
 				domain: 'ip_name_here',
-				dev: '/api/dev', // choose dev or live 
+				dev: '/api/dev',
 				live: '/api/live',
-				apiView: '/api/evaluation',
-				pullCriterion: '/evaluator_id/', // pull from http response when login is initiate
-				test: 'staging.', // choose test or live environment to POST/GET
-				live: 'www.',
-				action: '/update',	
+				login: '/api/auth/login',
+				logout: '/api/auth/logout',
+				apiViewEvaluation: '/api/evaluation',
+				apiViewNomination: '/api/nomination',
+				pullCriterion: '/evaluator_id/',
+		    	test: 'staging.',
+				production: 'www.',
+				action: '/update',
+				ad_hoc: '/addWithEvaluation',
+				post_response: '/show_post_data',			
+				file_response: '/show_file_data',
+				file_upload: '/uploadImage',
+				mode: 'live' // switch to control use of staging or prouction server
 
-				// old RESTful calls
-
-				webServer: 'http://ip_name_here',
-				collectionDevelopment: 'app', // set on server to use development database 
-				collectionProduction: 'applive', // set on server to use live database
-				evaluator_id: insert_fixed_id_here , // need variable evaluator_id (dependent on development of cookie auth piece)
-				callback: insert_calback_function_for_cors_request_here,
-				testHttpResponse: 'showPostedData.php', // give server response
-				postResults: 'updateData.php'  // update data on server
 
 			}
 		},
@@ -118,18 +125,30 @@ Note: You will need to configure the global URL variables for the AJAX calls in 
 		},
 
 		//loads the views used by the app from the app/view folder
+	 //loads the views used by the app from the app/view folder
 		views: [
-			
-			'SiteEvaluationEdit',
+
+			'ClearAll',	
+			'EvaluationCriteria',
 			'Evaluation',
 			'EvaluationList',
-			'Geolocation', 
-			'GeolocationList',
+			'EvaluationForm',
+			'EvaluationAward',
+			'EvaluationAwardForm',
+			'EvaluationAwardList',
+			'SiteGeneral',
+			'SiteGeneralForm',
+			'SiteGeneralList',
+			'SiteGeolocation', 
+			'SiteGeolocationList',
+			'Geoposition',	
+			'Login',
 			'Pull',
 			'Push',
 			'PushList',
-			'PushForm'
-
+			'PushForm',
+			'RemoveRecord',
+			'RemoveRecordList'
 		],
 
 		models: [ 
@@ -151,6 +170,8 @@ Note: You will need to configure the global URL variables for the AJAX calls in 
 		//loads app/store/Options.js, which contains the tree data for our main navigation NestedList
 		stores: [
 
+		    'Evaluators',
+			'ImageQueue',
 			'Options',  
 			'SiteEvaluations'
 			/*'Evaluations', 
@@ -159,6 +180,7 @@ Note: You will need to configure the global URL variables for the AJAX calls in 
 			'Evaluators',
 			'Geolocations',
 			'SiteMaintainers'*/
+
 
 		],
 	 
@@ -173,10 +195,15 @@ Note: You will need to configure the global URL variables for the AJAX calls in 
 
 		//ancillary views
 		controllers: [
-		
-			'GeolocationMaster',
-			'SiteEvaluationMaster',
-			'PushMaster'
+	
+			'Evaluation',
+			'EvaluationAward',
+			'SiteGeneral',
+			'SiteGeolocation',
+			'Login',
+			'Push',
+			'RemoveRecord',
+			'SiteImageCapture'
 		
 		]
 	});
