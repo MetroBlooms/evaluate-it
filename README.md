@@ -37,12 +37,12 @@ TODO:
 **Currently using kludge for Android and iOS; implement and test more uniform solution: https://github.com/bricemason/sencha-cordova-builder**
 
 *  Add unit and integration tests (using Jasmine)
-*  Add normalized model (see comments in app/model/SiteEvaluation.js)a
+*  Add normalized model (see comments in app/model/SiteEvaluation.js)
 *  Switch to Nokia maps API
 *  Fix image upload issues on iOS
 *  Add multi-image binding to single evluation
 *  Improve style and form flow
-*  Add user selected geopositioning ccuracy
+*  Add user selected geopositioning accuracy
 *  Etc.
 
 Note: You will need to configure the global URL variables for the AJAX calls in the configuration file app.js (not included in this repository, but necessary to run the application. app.js configuration is listed below). You can also use this file for other sensitive configuration data storage. 
