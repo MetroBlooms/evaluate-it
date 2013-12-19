@@ -9,12 +9,12 @@ Credits: <a href="http://dev.sencha.com/deploy/touch/examples/production/kitchen
 Test Platform: Web (see TODO)
 
 Deployment instructions:
-*  <a href="http://www.sencha.com/products/touch/download/">Download and install Sencha Touch SDK</a>
+*  <a href="http://www.sencha.com/products/touch/download/">Download and install Sencha Touch SDK - OpenSource/GPL license version</a>
 *  <a href="http://www.sencha.com/products/sencha-cmd/download">Download and install Sencha command utility</a>   
-*  clone repo in directory of your choice (/path/to/app/)
-*  cd to Sencha Touch SDK directory  
-*  sencha generate app EvaluateIt evaluate-it
-*  cd /path/to/app/evaluate-it
+*  clone repo in directory of your choice (/path/to/app/, e.g.~/development)
+*  cd to Sencha Touch SDK directory (e.g., ~/Library/Javascript/sencha/touch-2.3.1)
+*  sencha generate app EvaluateIt ~/development/evaluate-it
+*  cd ~/development/evaluate-it
 *  vi app.js (modify as per below)
 *  vi .sencha/app/sencha.cfg (add '${app.dir}/lib/plugin' to app.classpath as per line below)
 
