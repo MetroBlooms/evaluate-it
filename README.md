@@ -19,7 +19,7 @@ Deployment instructions:
 *  vi .sencha/app/sencha.cfg (add '${app.dir}/lib/plugin' to app.classpath as per line below)
 
     app.classpath=${app.dir}/app.js,${app.dir}/app,${app.dir}/lib/plugin
-
+*  drop app.js (one that I e-mailed you; see note about app.js below) into ~/development/evaluate-it
 *  sencha app build testing
 *  Download and install <a href="http://phonegap.com/download/#">Phonegap</a> for your desired environment
 *  Configure your native development environment
