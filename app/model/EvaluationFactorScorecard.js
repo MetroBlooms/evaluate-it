@@ -5,9 +5,9 @@ Ext.define('EvaluateIt.model.EvaluationFactorScorecard', {
         //idProperty: 'id', // use with proxy.SQL 
 	identifier: 'uuid', // use with proxy.localstorage 
         fields: [
-            {name: 'id', type: 'int'},
-            {name: 'score', type: 'int'},
-            {name: 'factorType', type: 'int'}
+            {name: 'id', type: 'int'}, // pk
+            {name: 'score', type: 'int'}, // score: valid value in (0, 4)
+            {name: 'factorType', type: 'int'} // linking id for lookup
         ],
 	belongsTo: [{ model: 'EvaluateIt.model.Evaluation', associationKey: 'evaluationId' }]
 

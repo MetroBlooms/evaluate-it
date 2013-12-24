@@ -7,7 +7,7 @@ Ext.define('EvaluateIt.model.Evaluator', {
 	// 'Ext.data.identifier.Uuid'
 	//identifier: 'uuid', // use with proxy.localstorage 
         fields: [
-            {name: 'remoteEvaluatorId', type: 'int'},
+            {name: 'remoteEvaluatorId', type: 'int'}, // linking id to remote JSON
             {name: 'firstName', type: 'auto'},
             {name: 'lastName', type: 'auto'},
 	    	{name: 'email', type: 'auto'}

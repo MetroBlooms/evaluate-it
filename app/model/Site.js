@@ -2,10 +2,8 @@
 
 Ext.define('EvaluateIt.model.Site', {
     extend: 'Ext.data.Model',
-    //extend: 'EvaluateIt.model.BaseModel',
-    
     config: {
-        //idProperty: 'id', // use with proxy.SQL 
+    //idProperty: 'id', // use with proxy.SQL 
 	//identifier: 'uuid', // use with proxy.localstorage 
         fields: [
 			{name: 'key_id', type: 'string'},
