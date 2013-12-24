@@ -1,30 +1,30 @@
-This folder contains the models for evaluateIt!
+# This folder contains the models for evaluateIt!
 
 TODO: Expand detail
 
-The current model:
+# The current model:
 
 **SiteEvaluation** (A flattened representation of the desired model)
 
-hasOne: Evaluator
+* hasOne: Evaluator
 
-The desired model:
+# The desired model:
 
 **Site**
 
-hasMany: Evaluation,
+* hasMany: Evaluation,
 	     SiteMaintainer
 
-hasOne:  Geolocation,
+* hasOne:  Geolocation,
 		 Address 
 
 **Evaluation**
 
-hasMany: EvaluationFactorScorecard,
+* hasMany: EvaluationFactorScorecard,
 		 EvaluationFeature,
 		 EvaluationImage (TODO: implement as per http://code.medula.cl/article_Picture-capture-and-uploader-app-with-ST2.html)
 
-hasOne:  EvaluationAward,
+* hasOne:  EvaluationAward,
 		 Evaluator
 
 
