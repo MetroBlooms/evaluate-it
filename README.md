@@ -1,4 +1,4 @@
-Cross platform mobile app built using Sencha Touch 2.1.1 framework 
+Cross platform mobile app built using Sencha Touch 2.3.1 framework 
 
 **This project obsoletes evaluate-it-jqm.**
 
