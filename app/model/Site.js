@@ -8,7 +8,8 @@ Ext.define('EvaluateIt.model.Site', {
         fields: [
 			{name: 'key_id', type: 'string'},
 			{name: 'site_id', type: 'int'},
-           	{name: 'remoteSiteId', type: 'int'}
+           	{name: 'remoteSiteId', type: 'int'},
+            {name: 'siteName', type: 'int'} // does site have a formal name
         ],
 		proxy: {
         	type: "localstorage"
