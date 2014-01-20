@@ -7,7 +7,9 @@ Ext.define('EvaluateIt.model.SiteMaintainer', {
          //idProperty: 'id', // use with proxy.SQL 
 	identifier: 'uuid', // use with proxy.localstorage 
         fields: [
-            {name: 'name', type: 'string'},
+            {name: 'firstName', type: 'string'},
+            {name: 'lastName', type: 'string'},
+            {name: 'emailAddress', type: 'string'},
 	    {name: 'site_id', type: 'int'}
         ],
 	proxy: {

@@ -218,7 +218,8 @@ function assemble_evaluation(record) {
 				&& !record.data.design !== null 
 				&& !record.data.maintenance !== null 
 				&& !record.data.environmentalStewardship !== null) {
-			
+
+            // TODO: make a method of Evaluation
 			score = record.data.visualImpact  
 					+ record.data.varietyAndHealth 
 					+ record.data.design  
