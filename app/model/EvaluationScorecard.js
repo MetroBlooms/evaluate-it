@@ -1,4 +1,4 @@
-Ext.define('EvaluateIt.model.EvaluationFactorScorecard', {
+Ext.define('EvaluateIt.model.EvaluationScorecard', {
     extend: 'Ext.data.Model',
     
     config: {
