@@ -88,7 +88,7 @@ function geo_success(position) {
 		sessionStorage.accuracy = accuracy;
 		sessionStorage.timeStamp = timeStamp;
 
-		navigator.geolocation.clearWatch(watchID);
+		clearWatch(watchID);
 	}
 
 
