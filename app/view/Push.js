@@ -1,13 +1,19 @@
+/**
+ * Create a list of sites that have been evaluated and can be pushed to the remote server.
+ * First create a Site model with defined fields,
+ * then create a store to contain the data,
+ * finally create the list itself using an xtype widget, which gets its filtered data
+ * (on category = 'push' by regex for existing address in EvaluateIt.controller.Main) from the store
+ *
+ */
 Ext.define('EvaluateIt.view.Push', {
 		extend: 'Ext.Container',
       	fullscreen: true,
-		//requires: ['Ext.TitleBar'],
 		alias: 'widget.pushview',
 		
 		config: {
 			layout: 'vbox',
 			layout: 'fit',
-			//id: 'pushview',
 			items: [
 				{
 					xtype: 'toolbar',

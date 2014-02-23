@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-view-Push'>/**
+</span> * Create a list of sites that have been evaluated and can be pushed to the remote server.
+ * First create a Site model with defined fields,
+ * then create a store to contain the data,
+ * finally create the list itself using an xtype widget, which gets its filtered data
+ * (on category = &#39;push&#39; by regex for existing address in EvaluateIt.controller.Main) from the store
+ *
+ */
+Ext.define(&#39;EvaluateIt.view.Push&#39;, {
+		extend: &#39;Ext.Container&#39;,
+<span id='EvaluateIt-view-Push-cfg-fullscreen'>      	fullscreen: true,
+</span>		alias: &#39;widget.pushview&#39;,
+		
+		config: {
+<span id='EvaluateIt-view-Push-cfg-layout'>			layout: &#39;vbox&#39;,
+</span><span id='EvaluateIt-view-Push-cfg-layout'>			layout: &#39;fit&#39;,
+</span><span id='EvaluateIt-view-Push-cfg-items'>			items: [
+</span>				{
+					xtype: &#39;toolbar&#39;,
+					docked: &#39;top&#39;,
+					items: [
+						{
+							xtype: &#39;button&#39;,
+							itemId: &#39;loginButton&#39;,
+							text: &#39;Login&#39;,
+							iconCls: &#39;arrow_right&#39;,
+							iconMask: true 
+						},
+						{
+							xtype: &#39;button&#39;,
+							itemId: &#39;logOutButton&#39;,
+							text: &#39;Logout&#39;,
+							iconCls: &#39;arrow_right&#39;,
+							iconMask: true 
+            			}
+
+					]
+
+				},
+				{
+					flex: 1,
+					xtype: &#39;pushList&#39;
+				}
+			
+		],
+<span id='EvaluateIt-view-Push-cfg-listeners'>        listeners: [{
+</span>            delegate: &#39;#logOutButton&#39;,
+            event: &#39;tap&#39;,
+            fn: &#39;onLogOutButtonTap&#39;
+        }]
+    },
+<span id='EvaluateIt-view-Push-method-onLogOutButtonTap'>    onLogOutButtonTap: function () {
+</span>        this.fireEvent(&#39;onSignOffCommand&#39;);
+    }
+	
+});
+
+</pre>
+</body>
+</html>

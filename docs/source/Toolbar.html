@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-Toolbar'>/**
+</span> * @aside video tabs-toolbars
+ *
+ * {@link Ext.Toolbar}s are most commonly used as docked items as within a {@link Ext.Container}. They can be docked either `top` or `bottom` using the {@link #docked} configuration.
+ *
+ * They allow you to insert items (normally {@link Ext.Button buttons}) and also add a {@link #title}.
+ *
+ * The {@link #defaultType} of {@link Ext.Toolbar} is {@link Ext.Button}.
+ *
+ * You can alternatively use {@link Ext.TitleBar} if you want the title to automatically adjust the size of its items.
+ *
+ * ## Examples
+ *
+ *     @example miniphone preview
+ *     Ext.create(&#39;Ext.Container&#39;, {
+ *         fullscreen: true,
+ *         layout: {
+ *             type: &#39;vbox&#39;,
+ *             pack: &#39;center&#39;
+ *         },
+ *         items: [
+ *             {
+ *                 xtype : &#39;toolbar&#39;,
+ *                 docked: &#39;top&#39;,
+ *                 title: &#39;My Toolbar&#39;
+ *             },
+ *             {
+ *                 xtype: &#39;container&#39;,
+ *                 defaults: {
+ *                     xtype: &#39;button&#39;,
+ *                     margin: &#39;10 10 0 10&#39;
+ *                 },
+ *                 items: [
+ *                     {
+ *                         text: &#39;Toggle docked&#39;,
+ *                         handler: function() {
+ *                             var toolbar = Ext.ComponentQuery.query(&#39;toolbar&#39;)[0],
+ *                                 newDocked = (toolbar.getDocked() === &#39;top&#39;) ? &#39;bottom&#39; : &#39;top&#39;;
+ *
+ *                             toolbar.setDocked(newDocked);
+ *                         }
+ *                     },
+ *                     {
+ *                         text: &#39;Toggle UI&#39;,
+ *                         handler: function() {
+ *                             var toolbar = Ext.ComponentQuery.query(&#39;toolbar&#39;)[0],
+ *                                 newUi = (toolbar.getUi() === &#39;light&#39;) ? &#39;dark&#39; : &#39;light&#39;;
+ *
+ *                             toolbar.setUi(newUi);
+ *                         }
+ *                     },
+ *                     {
+ *                         text: &#39;Change title&#39;,
+ *                         handler: function() {
+ *                             var toolbar = Ext.ComponentQuery.query(&#39;toolbar&#39;)[0],
+ *                                 titles = [&#39;My Toolbar&#39;, &#39;Ext.Toolbar&#39;, &#39;Configurations are awesome!&#39;, &#39;Beautiful.&#39;],
+                                   //internally, the title configuration gets converted into a {@link Ext.Title} component,
+                                   //so you must get the title configuration of that component
+ *                                 title = toolbar.getTitle().getTitle(),
+ *                                 newTitle = titles[titles.indexOf(title) + 1] || titles[0];
+ *
+ *                             toolbar.setTitle(newTitle);
+ *                         }
+ *                     }
+ *                 ]
+ *             }
+ *         ]
+ *     });
+ *
+ * ## Notes
+ *
+ * You must use a HTML5 doctype for {@link #docked} `bottom` to work. To do this, simply add the following code to the HTML file:
+ *
+ *     &lt;!doctype html&gt;
+ *
+ * So your index.html file should look a little like this:
+ *
+ *     &lt;!doctype html&gt;
+ *     &lt;html&gt;
+ *         &lt;head&gt;
+ *             &lt;title&gt;MY application title&lt;/title&gt;
+ *             ...
+ *
+ */
+Ext.define(&#39;Ext.Toolbar&#39;, {
+    extend: &#39;Ext.Container&#39;,
+    xtype : &#39;toolbar&#39;,
+
+    requires: [
+        &#39;Ext.Button&#39;,
+        &#39;Ext.Title&#39;,
+        &#39;Ext.Spacer&#39;,
+        &#39;Ext.layout.HBox&#39;
+    ],
+
+<span id='Ext-Toolbar-property-isToolbar'>    // @private
+</span>    isToolbar: true,
+
+    config: {
+<span id='Ext-Toolbar-cfg-baseCls'>        /**
+</span>         * @cfg baseCls
+         * @inheritdoc
+         */
+        baseCls: Ext.baseCSSPrefix + &#39;toolbar&#39;,
+
+<span id='Ext-Toolbar-cfg-ui'>        /**
+</span>         * @cfg {String} ui
+         * The ui for this {@link Ext.Toolbar}. Either &#39;light&#39; or &#39;dark&#39;. You can create more UIs by using using the CSS Mixin {@link #sencha-toolbar-ui}
+         * @accessor
+         */
+        ui: &#39;dark&#39;,
+
+<span id='Ext-Toolbar-cfg-title'>        /**
+</span>         * @cfg {String/Ext.Title} title
+         * The title of the toolbar.
+         * @accessor
+         */
+        title: null,
+
+<span id='Ext-Toolbar-cfg-defaultType'>        /**
+</span>         * @cfg {String} defaultType
+         * The default xtype to create.
+         * @accessor
+         */
+        defaultType: &#39;button&#39;,
+
+<span id='Ext-Toolbar-cfg-docked'>        /**
+</span>         * @cfg {String} docked
+         * The docked position for this {@link Ext.Toolbar}.
+         * If you specify `left` or `right`, the {@link #layout} configuration will automatically change to a `vbox`. It&#39;s also
+         * recommended to adjust the {@link #width} of the toolbar if you do this.
+         * @accessor
+         */
+
+<span id='Ext-Toolbar-cfg-minHeight'>        /**
+</span>         * @cfg {String} minHeight
+         * The minimum height height of the Toolbar.
+         * @accessor
+         */
+        minHeight: null,
+
+<span id='Ext-Toolbar-cfg-layout'>        /**
+</span>         * @cfg {Object/String} layout Configuration for this Container&#39;s layout. Example:
+         *
+         *     Ext.create(&#39;Ext.Container&#39;, {
+         *         layout: {
+         *             type: &#39;hbox&#39;,
+         *             align: &#39;middle&#39;
+         *         },
+         *         items: [
+         *             {
+         *                 xtype: &#39;panel&#39;,
+         *                 flex: 1,
+         *                 style: &#39;background-color: red;&#39;
+         *             },
+         *             {
+         *                 xtype: &#39;panel&#39;,
+         *                 flex: 2,
+         *                 style: &#39;background-color: green&#39;
+         *             }
+         *         ]
+         *     });
+         *
+         * See the [layouts guide](#!/guides/layouts) for more information
+         *
+         * __Note:__ If you set the {@link #docked} configuration to `left` or `right`, the default layout will change from the
+         * `hbox` to a `vbox`.
+         *
+         * @accessor
+         */
+        layout: {
+            type: &#39;hbox&#39;,
+            align: &#39;center&#39;
+        }
+    },
+
+<span id='Ext-Toolbar-property-hasCSSMinHeight'>    hasCSSMinHeight: true,
+</span>
+<span id='Ext-Toolbar-method-constructor'>    constructor: function(config) {
+</span>        config = config || {};
+
+        if (config.docked == &quot;left&quot; || config.docked == &quot;right&quot;) {
+            config.layout = {
+                type: &#39;vbox&#39;,
+                align: &#39;stretch&#39;
+            };
+        }
+
+        this.callParent([config]);
+    },
+
+<span id='Ext-Toolbar-method-applyTitle'>    // @private
+</span>    applyTitle: function(title) {
+        if (typeof title == &#39;string&#39;) {
+            title = {
+                title: title,
+                centered : Ext.theme.is.Tizen ? false : true
+            };
+        }
+
+        return Ext.factory(title, Ext.Title, this.getTitle());
+    },
+
+<span id='Ext-Toolbar-method-updateTitle'>    // @private
+</span>    updateTitle: function(newTitle, oldTitle) {
+        if (newTitle) {
+            this.add(newTitle);
+        }
+
+        if (oldTitle) {
+            oldTitle.destroy();
+        }
+    },
+
+<span id='Ext-Toolbar-method-showTitle'>    /**
+</span>     * Shows the title, if it exists.
+     */
+    showTitle: function() {
+        var title = this.getTitle();
+
+        if (title) {
+            title.show();
+        }
+    },
+
+<span id='Ext-Toolbar-method-hideTitle'>    /**
+</span>     * Hides the title, if it exists.
+     */
+    hideTitle: function() {
+        var title = this.getTitle();
+
+        if (title) {
+            title.hide();
+        }
+    }
+
+<span id='Ext-Toolbar-method-getTitle'>    /**
+</span>     * Returns an {@link Ext.Title} component.
+     * @member Ext.Toolbar
+     * @method getTitle
+     * @return {Ext.Title}
+     */
+
+<span id='Ext-Toolbar-method-setTitle'>    /**
+</span>     * Use this to update the {@link #title} configuration.
+     * @member Ext.Toolbar
+     * @method setTitle
+     * @param {String/Ext.Title} title You can either pass a String, or a config/instance of {@link Ext.Title}.
+     */
+
+}, function() {
+    //&lt;deprecated product=touch since=2.0&gt;
+<span id='Ext-Toolbar-cfg-titleCls'>    /**
+</span>     * @member Ext.Toolbar
+     * @cfg {Boolean} titleCls
+     * The CSS class to apply to the `titleEl`.
+     * @removed 2.0.0 Title class is now a config option of the title
+     */
+    Ext.deprecateProperty(this, &#39;titleCls&#39;, null, &quot;Ext.Toolbar.titleCls has been removed. Use #cls config of title instead.&quot;);
+    //&lt;/deprecated&gt;
+});
+
+</pre>
+</body>
+</html>

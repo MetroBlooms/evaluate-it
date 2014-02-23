@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.view.phone.TouchEvents&#39;, {
+    extend: &#39;EvaluateIt.view.TouchEvents&#39;,
+
+    config: {
+        layout: &#39;card&#39;,
+
+        items: [
+            {
+                scrollable: true,
+
+                layout: {
+                    type: &#39;vbox&#39;,
+                    align: &#39;stretch&#39;
+                },
+
+                items: [
+                    {
+                        xtype: &#39;button&#39;,
+                        ui: &#39;confirm&#39;,
+                        text: &#39;Console&#39;,
+                        margin: 10,
+                        action: &#39;showConsole&#39;
+                    },
+                    {
+                        xtype: &#39;toucheventinfo&#39;
+                    }
+                ]
+            },
+            {
+                layout: {
+                    type: &#39;vbox&#39;,
+                    align: &#39;stretch&#39;
+                },
+                items: [
+                    {
+                        xtype: &#39;toucheventpad&#39;,
+                        flex: 1
+                    },
+                    {
+                        xtype: &#39;toucheventlogger&#39;,
+                        flex: 1
+                    }
+                ]
+            }
+        ]
+    },
+
+    showConsole: function() {
+        this.setActiveItem(1);
+    }
+});
+</pre>
+</body>
+</html>

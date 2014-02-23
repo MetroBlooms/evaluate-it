@@ -1,9 +1,12 @@
 /**
- * Create a list of sites to enter general information.
- * First create a SiteEvaluation model with defined fields, then create a store to contain
- * the data, finally create the list itself, which gets its filtered data (on category = 'evaluations' by regex for existing address in Main.js) from the store
+ * Create a list of sites to enter general information regarding the evaluation.
+ * First create a Site model with defined fields,
+ * then create a store to contain the data,
+ * finally create the list itself,
+ * which gets its filtered data (on category = 'evaluations' by regex for existing address in EvaluateIt.controller.Main) from the store
+ *
+ * TODO: rename to Site as per normalized model
  */
-
 Ext.define('EvaluateIt.view.SiteGeneral', {
 		extend: 'Ext.Container',
       	fullscreen: true,
@@ -13,7 +16,9 @@ Ext.define('EvaluateIt.view.SiteGeneral', {
 				{
 					xtype : 'toolbar',
 					docked: 'top',
-					// add an Ad Hoc evaluation: requirements pending
+		            /**
+                     * add an Ad Hoc evaluation (not obtained via Pull)
+                     */
 					items: [
 						{
 							xtype: 'button',

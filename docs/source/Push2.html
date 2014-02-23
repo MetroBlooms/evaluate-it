@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.controller.Push&#39;, {
+	extend: &#39;Ext.app.Controller&#39;,
+
+	config: {
+		profile: Ext.os.deviceType.toLowerCase(),
+  		stores: [&#39;SiteEvaluations&#39;],
+  		models: [&#39;SiteEvaluation&#39;],
+  		refs: {
+   			myPushList: &#39;pushList&#39;
+  		},
+		control: {
+			&#39;pushList&#39;: {
+				activate: &#39;onActivate&#39;,
+				itemtap: &#39;onSelectPush&#39;
+			},
+			&#39;pushForm button[itemId=save]&#39;: {
+				tap: &#39;onSavePush&#39; 
+			},
+			&#39;container button[itemId=loginButton]&#39;: {
+				tap: &#39;onLoginPush&#39; 
+			},
+			&#39;container button[itemId=logoutPush]&#39;: {
+				tap: &#39;onLogoutPush&#39; 
+			}
+		}	  
+
+ 	},
+
+	onActivate: function() {
+  		console.log(&#39;Main container is active&#39;);
+		
+ 	},
+
+	onLoginPush: function(button) {
+		console.log(&#39;Button Click&#39;);
+		var loginForm = Ext.Viewport.down(&#39;login&#39;);
+		//create widget if it doesn&#39;t exist
+		if(!loginForm){
+			loginForm = Ext.widget(&#39;loginview&#39;);
+		} 
+		loginForm.reset();
+		loginForm.showBy(button);
+	},
+
+	onSavePush: function(button) {
+		console.log(&#39;Button Click for Save&#39;);
+		var form = button.up(&#39;panel&#39;);
+		//get the record 
+		var record = form.getRecord();
+		//get the form values
+		var values = form.getValues();
+		//if a new push
+		if(!record){
+			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
+			Ext.getStore(&#39;SiteEvaluations&#39;).add(newRecord);
+		}
+		//existing push
+		else {
+			record.set(values);
+		}
+		form.hide();
+		//save the data to the Web local Storage
+		Ext.getStore(&#39;SiteEvaluations&#39;).sync();
+
+		// assemble record 
+		assemble_evaluation(record);
+		
+		//initialize_image_post(record);
+
+	},
+
+	// TODO: add missing atributes to form; add image uploade using native or Cordova method
+
+	onSelectPush: function(view, index, target, record, event) {
+
+		console.log(&#39;Selected a SiteEvaluation from the list&#39;);
+		var pushForm = Ext.Viewport.down(&#39;pushForm&#39;);
+
+		if(!pushForm){
+			pushForm = Ext.widget(&#39;pushForm&#39;);
+		}	 
+		pushForm.setRecord(record);
+		pushForm.showBy(target);
+
+		console.log(&#39;Selected a Push from the list &#39; + index + &#39; &#39; + record.data.address);
+	}			
+
+});
+
+/* Test json to POST
+
+{
+	&quot;evaluation&quot;: {
+		&quot;evaluation_id&quot;:44216,
+		&quot;garden_id&quot;:37288,
+		&quot;eval_type&quot;:1,
+		&quot;score&quot;:15,
+		&quot;rating&quot;:&quot;GD&quot;,
+		&quot;rating_year&quot;:2013,
+		&quot;bestof&quot;:&quot;NADA!&quot;,
+		&quot;special_award_specified&quot;:null,
+		&quot;evaluator_id&quot;:&quot;265&quot;,
+		&quot;nate_siegel_award&quot;:0,
+		&quot;rainbarrel&quot;:0,
+		&quot;date_evaluated&quot;:&quot;1969-12-31T18:00:00&quot;,
+		&quot;comments&quot;:&quot;&quot;,
+		&quot;scoresheet&quot;:{
+			&quot;color&quot;:1,
+			&quot;plant_variety&quot;:2,
+			&quot;design&quot;:3,
+			&quot;maintenance&quot;:4,
+			&quot;environmental_stewardship&quot;:5
+		}
+	},
+	&quot;garden&quot;:{
+		&quot;garden_id&quot;:37288,
+		&quot;name&quot;:&quot;Larry Opelt&quot;,
+		&quot;no_longer_exists&quot;:0,
+		&quot;raingarden&quot;:0
+	},
+	&quot;geolocation&quot;:{
+		&quot;latitude&quot;:44.9615709,
+		&quot;longitude&quot;:-93.3353673,
+		&quot;accuracy&quot;:25
+	}
+} 
+
+*/
+
+/* Ad hoc nomination
+
+This JSON struction is identical to the structure for adding a garden evaluation, with the addition of the &quot;nomination&quot; object.
+The &quot;garden&quot; object that you might send with an evaluation update is not necessary here because garden information is sent along with the nomination. (in an evaluation, the &#39;garden&#39; object is also optional, but could be send it you want to permanantly update informtion about the garden)
+
+{
+    nomination: {  
+        &#39;nominator_id&#39;: &#39;1930&#39;, 
+        &#39;nominator_name&#39;: &#39;Paul Stroot&#39;, 
+        &#39;nominator_email&#39;: &#39;test@dancingpaul.com&#39;, 
+        &#39;name_of_garden&#39;: &#39;Metroblooms Test Garden Extrordinaire&#39;,
+        &#39;gardener_name&#39;: &#39;Paul Stroot&#39;,
+        &#39;gardener_email&#39;: &#39;paul@dancingpaul.com&#39;,
+        &#39;address&#39;: &#39;3516 Blaisdell Ave&#39;, 
+        &#39;city&#39;: &#39;Minneapolis&#39;, 
+        &#39;state&#39;: &#39;MN&#39;, 
+        &#39;zip&#39;: &#39;55408&#39;, 
+        &#39;neighborhood&#39;: &#39;Kingfield&#39;, 
+        &#39;county&#39;: &#39;Hennepin&#39;, 
+        &#39;boulevard_garden&#39;: &#39;0&#39;, 
+        &#39;raingarden&#39;: &#39;0&#39;,
+        &#39;residential_garden&#39;: &#39;0&#39;, 
+        &#39;business_garden&#39;: &#39;0&#39;, 
+        &#39;community&#39;: &#39;0&#39;, 
+        &#39;church&#39;: &#39;0&#39;, 
+        &#39;public_building&#39;: &#39;0&#39;, 
+        &#39;apartment_or_condo&#39;: &#39;0&#39;, 
+        &#39;container_windowbox&#39;: &#39;0&#39;, 
+        &#39;rainbarrel&#39;: &#39;0&#39;, 
+        &#39;downspouts_redirected&#39;: &#39;1&#39;, 
+        &#39;not_publically_visible&#39;: &#39;0&#39;, 
+        &#39;noteworthy_features&#39;: &#39;THIS IS A TEST&#39;, 
+        &#39;uploaded_image&#39;: &#39;n/a&#39;,               
+    },
+    evaluation: {    
+        eval_type: &#39;garden evaluation&#39;,
+        score: &#39;14&#39;,    
+        rating: &#39;GM&#39;,   
+        rating_year : &#39;2013&#39;,
+        bestof : &#39;Best Test Garden&#39;,
+        special_award_specified: &#39;SuperSpecial Award&#39;,
+        evaluator_id: &#39;265&#39;,
+        nate_siegel_award : 0,
+        rainbarrel : 1,
+        downspouts_redirected: 1,   
+        date_evaluated: &#39;2013-04-15 12:30:00&#39;,
+        comments : &#39;This is a test submission&#39;,
+        revisit :  0, 
+        scoresheet:{
+            color : 1,
+            plant_variety : 2,
+            design : 3,
+            maintenance : 4,
+            environmental_stewardship : 5
+        }       
+    },
+    geolocation: {
+        latitude :  &#39;43.6544&#39;,
+        longitude :  &#39;76.3322&#39;,
+        accuracy: &#39;45&#39;,    
+        altitude: &#39;56&#39;,
+        altitudeAccuracy: &#39;54&#39;,
+        heading: &#39;45&#39;,
+        speed:&#39;45&#39;
+    },
+    garden:{}
+}
+
+*/
+// assemble json and make Ajax call
+function assemble_evaluation(record) {
+
+	var	score,
+		award,
+		rating,
+		nate_siegel_award,
+		rain_garden = 0,
+		no_longer_exists = 0,
+		currentYear = (new Date()).getFullYear(),
+		obj = {},
+		core = {},
+		existing = {},
+		ad_hoc = {},
+		eval_type;
+
+		// compute score: TODO: check for null/isInt!
+		if (record.data.visualImpact !== null 
+				&amp;&amp; !record.data.varietyAndHealth !== null 
+				&amp;&amp; !record.data.design !== null 
+				&amp;&amp; !record.data.maintenance !== null 
+				&amp;&amp; !record.data.environmentalStewardship !== null) {
+
+            // TODO: make a method of Evaluation
+			score = record.data.visualImpact  
+					+ record.data.varietyAndHealth 
+					+ record.data.design  
+					+ record.data.maintenance 
+					+ record.data.environmentalStewardship;
+
+			// get rating for given score
+			rating = evaluation_rating(score);
+			console.log(&quot;rating&quot; + rating);	
+		}
+		else {
+			
+			score = null;
+			rating = null;
+
+		}
+	
+		// get award if given
+		award = evaluation_award(record.data.awardId);
+		console.log(&quot;award&quot; + award.bestof + &#39; &#39; + award.nate_seigel);
+
+		if (record.data.noLongerExists === &#39;true&#39; || record.data.noLongerExists === true) {
+			no_longer_exists = 1;
+		}
+
+		if (record.data.rainGarden === &#39;true&#39; || record.data.rainGarden === true) {
+			rain_garden = 1;
+		}
+
+		core = {
+			evaluation: {
+				//evaluation_id: record.data.remoteEvaluationId,
+				garden_id: record.data.remoteSiteId,
+				eval_type: 1,// null, // change!
+				score: score,
+				rating: rating,
+				rating_year: currentYear,
+				bestof: award.bestof,
+				special_award_specified: record.data.specialAwardSpecified,
+				evaluator_id: sessionStorage.evaluator_id, // would use remoteEvaluatorId, but if ad hoc this will not exist
+				nate_siegel_award: award.nate_seigel,
+				date_evaluated: Ext.Date.format(record.data.dateOfEvaluation, &#39;m/d/Y&#39;), // formatted as mm/dd/yyyy 
+				// date_entered_on_device_by_evaluator,
+				comments: record.data.comments,
+				scoresheet: {
+					color: record.data.visualImpact,
+					plant_variety: record.data.varietyAndHealth,
+					design: record.data.design,
+					maintenance: record.data.maintenance,
+					environmental_stewardship: record.data.environmentalStewardship
+				}
+			},
+			geolocation: {
+				latitude: record.data.latitude,
+				longitude: record.data.longitude,
+				accuracy: record.data.accuracy
+			}
+
+		};
+
+		console.log(&#39;Assembled core to push: &#39; + Ext.encode(core));	
+
+		// existing nomination
+		existing = {
+			garden: {
+				garden_id: record.data.remoteSiteId,
+				name:  record.data.name,
+				no_longer_exists: no_longer_exists,
+				raingarden: rain_garden
+			}
+		}; 
+
+		console.log(&#39;Assembled existing to push: &#39; + Ext.encode(existing));	
+				
+		// new nomination
+		ad_hoc = {
+			nomination: {  
+				nominator_id: sessionStorage.evaluator_id,  
+				nominator_name: sessionStorage.firstname + &#39; &#39; + sessionStorage.lastname,
+				nominator_email: sessionStorage.email,
+				gardener_name: record.data.name,
+				address: record.data.address, 
+				city: record.data.city, 
+				state: record.data.state, 
+				zip: record.data.zipcode, 
+				neighborhood: record.data.neighborhood, 
+				county: record.data.county 
+			},
+			garden: {}               
+		};
+		
+		console.log(&#39;Assembled ad_hoc to push: &#39; + Ext.encode(ad_hoc));	
+
+		// create json for submission
+
+		// existing:
+		if (record.data.remoteSiteId &amp;&amp; record.data.remoteEvaluationId &amp;&amp; record.data.remoteEvaluatorId) {
+			obj = Ext.Object.merge(core, existing);
+			obj.evaluation.evaluation_id = record.data.remoteEvaluationId;
+			console.log(&#39;existing&#39;);
+			eval_type = &#39;existing&#39;;
+		}
+		// new
+		else {
+			obj = Ext.Object.merge(core, ad_hoc);
+			obj.evaluation.uuid = record.data.id; // new usees uuid as linking id
+			console.log(&#39;new&#39;);
+			eval_type = &#39;new&#39;;
+		}
+
+		console.log(&#39;Assembled object to push: &#39; + Ext.encode(obj));
+			
+	//	post_to_remote(obj, record, eval_type);
+			
+}
+
+// rating based on Metro Blooms evaluation form
+function evaluation_rating (score)	{
+
+	if (score &gt;= 18) {
+		rating = &#39;EG&#39;;
+	} else if (score &gt;= 14 &amp;&amp; score &lt; 18) {
+		rating = &#39;GD&#39;;
+	} else if (score &gt;= 9 &amp;&amp; score &lt; 14) {
+		rating = &#39;GM&#39;;
+	} else if (score &gt;= 5 &amp;&amp; score &lt; 9) {
+		rating = &#39;CA&#39;;
+	} else {
+		rating = &#39;&#39;; //&#39;&#39;;
+	}
+
+	return rating;
+}
+
+// awards based on Metro Blooms evaluation form
+function evaluation_award (award_id) {
+
+	var nate_siegel = 0;
+
+	switch (award_id) {
+		case 1:
+			bestof = &#39;Boulevard Garden&#39;;
+			break;
+		case 2:
+			bestof = &#39;Business Garden or Raingarden&#39;;
+			break;
+		case 3:
+			bestof = &#39;Container/WindowBox Garden&#39;;
+			break;
+		case 4:
+			bestof = &#39;Congregation Garden or Raingarden&#39;;
+			break;
+		case 5:
+			bestof = &#39;Residential Garden or Raingarden&#39;;
+			break;
+		case 6:
+			bestof = &#39;Alley Garden&#39;;
+			break;
+		case 7:
+			bestof = &#39;Public &amp; Schoolyard Garden or Raingarden&#39;;
+			break;
+		case 8:
+			bestof = &#39;NateSiegel&#39;;
+			nate_siegel = 1;
+			break;
+		case 9:
+			bestof = &#39;Special&#39;;
+			break;
+		default:
+			bestof = null;
+			break;
+	}
+	
+	return {
+        &#39;bestof&#39;: bestof,
+        &#39;nate_seigel&#39;: nate_siegel
+    }; 
+}
+
+// Ajax to remote Webserver
+function post_to_remote(obj, record, eval_type) {
+
+	var url, //url = EvaluateIt.config.webServer;
+	// POST to server; config variables from app.json
+	//url +=  &#39;/&#39; +  EvaluateIt.config.collectionDevelopment;
+	//url +=  &#39;/&#39; +  EvaluateIt.config.testHttpResponse;//postResults;
+					
+	// new API with authorization token
+	url =  EvaluateIt.config.protocol;
+	
+	// select mode of API access
+	if (EvaluateIt.config.mode === &#39;test&#39;) {
+		url += EvaluateIt.config.test;
+	}
+	if (EvaluateIt.config.mode === &#39;live&#39;) {
+		url += EvaluateIt.config.production;
+	}
+	
+	url += EvaluateIt.config.domain;
+	
+	if (eval_type === &#39;existing&#39;) {
+		url += EvaluateIt.config.apiViewEvaluation;
+		url += EvaluateIt.config.action;
+	}
+
+	if (eval_type === &#39;new&#39;) {
+		url += EvaluateIt.config.apiViewNomination;
+		url += EvaluateIt.config.ad_hoc;
+	}
+
+	url += &#39;?token=&#39; + sessionStorage.sessionToken;
+
+	console.log(&#39;new url: &#39; + url);
+
+	// AJAX post
+	Ext.Ajax.request({
+		type: &#39;POST&#39;,
+		//cors: true,
+		url: url,
+		jsonData: obj,
+		//useDefaultXhrHeader: false,
+		success: function (response) {
+			console.log(&#39;success: &#39; + response.responseText);
+
+			alert(&#39;Successfully uploaded: &#39;+ response.responseText);
+
+		},
+		fail: function (e, jqxhr, settings, exception) {
+			console.log(e);
+			alert(e);
+		}
+	}); 
+
+	// check if image exists in store
+	if (record.get(&#39;imageUri&#39;) !== null &amp;&amp; record.get(&#39;imageUri&#39;) !== &#39;&#39;) {
+		initialize_image_post(record)
+	}
+ 
+}
+
+function initialize_image_post(record) {
+
+	var uri,
+		url,
+		evaluation_kvp = {};
+
+	// use new API with authorization token
+	url =  EvaluateIt.config.protocol;
+	
+	// select mode of API access
+	if (EvaluateIt.config.mode === &#39;test&#39;) {
+		url += EvaluateIt.config.test;
+	}
+	if (EvaluateIt.config.mode === &#39;live&#39;) {
+		url += EvaluateIt.config.production;
+	}
+
+	url += EvaluateIt.config.domain;
+	// url += EvaluateIt.config.dev; // ev environment
+	// url += EvaluateIt.config.file_response;  // needed for POST echo
+	url += EvaluateIt.config.apiViewEvaluation;
+	url += EvaluateIt.config.file_upload;
+	url += &#39;?token=&#39; + sessionStorage.sessionToken;
+
+	uri = record.data.imageUri; // local path to image
+   
+	console.log(&#39;upload uri: &#39; + uri + &#39;url: &#39; + url); 
+
+	console.log(&#39;evaluation_id, uuid &#39; + record.data.remoteEvaluationId + &#39;, &#39; + record.data.id );
+
+	// assemble key value pair for use in file transfer object for: existing evaluation
+	if (record.data.remoteEvaluationId !== null) {
+		evaluation_kvp.evaluation_id = record.data.remoteEvaluationId;
+		console.log(&#39;evaluation_id &#39; + Ext.encode(evaluation_kvp));
+	}
+	// new nomination/evaluation: use localStorage uuid as identifier
+	else {
+		evaluation_kvp.uuid = record.data.id;
+		console.log(&#39;uuid &#39; + Ext.encode(evaluation_kvp));
+	}
+	
+	post_image(uri, url, evaluation_kvp);
+}
+
+// Phonegap file transfer
+function post_image(imageUri, url, evaluation_kvp) {
+    var options = new FileUploadOptions(),
+        ft = new FileTransfer();
+
+    options.fileKey = &#39;userfile&#39;;
+    //options.fileName = imageUri.substr(imageUri.lastIndexOf(&#39;/&#39;) + 1);
+    options.mimeType = &#39;image/jpeg&#39;;
+    options.chunkedMode = false;
+	options.params = evaluation_kvp; // attached key value pair
+
+    ft.upload(imageUri, encodeURI(url), post_success, post_error, options);
+}
+
+function post_success(r) {
+    console.log(&quot;Code = &quot; + r.responseCode);
+    console.log(&quot;Response = &quot; + r.response);
+    console.log(&quot;Sent = &quot; + r.bytesSent);
+    alert(r.response);
+	console.log(r.response);
+
+	var response = Ext.JSON.decode(r.response);
+	alert(response.imageData.file_name);
+
+}
+
+function post_error(error) {
+    alert(&quot;An error has occurred: Code = &quot; + error.code);
+	console.log(&quot;An error has occurred: Code = &quot; + error.code);
+
+}
+</pre>
+</body>
+</html>

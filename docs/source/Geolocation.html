@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-device-Geolocation'>/**
+</span> * Provides access to the native Geolocation API when running on a device. There are three implementations of this API:
+ *
+ * - Sencha Packager
+ * - [PhoneGap](http://docs.phonegap.com/en/1.4.1/phonegap_device_device.md.html)
+ * - Browser
+ *
+ * This class will automatically select the correct implementation depending on the device your application is running on.
+ *
+ * ## Examples
+ *
+ * Getting the current location:
+ *
+ *     Ext.device.Geolocation.getCurrentPosition({
+ *         success: function(position) {
+ *             console.log(position.coords);
+ *         },
+ *         failure: function() {
+ *             console.log(&#39;something went wrong!&#39;);
+ *         }
+ *     });
+ *
+ * Watching the current location:
+ *
+ *     Ext.device.Geolocation.watchPosition({
+ *         frequency: 3000, // Update every 3 seconds
+ *         callback: function(position) {
+ *             console.log(&#39;Position updated!&#39;, position.coords);
+ *         },
+ *         failure: function() {
+ *             console.log(&#39;something went wrong!&#39;);
+ *         }
+ *     });
+ *
+ * @mixins Ext.device.geolocation.Abstract
+ *
+ * @aside guide native_apis
+ */
+Ext.define(&#39;Ext.device.Geolocation&#39;, {
+    singleton: true,
+
+    requires: [
+        &#39;Ext.device.Communicator&#39;,
+        &#39;Ext.device.geolocation.Cordova&#39;,
+        &#39;Ext.device.geolocation.Sencha&#39;,
+        &#39;Ext.device.geolocation.Simulator&#39;
+    ],
+
+<span id='Ext-device-Geolocation-method-constructor'>    constructor: function() {
+</span>        var browserEnv = Ext.browser.is;
+        if (browserEnv.WebView) {
+            if (browserEnv.Cordova) {
+                return Ext.create(&#39;Ext.device.geolocation.Cordova&#39;);
+            } else if (browserEnv.Sencha) {
+                return Ext.create(&#39;Ext.device.geolocation.Sencha&#39;);
+            }
+        }
+
+        return Ext.create(&#39;Ext.device.geolocation.Simulator&#39;);
+    }
+});
+</pre>
+</body>
+</html>

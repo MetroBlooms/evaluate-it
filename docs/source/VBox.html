@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-layout-VBox'>/**
+</span> * @aside guide layouts
+ * @aside video layouts
+ *
+ * The VBox (short for vertical box) layout makes it easy to position items horizontally in a
+ * {@link Ext.Container Container}. It can size items based on a fixed height or a fraction of the total height
+ * available.
+ *
+ * For example, let&#39;s say we want a banner to take one third of the available height, and an information panel in the
+ * rest of the screen. We can achieve this with vbox layout&#39;s *flex* config:
+ *
+ *     @example
+ *     Ext.create(&#39;Ext.Container&#39;, {
+ *         fullscreen: true,
+ *         layout: &#39;vbox&#39;,
+ *         items: [
+ *             {
+ *                 html: &#39;Awesome banner&#39;,
+ *                 style: &#39;background-color: #759E60;&#39;,
+ *                 flex: 1
+ *             },
+ *             {
+ *                 html: &#39;Some wonderful information&#39;,
+ *                 style: &#39;background-color: #5E99CC;&#39;,
+ *                 flex: 2
+ *             }
+ *         ]
+ *     });
+ *
+ * This will give us two boxes - one that&#39;s one third of the available height, the other being two thirds of the
+ * available height:
+ *
+ * {@img ../guides/layouts/vbox.jpg}
+ *
+ * We can also specify fixed heights for child items, or mix fixed heights and flexes. For example, here we have 3
+ * items - one at the top and bottom with flex: 1, and one in the center with a fixed width of 100px:
+ *
+ *     @example preview portrait
+ *     Ext.create(&#39;Ext.Container&#39;, {
+ *         fullscreen: true,
+ *         layout: &#39;vbox&#39;,
+ *         items: [
+ *             {
+ *                 html: &#39;Top item&#39;,
+ *                 style: &#39;background-color: #5E99CC;&#39;,
+ *                 flex: 1
+ *             },
+ *             {
+ *                 html: &#39;Center item&#39;,
+ *                 height: 100
+ *             },
+ *             {
+ *                 html: &#39;Bottom item&#39;,
+ *                 style: &#39;background-color: #759E60;&#39;,
+ *                 flex: 1
+ *             }
+ *         ]
+ *     });
+ *
+ * Which gives us an effect like this:
+ *
+ * {@img ../guides/layouts/vboxfixed.jpg}
+ *
+ * For a more detailed overview of what layouts are and the types of layouts shipped with Sencha Touch 2, check out the
+ * [Layout Guide](#!/guide/layouts).
+ *
+ */
+Ext.define(&#39;Ext.layout.VBox&#39;, {
+    extend: &#39;Ext.layout.FlexBox&#39;,
+
+    alias: &#39;layout.vbox&#39;,
+
+    config: {
+<span id='Ext-layout-VBox-cfg-orient'>        orient: &#39;vertical&#39;
+</span>    }
+});
+</pre>
+</body>
+</html>

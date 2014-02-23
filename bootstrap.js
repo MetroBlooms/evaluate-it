@@ -38,8 +38,9 @@ Ext.ClassManager.addNameAlternateMappings({
   "EvaluateIt.model.Address": [],
   "EvaluateIt.model.Evaluation": [],
   "EvaluateIt.model.EvaluationAward": [],
-  "EvaluateIt.model.EvaluationFactorScorecard": [],
   "EvaluateIt.model.EvaluationFeature": [],
+  "EvaluateIt.model.EvaluationImage": [],
+  "EvaluateIt.model.EvaluationScorecard": [],
   "EvaluateIt.model.Evaluator": [],
   "EvaluateIt.model.Geolocation": [],
   "EvaluateIt.model.Option": [],
@@ -50,6 +51,10 @@ Ext.ClassManager.addNameAlternateMappings({
   "EvaluateIt.profile.Phone": [],
   "EvaluateIt.profile.Tablet": [],
   "EvaluateIt.store.Addresses": [],
+  "EvaluateIt.store.EvaluationAwards": [],
+  "EvaluateIt.store.EvaluationFeatures": [],
+  "EvaluateIt.store.EvaluationImages": [],
+  "EvaluateIt.store.EvaluationScorecards": [],
   "EvaluateIt.store.Evaluations": [],
   "EvaluateIt.store.Evaluators": [],
   "EvaluateIt.store.Geolocations": [],
@@ -737,8 +742,9 @@ Ext.ClassManager.addNameAliasMappings({
   "EvaluateIt.model.Address": [],
   "EvaluateIt.model.Evaluation": [],
   "EvaluateIt.model.EvaluationAward": [],
-  "EvaluateIt.model.EvaluationFactorScorecard": [],
   "EvaluateIt.model.EvaluationFeature": [],
+  "EvaluateIt.model.EvaluationImage": [],
+  "EvaluateIt.model.EvaluationScorecard": [],
   "EvaluateIt.model.Evaluator": [],
   "EvaluateIt.model.Geolocation": [],
   "EvaluateIt.model.Option": [],
@@ -750,6 +756,16 @@ Ext.ClassManager.addNameAliasMappings({
   "EvaluateIt.profile.Tablet": [],
   "EvaluateIt.store.Addresses": [
     "store.Addresses"
+  ],
+  "EvaluateIt.store.EvaluationAwards": [
+    "store.EvaluationAwards"
+  ],
+  "EvaluateIt.store.EvaluationFeatures": [
+    "store.EvaluationFeatures"
+  ],
+  "EvaluateIt.store.EvaluationImages": [],
+  "EvaluateIt.store.EvaluationScorecards": [
+    "store.EvaluationScorecards"
   ],
   "EvaluateIt.store.Evaluations": [
     "store.Evaluations"

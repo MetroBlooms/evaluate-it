@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.controller.Evaluation&#39;, {
+	extend : &#39;Ext.app.Controller&#39;,
+
+	config: {
+		profile: Ext.os.deviceType.toLowerCase(),
+  		stores : [&#39;SiteEvaluations&#39;],
+  		models : [&#39;SiteEvaluation&#39;],
+  		refs: {
+   			myEvaluationList: &#39;evaluationList&#39;
+  		},
+		control: {
+			&#39;evaluationList&#39;: {
+				activate: &#39;onActivate&#39;,
+				itemtap: &#39;onSelectEvaluation&#39;
+			},
+			&#39;siteEvaluationForm button[itemId=save]&#39; : {
+				tap : &#39;onSaveEvaluation&#39; 
+			}
+		}	  
+
+ 	},
+
+	onActivate: function() {
+  		console.log(&#39;Main container is active&#39;);
+ 	},
+
+	onSaveEvaluation: function(button) {
+		console.log(&#39;Button Click for Save&#39;);
+		var form = button.up(&#39;panel&#39;),
+		//var form = Ext.getCmp(&#39;evaluationId&#39;);
+		//get the record 
+		    record = form.getRecord(),
+		//get the form values
+		//var values = form.getValues();
+		// return a clone for updating of values
+		    values = Ext.clone(form.getValues()),
+			sumRating;
+
+		// calculatee sum of factor ratings: TODO: display on form
+		if (form.getValues().visualImpact !== null 
+			&amp;&amp; form.getValues().varietyAndHealth !== null 
+			&amp;&amp; form.getValues().design !== null 
+			&amp;&amp; form.getValues().maintenance !== null 
+			&amp;&amp; form.getValues().environmentalStewardship !== null) {
+
+			sumRating = parseInt(form.getValues().visualImpact) + 
+						parseInt(form.getValues().varietyAndHealth) +
+						parseInt(form.getValues().design) + 
+						parseInt(form.getValues().maintenance) + 
+						parseInt(form.getValues().environmentalStewardship);
+						
+			alert(&#39;SumRating: &#39; + sumRating);
+
+			form.setValues({
+				sumRating: sumRating 
+			})
+
+			values = form.getValues();
+
+			record = form.getRecord();
+
+
+		}
+		else {
+			alert(&#39;missing factor rating!&#39;);
+		}
+
+		//if a new siteEvaluation
+		if(!record){
+			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
+			Ext.getStore(&#39;SiteEvaluations&#39;).add(newRecord);
+		}
+		//existing siteEvaluation
+		else {
+
+			// get image uri
+			var images = Ext.create(&#39;EvaluateIt.store.ImageQueue&#39;);
+
+			images.queryBy(function(iRecord,id){
+				images = Ext.getStore(images);
+				
+				if (images.getCount() &gt; 0) {
+					var uri  = iRecord.get(&#39;src&#39;);
+					
+					 //	image = Ext.getCmp(&#39;imageUri&#39;);
+
+					//image = form.setValue(uri);
+					
+					//form.getCmp(&#39;imageId&#39;).setValue(uri);
+					
+					console.log(&#39;URI: &#39; +  uri);
+
+
+					// update store with URI
+
+					var siteId = record.get(&#39;site_id&#39;);
+
+
+					form.setValues({
+						imageUri: uri 
+					})
+
+					values = form.getValues();
+
+					record = form.getRecord();
+
+				
+					//record.set(&#39;imageUri&#39;,uri)
+				
+		
+				}
+			});
+
+
+			// do stuff
+			record.set(values);
+		}
+		form.hide();
+		//save the data to the Web local Storage
+		Ext.getStore(&#39;SiteEvaluations&#39;).sync();
+
+	},
+
+	onSelectEvaluation: function(view, index, target, record, event) {
+
+		// clear content from image queue stor to initialize
+		var lostor = Ext.getStore(&#39;theImageQueue&#39;);
+		lostor.getProxy().clear();
+
+		console.log(&#39;Selected a SiteEvaluation from the list&#39;);
+		var siteEvaluationForm = Ext.Viewport.down(&#39;siteEvaluationForm&#39;);
+
+		if(!siteEvaluationForm){
+			siteEvaluationForm = Ext.widget(&#39;siteEvaluationForm&#39;);
+		}	 
+		siteEvaluationForm.setRecord(record);
+		siteEvaluationForm.showBy(target);
+	}
+
+});
+
+
+
+</pre>
+</body>
+</html>

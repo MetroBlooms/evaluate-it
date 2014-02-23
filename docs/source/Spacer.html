@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-Spacer'>/**
+</span>The {@link Ext.Spacer} component is generally used to put space between items in {@link Ext.Toolbar} components.
+
+## Examples
+
+By default the {@link #flex} configuration is set to 1:
+
+    @example miniphone preview
+    Ext.create(&#39;Ext.Container&#39;, {
+        fullscreen: true,
+        items: [
+            {
+                xtype : &#39;toolbar&#39;,
+                docked: &#39;top&#39;,
+                items: [
+                    {
+                        xtype: &#39;button&#39;,
+                        text : &#39;Button One&#39;
+                    },
+                    {
+                        xtype: &#39;spacer&#39;
+                    },
+                    {
+                        xtype: &#39;button&#39;,
+                        text : &#39;Button Two&#39;
+                    }
+                ]
+            }
+        ]
+    });
+
+Alternatively you can just set the {@link #width} configuration which will get the {@link Ext.Spacer} a fixed width:
+
+    @example preview
+    Ext.create(&#39;Ext.Container&#39;, {
+        fullscreen: true,
+        layout: {
+            type: &#39;vbox&#39;,
+            pack: &#39;center&#39;,
+            align: &#39;stretch&#39;
+        },
+        items: [
+            {
+                xtype : &#39;toolbar&#39;,
+                docked: &#39;top&#39;,
+                items: [
+                    {
+                        xtype: &#39;button&#39;,
+                        text : &#39;Button One&#39;
+                    },
+                    {
+                        xtype: &#39;spacer&#39;,
+                        width: 50
+                    },
+                    {
+                        xtype: &#39;button&#39;,
+                        text : &#39;Button Two&#39;
+                    }
+                ]
+            },
+            {
+                xtype: &#39;container&#39;,
+                items: [
+                    {
+                        xtype: &#39;button&#39;,
+                        text : &#39;Change Ext.Spacer width&#39;,
+                        handler: function() {
+                            //get the spacer using ComponentQuery
+                            var spacer = Ext.ComponentQuery.query(&#39;spacer&#39;)[0],
+                                from = 10,
+                                to = 250;
+
+                            //set the width to a random number
+                            spacer.setWidth(Math.floor(Math.random() * (to - from + 1) + from));
+                        }
+                    }
+                ]
+            }
+        ]
+    });
+
+You can also insert multiple {@link Ext.Spacer}&#39;s:
+
+    @example preview
+    Ext.create(&#39;Ext.Container&#39;, {
+        fullscreen: true,
+        items: [
+            {
+                xtype : &#39;toolbar&#39;,
+                docked: &#39;top&#39;,
+                items: [
+                    {
+                        xtype: &#39;button&#39;,
+                        text : &#39;Button One&#39;
+                    },
+                    {
+                        xtype: &#39;spacer&#39;
+                    },
+                    {
+                        xtype: &#39;button&#39;,
+                        text : &#39;Button Two&#39;
+                    },
+                    {
+                        xtype: &#39;spacer&#39;,
+                        width: 20
+                    },
+                    {
+                        xtype: &#39;button&#39;,
+                        text : &#39;Button Three&#39;
+                    }
+                ]
+            }
+        ]
+    });
+ */
+Ext.define(&#39;Ext.Spacer&#39;, {
+    extend: &#39;Ext.Component&#39;,
+    alias : &#39;widget.spacer&#39;,
+
+    config: {
+<span id='Ext-Spacer-cfg-flex'>        /**
+</span>         * @cfg {Number} flex
+         * The flex value of this spacer. This defaults to 1, if no width has been set.
+         * @accessor
+         */
+        
+<span id='Ext-Spacer-cfg-width'>        /**
+</span>         * @cfg {Number} width
+         * The width of this spacer. If this is set, the value of {@link #flex} will be ignored.
+         * @accessor
+         */
+    },
+
+<span id='Ext-Spacer-method-constructor'>    // @private
+</span>    constructor: function(config) {
+        config = config || {};
+
+        if (!config.width) {
+            config.flex = 1;
+        }
+
+        this.callParent([config]);
+    }
+});
+</pre>
+</body>
+</html>

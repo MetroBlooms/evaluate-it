@@ -1,14 +1,19 @@
-// from http://miamicoder.com/2012/adding-a-login-screen-to-a-sencha-touch-application-part-2/
-
+/**
+ * **See full documented usage** [HERE][1];
+ * [1]: http://miamicoder.com/2012/adding-a-login-screen-to-a-sencha-touch-application-part-2/
+ *
+ * This implementation is through item buttons accessed in EvaluateIt.view.Pull and EvaluateIt.view.Push;
+ * authentication token is then written to sessionStorage
+ * TODO: Set tablet height/width
+ */
 Ext.define('EvaluateIt.view.Login', {
     extend: 'Ext.form.Panel',
     alias: "widget.loginview",
 	id: 'loginView',
     requires: ['Ext.form.FieldSet', 'Ext.form.Password', 'Ext.Label', 'Ext.Img', 'Ext.util.DelayedTask'],
+
     config: {
         title: 'Login',
-
-		// test
 
 		left: 0,
 		top: 0,
@@ -18,8 +23,7 @@ Ext.define('EvaluateIt.view.Login', {
 		hideOnMaskTap: true,
 
 		// Set the width and height of the panel
-		//width: 400,
-		//height: 330,
+
 		width: Ext.os.deviceType == 'Phone' ?  screen.width : 300,
 		height: Ext.os.deviceType == 'Phone' ?  screen.height : 400,
 		scrollable: true,
@@ -32,9 +36,7 @@ Ext.define('EvaluateIt.view.Login', {
 			labelWrap: true
 		},
 
-		// end test
-
-        items: [
+		items: [
             {
                 xtype: 'image',
                 src: '/resources/images/mb.gif',
@@ -91,7 +93,11 @@ Ext.define('EvaluateIt.view.Login', {
 				xtype: 'button',
 				ui: 'close',
 				text: 'Close',
-				// destroy form.Panel overlay to return to tree store view 
+
+                /**
+                 * destroy form.Panel overlay to return to tree store view
+                 */
+
 				handler: function() {
 					Ext.getCmp('loginView').destroy();						
 				}

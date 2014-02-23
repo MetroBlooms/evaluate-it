@@ -1,8 +1,14 @@
-// TODO: add remaining evaluation eementss (based on requirements)
+/**
+ * Form panel view for selecting evaluation scorecard (See EvaluateIt.view.EvaluationCriteria for criteria)
+ * Binds to model and store in EvaluateIt.controller.Evaluation
+ *
+ * TODO: set height/width for tablet, rename alias, etc. to fit normalized model: EvaluateIt.model.EvaluationScorecard
+ */
 
-var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
+Ext.define('EvaluateIt.view.EvaluationForm', {
+//var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
+// TODO: Not sure why this was implemented like this? Need to determine
 	extend: 'Ext.form.Panel',
-	//id: 'evaluationId',
 	alias : 'widget.siteEvaluationForm',
 	requires: [
         'Ext.form.Panel',
@@ -12,18 +18,22 @@ var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
         'Ext.field.Hidden'
     ],
 	config: {
-	 
-	// We give it a left and top property to make it floating by default
+
+
+        // We give it a left and top property to make it floating by default
+
 		left: 0,
 		top: 0,
 
-		// Make it modal so you can click the mask to hide the overlay
+        /**
+         * Make it modal so you can click the mask to hide the overlay
+         */
 		modal: true,
 		hideOnMaskTap: true,
 
-		// Set the width and height of the panel
-		//width: 400,
-		//height: 330,
+        /**
+         * Set the width and height of the panel
+         */
 		width: Ext.os.deviceType == 'Phone' ?  screen.width : 350,
 		height: Ext.os.deviceType == 'Phone' ?  screen.height : 500,
 		scrollable: true,
@@ -35,19 +45,28 @@ var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
 			labelWidth: '50%',
 			labelWrap: true
 		},
+
+        /**
+         * @cfg
+         *
+         * BMP evaluation items as per evaluation rules on instrument
+         *
+         * TODO: create enumeration
+         */
 		items: [
-			{	
+			{
        			xtype: 'textfield',
 		   		name: 'address',
-		   		readOnly: true 
-			},   
+		   		readOnly: true
+			},
+
+
 			{
 				xtype: 'selectfield',
 				itemId: 'visualImpact',
 				name: 'visualImpact',
 				label: 'Visual impact',
 				autoSelect: false,
-				//blur : doCalculateTotals(),
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
@@ -57,14 +76,13 @@ var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
 					{text: '3',  value: '3'},
 					{text: '4',  value: '4'}
 				]
-			},  
+			},
 			{
 				xtype: 'selectfield',
 				itemId: 'varietyAndHealth',
 				name: 'varietyAndHealth',
 				label: 'Plant variety and health',
 				autoSelect: false,
-				//blur : doCalculateTotals(),
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
@@ -74,14 +92,13 @@ var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
 					{text: '3',  value: '3'},
 					{text: '4',  value: '4'}
 				]
-			},  
+			},
 			{
 				xtype: 'selectfield',
 				itemId: 'design',
 				name: 'design',
 				label: 'Design',
 				autoSelect: false,
-				//blur : doCalculateTotals(),
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
@@ -91,14 +108,13 @@ var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
 					{text: '3',  value: '3'},
 					{text: '4',  value: '4'}
 				]
-			},  
+			},
 			{
 				xtype: 'selectfield',
 				itemId: 'maintenance',
 				name: 'maintenance',
 				label: 'Maintenance',
 				autoSelect: false,
-				//blur : doCalculateTotals(),
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
@@ -108,14 +124,13 @@ var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
 					{text: '3',  value: '3'},
 					{text: '4',  value: '4'}
 				]
-			},  
+			},
 			{
 				xtype: 'selectfield',
 				itemId: 'environmentalStewardship',
 				name: 'environmentalStewardship',
 				label: 'Environmental Stewardship',
 				autoSelect: false,
-				//blur : doCalculateTotals(),
 				placeHolder: 'Select a score',
 				options: [
 					{text: ''},
@@ -131,33 +146,24 @@ var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
 				label: 'Total score:',
 				name: 'sumRating',
 				readOnly: true
-			},  
+			},
 			{
 				xtype: 'hiddenfield',
 				name: 'imageUri',
-				itemId: 'imageId' 
-			}, 
-			/*{
-				xtype: 'button',
-        		text: 'Sum factors',
-        		handler: function(btn){
-    				//console.log(Ext.getCmp('design'));	//console.log(form value);
-					console.log(Ext.getCmp('design').getValue());
-					
-        		}
-    		},*/
+				itemId: 'imageId'
+			},
 			{
                  xtype: 'button',
                  itemId: 'siteImage',
                  text: 'Select Photo'
-            }, 
+            },
 			{
 				xtype: 'button',
 				itemId: 'save',
 				text: 'Save'
 			}
-            
+
         ]
     }
-  
+
 });

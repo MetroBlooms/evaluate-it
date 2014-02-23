@@ -1,3 +1,11 @@
+/**
+ * **See full documented usage** [HERE][1];
+ * [1]: http://miamicoder.com/2012/adding-a-login-screen-to-a-sencha-touch-application-part-2/
+ *
+ * This implementation is through item buttons accessed in EvaluateIt.view.Pull and EvaluateIt.view.Push;
+ * authentication token is then deleted from sessionStorage
+ * TODO: Set tablet height/width
+ */
 Ext.define('EvaluateIt.view.Logout', {
     extend: 'Ext.form.Panel',
     requires: ['Ext.TitleBar'],
@@ -5,10 +13,7 @@ Ext.define('EvaluateIt.view.Logout', {
     id: 'logoutView',
 	config: {
  		title: 'Logout',
-
-		// test
-
-		left: 0,
+    	left: 0,
 		top: 0,
 
 		// Make it modal so you can click the mask to hide the overlay
@@ -16,8 +21,6 @@ Ext.define('EvaluateIt.view.Logout', {
 		hideOnMaskTap: true,
 
 		// Set the width and height of the panel
-		//width: 400,
-		//height: 330,
 		width: Ext.os.deviceType == 'Phone' ?  screen.width : 300,
 		height: Ext.os.deviceType == 'Phone' ?  200 : 300,
 		scrollable: true,
@@ -43,7 +46,10 @@ Ext.define('EvaluateIt.view.Logout', {
 				xtype: "button",
 					ui: "close",
 					text: "Close",
-					// destroy form.Panel overlay to return to tree store view 
+
+                    /**
+                     * destroy form.Panel overlay to return to tree store view
+                     */
 					handler: function() {
 						Ext.getCmp('logoutView').destroy();						
 					}

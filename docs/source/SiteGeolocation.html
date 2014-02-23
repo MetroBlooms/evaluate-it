@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.controller.SiteGeolocation&#39;, {
+	extend : &#39;Ext.app.Controller&#39;,
+	requires: [&#39;Ext.Toolbar&#39;],
+
+	config: {
+		profile: Ext.os.deviceType.toLowerCase(),
+  		stores : [&#39;SiteEvaluations&#39;],
+  		models : [&#39;SiteEvaluation&#39;],
+  		refs: {
+   			mySiteGeolocationList: &#39;siteGeolocationList&#39;
+  		},
+		control: {
+			&#39;siteGeolocationList&#39;: {
+				activate: &#39;onActivate&#39;,
+				itemtap: &#39;onSelectSiteGeolocation&#39;
+			}
+		}	  
+
+ 	},
+
+	onActivate: function() {
+  		console.log(&#39;Main container is active&#39;);
+ 	},
+
+
+	// spawns a new form panel with Google map centered on current location 
+	onSelectSiteGeolocation: function(view, index, target, record, event) {
+
+		console.log(&#39;Selected a Geolocation from the list&#39;);
+
+		// grab geolocation coordinates from device API
+
+		// Google maps API stuff here
+		var latitude = sessionStorage.latitude, //44.9616164; 
+		    longitude = sessionStorage.longitude; //-93.33539329999999,
+
+		console.log(&#39;latitude/longitude ...&#39; + sessionStorage.latitude + &#39; &#39; + sessionStorage.longitude);
+
+		//alert(&#39;Coords &#39; +  + sessionStorage.latitude + &#39; &#39; + sessionStorage.longitude);
+
+		var	position = new google.maps.LatLng(latitude, longitude),  
+
+			infowindow = new google.maps.InfoWindow({
+				content: &#39;EvaluateIt!&#39;
+			}),
+
+			//Tracking Marker Image
+			image = new google.maps.MarkerImage(
+				&#39;resources/images/point.png&#39;,
+				new google.maps.Size(32, 31),
+				new google.maps.Point(0, 0),
+				new google.maps.Point(16, 31)
+			),
+
+			shadow = new google.maps.MarkerImage(
+				&#39;resources/images/shadow.png&#39;,
+				new google.maps.Size(64, 52),
+				new google.maps.Point(0, 0),
+				new google.maps.Point(-5, 42)
+			),
+
+			trackingButton = Ext.create(&#39;Ext.Button&#39;, {
+				iconMask: true,
+				iconCls: &#39;locate&#39;
+			}),
+
+			trafficButton = Ext.create(&#39;Ext.Button&#39;, {
+				iconMask: true,
+				pressed: false,
+				iconCls: &#39;maps&#39;
+			}),
+			
+			toolbar = Ext.create(&#39;Ext.Toolbar&#39;, {
+				docked: &#39;top&#39;,
+				alias : &#39;widget.geolocationToolbar&#39;,
+				ui: &#39;light&#39;,
+				defaults: {
+					iconMask: true
+				},
+				items: [
+					{
+						xtype: &#39;button&#39;,
+         				ui: &#39;back&#39;,
+         				text: &#39;Back&#39;,
+						// destroy form.Panel overlay to return to tree store view 
+						handler: function() {
+							geo_panel.destroy();						
+						}
+            		},
+					{
+						iconCls: &#39;home&#39;,
+						handler: function() {
+							google_map.getMap().panTo(position);
+						}
+					},
+					// display selected address
+					/*{	
+						xtype: &#39;textfield&#39;, 
+						name: &#39;address&#39;,
+						itemId: &#39;address&#39;,
+						readOnly: true
+					},*/
+					// save geolocation data
+					{
+						xtype: &#39;button&#39;,
+						itemId: &#39;save&#39;,
+						text: &#39;Save location&#39;,
+						handler: function() {
+						
+							// get record associated with model bound to form 	
+							var record = geo_panel.getRecord();
+				
+							// set geolocation values			
+							record.set(&#39;latitude&#39;,sessionStorage.latitude);
+							record.set(&#39;longitude&#39;,sessionStorage.longitude);
+							record.set(&#39;accuracy&#39;,sessionStorage.accuracy);
+
+							// update store with new values	
+							Ext.getStore(&#39;SiteEvaluations&#39;).sync();
+							alert(&#39;Location was saved successfully!&#39;);
+
+						}
+					}
+
+				]
+			});
+
+		var google_map = Ext.create(&#39;Ext.Map&#39;, {
+			alias : &#39;widget.whereAmI&#39;,
+
+			mapOptions : {
+				center : new google.maps.LatLng(latitude, longitude),
+				zoom : 12,
+				mapTypeId : google.maps.MapTypeId.ROADMAP,
+				navigationControl: true,
+				navigationControlOptions: {
+					style: google.maps.NavigationControlStyle.DEFAULT
+				}
+			},
+
+			plugins : [
+				new Ext.plugin.google.Tracker({
+					trackSuspended: true,   //suspend tracking initially
+					allowHighAccuracy: false,
+					marker: new google.maps.Marker({
+						position: position,
+						title: &#39;My Current Location&#39;,
+						shadow: shadow,
+						icon: image
+					})
+				}),
+				new Ext.plugin.google.Traffic()
+			],
+
+			//useCurrentLocation: true,
+
+			listeners: {
+				maprender: function(comp, map) {
+					var marker = new google.maps.Marker({
+						position: map.center,
+						title : &#39;Weeeee!&#39;,
+						map: map
+					});
+
+					google.maps.event.addListener(marker, &#39;click&#39;, function() {
+						infowindow.open(map, marker);
+					});
+
+					setTimeout(function() {
+						map.panTo(position);
+					}, 100);
+				}
+
+			}
+		});
+
+		var geo_panel = new Ext.form.Panel({
+			useCurrentLocation: true,
+			//config: {
+			//	width: Ext.os.deviceType == &#39;Phone&#39; ?  screen.width : 300,
+			//	height: Ext.os.deviceType == &#39;Phone&#39; ?  screen.height : 500,
+
+				fullscreen: true,
+				layout: &#39;fit&#39;,
+				items: [toolbar, google_map]
+			//}
+
+		});
+		geo_panel.setRecord(record);
+		geo_panel.show();
+
+	}
+
+});
+
+
+function getCurrentPosition() {
+	//navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, {desiredAccuracy:30, maxWait:15000});
+
+	navigator.geolocation.getCurrentPosition(geo_success, geo_error, { maximumAge: 30, timeout: 5000, enableHighAccuracy: true });
+}
+
+function geo_success(position) {
+	var coordinates = position.coords,
+		location = &#39;Longitude &#39; + coordinates.longitude + &#39; Latitude &#39; + coordinates.latitude + &#39; Accuracy &#39; + coordinates.accuracy,
+		timeStamp = new Date(position.timestamp),
+		latitude = coordinates.latitude,
+		longitude =  coordinates.longitude,
+		accuracy = coordinates.accuracy;
+		
+	alert(&#39;success! geoLocation is ready to use!&#39; + &#39; accuracy &#39; + accuracy);
+
+	//element.innerHTML = &#39;Latitude: &#39; + position.coords.latitude + &#39;&lt;br /&gt;&#39;
+	//	+ &#39;Longitude: &#39; + position.coords.longitude + &#39;&lt;br /&gt;&#39;
+	//	+ &#39;Altitude: &#39; + position.coords.altitude + &#39;&lt;br /&gt;&#39; 
+	//	+ &#39;Accuracy: &#39; + position.coords.accuracy + &#39;&lt;br /&gt;&#39;
+	//	+ &#39;Timestamp: &#39; + new Date(position.timestamp) + &#39;&lt;br /&gt;&#39;;
+
+
+	// initialize
+	//sessionStorage.clear();
+	// add data to localStorage 
+	sessionStorage.latitude = latitude;
+	sessionStorage.longitude = longitude;
+	sessionStorage.accuracy = accuracy;
+	sessionStorage.timeStamp = timeStamp;
+
+}
+
+// onError Callback receives a PositionError object
+function geo_error(error) {
+	alert(&#39;error!&#39; );
+}
+
+
+
+</pre>
+</body>
+</html>

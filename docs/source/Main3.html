@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-controller-tablet-Main'>/**
+</span> * @class EvaluateIt.controller.tablet.Main
+ * @extends EvaluateIt.controller.Main
+ *
+ * This is the Main controller subclass for the &#39;tablet&#39; profile. Almost all of the functionality is implemented in the
+ * superclass, here we just define showView, which is the function that is called whenever any view is navigated to via
+ * the navigation NestedList or a url change.
+ */
+Ext.define(&#39;EvaluateIt.controller.tablet.Main&#39;, {
+    extend: &#39;EvaluateIt.controller.Main&#39;,
+
+<span id='EvaluateIt-controller-tablet-Main-method-onNavTap'>    /**
+</span>     * This is called whenever the user taps on an item in the main navigation NestedList
+     */
+    onNavTap: function(nestedList, list, index) {
+        // Note: does not get store isntance, but instead gets model instance for hash change routing
+		var record = list.getStore().getAt(index);
+
+        if (record.isLeaf()) {
+			
+			// append category parameter for use in selection of proper view to render in route through use of filter 
+			console.log(&#39;url to route: &#39; + &#39; &#39; + record.toUrl() + &#39;\/&#39; + record.get(&#39;category&#39;));
+            record =  record.toUrl() + &#39;\/&#39; + record.get(&#39;category&#39;); 			
+			
+			// call route with model instance name and parameters
+			this.redirectTo(record);
+        }
+    },
+
+<span id='EvaluateIt-controller-tablet-Main-method-showView'>    /**
+</span>     * For a given Option model instance, shows the appropriate view. This is the endpoint for all routes matching
+     * &#39;option/:id&#39;, so is called automatically whenever the user navigates back or forward between options.
+     * @param {EvaluateIt.model.Option} item The Option model instance for which we want to show a view
+     */
+    showView: function(item) {
+        var nav  = this.getNav(),
+			title  = item.get(&#39;text&#39;),
+            view = this.createView(item),
+            main = this.getMain(),
+            anim = item.get(&#39;animation&#39;),
+            layout  = main.getLayout(),
+            initialAnim = layout.getAnimation(),
+            newAnim;
+
+        if (anim) {
+            layout.setAnimation(anim);
+            newAnim = layout.getAnimation();
+        }
+
+        nav.setDetailContainer(main);
+        nav.setDetailCard(view);
+        nav.goToNode(item.parentNode);
+        nav.goToLeaf(item);
+        nav.getActiveItem().select(item);
+
+        if (newAnim) {
+            newAnim.on(&#39;animationend&#39;, function() {
+                layout.setAnimation(initialAnim);
+            }, this, { single: true });
+        }
+
+	
+		//var title = item.get(&#39;text&#39;) + &#39; - &#39; + name;	
+		console.log(&#39;title: &#39; + title);
+
+        this.getToolbar().setTitle(item.get(&#39;text&#39;));
+    },
+
+<span id='EvaluateIt-controller-tablet-Main-method-showMenuById'>    showMenuById: Ext.emptyFn
+</span>});
+</pre>
+</body>
+</html>

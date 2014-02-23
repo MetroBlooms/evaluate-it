@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">//&lt;feature charts&gt;
+Ext.define(&#39;EvaluateIt.view.ColorPatterns&#39;, {
+    singleton: true,
+    requires: [&#39;Ext.draw.Color&#39;],
+    colors: [&quot;#115fa6&quot;, &quot;#94ae0a&quot;, &quot;#a61120&quot;, &quot;#ff8809&quot;, &quot;#ffd13e&quot;, &quot;#a61187&quot;, &quot;#24ad9a&quot;, &quot;#7c7474&quot;, &quot;#a66111&quot;],
+
+    getBaseColors: function (index) {
+        if (index == null) {
+            return this.colors.slice();
+        } else {
+            return this.colors[index];
+        }
+    },
+
+    getAlteredBaseColorsHSL: function (deltaHSL) {
+        deltaHSL = Ext.applyIf(deltaHSL || {}, {h: 0, s: 0, l: 0});
+        var deltaH = deltaHSL.h,
+            deltaS = deltaHSL.s,
+            deltaL = deltaHSL.l,
+            colors = [], i, hsl;
+        for (i = 0; i &lt; this.colors.length; i++) {
+            hsl = Ext.draw.Color.create(this.colors[i]).getHSL();
+            colors.push(Ext.draw.Color.fromHSL(hsl[0] + deltaH, hsl[1] + deltaS, hsl[2] + deltaL));
+        }
+        return colors;
+    },
+
+    getGradientColorsHSL: function (baseColor, from, to, number) {
+        baseColor = Ext.draw.Color.create(baseColor);
+        var hsl = baseColor.getHSL(),
+            fromH = &#39;h&#39; in from ? from.h : hsl[0],
+            fromS = &#39;s&#39; in from ? from.s : hsl[1],
+            fromL = &#39;l&#39; in from ? from.l : hsl[2],
+            toH = &#39;h&#39; in to ? to.h : hsl[0],
+            toS = &#39;s&#39; in to ? to.s : hsl[1],
+            toL = &#39;l&#39; in to ? to.l : hsl[2],
+            i, colors = [],
+            deltaH = (toH - fromH) / number,
+            deltaS = (toS - fromS) / number,
+            deltaL = (toL - fromL) / number;
+        for (i = 0; i &lt;= number; i++) {
+            colors.push(Ext.draw.Color.fromHSL(
+                fromH + deltaH * i,
+                fromS + deltaS * i,
+                fromL + deltaL * i
+            ).toString());
+        }
+        return colors;
+    },
+
+    getGradientColors: function (fromColor, toColor, number) {
+        var colors = [],
+            temp = new Ext.draw.Color(),
+            i;
+        fromColor = Ext.draw.Color.create(fromColor);
+        toColor = Ext.draw.Color.create(toColor);
+        for (i = 0; i &lt;= number; i++) {
+            temp.r = fromColor.r * (1 - i / number) + toColor.r * i / number;
+            temp.g = fromColor.g * (1 - i / number) + toColor.g * i / number;
+            temp.b = fromColor.b * (1 - i / number) + toColor.b * i / number;
+            temp.a = fromColor.a * (1 - i / number) + toColor.a * i / number;
+            colors.push(temp.toString());
+        }
+        return colors;
+    },
+
+    getGradientColorsByBrightness: function (baseColor, fromBrightness, toBrightness, number) {
+        baseColor = Ext.draw.Color.create(baseColor);
+        var hsl = baseColor.getHSL(), colors = [], i;
+        for (i = 0; i &lt;= number; i++) {
+            colors.push(Ext.draw.Color.fromHSL(hsl[0], hsl[1], fromBrightness * (1 - i / number) + toBrightness * i / number).toString());
+        }
+        return colors;
+    }
+});
+//&lt;/feature&gt;
+</pre>
+</body>
+</html>

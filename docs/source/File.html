@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-field-File'>/**
+</span> * @aside guide forms
+ *
+ * Creates an HTML file input field on the page. This is usually used to upload files to remote server. File fields are usually
+ * created inside a form like this:
+ *
+ *     @example
+ *     Ext.create(&#39;Ext.form.Panel&#39;, {
+ *         fullscreen: true,
+ *         items: [
+ *             {
+ *                 xtype: &#39;fieldset&#39;,
+ *                 title: &#39;My Uploader&#39;,
+ *                 items: [
+ *                     {
+ *                         xtype: &#39;filefield&#39;,
+ *                         label: &quot;MyPhoto:&quot;,
+ *                         name: &#39;photo&#39;,
+ *                         accept: &#39;image&#39;
+ *                     }
+ *                 ]
+ *             }
+ *         ]
+ *     });
+ */
+
+Ext.define(&#39;Ext.field.File&#39;, {
+    extend: &#39;Ext.field.Field&#39;,
+    xtype : &#39;filefield&#39;,
+    requires: [&quot;Ext.field.FileInput&quot;],
+
+    config : {
+<span id='Ext-field-File-cfg-component'>        component: {
+</span>            xtype : &#39;fileinput&#39;,
+            fastFocus: false
+        }
+    },
+
+<span id='Ext-field-File-property-proxyConfig'>    proxyConfig: {
+</span>        name: null,
+        value: null,
+        files:null,
+
+<span id='Ext-field-File-cfg-multiple'>        /**
+</span>         * @cfg {Boolean} multiple Allow selection of multiple files
+         *
+         * @accessor
+         */
+        multiple: false,
+
+<span id='Ext-field-File-cfg-accept'>        /**
+</span>         * @cfg {String} accept File input accept attribute documented here (http://www.w3schools.com/tags/att_input_accept.asp)
+         * Also can be simple strings -- e.g. audio, video, image
+         *
+         * @accessor
+         */
+        accept: null,
+<span id='Ext-field-File-cfg-capture'>        /**
+</span>         * @cfg {String} capture File input capture attribute. Accepts values such as &quot;camera&quot;, &quot;camcorder&quot;, &quot;microphone&quot;
+         *
+         * @accessor
+         */
+        capture: null
+    },
+
+<span id='Ext-field-File-property-isFile'>    // @private
+</span>    isFile: true,
+
+<span id='Ext-field-File-method-initialize'>    // @private
+</span>    initialize: function() {
+        var me = this;
+
+        me.callParent();
+
+        me.getComponent().on({
+            scope: this,
+            change      : &#39;onChange&#39;
+        });
+    },
+
+<span id='Ext-field-File-method-onChange'>    onChange: function(me, value, startValue) {
+</span>        me.fireEvent(&#39;change&#39;, this, value, startValue);
+    }
+});
+</pre>
+</body>
+</html>

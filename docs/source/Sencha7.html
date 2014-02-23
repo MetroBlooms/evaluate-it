@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-device-notification-Sencha'>/**
+</span> * @private
+ */
+Ext.define(&#39;Ext.device.notification.Sencha&#39;, {
+    extend: &#39;Ext.device.notification.Abstract&#39;,
+    requires: [&#39;Ext.device.Communicator&#39;],
+
+<span id='Ext-device-notification-Sencha-method-show'>    show: function() {
+</span>        var config = this.callParent(arguments);
+
+        Ext.device.Communicator.send({
+            command: &#39;Notification#show&#39;,
+            callbacks: {
+                callback: config.callback
+            },
+            scope  : config.scope,
+            title  : config.title,
+            message: config.message,
+            buttons: config.buttons.join(&#39;,&#39;) //@todo fix this
+        });
+    },
+
+<span id='Ext-device-notification-Sencha-method-vibrate'>    vibrate: function() {
+</span>        Ext.device.Communicator.send({
+            command: &#39;Notification#vibrate&#39;
+        });
+    }
+});
+</pre>
+</body>
+</html>

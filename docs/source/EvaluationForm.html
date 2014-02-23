@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-view-EvaluationForm'>/**
+</span> * Form panel view for selecting evaluation scorecard (See EvaluateIt.view.EvaluationCriteria for criteria)
+ * Binds to model and store in EvaluateIt.controller.Evaluation
+ *
+ * TODO: set height/width for tablet, rename alias, etc. to fit normalized model: EvaluateIt.model.EvaluationScorecard
+ */
+
+Ext.define(&#39;EvaluateIt.view.EvaluationForm&#39;, {
+//var formPanel = Ext.define(&#39;EvaluateIt.view.EvaluationForm&#39;, {
+// TODO: Not sure why this was implemented like this? Need to determine
+	extend: &#39;Ext.form.Panel&#39;,
+	alias : &#39;widget.siteEvaluationForm&#39;,
+	requires: [
+        &#39;Ext.form.Panel&#39;,
+        &#39;Ext.form.FieldSet&#39;,
+        &#39;Ext.field.Number&#39;,
+        &#39;Ext.field.Select&#39;,
+        &#39;Ext.field.Hidden&#39;
+    ],
+	config: {
+
+
+<span id='EvaluateIt-view-EvaluationForm-cfg-left'>        // We give it a left and top property to make it floating by default
+</span>
+		left: 0,
+<span id='EvaluateIt-view-EvaluationForm-cfg-top'>		top: 0,
+</span>
+<span id='EvaluateIt-view-EvaluationForm-cfg-modal'>        /**
+</span>         * Make it modal so you can click the mask to hide the overlay
+         */
+		modal: true,
+<span id='EvaluateIt-view-EvaluationForm-cfg-hideOnMaskTap'>		hideOnMaskTap: true,
+</span>
+<span id='EvaluateIt-view-EvaluationForm-cfg-width'>        /**
+</span>         * Set the width and height of the panel
+         */
+		width: Ext.os.deviceType == &#39;Phone&#39; ?  screen.width : 350,
+<span id='EvaluateIt-view-EvaluationForm-cfg-height'>		height: Ext.os.deviceType == &#39;Phone&#39; ?  screen.height : 500,
+</span><span id='EvaluateIt-view-EvaluationForm-cfg-scrollable'>		scrollable: true,
+</span><span id='EvaluateIt-view-EvaluationForm-cfg-layout'>	 	layout: {
+</span>			type: &#39;vbox&#39;
+		},
+<span id='EvaluateIt-view-EvaluationForm-cfg-defaults'>		defaults: {
+</span>			margin: &#39;0 0 5 0&#39;,
+			labelWidth: &#39;50%&#39;,
+			labelWrap: true
+		},
+
+<span id='EvaluateIt-view-EvaluationForm-cfg-items'>        /**
+</span>         * @cfg
+         *
+         * BMP evaluation items as per evaluation rules on instrument
+         *
+         * TODO: create enumeration
+         */
+		items: [
+			{
+       			xtype: &#39;textfield&#39;,
+		   		name: &#39;address&#39;,
+		   		readOnly: true
+			},
+
+
+			{
+				xtype: &#39;selectfield&#39;,
+				itemId: &#39;visualImpact&#39;,
+				name: &#39;visualImpact&#39;,
+				label: &#39;Visual impact&#39;,
+				autoSelect: false,
+				placeHolder: &#39;Select a score&#39;,
+				options: [
+					{text: &#39;&#39;},
+					{text: &#39;0&#39;,  value: &#39;0&#39;},
+					{text: &#39;1&#39;,  value: &#39;1&#39;},
+					{text: &#39;2&#39;,  value: &#39;2&#39;},
+					{text: &#39;3&#39;,  value: &#39;3&#39;},
+					{text: &#39;4&#39;,  value: &#39;4&#39;}
+				]
+			},
+			{
+				xtype: &#39;selectfield&#39;,
+				itemId: &#39;varietyAndHealth&#39;,
+				name: &#39;varietyAndHealth&#39;,
+				label: &#39;Plant variety and health&#39;,
+				autoSelect: false,
+				placeHolder: &#39;Select a score&#39;,
+				options: [
+					{text: &#39;&#39;},
+					{text: &#39;0&#39;,  value: &#39;0&#39;},
+					{text: &#39;1&#39;,  value: &#39;1&#39;},
+					{text: &#39;2&#39;,  value: &#39;2&#39;},
+					{text: &#39;3&#39;,  value: &#39;3&#39;},
+					{text: &#39;4&#39;,  value: &#39;4&#39;}
+				]
+			},
+			{
+				xtype: &#39;selectfield&#39;,
+				itemId: &#39;design&#39;,
+				name: &#39;design&#39;,
+				label: &#39;Design&#39;,
+				autoSelect: false,
+				placeHolder: &#39;Select a score&#39;,
+				options: [
+					{text: &#39;&#39;},
+					{text: &#39;0&#39;,  value: &#39;0&#39;},
+					{text: &#39;1&#39;,  value: &#39;1&#39;},
+					{text: &#39;2&#39;,  value: &#39;2&#39;},
+					{text: &#39;3&#39;,  value: &#39;3&#39;},
+					{text: &#39;4&#39;,  value: &#39;4&#39;}
+				]
+			},
+			{
+				xtype: &#39;selectfield&#39;,
+				itemId: &#39;maintenance&#39;,
+				name: &#39;maintenance&#39;,
+				label: &#39;Maintenance&#39;,
+				autoSelect: false,
+				placeHolder: &#39;Select a score&#39;,
+				options: [
+					{text: &#39;&#39;},
+					{text: &#39;0&#39;,  value: &#39;0&#39;},
+					{text: &#39;1&#39;,  value: &#39;1&#39;},
+					{text: &#39;2&#39;,  value: &#39;2&#39;},
+					{text: &#39;3&#39;,  value: &#39;3&#39;},
+					{text: &#39;4&#39;,  value: &#39;4&#39;}
+				]
+			},
+			{
+				xtype: &#39;selectfield&#39;,
+				itemId: &#39;environmentalStewardship&#39;,
+				name: &#39;environmentalStewardship&#39;,
+				label: &#39;Environmental Stewardship&#39;,
+				autoSelect: false,
+				placeHolder: &#39;Select a score&#39;,
+				options: [
+					{text: &#39;&#39;},
+					{text: &#39;0&#39;,  value: &#39;0&#39;},
+					{text: &#39;1&#39;,  value: &#39;1&#39;},
+					{text: &#39;2&#39;,  value: &#39;2&#39;},
+					{text: &#39;3&#39;,  value: &#39;3&#39;},
+					{text: &#39;4&#39;,  value: &#39;4&#39;}
+				]
+			},
+			{
+				xtype: &#39;textfield&#39;,
+				label: &#39;Total score:&#39;,
+				name: &#39;sumRating&#39;,
+				readOnly: true
+			},
+			{
+				xtype: &#39;hiddenfield&#39;,
+				name: &#39;imageUri&#39;,
+				itemId: &#39;imageId&#39;
+			},
+			{
+                 xtype: &#39;button&#39;,
+                 itemId: &#39;siteImage&#39;,
+                 text: &#39;Select Photo&#39;
+            },
+			{
+				xtype: &#39;button&#39;,
+				itemId: &#39;save&#39;,
+				text: &#39;Save&#39;
+			}
+
+        ]
+    }
+
+});
+</pre>
+</body>
+</html>

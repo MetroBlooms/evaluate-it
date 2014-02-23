@@ -1,5 +1,5 @@
 /**
- * Widget, with template to render displayed sites to evaluate 
+ * Widget with template to render displayed sites to evaluate
 */
 
 Ext.define('EvaluateIt.view.EvaluationList', {
@@ -9,7 +9,10 @@ Ext.define('EvaluateIt.view.EvaluationList', {
 		width: Ext.os.deviceType == 'Phone' ? null : 300,
 		height: Ext.os.deviceType == 'Phone' ? null : 500,
 		xtype: 'list',
-		store: 'SiteEvaluations', //getRange(0, 9),
+		store: 'SiteEvaluations',
+        /**
+         * Template to display list
+         */
 		itemTpl: [
 			'<div><strong>Address: {address}</strong></div> '
 		],

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.require([&#39;Ext.data.proxy.SQL&#39;,&#39;EvaluateIt.model.Site&#39;]);
+
+Ext.define(&#39;EvaluateIt.model.SiteMaintainer&#39;, {
+    extend: &#39;Ext.data.Model&#39;,
+    
+    config: {
+         //idProperty: &#39;id&#39;, // use with proxy.SQL 
+	identifier: &#39;uuid&#39;, // use with proxy.localstorage 
+        fields: [
+            {name: &#39;firstName&#39;, type: &#39;string&#39;},
+            {name: &#39;lastName&#39;, type: &#39;string&#39;},
+            {name: &#39;emailAddress&#39;, type: &#39;string&#39;},
+	    {name: &#39;site_id&#39;, type: &#39;int&#39;}
+        ],
+	proxy: {
+           type: &quot;localstorage&quot;//,
+           //database: &#39;Yo&#39;
+        },
+	belongsTo: [
+	{ 
+	    model: &#39;EvaluateIt.model.Site&#39;, 
+	    associationKey: &#39;siteId&#39;,
+	    name: &#39;site&#39;,
+	    instanceName: &#39;site&#39;,
+	    getterName: &#39;getSite&#39;,
+	    setterName: &#39;setSite&#39;,
+	    foreignKey: &#39;site_id&#39; 
+	}]
+
+    }
+});
+</pre>
+</body>
+</html>
