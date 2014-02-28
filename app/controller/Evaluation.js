@@ -1,3 +1,10 @@
+/**
+ * Controller for EvaluateIt.view.Evaluation
+ *
+ * TODO: figure out why I needed to clone the record;
+ * it may have something to do with grabbing the image from the gallery
+ *
+ */
 Ext.define('EvaluateIt.controller.Evaluation', {
 	extend : 'Ext.app.Controller',
 
@@ -32,31 +39,47 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 		    record = form.getRecord(),
 		//get the form values
 		//var values = form.getValues();
-		// return a clone for updating of values
-		    values = Ext.clone(form.getValues()),
-			sumRating;
 
-		// calculatee sum of factor ratings: TODO: display on form
-		if (form.getValues().visualImpact !== null 
+		// return a clone for updating of values
+        // TODO: Determine why I did this
+
+		    values = Ext.clone(form.getValues()),
+			sumRating,
+            evaluationRating;
+
+		// calculatee sum of factor ratings:
+        if (form.getValues().visualImpact !== null
 			&& form.getValues().varietyAndHealth !== null 
 			&& form.getValues().design !== null 
 			&& form.getValues().maintenance !== null 
 			&& form.getValues().environmentalStewardship !== null) {
 
-			sumRating = parseInt(form.getValues().visualImpact) + 
-						parseInt(form.getValues().varietyAndHealth) +
-						parseInt(form.getValues().design) + 
-						parseInt(form.getValues().maintenance) + 
-						parseInt(form.getValues().environmentalStewardship);
-						
-			alert('SumRating: ' + sumRating);
+            /**
+             *
+             * Compute sum of scorecard factores
+             * @type {Integer}
+             */
+			sumRating = EvaluateIt.utils.Global.sum_factor_ratings(form.getValues().visualImpact,
+                form.getValues().varietyAndHealth,
+                form.getValues().design,
+                form.getValues().maintenanc,
+                form.getValues().environmentalStewardship);
+
+            /**
+             * Determine ranking of evaluation
+             * calls global function
+             * @type {String}
+             */
+            evaluationRating = EvaluateIt.utils.Global.evaluation_rating (sumRating);
+
+            // TODO: display on form
+			alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
 
 			form.setValues({
 				sumRating: sumRating 
 			})
 
 			values = form.getValues();
-
 			record = form.getRecord();
 
 
@@ -80,21 +103,14 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 				images = Ext.getStore(images);
 				
 				if (images.getCount() > 0) {
-					var uri  = iRecord.get('src');
-					
-					 //	image = Ext.getCmp('imageUri');
+					var uri  = Record.get('src');
 
-					//image = form.setValue(uri);
-					
 					//form.getCmp('imageId').setValue(uri);
 					
 					console.log('URI: ' +  uri);
 
-
 					// update store with URI
-
 					var siteId = record.get('site_id');
-
 
 					form.setValues({
 						imageUri: uri 
@@ -104,10 +120,6 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
 					record = form.getRecord();
 
-				
-					//record.set('imageUri',uri)
-				
-		
 				}
 			});
 
@@ -139,5 +151,42 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
 });
 
+
+// move to Global.js
+
+/*function sum_factor_ratings(visualImpact,varietyAndHealth,design,maintenance, ) {
+
+    var sum;
+
+    sum = parseInt(visualImpact) +
+    parseInt(varietyAndHealth) +
+    parseInt(design) +
+    parseInt(maintenance) +
+    parseInt(environmentalStewardship);
+
+    alert('Sum' + sum);
+
+    return sum;
+}*/
+
+
+/*function evaluation_rating (score)	{
+
+    var rating;
+
+    if (score >= 18) {
+        rating = 'EG';
+    } else if (score >= 14 && score < 18) {
+        rating = 'GD';
+    } else if (score >= 9 && score < 14) {
+        rating = 'GM';
+    } else if (score >= 5 && score < 9) {
+        rating = 'CA';
+    } else {
+        rating = ''; //'';
+    }
+
+    return rating;
+} */
 
 

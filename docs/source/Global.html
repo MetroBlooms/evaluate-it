@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-utils-Global'>/**
+</span> * Global functions
+ *
+ */
+Ext.define(&#39;EvaluateIt.utils.Global&#39;, {
+    singleton : true,
+    alias : &#39;widget.global&#39;,
+<span id='EvaluateIt-utils-Global-method-constructor'>    constructor: function(config) {
+</span>        this.initConfig(config);
+    },
+
+<span id='EvaluateIt-utils-Global-method-evaluation_rating'>    /**
+</span>     *
+     * Rating based on Metro Blooms evaluation form
+     * @param score
+     * @returns {String}
+     */
+    evaluation_rating: function(param){
+        alert(param);
+        var rating;
+
+        if (score &gt;= 18) {
+            rating = &#39;EG&#39;;
+        } else if (score &gt;= 14 &amp;&amp; score &lt; 18) {
+            rating = &#39;GD&#39;;
+        } else if (score &gt;= 9 &amp;&amp; score &lt; 14) {
+            rating = &#39;GM&#39;;
+        } else if (score &gt;= 5 &amp;&amp; score &lt; 9) {
+            rating = &#39;CA&#39;;
+        } else {
+            rating = &#39;&#39;; //&#39;&#39;;
+        }
+
+        return rating;
+
+    },
+
+<span id='EvaluateIt-utils-Global-method-sum_factor_ratings'>    /**
+</span>     * Compute sum of scorecard factors
+     * @return {Integer}
+     */
+    sum_factor_ratings: function (visualImpact,varietyAndHealth,design,maintenance,environmentalStewardship) {
+
+        var sum;
+<span id='EvaluateIt-utils-Global-property-sum'>        /**
+</span>         * Ensure all values are integers first before summing
+         * over them
+         */
+        sum = parseInt(visualImpact) +
+            parseInt(varietyAndHealth) +
+            parseInt(design) +
+            parseInt(maintenance) +
+            parseInt(environmentalStewardship);
+
+        alert(&#39;Sum&#39; + sum);
+
+        return sum;
+    }
+})</pre>
+</body>
+</html>

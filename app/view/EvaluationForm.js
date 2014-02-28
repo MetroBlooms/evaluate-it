@@ -7,7 +7,8 @@
 
 Ext.define('EvaluateIt.view.EvaluationForm', {
 //var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
-// TODO: Not sure why this was implemented like this? Need to determine
+// TODO: Not sure why this was implemented like this?
+// Need to determine (may have something to do with a destroy issued later)
 	extend: 'Ext.form.Panel',
 	alias : 'widget.siteEvaluationForm',
 	requires: [

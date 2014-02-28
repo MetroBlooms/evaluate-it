@@ -4,6 +4,7 @@
  *
  * This implementation is through item buttons accessed in EvaluateIt.view.Pull and EvaluateIt.view.Push;
  * authentication token is then deleted from sessionStorage
+ *
  * TODO: Set tablet height/width
  */
 Ext.define('EvaluateIt.view.Logout', {

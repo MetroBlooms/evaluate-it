@@ -63,6 +63,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "EvaluateIt.store.SiteEvaluations": [],
   "EvaluateIt.store.SiteMaintainers": [],
   "EvaluateIt.store.Sites": [],
+  "EvaluateIt.utils.Global": [],
   "EvaluateIt.view.ClearAll": [],
   "EvaluateIt.view.Evaluation": [],
   "EvaluateIt.view.EvaluationAward": [],
@@ -784,6 +785,9 @@ Ext.ClassManager.addNameAliasMappings({
   "EvaluateIt.store.SiteMaintainers": [],
   "EvaluateIt.store.Sites": [
     "store.Sites"
+  ],
+  "EvaluateIt.utils.Global": [
+    "widget.global"
   ],
   "EvaluateIt.view.ClearAll": [
     "widget.clearview"

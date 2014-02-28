@@ -4,6 +4,7 @@
  *
  * This implementation is through item buttons accessed in EvaluateIt.view.Pull and EvaluateIt.view.Push;
  * authentication token is then written to sessionStorage
+ *
  * TODO: Set tablet height/width
  */
 Ext.define('EvaluateIt.view.Login', {
@@ -39,7 +40,7 @@ Ext.define('EvaluateIt.view.Login', {
 		items: [
             {
                 xtype: 'image',
-                src: '/resources/images/mb.gif',
+                src: 'resources/images/mb.gif',
                 height: 80, 
 				width: '100%' 
             },

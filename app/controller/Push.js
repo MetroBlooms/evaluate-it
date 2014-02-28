@@ -1,3 +1,6 @@
+/**
+ * TODO: need single function evaluation_rating
+ */
 Ext.define('EvaluateIt.controller.Push', {
 	extend: 'Ext.app.Controller',
 
@@ -219,15 +222,27 @@ function assemble_evaluation(record) {
 				&& !record.data.maintenance !== null 
 				&& !record.data.environmentalStewardship !== null) {
 
-            // TODO: make a method of Evaluation
-			score = record.data.visualImpact  
-					+ record.data.varietyAndHealth 
-					+ record.data.design  
-					+ record.data.maintenance 
-					+ record.data.environmentalStewardship;
+            /**
+             *
+             * Compute sum of scorecard factores
+             * @type {Integer}
+             */
+            score = EvaluateIt.utils.Global.sum_factor_ratings(record.data.visualImpact,
+                record.data.varietyAndHealth,
+                record.data.design,
+                record.data.maintenanc,
+                record.data.environmentalStewardship);
 
-			// get rating for given score
+
+            // get rating for given score
 			rating = evaluation_rating(score);
+            /**
+             * Determine ranking of evaluation
+             * calls global function
+             * @type {String}
+             */
+            rating = EvaluateIt.utils.Global.evaluation_rating (score);
+
 			console.log("rating" + rating);	
 		}
 		else {
@@ -337,27 +352,31 @@ function assemble_evaluation(record) {
 }
 
 // rating based on Metro Blooms evaluation form
-function evaluation_rating (score)	{
+// move to Global.js
+/*function evaluation_rating (score)	{
 
-	if (score >= 18) {
-		rating = 'EG';
-	} else if (score >= 14 && score < 18) {
-		rating = 'GD';
-	} else if (score >= 9 && score < 14) {
-		rating = 'GM';
-	} else if (score >= 5 && score < 9) {
-		rating = 'CA';
-	} else {
-		rating = ''; //'';
-	}
+ var rating;
 
-	return rating;
-}
+ if (score >= 18) {
+ rating = 'EG';
+ } else if (score >= 14 && score < 18) {
+ rating = 'GD';
+ } else if (score >= 9 && score < 14) {
+ rating = 'GM';
+ } else if (score >= 5 && score < 9) {
+ rating = 'CA';
+ } else {
+ rating = ''; //'';
+ }
+
+ return rating;
+ } */
 
 // awards based on Metro Blooms evaluation form
 function evaluation_award (award_id) {
 
-	var nate_siegel = 0;
+	var nate_siegel = 0,
+        best_of;
 
 	switch (award_id) {
 		case 1:

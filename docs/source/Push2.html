@@ -15,18 +15,21 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.controller.Push&#39;, {
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-controller-Push'>/**
+</span> * TODO: need single function evaluation_rating
+ */
+Ext.define(&#39;EvaluateIt.controller.Push&#39;, {
 	extend: &#39;Ext.app.Controller&#39;,
 
 	config: {
-		profile: Ext.os.deviceType.toLowerCase(),
-  		stores: [&#39;SiteEvaluations&#39;],
-  		models: [&#39;SiteEvaluation&#39;],
-  		refs: {
-   			myPushList: &#39;pushList&#39;
+<span id='EvaluateIt-controller-Push-cfg-profile'>		profile: Ext.os.deviceType.toLowerCase(),
+</span><span id='EvaluateIt-controller-Push-cfg-stores'>  		stores: [&#39;SiteEvaluations&#39;],
+</span><span id='EvaluateIt-controller-Push-cfg-models'>  		models: [&#39;SiteEvaluation&#39;],
+</span><span id='EvaluateIt-controller-Push-cfg-refs'>  		refs: {
+</span>   			myPushList: &#39;pushList&#39;
   		},
-		control: {
-			&#39;pushList&#39;: {
+<span id='EvaluateIt-controller-Push-cfg-control'>		control: {
+</span>			&#39;pushList&#39;: {
 				activate: &#39;onActivate&#39;,
 				itemtap: &#39;onSelectPush&#39;
 			},
@@ -43,13 +46,13 @@
 
  	},
 
-	onActivate: function() {
-  		console.log(&#39;Main container is active&#39;);
+<span id='EvaluateIt-controller-Push-method-onActivate'>	onActivate: function() {
+</span>  		console.log(&#39;Main container is active&#39;);
 		
  	},
 
-	onLoginPush: function(button) {
-		console.log(&#39;Button Click&#39;);
+<span id='EvaluateIt-controller-Push-method-onLoginPush'>	onLoginPush: function(button) {
+</span>		console.log(&#39;Button Click&#39;);
 		var loginForm = Ext.Viewport.down(&#39;login&#39;);
 		//create widget if it doesn&#39;t exist
 		if(!loginForm){
@@ -59,8 +62,8 @@
 		loginForm.showBy(button);
 	},
 
-	onSavePush: function(button) {
-		console.log(&#39;Button Click for Save&#39;);
+<span id='EvaluateIt-controller-Push-method-onSavePush'>	onSavePush: function(button) {
+</span>		console.log(&#39;Button Click for Save&#39;);
 		var form = button.up(&#39;panel&#39;);
 		//get the record 
 		var record = form.getRecord();
@@ -86,8 +89,8 @@
 
 	},
 
-	// TODO: add missing atributes to form; add image uploade using native or Cordova method
-
+<span id='EvaluateIt-controller-Push-method-onSelectPush'>	// TODO: add missing atributes to form; add image uploade using native or Cordova method
+</span>
 	onSelectPush: function(view, index, target, record, event) {
 
 		console.log(&#39;Selected a SiteEvaluation from the list&#39;);
@@ -236,15 +239,27 @@ function assemble_evaluation(record) {
 				&amp;&amp; !record.data.maintenance !== null 
 				&amp;&amp; !record.data.environmentalStewardship !== null) {
 
-            // TODO: make a method of Evaluation
-			score = record.data.visualImpact  
-					+ record.data.varietyAndHealth 
-					+ record.data.design  
-					+ record.data.maintenance 
-					+ record.data.environmentalStewardship;
+<span id='EvaluateIt-controller-Push-property-score'>            /**
+</span>             *
+             * Compute sum of scorecard factores
+             * @type {Integer}
+             */
+            score = EvaluateIt.utils.Global.sum_factor_ratings(record.data.visualImpact,
+                record.data.varietyAndHealth,
+                record.data.design,
+                record.data.maintenanc,
+                record.data.environmentalStewardship);
 
-			// get rating for given score
+
+            // get rating for given score
 			rating = evaluation_rating(score);
+<span id='EvaluateIt-controller-Push-property-rating'>            /**
+</span>             * Determine ranking of evaluation
+             * calls global function
+             * @type {String}
+             */
+            rating = EvaluateIt.utils.Global.evaluation_rating (score);
+
 			console.log(&quot;rating&quot; + rating);	
 		}
 		else {
@@ -354,27 +369,31 @@ function assemble_evaluation(record) {
 }
 
 // rating based on Metro Blooms evaluation form
-function evaluation_rating (score)	{
+// move to Global.js
+/*function evaluation_rating (score)	{
 
-	if (score &gt;= 18) {
-		rating = &#39;EG&#39;;
-	} else if (score &gt;= 14 &amp;&amp; score &lt; 18) {
-		rating = &#39;GD&#39;;
-	} else if (score &gt;= 9 &amp;&amp; score &lt; 14) {
-		rating = &#39;GM&#39;;
-	} else if (score &gt;= 5 &amp;&amp; score &lt; 9) {
-		rating = &#39;CA&#39;;
-	} else {
-		rating = &#39;&#39;; //&#39;&#39;;
-	}
+ var rating;
 
-	return rating;
-}
+ if (score &gt;= 18) {
+ rating = &#39;EG&#39;;
+ } else if (score &gt;= 14 &amp;&amp; score &lt; 18) {
+ rating = &#39;GD&#39;;
+ } else if (score &gt;= 9 &amp;&amp; score &lt; 14) {
+ rating = &#39;GM&#39;;
+ } else if (score &gt;= 5 &amp;&amp; score &lt; 9) {
+ rating = &#39;CA&#39;;
+ } else {
+ rating = &#39;&#39;; //&#39;&#39;;
+ }
+
+ return rating;
+ } */
 
 // awards based on Metro Blooms evaluation form
 function evaluation_award (award_id) {
 
-	var nate_siegel = 0;
+	var nate_siegel = 0,
+        best_of;
 
 	switch (award_id) {
 		case 1:
