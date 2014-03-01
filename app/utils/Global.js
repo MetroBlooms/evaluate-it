@@ -38,6 +38,18 @@ Ext.define('EvaluateIt.utils.Global', {
     /**
      * Compute sum of scorecard factors
      * @return {Integer}
+     *
+     * TODO: variable list of parameters as per design pattern:
+     *
+     * obj = {
+			var: withValue
+		};
+     *
+     * obj = {
+			var: null
+		};
+     *
+     *
      */
     sum_factor_ratings: function(visualImpact,varietyAndHealth,design,maintenance,environmentalStewardship) {
 
@@ -46,6 +58,8 @@ Ext.define('EvaluateIt.utils.Global', {
          * Ensure all values are integers first before summing
          * over them
          */
+        alert('1' + visualImpact + '2' + varietyAndHealth);
+
         sum = parseInt(visualImpact) +
             parseInt(varietyAndHealth) +
             parseInt(design) +

@@ -54,10 +54,11 @@ Ext.define('EvaluateIt.controller.Evaluation', {
              * Compute sum of scorecard factores
              * @type {Integer}
              */
-			sumRating = EvaluateIt.utils.Global.sum_factor_ratings(form.getValues().visualImpact,
+			sumRating = EvaluateIt.utils.Global.sum_factor_ratings(
+                form.getValues().visualImpact,
                 form.getValues().varietyAndHealth,
                 form.getValues().design,
-                form.getValues().maintenanc,
+                form.getValues().maintenance,
                 form.getValues().environmentalStewardship);
 
             /**

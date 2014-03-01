@@ -1,8 +1,8 @@
 /**
- * Menu structure of app using tree store data structure
- * Roots are defined by function; leaves are end points for navigating to specified views 
+ * Self firing function with menu structure of app using tree store data structure
+ * Roots are defined by function; leaves are end points for navigating to specified views
+ *
 **/
-
 (function () {
 
     var root = {
