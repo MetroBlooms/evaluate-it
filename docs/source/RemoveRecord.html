@@ -15,18 +15,21 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.controller.RemoveRecord&#39;, {
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-controller-RemoveRecord'>/**
+</span> * Controls record removal from data store
+ */
+Ext.define(&#39;EvaluateIt.controller.RemoveRecord&#39;, {
 	extend : &#39;Ext.app.Controller&#39;,
 
 	config: {
-  		profile: Ext.os.deviceType.toLowerCase(),
-  		stores : [&#39;SiteEvaluations&#39;],
-  		models : [&#39;SiteEvaluation&#39;],
-		refs: {
-   			myRemoveRecordList: &#39;removeRecordList&#39;
+<span id='EvaluateIt-controller-RemoveRecord-cfg-profile'>  		profile: Ext.os.deviceType.toLowerCase(),
+</span><span id='EvaluateIt-controller-RemoveRecord-cfg-stores'>  		stores : [&#39;SiteEvaluations&#39;],
+</span><span id='EvaluateIt-controller-RemoveRecord-cfg-models'>  		models : [&#39;SiteEvaluation&#39;],
+</span><span id='EvaluateIt-controller-RemoveRecord-cfg-refs'>		refs: {
+</span>   			myRemoveRecordList: &#39;removeRecordList&#39;
   		},
-		control: {
-			&#39;removeRecordList&#39;: {
+<span id='EvaluateIt-controller-RemoveRecord-cfg-control'>		control: {
+</span>			&#39;removeRecordList&#39;: {
 				activate: &#39;onActivate&#39;,
 				itemtap: &#39;onSelectRemoveRecord&#39;
 			}
@@ -34,12 +37,12 @@
 
  	},
 
-	onActivate: function() {
-  		console.log(&#39;Main container is active&#39;);
+<span id='EvaluateIt-controller-RemoveRecord-method-onActivate'>	onActivate: function() {
+</span>  		console.log(&#39;Main container is active&#39;);
  	},
 
-	onSelectRemoveRecord: function(view, index, target, record, event) {
-		console.log(&#39;Selected a record for removal from the list&#39;);
+<span id='EvaluateIt-controller-RemoveRecord-method-onSelectRemoveRecord'>	onSelectRemoveRecord: function(view, index, target, record, event) {
+</span>		console.log(&#39;Selected a record for removal from the list&#39;);
 		var	id = record.get(&#39;id&#39;), // get key
 			evaluationStore = Ext.create(&#39;EvaluateIt.store.SiteEvaluations&#39;)
 			index;

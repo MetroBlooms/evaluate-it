@@ -1,6 +1,8 @@
-// Handle login session tokens
-// from http://miamicoder.com/2012/adding-a-login-screen-to-a-sencha-touch-application-part-2/
-
+/**
+ * Controller for handling session tokens
+ * **See full documented usage** [HERE][1];
+ * [1]: http://miamicoder.com/2012/adding-a-login-screen-to-a-sencha-touch-application-part-2/
+ */
 Ext.define('EvaluateIt.controller.Login', {
     extend: 'Ext.app.Controller',
     config: {

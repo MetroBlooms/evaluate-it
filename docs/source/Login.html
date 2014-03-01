@@ -15,19 +15,21 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">// Handle login session tokens
-// from http://miamicoder.com/2012/adding-a-login-screen-to-a-sencha-touch-application-part-2/
-
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-controller-Login'>/**
+</span> * Controller for handling session tokens
+ * **See full documented usage** [HERE][1];
+ * [1]: http://miamicoder.com/2012/adding-a-login-screen-to-a-sencha-touch-application-part-2/
+ */
 Ext.define(&#39;EvaluateIt.controller.Login&#39;, {
     extend: &#39;Ext.app.Controller&#39;,
     config: {
-        refs: {
-            loginView: &#39;loginview&#39;,
+<span id='EvaluateIt-controller-Login-cfg-refs'>        refs: {
+</span>            loginView: &#39;loginview&#39;,
             pushView: &#39;pushview&#39;,
 			pullView: &#39;pullview&#39; 
         },
-        control: {
-            loginView: {
+<span id='EvaluateIt-controller-Login-cfg-control'>        control: {
+</span>            loginView: {
                 signInCommand: &#39;onSignInCommand&#39;
             },
 			pushView: { 
@@ -40,21 +42,21 @@ Ext.define(&#39;EvaluateIt.controller.Login&#39;, {
         }
     },
 
-    // Session token
-
+<span id='EvaluateIt-controller-Login-property-sessionToken'>    // Session token
+</span>
     sessionToken: null,
 
-    // Transitions
-    getSlideLeftTransition: function () {
+<span id='EvaluateIt-controller-Login-method-getSlideLeftTransition'>    // Transitions
+</span>    getSlideLeftTransition: function () {
         return { type: &#39;slide&#39;, direction: &#39;left&#39; };
     },
 
-    getSlideRightTransition: function () {
-        return { type: &#39;slide&#39;, direction: &#39;right&#39; };
+<span id='EvaluateIt-controller-Login-method-getSlideRightTransition'>    getSlideRightTransition: function () {
+</span>        return { type: &#39;slide&#39;, direction: &#39;right&#39; };
     },
 
-    onSignInCommand: function (view, username, password) {
-
+<span id='EvaluateIt-controller-Login-method-onSignInCommand'>    onSignInCommand: function (view, username, password) {
+</span>
         console.log(&#39;Username: &#39; + username + &#39;\n&#39; + &#39;Password: &#39; + password);
 
         var me = this,
@@ -129,23 +131,23 @@ Ext.define(&#39;EvaluateIt.controller.Login&#39;, {
         });
     },
 
-    signInSuccess: function (message) {
-        console.log(&#39;Signed in.&#39;);
+<span id='EvaluateIt-controller-Login-method-signInSuccess'>    signInSuccess: function (message) {
+</span>        console.log(&#39;Signed in.&#39;);
         var loginView = this.getLoginView();
 		loginView.showSignInSucceededMessage(message);
         loginView.setMasked(false);
 
     },
 
-    signInFailure: function (message) {
-		console.log(&#39;message&#39; + message);
+<span id='EvaluateIt-controller-Login-method-signInFailure'>    signInFailure: function (message) {
+</span>		console.log(&#39;message&#39; + message);
         var loginView = this.getLoginView();
         loginView.showSignInFailedMessage(message);
         loginView.setMasked(false);
     },
 
-    onSignOffCommand: function () {
-		var	url =  EvaluateIt.config.protocol;
+<span id='EvaluateIt-controller-Login-method-onSignOffCommand'>    onSignOffCommand: function () {
+</span>		var	url =  EvaluateIt.config.protocol;
 
 		// select mode of API access
 		if (EvaluateIt.config.mode === &#39;test&#39;) {

@@ -15,19 +15,24 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.controller.SiteGeolocation&#39;, {
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-controller-SiteGeolocation'>/**
+</span> * Controls assignment of coordinates to location
+ * uses Google Maps API
+ *
+ */
+Ext.define(&#39;EvaluateIt.controller.SiteGeolocation&#39;, {
 	extend : &#39;Ext.app.Controller&#39;,
 	requires: [&#39;Ext.Toolbar&#39;],
 
 	config: {
-		profile: Ext.os.deviceType.toLowerCase(),
-  		stores : [&#39;SiteEvaluations&#39;],
-  		models : [&#39;SiteEvaluation&#39;],
-  		refs: {
-   			mySiteGeolocationList: &#39;siteGeolocationList&#39;
+<span id='EvaluateIt-controller-SiteGeolocation-cfg-profile'>		profile: Ext.os.deviceType.toLowerCase(),
+</span><span id='EvaluateIt-controller-SiteGeolocation-cfg-stores'>  		stores : [&#39;SiteEvaluations&#39;],
+</span><span id='EvaluateIt-controller-SiteGeolocation-cfg-models'>  		models : [&#39;SiteEvaluation&#39;],
+</span><span id='EvaluateIt-controller-SiteGeolocation-cfg-refs'>  		refs: {
+</span>   			mySiteGeolocationList: &#39;siteGeolocationList&#39;
   		},
-		control: {
-			&#39;siteGeolocationList&#39;: {
+<span id='EvaluateIt-controller-SiteGeolocation-cfg-control'>		control: {
+</span>			&#39;siteGeolocationList&#39;: {
 				activate: &#39;onActivate&#39;,
 				itemtap: &#39;onSelectSiteGeolocation&#39;
 			}
@@ -35,13 +40,13 @@
 
  	},
 
-	onActivate: function() {
-  		console.log(&#39;Main container is active&#39;);
+<span id='EvaluateIt-controller-SiteGeolocation-method-onActivate'>	onActivate: function() {
+</span>  		console.log(&#39;Main container is active&#39;);
  	},
 
 
-	// spawns a new form panel with Google map centered on current location 
-	onSelectSiteGeolocation: function(view, index, target, record, event) {
+<span id='EvaluateIt-controller-SiteGeolocation-method-onSelectSiteGeolocation'>	// spawns a new form panel with Google map centered on current location 
+</span>	onSelectSiteGeolocation: function(view, index, target, record, event) {
 
 		console.log(&#39;Selected a Geolocation from the list&#39;);
 
@@ -211,43 +216,6 @@
 });
 
 
-function getCurrentPosition() {
-	//navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, {desiredAccuracy:30, maxWait:15000});
-
-	navigator.geolocation.getCurrentPosition(geo_success, geo_error, { maximumAge: 30, timeout: 5000, enableHighAccuracy: true });
-}
-
-function geo_success(position) {
-	var coordinates = position.coords,
-		location = &#39;Longitude &#39; + coordinates.longitude + &#39; Latitude &#39; + coordinates.latitude + &#39; Accuracy &#39; + coordinates.accuracy,
-		timeStamp = new Date(position.timestamp),
-		latitude = coordinates.latitude,
-		longitude =  coordinates.longitude,
-		accuracy = coordinates.accuracy;
-		
-	alert(&#39;success! geoLocation is ready to use!&#39; + &#39; accuracy &#39; + accuracy);
-
-	//element.innerHTML = &#39;Latitude: &#39; + position.coords.latitude + &#39;&lt;br /&gt;&#39;
-	//	+ &#39;Longitude: &#39; + position.coords.longitude + &#39;&lt;br /&gt;&#39;
-	//	+ &#39;Altitude: &#39; + position.coords.altitude + &#39;&lt;br /&gt;&#39; 
-	//	+ &#39;Accuracy: &#39; + position.coords.accuracy + &#39;&lt;br /&gt;&#39;
-	//	+ &#39;Timestamp: &#39; + new Date(position.timestamp) + &#39;&lt;br /&gt;&#39;;
-
-
-	// initialize
-	//sessionStorage.clear();
-	// add data to localStorage 
-	sessionStorage.latitude = latitude;
-	sessionStorage.longitude = longitude;
-	sessionStorage.accuracy = accuracy;
-	sessionStorage.timeStamp = timeStamp;
-
-}
-
-// onError Callback receives a PositionError object
-function geo_error(error) {
-	alert(&#39;error!&#39; );
-}
 
 
 

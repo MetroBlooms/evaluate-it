@@ -34,16 +34,11 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 	onSaveEvaluation: function(button) {
 		console.log('Button Click for Save');
 		var form = button.up('panel'),
-		//var form = Ext.getCmp('evaluationId');
-		//get the record 
+		    // get the record
 		    record = form.getRecord(),
-		//get the form values
-		//var values = form.getValues();
-
-		// return a clone for updating of values
-        // TODO: Determine why I did this
-
-		    values = Ext.clone(form.getValues()),
+		    // return a clone for updating of values
+            // TODO: Determine why I did this
+            values = Ext.clone(form.getValues()),
 			sumRating,
             evaluationRating;
 
@@ -105,11 +100,9 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 				if (images.getCount() > 0) {
 					var uri  = Record.get('src');
 
-					//form.getCmp('imageId').setValue(uri);
-					
 					console.log('URI: ' +  uri);
 
-					// update store with URI
+					// update store with image uri
 					var siteId = record.get('site_id');
 
 					form.setValues({
@@ -128,14 +121,14 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 			record.set(values);
 		}
 		form.hide();
-		//save the data to the Web local Storage
+		//save the data to localStorage
 		Ext.getStore('SiteEvaluations').sync();
 
 	},
 
 	onSelectEvaluation: function(view, index, target, record, event) {
 
-		// clear content from image queue stor to initialize
+		// clear content from image queue store to initialize
 		var lostor = Ext.getStore('theImageQueue');
 		lostor.getProxy().clear();
 
@@ -150,43 +143,5 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 	}
 
 });
-
-
-// move to Global.js
-
-/*function sum_factor_ratings(visualImpact,varietyAndHealth,design,maintenance, ) {
-
-    var sum;
-
-    sum = parseInt(visualImpact) +
-    parseInt(varietyAndHealth) +
-    parseInt(design) +
-    parseInt(maintenance) +
-    parseInt(environmentalStewardship);
-
-    alert('Sum' + sum);
-
-    return sum;
-}*/
-
-
-/*function evaluation_rating (score)	{
-
-    var rating;
-
-    if (score >= 18) {
-        rating = 'EG';
-    } else if (score >= 14 && score < 18) {
-        rating = 'GD';
-    } else if (score >= 9 && score < 14) {
-        rating = 'GM';
-    } else if (score >= 5 && score < 9) {
-        rating = 'CA';
-    } else {
-        rating = ''; //'';
-    }
-
-    return rating;
-} */
 
 

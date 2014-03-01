@@ -1,3 +1,8 @@
+/**
+ * Controls assignment of coordinates to location
+ * uses Google Maps API
+ *
+ */
 Ext.define('EvaluateIt.controller.SiteGeolocation', {
 	extend : 'Ext.app.Controller',
 	requires: ['Ext.Toolbar'],
@@ -194,43 +199,6 @@ Ext.define('EvaluateIt.controller.SiteGeolocation', {
 });
 
 
-function getCurrentPosition() {
-	//navigator.geolocation.getAccurateCurrentPosition(onSuccess, onError, {desiredAccuracy:30, maxWait:15000});
-
-	navigator.geolocation.getCurrentPosition(geo_success, geo_error, { maximumAge: 30, timeout: 5000, enableHighAccuracy: true });
-}
-
-function geo_success(position) {
-	var coordinates = position.coords,
-		location = 'Longitude ' + coordinates.longitude + ' Latitude ' + coordinates.latitude + ' Accuracy ' + coordinates.accuracy,
-		timeStamp = new Date(position.timestamp),
-		latitude = coordinates.latitude,
-		longitude =  coordinates.longitude,
-		accuracy = coordinates.accuracy;
-		
-	alert('success! geoLocation is ready to use!' + ' accuracy ' + accuracy);
-
-	//element.innerHTML = 'Latitude: ' + position.coords.latitude + '<br />'
-	//	+ 'Longitude: ' + position.coords.longitude + '<br />'
-	//	+ 'Altitude: ' + position.coords.altitude + '<br />' 
-	//	+ 'Accuracy: ' + position.coords.accuracy + '<br />'
-	//	+ 'Timestamp: ' + new Date(position.timestamp) + '<br />';
-
-
-	// initialize
-	//sessionStorage.clear();
-	// add data to localStorage 
-	sessionStorage.latitude = latitude;
-	sessionStorage.longitude = longitude;
-	sessionStorage.accuracy = accuracy;
-	sessionStorage.timeStamp = timeStamp;
-
-}
-
-// onError Callback receives a PositionError object
-function geo_error(error) {
-	alert('error!' );
-}
 
 
 

@@ -16,7 +16,8 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='EvaluateIt-controller-Push'>/**
-</span> * TODO: need single function evaluation_rating
+</span> * Handle data transfers to remote server
+ *
  */
 Ext.define(&#39;EvaluateIt.controller.Push&#39;, {
 	extend: &#39;Ext.app.Controller&#39;,
@@ -89,9 +90,8 @@ Ext.define(&#39;EvaluateIt.controller.Push&#39;, {
 
 	},
 
-<span id='EvaluateIt-controller-Push-method-onSelectPush'>	// TODO: add missing atributes to form; add image uploade using native or Cordova method
-</span>
-	onSelectPush: function(view, index, target, record, event) {
+<span id='EvaluateIt-controller-Push-method-onSelectPush'>	// TODO: add missing attributes to form; add image uploade using native or Cordova method
+</span>	onSelectPush: function(view, index, target, record, event) {
 
 		console.log(&#39;Selected a SiteEvaluation from the list&#39;);
 		var pushForm = Ext.Viewport.down(&#39;pushForm&#39;);
@@ -103,120 +103,15 @@ Ext.define(&#39;EvaluateIt.controller.Push&#39;, {
 		pushForm.showBy(target);
 
 		console.log(&#39;Selected a Push from the list &#39; + index + &#39; &#39; + record.data.address);
-	}			
+	}
 
 });
 
-/* Test json to POST
-
-{
-	&quot;evaluation&quot;: {
-		&quot;evaluation_id&quot;:44216,
-		&quot;garden_id&quot;:37288,
-		&quot;eval_type&quot;:1,
-		&quot;score&quot;:15,
-		&quot;rating&quot;:&quot;GD&quot;,
-		&quot;rating_year&quot;:2013,
-		&quot;bestof&quot;:&quot;NADA!&quot;,
-		&quot;special_award_specified&quot;:null,
-		&quot;evaluator_id&quot;:&quot;265&quot;,
-		&quot;nate_siegel_award&quot;:0,
-		&quot;rainbarrel&quot;:0,
-		&quot;date_evaluated&quot;:&quot;1969-12-31T18:00:00&quot;,
-		&quot;comments&quot;:&quot;&quot;,
-		&quot;scoresheet&quot;:{
-			&quot;color&quot;:1,
-			&quot;plant_variety&quot;:2,
-			&quot;design&quot;:3,
-			&quot;maintenance&quot;:4,
-			&quot;environmental_stewardship&quot;:5
-		}
-	},
-	&quot;garden&quot;:{
-		&quot;garden_id&quot;:37288,
-		&quot;name&quot;:&quot;Larry Opelt&quot;,
-		&quot;no_longer_exists&quot;:0,
-		&quot;raingarden&quot;:0
-	},
-	&quot;geolocation&quot;:{
-		&quot;latitude&quot;:44.9615709,
-		&quot;longitude&quot;:-93.3353673,
-		&quot;accuracy&quot;:25
-	}
-} 
-
-*/
-
-/* Ad hoc nomination
-
-This JSON struction is identical to the structure for adding a garden evaluation, with the addition of the &quot;nomination&quot; object.
-The &quot;garden&quot; object that you might send with an evaluation update is not necessary here because garden information is sent along with the nomination. (in an evaluation, the &#39;garden&#39; object is also optional, but could be send it you want to permanantly update informtion about the garden)
-
-{
-    nomination: {  
-        &#39;nominator_id&#39;: &#39;1930&#39;, 
-        &#39;nominator_name&#39;: &#39;Paul Stroot&#39;, 
-        &#39;nominator_email&#39;: &#39;test@dancingpaul.com&#39;, 
-        &#39;name_of_garden&#39;: &#39;Metroblooms Test Garden Extrordinaire&#39;,
-        &#39;gardener_name&#39;: &#39;Paul Stroot&#39;,
-        &#39;gardener_email&#39;: &#39;paul@dancingpaul.com&#39;,
-        &#39;address&#39;: &#39;3516 Blaisdell Ave&#39;, 
-        &#39;city&#39;: &#39;Minneapolis&#39;, 
-        &#39;state&#39;: &#39;MN&#39;, 
-        &#39;zip&#39;: &#39;55408&#39;, 
-        &#39;neighborhood&#39;: &#39;Kingfield&#39;, 
-        &#39;county&#39;: &#39;Hennepin&#39;, 
-        &#39;boulevard_garden&#39;: &#39;0&#39;, 
-        &#39;raingarden&#39;: &#39;0&#39;,
-        &#39;residential_garden&#39;: &#39;0&#39;, 
-        &#39;business_garden&#39;: &#39;0&#39;, 
-        &#39;community&#39;: &#39;0&#39;, 
-        &#39;church&#39;: &#39;0&#39;, 
-        &#39;public_building&#39;: &#39;0&#39;, 
-        &#39;apartment_or_condo&#39;: &#39;0&#39;, 
-        &#39;container_windowbox&#39;: &#39;0&#39;, 
-        &#39;rainbarrel&#39;: &#39;0&#39;, 
-        &#39;downspouts_redirected&#39;: &#39;1&#39;, 
-        &#39;not_publically_visible&#39;: &#39;0&#39;, 
-        &#39;noteworthy_features&#39;: &#39;THIS IS A TEST&#39;, 
-        &#39;uploaded_image&#39;: &#39;n/a&#39;,               
-    },
-    evaluation: {    
-        eval_type: &#39;garden evaluation&#39;,
-        score: &#39;14&#39;,    
-        rating: &#39;GM&#39;,   
-        rating_year : &#39;2013&#39;,
-        bestof : &#39;Best Test Garden&#39;,
-        special_award_specified: &#39;SuperSpecial Award&#39;,
-        evaluator_id: &#39;265&#39;,
-        nate_siegel_award : 0,
-        rainbarrel : 1,
-        downspouts_redirected: 1,   
-        date_evaluated: &#39;2013-04-15 12:30:00&#39;,
-        comments : &#39;This is a test submission&#39;,
-        revisit :  0, 
-        scoresheet:{
-            color : 1,
-            plant_variety : 2,
-            design : 3,
-            maintenance : 4,
-            environmental_stewardship : 5
-        }       
-    },
-    geolocation: {
-        latitude :  &#39;43.6544&#39;,
-        longitude :  &#39;76.3322&#39;,
-        accuracy: &#39;45&#39;,    
-        altitude: &#39;56&#39;,
-        altitudeAccuracy: &#39;54&#39;,
-        heading: &#39;45&#39;,
-        speed:&#39;45&#39;
-    },
-    garden:{}
-}
-
-*/
-// assemble json and make Ajax call
+<span id='EvaluateIt-controller-Push-method-assemble_evaluation'>/**
+</span> * Assemble json to push to remote
+ *
+ * @param record
+ */
 function assemble_evaluation(record) {
 
 	var	score,
@@ -233,10 +128,10 @@ function assemble_evaluation(record) {
 		eval_type;
 
 		// compute score: TODO: check for null/isInt!
-		if (record.data.visualImpact !== null 
-				&amp;&amp; !record.data.varietyAndHealth !== null 
-				&amp;&amp; !record.data.design !== null 
-				&amp;&amp; !record.data.maintenance !== null 
+		if (record.data.visualImpact !== null
+				&amp;&amp; !record.data.varietyAndHealth !== null
+				&amp;&amp; !record.data.design !== null
+				&amp;&amp; !record.data.maintenance !== null
 				&amp;&amp; !record.data.environmentalStewardship !== null) {
 
 <span id='EvaluateIt-controller-Push-property-score'>            /**
@@ -260,17 +155,17 @@ function assemble_evaluation(record) {
              */
             rating = EvaluateIt.utils.Global.evaluation_rating (score);
 
-			console.log(&quot;rating&quot; + rating);	
+			console.log(&quot;rating&quot; + rating);
 		}
 		else {
-			
+
 			score = null;
 			rating = null;
 
 		}
-	
+
 		// get award if given
-		award = evaluation_award(record.data.awardId);
+		award = EvaluateIt.utils.Global.evaluation_award(record.data.awardId);
 		console.log(&quot;award&quot; + award.bestof + &#39; &#39; + award.nate_seigel);
 
 		if (record.data.noLongerExists === &#39;true&#39; || record.data.noLongerExists === true) {
@@ -281,6 +176,10 @@ function assemble_evaluation(record) {
 			rain_garden = 1;
 		}
 
+<span id='EvaluateIt-controller-Push-property-core'>    /**
+</span>     * Core data set for sending to remote server
+     * @type {{evaluation: {garden_id: (parseJson.remoteSiteId|*), eval_type: number, score: *, rating: *, rating_year: number, bestof: (*|EvaluateIt.utils.Global.evaluation_award.bestof|core.evaluation.bestof|evaluation_award.bestof), special_award_specified: *, evaluator_id: (*|core.evaluation.evaluator_id|sessionStorage.evaluator_id), nate_siegel_award: (EvaluateIt.utils.Global.evaluation_award.nate_seigel|*|evaluation_award.nate_seigel), date_evaluated: *, comments: (*|Function|Docs.Settings.defaults.comments|core.evaluation.comments|Docs.view.comments), scoresheet: {color: *, plant_variety: *, design: (*|core.evaluation.scoresheet.design), maintenance: (*|core.evaluation.scoresheet.maintenance), environmental_stewardship: *}}, geolocation: {latitude: (*|Number|latitude|core.geolocation.latitude|sessionStorage.latitude), longitude: (*|Number|longitude|core.geolocation.longitude|sessionStorage.longitude), accuracy: (*|Number|accuracy|Ext.chart.series.Pie.accuracy|core.geolocation.accuracy|sessionStorage.accuracy)}}}
+     */
 		core = {
 			evaluation: {
 				//evaluation_id: record.data.remoteEvaluationId,
@@ -293,7 +192,7 @@ function assemble_evaluation(record) {
 				special_award_specified: record.data.specialAwardSpecified,
 				evaluator_id: sessionStorage.evaluator_id, // would use remoteEvaluatorId, but if ad hoc this will not exist
 				nate_siegel_award: award.nate_seigel,
-				date_evaluated: Ext.Date.format(record.data.dateOfEvaluation, &#39;m/d/Y&#39;), // formatted as mm/dd/yyyy 
+				date_evaluated: Ext.Date.format(record.data.dateOfEvaluation, &#39;m/d/Y&#39;), // formatted as mm/dd/yyyy
 				// date_entered_on_device_by_evaluator,
 				comments: record.data.comments,
 				scoresheet: {
@@ -312,9 +211,12 @@ function assemble_evaluation(record) {
 
 		};
 
-		console.log(&#39;Assembled core to push: &#39; + Ext.encode(core));	
+		console.log(&#39;Assembled core to push: &#39; + Ext.encode(core));
 
-		// existing nomination
+<span id='EvaluateIt-controller-Push-property-existing'>    /**
+</span>     * Non ad hoc evaluation, minimal data elements
+     * @type {{garden: {garden_id: (parseJson.remoteSiteId|*), name: (Docs.data.name|*), no_longer_exists: number, raingarden: number}}}
+     */
 		existing = {
 			garden: {
 				garden_id: record.data.remoteSiteId,
@@ -322,31 +224,33 @@ function assemble_evaluation(record) {
 				no_longer_exists: no_longer_exists,
 				raingarden: rain_garden
 			}
-		}; 
+		};
 
-		console.log(&#39;Assembled existing to push: &#39; + Ext.encode(existing));	
-				
-		// new nomination
+		console.log(&#39;Assembled existing to push: &#39; + Ext.encode(existing));
+
+<span id='EvaluateIt-controller-Push-property-ad_hoc'>    /**
+</span>     * Ad hoc nomination with attributes required to create new remote record
+     * @type {{nomination: {nominator_id: (*|core.evaluation.evaluator_id|sessionStorage.evaluator_id), nominator_name: string, nominator_email: (Function|email|*|sessionStorage.email), gardener_name: (Docs.data.name|*), address: (*|parseJson.address|x.contextGrabbers.p.address|ad_hoc.nomination.address), city: (*|parseJson.city|ad_hoc.nomination.city), state: (*|Ext.mixin.Progressable.state|parseJson.state|Ext.ProgressIndicator.state|state|Ext.data.SyncModel.state), zip: (parseJson.zipcode|*), neighborhood: (*|parseJson.neighborhood|ad_hoc.nomination.neighborhood), county: (*|ad_hoc.nomination.county)}, garden: {}}}
+     */
 		ad_hoc = {
-			nomination: {  
-				nominator_id: sessionStorage.evaluator_id,  
+			nomination: {
+				nominator_id: sessionStorage.evaluator_id,
 				nominator_name: sessionStorage.firstname + &#39; &#39; + sessionStorage.lastname,
 				nominator_email: sessionStorage.email,
 				gardener_name: record.data.name,
-				address: record.data.address, 
-				city: record.data.city, 
-				state: record.data.state, 
-				zip: record.data.zipcode, 
-				neighborhood: record.data.neighborhood, 
-				county: record.data.county 
+				address: record.data.address,
+				city: record.data.city,
+				state: record.data.state,
+				zip: record.data.zipcode,
+				neighborhood: record.data.neighborhood,
+				county: record.data.county
 			},
-			garden: {}               
+			garden: {}
 		};
-		
-		console.log(&#39;Assembled ad_hoc to push: &#39; + Ext.encode(ad_hoc));	
 
-		// create json for submission
+		console.log(&#39;Assembled ad_hoc to push: &#39; + Ext.encode(ad_hoc));
 
+		// Assemble json for submission
 		// existing:
 		if (record.data.remoteSiteId &amp;&amp; record.data.remoteEvaluationId &amp;&amp; record.data.remoteEvaluatorId) {
 			obj = Ext.Object.merge(core, existing);
@@ -363,89 +267,32 @@ function assemble_evaluation(record) {
 		}
 
 		console.log(&#39;Assembled object to push: &#39; + Ext.encode(obj));
-			
-	//	post_to_remote(obj, record, eval_type);
-			
+
+		post_to_remote(obj, record, eval_type);
+
 }
 
-// rating based on Metro Blooms evaluation form
-// move to Global.js
-/*function evaluation_rating (score)	{
-
- var rating;
-
- if (score &gt;= 18) {
- rating = &#39;EG&#39;;
- } else if (score &gt;= 14 &amp;&amp; score &lt; 18) {
- rating = &#39;GD&#39;;
- } else if (score &gt;= 9 &amp;&amp; score &lt; 14) {
- rating = &#39;GM&#39;;
- } else if (score &gt;= 5 &amp;&amp; score &lt; 9) {
- rating = &#39;CA&#39;;
- } else {
- rating = &#39;&#39;; //&#39;&#39;;
- }
-
- return rating;
- } */
-
-// awards based on Metro Blooms evaluation form
-function evaluation_award (award_id) {
-
-	var nate_siegel = 0,
-        best_of;
-
-	switch (award_id) {
-		case 1:
-			bestof = &#39;Boulevard Garden&#39;;
-			break;
-		case 2:
-			bestof = &#39;Business Garden or Raingarden&#39;;
-			break;
-		case 3:
-			bestof = &#39;Container/WindowBox Garden&#39;;
-			break;
-		case 4:
-			bestof = &#39;Congregation Garden or Raingarden&#39;;
-			break;
-		case 5:
-			bestof = &#39;Residential Garden or Raingarden&#39;;
-			break;
-		case 6:
-			bestof = &#39;Alley Garden&#39;;
-			break;
-		case 7:
-			bestof = &#39;Public &amp; Schoolyard Garden or Raingarden&#39;;
-			break;
-		case 8:
-			bestof = &#39;NateSiegel&#39;;
-			nate_siegel = 1;
-			break;
-		case 9:
-			bestof = &#39;Special&#39;;
-			break;
-		default:
-			bestof = null;
-			break;
-	}
-	
-	return {
-        &#39;bestof&#39;: bestof,
-        &#39;nate_seigel&#39;: nate_siegel
-    }; 
-}
-
-// Ajax to remote Webserver
+<span id='EvaluateIt-controller-Push-method-post_to_remote'>/**
+</span> * Ajax to remote Webserver for json
+ *
+ * @param obj
+ * @param record
+ * @param eval_type
+ */
 function post_to_remote(obj, record, eval_type) {
 
+<span id='EvaluateIt-controller-Push-property-url'>    /**
+</span>     * Assemble url as per API definition
+     *
+     */
 	var url, //url = EvaluateIt.config.webServer;
 	// POST to server; config variables from app.json
 	//url +=  &#39;/&#39; +  EvaluateIt.config.collectionDevelopment;
 	//url +=  &#39;/&#39; +  EvaluateIt.config.testHttpResponse;//postResults;
-					
+
 	// new API with authorization token
 	url =  EvaluateIt.config.protocol;
-	
+
 	// select mode of API access
 	if (EvaluateIt.config.mode === &#39;test&#39;) {
 		url += EvaluateIt.config.test;
@@ -453,9 +300,9 @@ function post_to_remote(obj, record, eval_type) {
 	if (EvaluateIt.config.mode === &#39;live&#39;) {
 		url += EvaluateIt.config.production;
 	}
-	
+
 	url += EvaluateIt.config.domain;
-	
+
 	if (eval_type === &#39;existing&#39;) {
 		url += EvaluateIt.config.apiViewEvaluation;
 		url += EvaluateIt.config.action;
@@ -487,15 +334,20 @@ function post_to_remote(obj, record, eval_type) {
 			console.log(e);
 			alert(e);
 		}
-	}); 
+	});
 
 	// check if image exists in store
 	if (record.get(&#39;imageUri&#39;) !== null &amp;&amp; record.get(&#39;imageUri&#39;) !== &#39;&#39;) {
 		initialize_image_post(record)
 	}
- 
+
 }
 
+<span id='EvaluateIt-controller-Push-method-initialize_image_post'>/**
+</span> * Assemble required objects for image transmittal
+ *
+ * @param record
+ */
 function initialize_image_post(record) {
 
 	var uri,
@@ -504,7 +356,7 @@ function initialize_image_post(record) {
 
 	// use new API with authorization token
 	url =  EvaluateIt.config.protocol;
-	
+
 	// select mode of API access
 	if (EvaluateIt.config.mode === &#39;test&#39;) {
 		url += EvaluateIt.config.test;
@@ -521,8 +373,8 @@ function initialize_image_post(record) {
 	url += &#39;?token=&#39; + sessionStorage.sessionToken;
 
 	uri = record.data.imageUri; // local path to image
-   
-	console.log(&#39;upload uri: &#39; + uri + &#39;url: &#39; + url); 
+
+	console.log(&#39;upload uri: &#39; + uri + &#39;url: &#39; + url);
 
 	console.log(&#39;evaluation_id, uuid &#39; + record.data.remoteEvaluationId + &#39;, &#39; + record.data.id );
 
@@ -536,11 +388,17 @@ function initialize_image_post(record) {
 		evaluation_kvp.uuid = record.data.id;
 		console.log(&#39;uuid &#39; + Ext.encode(evaluation_kvp));
 	}
-	
+
 	post_image(uri, url, evaluation_kvp);
 }
 
-// Phonegap file transfer
+<span id='EvaluateIt-controller-Push-method-post_image'>/**
+</span> * Post image to remote server using Phonegap file transfer API
+ *
+ * @param imageUri
+ * @param url
+ * @param evaluation_kvp
+ */
 function post_image(imageUri, url, evaluation_kvp) {
     var options = new FileUploadOptions(),
         ft = new FileTransfer();

@@ -1,3 +1,8 @@
+/**
+ *
+ * Controls writing image uri to datastore
+ */
+
 Ext.define('EvaluateIt.controller.SiteImageCapture',{
     extend : 'Ext.app.Controller',
     requires: [

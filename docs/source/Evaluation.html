@@ -51,16 +51,11 @@ Ext.define(&#39;EvaluateIt.controller.Evaluation&#39;, {
 <span id='EvaluateIt-controller-Evaluation-method-onSaveEvaluation'>	onSaveEvaluation: function(button) {
 </span>		console.log(&#39;Button Click for Save&#39;);
 		var form = button.up(&#39;panel&#39;),
-		//var form = Ext.getCmp(&#39;evaluationId&#39;);
-		//get the record 
+		    // get the record
 		    record = form.getRecord(),
-		//get the form values
-		//var values = form.getValues();
-
-		// return a clone for updating of values
-        // TODO: Determine why I did this
-
-		    values = Ext.clone(form.getValues()),
+		    // return a clone for updating of values
+            // TODO: Determine why I did this
+            values = Ext.clone(form.getValues()),
 			sumRating,
             evaluationRating;
 
@@ -122,11 +117,9 @@ Ext.define(&#39;EvaluateIt.controller.Evaluation&#39;, {
 				if (images.getCount() &gt; 0) {
 					var uri  = Record.get(&#39;src&#39;);
 
-					//form.getCmp(&#39;imageId&#39;).setValue(uri);
-					
 					console.log(&#39;URI: &#39; +  uri);
 
-					// update store with URI
+					// update store with image uri
 					var siteId = record.get(&#39;site_id&#39;);
 
 					form.setValues({
@@ -145,14 +138,14 @@ Ext.define(&#39;EvaluateIt.controller.Evaluation&#39;, {
 			record.set(values);
 		}
 		form.hide();
-		//save the data to the Web local Storage
+		//save the data to localStorage
 		Ext.getStore(&#39;SiteEvaluations&#39;).sync();
 
 	},
 
 <span id='EvaluateIt-controller-Evaluation-method-onSelectEvaluation'>	onSelectEvaluation: function(view, index, target, record, event) {
 </span>
-		// clear content from image queue stor to initialize
+		// clear content from image queue store to initialize
 		var lostor = Ext.getStore(&#39;theImageQueue&#39;);
 		lostor.getProxy().clear();
 
@@ -167,44 +160,6 @@ Ext.define(&#39;EvaluateIt.controller.Evaluation&#39;, {
 	}
 
 });
-
-
-// move to Global.js
-
-/*function sum_factor_ratings(visualImpact,varietyAndHealth,design,maintenance, ) {
-
-    var sum;
-
-    sum = parseInt(visualImpact) +
-    parseInt(varietyAndHealth) +
-    parseInt(design) +
-    parseInt(maintenance) +
-    parseInt(environmentalStewardship);
-
-    alert(&#39;Sum&#39; + sum);
-
-    return sum;
-}*/
-
-
-/*function evaluation_rating (score)	{
-
-    var rating;
-
-    if (score &gt;= 18) {
-        rating = &#39;EG&#39;;
-    } else if (score &gt;= 14 &amp;&amp; score &lt; 18) {
-        rating = &#39;GD&#39;;
-    } else if (score &gt;= 9 &amp;&amp; score &lt; 14) {
-        rating = &#39;GM&#39;;
-    } else if (score &gt;= 5 &amp;&amp; score &lt; 9) {
-        rating = &#39;CA&#39;;
-    } else {
-        rating = &#39;&#39;; //&#39;&#39;;
-    }
-
-    return rating;
-} */
 
 
 </pre>

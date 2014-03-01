@@ -21,8 +21,6 @@
  *
  * TODO: Add user selected accuracy for stop condition
  */
-
-
  Ext.define(&#39;EvaluateIt.view.Geoposition&#39;, {
     extend: &#39;Ext.Container&#39;,
 	alias: &#39;widget.pullview&#39;,
@@ -37,6 +35,7 @@
             {
                 docked: &#39;top&#39;,
                 xtype: &#39;toolbar&#39;,
+
 <span id='EvaluateIt-view-Geoposition-cfg-items'>                /**
 </span>                 * @cfg {button}
                  * Start watching location;
@@ -50,7 +49,7 @@
 						iconCls: &#39;arrow_right&#39;,
 						iconMask: true,
 						handler: function() {
-							get_position();
+                            EvaluateIt.utils.Global.get_position();
 						}
 					},
             		{
@@ -60,7 +59,7 @@
 						iconCls: &#39;arrow_right&#39;,
 						iconMask: true,
 						handler: function() {
-							clearWatch();
+                            EvaluateIt.utils.Global.clear_watch();
 						}
 					}
 
@@ -71,66 +70,7 @@
 
 });
 
-<span id='EvaluateIt-view-Geoposition-method-get_position'>/**
-</span> * Phonegap GPS API hook, fired on start location watch
- * @return {Object} Callback options
- */
-function get_position() {
 
-	var options = { frequency: 10000, enableHighAccuracy: true };
-        watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
-
-}
-
-<span id='EvaluateIt-view-Geoposition-method-clearWatch'>/**
-</span> * Phonegap API hook, fired on stop location watch
- */
-function clearWatch() {
-
-	if (watchID != null) {
-		navigator.geolocation.clearWatch(watchID);
-		watchID = null;
-		alert(&#39;GPS stopped!&#39;);
-	}
-}
-
-<span id='EvaluateIt-view-Geoposition-method-geo_success'>/**
-</span> * onSuccess Callback receives PositionSuccess object and writes to sessionStorage
- * @return {Object} Position coordinates
- */
-function geo_success(position) {
-	var coordinates = position.coords,
-		location = &#39;Longitude &#39; + coordinates.longitude + &#39; Latitude &#39; + coordinates.latitude + &#39; Accuracy &#39; + coordinates.accuracy,
-		timeStamp = new Date(position.timestamp),
-		latitude = coordinates.latitude,
-		longitude =  coordinates.longitude,
-		accuracy = coordinates.accuracy;
-
-	alert(&#39;watching position...&#39; + &#39; accuracy is &#39; + accuracy);
-	console.log(&#39; accuracy &#39; + accuracy);
-
-    // Success achieved when desired accuracy reached
-    if (accuracy &lt;= 10) {
-		alert(&#39;success! geoLocation is ready to use!&#39; + &#39; accuracy &#39; + accuracy);
-
-        // Write to sessionStorage for update to Geolocation model
-       	sessionStorage.latitude = latitude;
-		sessionStorage.longitude = longitude;
-		sessionStorage.accuracy = accuracy;
-		sessionStorage.timeStamp = timeStamp;
-
-		clearWatch(watchID);
-	}
-
-}
-
-<span id='EvaluateIt-view-Geoposition-method-geo_error'>/**
-</span> * onError Callback receives a PositionError object
- * @return {Alert}
- */
-function geo_error(error) {
-	alert(&#39;Geoposition error!&#39; );
-}
 
 
 </pre>

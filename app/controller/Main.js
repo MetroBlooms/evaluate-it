@@ -68,6 +68,11 @@ Ext.define('EvaluateIt.controller.Main', {
 				//listStore.clearFilter();
 				console.log('we are in: ' + category);
 
+                /**
+                 * Regular expression test for valid data
+                 *
+                 * @type {RegExp}
+                 */
 				var reg = new RegExp('[A-Za-z0-9_]','i');
 				listStore.filterBy(function(record, id) {
 

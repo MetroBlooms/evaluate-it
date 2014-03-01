@@ -1,3 +1,6 @@
+/**
+ * Controls record removal from data store
+ */
 Ext.define('EvaluateIt.controller.RemoveRecord', {
 	extend : 'Ext.app.Controller',
 

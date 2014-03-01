@@ -15,23 +15,28 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.controller.SiteImageCapture&#39;,{
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-controller-SiteImageCapture'>/**
+</span> *
+ * Controls writing image uri to datastore
+ */
+
+Ext.define(&#39;EvaluateIt.controller.SiteImageCapture&#39;,{
     extend : &#39;Ext.app.Controller&#39;,
     requires: [
         &#39;Ext.device.Camera&#39;
     ],
     config: {
-        refs: {
-            myEvaluationList: &#39;evaluationList&#39;
+<span id='EvaluateIt-controller-SiteImageCapture-cfg-refs'>        refs: {
+</span>            myEvaluationList: &#39;evaluationList&#39;
         },
-        control:{
-            &#39;siteEvaluationForm button[itemId=siteImage]&#39; : {
+<span id='EvaluateIt-controller-SiteImageCapture-cfg-control'>        control:{
+</span>            &#39;siteEvaluationForm button[itemId=siteImage]&#39; : {
                 tap : &#39;openCamera&#39;
             }
         }
     },
-    openCamera: function(button,eve){
-        Ext.device.Camera.capture({
+<span id='EvaluateIt-controller-SiteImageCapture-method-openCamera'>    openCamera: function(button,eve){
+</span>        Ext.device.Camera.capture({
             success: this.onCaptureSuccess,
 			failure: this.onCaptureFailure,
             scope: this,
@@ -40,16 +45,16 @@
             destination: &#39;file&#39;
         });
     },
-    onCaptureSuccess: function(uri) {
-        console.log(&#39;got foto:&#39;+uri);
+<span id='EvaluateIt-controller-SiteImageCapture-method-onCaptureSuccess'>    onCaptureSuccess: function(uri) {
+</span>        console.log(&#39;got foto:&#39;+uri);
         var lostor = Ext.getStore(&#39;theImageQueue&#39;);
         lostor.add({
             src: uri
         });
         lostor.sync();
     },
-	onCaptureFailure: function() {
-
+<span id='EvaluateIt-controller-SiteImageCapture-method-onCaptureFailure'>	onCaptureFailure: function() {
+</span>
 		console.log(&#39;capture failure&#39;);
 	}
 });
