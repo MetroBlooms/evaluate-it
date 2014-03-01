@@ -125,7 +125,7 @@ function assemble_evaluation(record) {
             score = EvaluateIt.utils.Global.sum_factor_ratings(record.data.visualImpact,
                 record.data.varietyAndHealth,
                 record.data.design,
-                record.data.maintenanc,
+                record.data.maintenance,
                 record.data.environmentalStewardship);
 
 
