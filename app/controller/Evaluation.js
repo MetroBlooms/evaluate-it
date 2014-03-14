@@ -99,7 +99,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 				images = Ext.getStore(images);
 				
 				if (images.getCount() > 0) {
-					var uri  = Record.get('src');
+					var uri  = record.get('src');
 
 					console.log('URI: ' +  uri);
 

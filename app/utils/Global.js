@@ -19,13 +19,13 @@ Ext.define('EvaluateIt.utils.Global', {
         alert(param);
         var rating;
 
-        if (score >= 18) {
+        if (param >= 18) {
             rating = 'EG';
-        } else if (score >= 14 && score < 18) {
+        } else if (param >= 14 && param < 18) {
             rating = 'GD';
-        } else if (score >= 9 && score < 14) {
+        } else if (param >= 9 && param < 14) {
             rating = 'GM';
-        } else if (score >= 5 && score < 9) {
+        } else if (param >= 5 && param < 9) {
             rating = 'CA';
         } else {
             rating = ''; //'';
@@ -58,15 +58,12 @@ Ext.define('EvaluateIt.utils.Global', {
          * Ensure all values are integers first before summing
          * over them
          */
-        alert('1' + visualImpact + '2' + varietyAndHealth);
 
         sum = parseInt(visualImpact) +
             parseInt(varietyAndHealth) +
             parseInt(design) +
             parseInt(maintenance) +
             parseInt(environmentalStewardship);
-
-        alert('Sum' + sum);
 
         return sum;
     },

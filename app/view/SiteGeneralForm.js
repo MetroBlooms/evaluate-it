@@ -26,8 +26,8 @@ Ext.define('EvaluateIt.view.SiteGeneralForm', {
 		hideOnMaskTap: true,
 
         // Set the width and height of the panel
-		width: Ext.os.deviceType == 'Phone' ?  screen.width : 350,
-		height: Ext.os.deviceType == 'Phone' ?  screen.height : 500,
+		width: Ext.os.deviceType == 'Phone' ?  screen.width : screen.width,
+		height: Ext.os.deviceType == 'Phone' ?  screen.height : screen.height,
 		scrollable: true,
 	 	layout: {
 			type: 'vbox'
