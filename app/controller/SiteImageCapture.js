@@ -30,11 +30,17 @@ Ext.define('EvaluateIt.controller.SiteImageCapture',{
     },
     onCaptureSuccess: function(uri) {
         console.log('got foto:'+uri);
-        var lostor = Ext.getStore('theImageQueue');
+        var lostor = Ext.getStore('theImageQueue'),
+            selectedImage = document.getElementById('selectedImage');;
         lostor.add({
             src: uri
         });
         lostor.sync();
+
+        // display image in form panel
+        selectedImage.style.display = 'inline-block';
+        selectedImage.src = uri;
+
     },
 	onCaptureFailure: function() {
 

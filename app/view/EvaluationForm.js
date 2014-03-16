@@ -153,12 +153,15 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
 				name: 'imageUri',
 				itemId: 'imageId'
 			},
-			{
-                 xtype: 'button',
-                 itemId: 'siteImage',
-                 text: 'Select Photo'
+            {
+                xtype: 'button',
+                itemId: 'siteImage',
+                text: 'Select Photo'
             },
-			{
+            {
+                html: 'Selected image:<img style="display:none;" id="selectedImage" src="" />'
+            },
+           	{
 				xtype: 'button',
 				itemId: 'save',
 				text: 'Save'
