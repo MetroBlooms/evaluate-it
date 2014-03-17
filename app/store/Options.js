@@ -82,6 +82,12 @@
                 text: 'RemoveRecord',
                 leaf: true,
                 id: 'removeRecord'
+            },
+            // switch environments
+            {
+                text: 'SetEnvironment',
+                leaf: true,
+                id: 'setEnvironment'
             }
         ]
     });

@@ -38,7 +38,7 @@ Ext.define('EvaluateIt.controller.SiteImageCapture',{
         lostor.sync();
 
         // display image in form panel
-        selectedImage.style.display = 'inline-block';
+        selectedImage.style.display = 'block';
         selectedImage.src = uri;
 
     },
