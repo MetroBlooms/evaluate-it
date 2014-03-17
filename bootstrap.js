@@ -82,6 +82,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "EvaluateIt.view.PushList": [],
   "EvaluateIt.view.RemoveRecord": [],
   "EvaluateIt.view.RemoveRecordList": [],
+  "EvaluateIt.view.SetEnvironment": [],
   "EvaluateIt.view.SiteGeneral": [],
   "EvaluateIt.view.SiteGeneralForm": [],
   "EvaluateIt.view.SiteGeneralList": [],
@@ -834,6 +835,9 @@ Ext.ClassManager.addNameAliasMappings({
   "EvaluateIt.view.RemoveRecord": [],
   "EvaluateIt.view.RemoveRecordList": [
     "widget.removeRecordList"
+  ],
+  "EvaluateIt.view.SetEnvironment": [
+    "widget.setEnvironment"
   ],
   "EvaluateIt.view.SiteGeneral": [],
   "EvaluateIt.view.SiteGeneralForm": [

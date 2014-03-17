@@ -2,7 +2,7 @@
  * Set global environment between production and development RESTFul web API
  */
  Ext.define('EvaluateIt.view.SetEnvironment', {
-    extend: 'Ext.form.FormPanel',
+    extend: 'Ext.Container',
 	alias: 'widget.setEnvironment',
     config: {
         scrollable: true,
@@ -19,18 +19,32 @@
                     {
                         xtype: 'segmentedbutton',
                         allowDepress: true,
+                        // listener to capture pressed value
+                        listeners: {
+                            toggle: function (segBtn, btn, isPressed) {
+                                var selLabels = [];
+                                Ext.Array.forEach(segBtn.getPressedButtons(), function (item) {
+                                    selLabels.push(item.config.text);
+                                    // set config parameter for mode
+                                    if (item.config.text === 'Production') {
+                                        EvaluateIt.config.mode = 'live';
+                                    }
+                                    if (item.config.text === 'Development') {
+                                        EvaluateIt.config.mode = 'test';
+                                    }
+                                    console.log('item.config.text' + item.config.text);
+                                }); // forEach()
+                                //Ext.Msg.alert('pressedButtons (' + selLabels.length + '):', Ext.JSON.encode(selLabels));
+                                console.log('EvaluateIt.config.mode ' + EvaluateIt.config.mode);
+                            } // toggle
+                        },
                         items: [
                             {
-                                text: 'Production',
-                                pressed: true,
-                                value: 'live'
+                                text: 'Production'
                             },
                             {
-                                text: 'Development',
-                                value: 'test'
+                                text: 'Development'
                             }
-                            // TODO: display text for which environment has been selected;
-                            // set EvaluateIt.config.mode via handler
 
                         ]
                     }
