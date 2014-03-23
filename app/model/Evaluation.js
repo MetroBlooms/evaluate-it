@@ -12,6 +12,7 @@ Ext.define('EvaluateIt.model.Evaluation', {
 	    	{name: 'remoteEvaluationId', type: 'int'}, // linking id to remote JSON
 			{name: 'remoteEvaluatorId', type: 'int'}, // linking id to remote JSON
             {name: 'dateOfEvaluation', type: 'date'}, // date evaluation done
+            {name: 'datePostedToRemote', type: 'date'}, // date successfully uploaded to remote
 	    	{name: 'evaluation_id', type: 'int'}, // linking id for associations
             {name: 'evaluationType', type: 'int'}, // type of evaluation done - to be added in the future`
 			{name: 'site_id', type: 'int'},	// linking id for associations

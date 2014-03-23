@@ -34,7 +34,7 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
      */
     showView: function(item) {
         var nav  = this.getNav(),
-			title  = item.get('text'),
+			mode  =  EvaluateIt.config.mode,
             view = this.createView(item),
             main = this.getMain(),
             anim = item.get('animation'),
@@ -61,9 +61,15 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
 
 	
 		//var title = item.get('text') + ' - ' + name;	
-		console.log('title: ' + title);
+		console.log('title: ' + mode);
 
-        this.getToolbar().setTitle(item.get('text'));
+        if (mode === 'live') {
+            mode = '';
+        }
+        if (mode === 'test') {
+            mode = '(in test mode)';
+        }
+        this.getToolbar().setTitle(item.get('text') + ' ' + mode);
     },
 
     showMenuById: Ext.emptyFn

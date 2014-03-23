@@ -99,24 +99,23 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 				images = Ext.getStore(images);
 				
 				if (images.getCount() > 0) {
-					var uri  = record.get('src');
+					var uri  = iRecord.get('src'); // changed to iRecord form record: what is effect?
 
 					console.log('URI: ' +  uri);
 
 					// update store with image uri
-					var siteId = record.get('site_id');
+					//var siteId = iRecord.get('site_id');
 
 					form.setValues({
 						imageUri: uri 
 					})
 
+                    // refresh values with new data
 					values = form.getValues();
-
 					record = form.getRecord();
 
 				}
 			});
-
 
 			// do stuff
 			record.set(values);

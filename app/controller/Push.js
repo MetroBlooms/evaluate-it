@@ -130,8 +130,7 @@ function assemble_evaluation(record) {
 
 
             // get rating for given score
-			rating = evaluation_rating(score);
-            /**
+			/**
              * Determine ranking of evaluation
              * calls global function
              * @type {String}
@@ -141,10 +140,8 @@ function assemble_evaluation(record) {
 			console.log("rating" + rating);
 		}
 		else {
-
 			score = null;
 			rating = null;
-
 		}
 
 		// get award if given
@@ -273,6 +270,14 @@ function post_to_remote(obj, record, eval_type) {
 	//url +=  '/' +  EvaluateIt.config.collectionDevelopment;
 	//url +=  '/' +  EvaluateIt.config.testHttpResponse;//postResults;
 
+        store = Ext.create('EvaluateIt.store.SiteEvaluations'),
+        //update_record = store.findExact('remoteEvaluationId', record.data.id);
+        update_record,
+        now = new Date();
+
+
+
+
 	// new API with authorization token
 	url =  EvaluateIt.config.protocol;
 
@@ -307,10 +312,18 @@ function post_to_remote(obj, record, eval_type) {
 		url: url,
 		jsonData: obj,
 		//useDefaultXhrHeader: false,
+        // flag as uploaded by updating store attribute datePostedToRemote with date
+
 		success: function (response) {
 			console.log('success: ' + response.responseText);
 
 			alert('Successfully uploaded: '+ response.responseText);
+
+            // update date success
+            store = Ext.getStore(store);
+            update_record = store.findRecord('id', record.data.id );
+            update_record.set('datePostedToRemote', now);
+            store.sync();
 
 		},
 		fail: function (e, jqxhr, settings, exception) {
