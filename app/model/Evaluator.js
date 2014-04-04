@@ -12,23 +12,20 @@ Ext.define('EvaluateIt.model.Evaluator', {
             {name: 'lastName', type: 'auto'},
 	    	{name: 'email', type: 'auto'}
         ],
-	proxy: {
-           type: "localstorage"//,
-           //database: 'Yo'
-        }/*,
-	
-	belongsTo: 
+        proxy: {
+            type: "sql", //"localstorage",
+            database: 'Test'
+        },
+	    belongsTo:
 		[
 			{ 
 				model: 'EvaluateIt.model.Evaluation', 
 				associationKey: 'evaluationId',
 				name: 'evaluation',
 				instanceName: 'evaluation',
-				getterName: 'getEvaluation',
-				setterName: 'setEvaluation',
-				foreignKey: 'evaluation_id' 
+				foreignKey: 'evaluation_id'
 			}
-		]*/
+		]
 
     }
 });

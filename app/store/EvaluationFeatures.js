@@ -1,5 +1,3 @@
-Ext.require(['EvaluateIt.model.EvaluationFeature']);
-
 Ext.define('EvaluateIt.store.EvaluationFeatures', {
     extend: 'Ext.data.Store',
 	alias: 'store.EvaluationFeatures',

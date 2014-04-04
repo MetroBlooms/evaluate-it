@@ -4,28 +4,26 @@ Ext.define('EvaluateIt.model.SiteMaintainer', {
     extend: 'Ext.data.Model',
     
     config: {
-         //idProperty: 'id', // use with proxy.SQL 
-	identifier: 'uuid', // use with proxy.localstorage 
+        idProperty: 'id', // use with proxy.SQL
+        //identifier: 'uuid', // use with proxy.localstorage
         fields: [
             {name: 'firstName', type: 'string'},
             {name: 'lastName', type: 'string'},
             {name: 'emailAddress', type: 'string'},
-	    {name: 'site_id', type: 'int'}
+	        {name: 'site_id', type: 'int'}
         ],
-	proxy: {
-           type: "localstorage"//,
-           //database: 'Yo'
+        proxy: {
+            type: "sql", //"localstorage",
+            database: 'Test'
         },
-	belongsTo: [
-	{ 
-	    model: 'EvaluateIt.model.Site', 
-	    associationKey: 'siteId',
-	    name: 'site',
-	    instanceName: 'site',
-	    getterName: 'getSite',
-	    setterName: 'setSite',
-	    foreignKey: 'site_id' 
-	}]
+        belongsTo: [
+        {
+            model: 'EvaluateIt.model.Site',
+            associationKey: 'siteId',
+            name: 'site',
+            instanceName: 'site',
+            foreignKey: 'site_id'
+        }]
 
     }
 });

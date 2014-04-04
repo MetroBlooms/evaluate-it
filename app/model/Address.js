@@ -4,7 +4,7 @@ Ext.define('EvaluateIt.model.Address', {
     extend: 'Ext.data.Model',
     config: {
         idProperty: 'id', // use with proxy.SQL 
-	//identifier: 'uuid', // use with proxy.localstorage 
+	    //identifier: 'uuid', // use with proxy.localstorage
         fields: [
 			{name: 'id', type: 'int'},
 	   		{name: 'address', type: 'string'},
@@ -15,12 +15,8 @@ Ext.define('EvaluateIt.model.Address', {
 			{name: 'site_id', type: 'string'} // linking id for associations
         ],
 		proxy: {
-           	type: "localstorage",  //"sql"
-			reader      : {
-            	type : 'json',
-            	root : 'data'
-       		}
-           //database: 'Yo'
+           	type: "sql", //"localstorage",
+			database: 'Test'
         },
 		belongsTo: 
 		[
@@ -29,8 +25,6 @@ Ext.define('EvaluateIt.model.Address', {
 				associationKey: 'siteId',
 				name: 'site',
 				instanceName: 'site',
-				//getterName: 'getSite',
-				//setterName: 'setSite',
 				primaryKey: 'id',
       			foreignStore: 'Sites',
 				foreignKey: 'site_id' 

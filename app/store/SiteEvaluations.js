@@ -1,5 +1,3 @@
-Ext.require(['EvaluateIt.model.SiteEvaluation']);
-
 Ext.define('EvaluateIt.store.SiteEvaluations', {
     extend: 'Ext.data.Store',
 	alias: 'store.SiteEvaluations',

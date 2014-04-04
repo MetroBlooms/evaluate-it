@@ -4,7 +4,7 @@ Ext.define('EvaluateIt.model.Evaluation', {
     extend: 'Ext.data.Model',
  
     config: {
-        //idProperty: 'id', // use with proxy.SQL 
+        idProperty: 'id', // use with proxy.SQL
 		//identifier: 'uuid', // use with proxy.localstorage 
         fields: [
 			{name: 'id', type: 'string'}, // pk
@@ -20,16 +20,10 @@ Ext.define('EvaluateIt.model.Evaluation', {
             {name: 'comments', type: 'string'} // general comments
 
         ],
-		proxy: {
-        	type: "localstorage"
+        proxy: {
+            type: "sql", //"localstorage",
+            database: 'Test'
         },
-
-
-		/*hasOne: [
-			{ 
-				model:	'EvaluateIt.model.Evaluator' 
-			}
-		],*/
 		belongsTo: [
 			{ 
 			    model: 'EvaluateIt.model.Site', 
@@ -51,12 +45,23 @@ Ext.define('EvaluateIt.model.Evaluation', {
 			    setterName: 'setEvaluator',
 			    foreignKey: 'evaluator_id'  
 			}*/
-		]
-
-
-//	hasOne: [{ model: 'EvaluateIt.model.EvaluationAward' }],
-//      hasMany: [{ model: 'EvaluateIt.model.EvaluationFactorScorecard' }],
-//	hasMany: [{ model: 'EvaluateIt.model.EvaluationFeature' }],
+		],
+        hasOne: [
+            {
+                model:	'EvaluateIt.model.Evaluator'
+            },
+            {
+                model: 'EvaluateIt.model.EvaluationAward'
+            }
+        ],
+        hasMany: [
+            {
+                model: 'EvaluateIt.model.EvaluationFactorScorecard '
+            },
+            {
+                model: 'EvaluateIt.model.EvaluationFeature'
+            }
+        ]
     }
 });
 
