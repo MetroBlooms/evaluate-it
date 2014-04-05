@@ -2,8 +2,8 @@ Ext.define('EvaluateIt.model.Geolocation', {
     extend: 'Ext.data.Model',
     
     config: {
-	idProperty: 'id', // use with proxy.SQL
-	//identifier: 'uuid', // use with proxy.localstorage
+        idProperty: 'id', // use with proxy.SQL
+        //identifier: 'uuid', // use with proxy.localstorage
         fields: [
             {name: 'latitude', type: 'float'},
             {name: 'longitude', type: 'float'},
@@ -14,8 +14,9 @@ Ext.define('EvaluateIt.model.Geolocation', {
             type: "sql", //"localstorage",
             database: 'Test'
         },
-	    hasOne: [
+	    associations: [
             {
+                type: 'hasOne',
                 model: 'EvaluateIt.model.Site'
             }
         ]

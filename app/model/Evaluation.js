@@ -24,28 +24,30 @@ Ext.define('EvaluateIt.model.Evaluation', {
             type: "sql", //"localstorage",
             database: 'Test'
         },
-		hasOne: [
+		associations: [
+
             {
+                type: 'hasOne',
                 model:	'EvaluateIt.model.Evaluator',
                 associationKey: 'evaluatorId'
             },
             {
+                type: 'hasOne',
                 model: 'EvaluateIt.model.EvaluationAward',
                 associationKey: 'evaluationAwardId'
-            }
-        ],
-        hasMany: [
+            },
             {
+                type: 'hasMany',
                 model: 'EvaluateIt.model.EvaluationFactorScorecard',
                 name: 'evaluationFactorScorecards'
             },
             {
+                type: 'hasMany',
                 model: 'EvaluateIt.model.EvaluationFeature',
                 name: 'evaluationFactorFeatures'
-            }
-        ],
-        belongsTo: [
+            },
             {
+                type: 'belongsTo',
                 model: 'EvsluateIt.model.Site',
                 associationKey: 'siteId'
             }

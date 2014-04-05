@@ -15,8 +15,9 @@ Ext.define('EvaluateIt.model.SiteMaintainer', {
             type: "sql", //"localstorage",
             database: 'Test'
         },
-        belongsTo: [
+        associations: [
         {
+            type: ' belongsTo',
             model: 'EvaluateIt.model.Site',
             associationKey: 'siteId'
         }]

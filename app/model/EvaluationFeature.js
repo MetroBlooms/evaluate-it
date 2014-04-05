@@ -11,8 +11,8 @@ Ext.define('EvaluateIt.model.EvaluationFeature', {
             type: "sql", //"localstorage",
             database: 'Test'
         },
-	    belongsTo: [
-            {
+	    associations: [
+            {   type: 'belongsTo',
                 model: 'EvaluateIt.model.Evaluation',
                 associationKey: 'evaluationId'
             }

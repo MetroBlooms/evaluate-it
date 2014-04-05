@@ -14,24 +14,26 @@ Ext.define('EvaluateIt.model.Site', {
             type: "sql", //"localstorage",
             database: 'Test'
         },
-        hasMany: [
-			{ 
+        associations:
+        [
+			{   type: ' hasMany',
 				model: 'EvaluateIt.model.Evaluation', 
 				name: 'siteEvaluations'
 
 			},
 		    {
+                type: ' hasMany',
                 model: 'EvaluateIt.model.SiteMaintainer',
                 name: 'siteMaintainers'
-            }
-        ],
-		hasOne: [
+            },
 			{
+                type: ' hasOne',
                 model: 'EvaluateIt.model.Geolocation',
                 associationKey: 'geolocationId'
 
 			},
             {
+                type: ' hasOne',
                 model: 'EvaluateIt.model.Address',
                 associationKey: 'addressId'
             }

@@ -16,9 +16,10 @@ Ext.define('EvaluateIt.model.Address', {
            	type: "sql", //"localstorage",
 			database: 'Test'
         },
-		hasOne:
+		associations:
 		[
-			{ 
+			{
+                type: 'hasOne',
 				model: 'EvaluateIt.model.Site'
 			}
 		]

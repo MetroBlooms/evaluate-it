@@ -7,20 +7,18 @@ Ext.define('EvaluateIt.model.EvaluationImage', {
         idProperty: 'id', // use with proxy.SQL
 		//identifier: 'uuid', // use with proxy.localstorage 
         fields: [
-				{name: 'id', type: 'int'}, // pk
-				{name: 'srcUri', type: 'string'} // local image location 
+				{name: 'srcUri', type: 'string'} // local image location
 		],
         proxy: {
             type: "sql", //"localstorage",
             database: 'Test'
         },
-		belongsTo: [
-			{ 
+		associations: [
+			{
+                type: 'belongsTo',
 			    model: 'EvaluateIt.model.Evaluation', 
-			   	name: 'evaluation',
-				foreignKey: 'evaluation_id',
-      			foreignStore: 'Evaluations'
-			}
+			   	name: 'evaluation'
+            }
 		]
 	}
 });

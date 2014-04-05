@@ -12,8 +12,9 @@ Ext.define('EvaluateIt.model.EvaluationAward', {
             type: "sql", //"localstorage",
             database: 'Test'
         },
-        hasOne: [
+        associations: [
             {
+                type: 'belongsTo',
                 model: 'EvaluateIt.model.Evaluation'
             }
         ]
