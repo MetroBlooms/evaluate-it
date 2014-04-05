@@ -14,12 +14,10 @@ Ext.define('EvaluateIt.model.Geolocation', {
             type: "sql", //"localstorage",
             database: 'Test'
         },
-	    belongsTo: [
+	    hasOne: [
             {
-                model: 'EvaluateIt.model.Site',
-                associationKey: 'siteId'
+                model: 'EvaluateIt.model.Site'
             }
         ]
-
     }
 });

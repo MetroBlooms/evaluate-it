@@ -6,10 +6,9 @@ Ext.define('EvaluateIt.model.Site', {
         idProperty: 'id', // use with proxy.SQL
         //identifier: 'uuid', // use with proxy.localstorage
         fields: [
-			//{name: 'key_id', type: 'string'},
-			{name: 'site_id', type: 'int'},
-           	{name: 'remoteSiteId', type: 'int'},
-            {name: 'siteName', type: 'int'} // does site have a formal name
+            {name: 'remoteSiteId', type: 'int'},
+            {name: 'siteName', type: 'string'} // does site have a formal name
+
         ],
         proxy: {
             type: "sql", //"localstorage",
@@ -28,11 +27,13 @@ Ext.define('EvaluateIt.model.Site', {
         ],
 		hasOne: [
 			{
-                model: 'EvaluateIt.model.Geolocation'
+                model: 'EvaluateIt.model.Geolocation',
+                associationKey: 'geolocationId'
 
 			},
             {
-                model: 'EvaluateIt.model.Address'
+                model: 'EvaluateIt.model.Address',
+                associationKey: 'addressId'
             }
 		] 
     }

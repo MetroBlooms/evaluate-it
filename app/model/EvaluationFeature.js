@@ -5,7 +5,6 @@ Ext.define('EvaluateIt.model.EvaluationFeature', {
         idProperty: 'id', // use with proxy.SQL
 	    //identifier: 'uuid', // use with proxy.localstorage
         fields: [
-            {name: 'id', type: 'int'}, // pk
             {name: 'featureType', type: 'int'} // linking id for lookup
         ],
         proxy: {

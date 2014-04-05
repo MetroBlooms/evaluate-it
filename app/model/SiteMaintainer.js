@@ -9,8 +9,7 @@ Ext.define('EvaluateIt.model.SiteMaintainer', {
         fields: [
             {name: 'firstName', type: 'string'},
             {name: 'lastName', type: 'string'},
-            {name: 'emailAddress', type: 'string'},
-	        {name: 'site_id', type: 'int'}
+            {name: 'emailAddress', type: 'string'}
         ],
         proxy: {
             type: "sql", //"localstorage",
@@ -19,10 +18,7 @@ Ext.define('EvaluateIt.model.SiteMaintainer', {
         belongsTo: [
         {
             model: 'EvaluateIt.model.Site',
-            associationKey: 'siteId',
-            name: 'site',
-            instanceName: 'site',
-            foreignKey: 'site_id'
+            associationKey: 'siteId'
         }]
 
     }

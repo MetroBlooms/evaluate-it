@@ -5,7 +5,6 @@ Ext.define('EvaluateIt.model.EvaluationAward', {
          //idProperty: 'id', // use with proxy.SQL 
 	    identifier: 'uuid', // use with proxy.localstorage
         fields: [
-            {name: 'id', type: 'int'}, // pk
             {name: 'specialAwardSpecified', type: 'auto'}, // string description for choice of "other"
             {name: 'awardType', type: 'int'} // linking id for lookup
         ],
@@ -13,10 +12,9 @@ Ext.define('EvaluateIt.model.EvaluationAward', {
             type: "sql", //"localstorage",
             database: 'Test'
         },
-        belongsTo: [
+        hasOne: [
             {
-                model: 'EvaluateIt.model.Evaluation',
-                associationKey: 'evaluationId'
+                model: 'EvaluateIt.model.Evaluation'
             }
         ]
     }

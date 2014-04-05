@@ -13,9 +13,9 @@ Ext.define('EvaluateIt.model.Evaluation', {
 			{name: 'remoteEvaluatorId', type: 'int'}, // linking id to remote JSON
             {name: 'dateOfEvaluation', type: 'date'}, // date evaluation done
             {name: 'datePostedToRemote', type: 'date'}, // date successfully uploaded to remote
-	    	{name: 'evaluation_id', type: 'int'}, // linking id for associations
+	    	//{name: 'evaluation_id', type: 'int'}, // linking id for associations
             {name: 'evaluationType', type: 'int'}, // type of evaluation done - to be added in the future`
-			{name: 'site_id', type: 'int'},	// linking id for associations
+			//{name: 'site_id', type: 'int'},	// linking id for associations
  			{name: 'noLongerExists', type: 'boolean'}, // invalid site: nothing to evaluate!
             {name: 'comments', type: 'string'} // general comments
 
@@ -24,42 +24,30 @@ Ext.define('EvaluateIt.model.Evaluation', {
             type: "sql", //"localstorage",
             database: 'Test'
         },
-		belongsTo: [
-			{ 
-			    model: 'EvaluateIt.model.Site', 
-			    //associationKey: 'siteId',
-				name: 'site',
-				//instanceName: 'site',
-			    //getterName: 'getSite',
-			    //setterName: 'setSite',
-      			primaryKey: 'key_id',
-      			foreignKey: 'site_id',
-      			foreignStore: 'Sites'
-			}/*,
-			{ 
-			    model: 'EvaluateIt.model.Evaluator',  
-			    associationKey: 'evaluator_id', 
-			    name: 'evaluator',
-		            instanceName: 'evaluator',
-			    getterName: 'getEvaluator',
-			    setterName: 'setEvaluator',
-			    foreignKey: 'evaluator_id'  
-			}*/
-		],
-        hasOne: [
+		hasOne: [
             {
-                model:	'EvaluateIt.model.Evaluator'
+                model:	'EvaluateIt.model.Evaluator',
+                associationKey: 'evaluatorId'
             },
             {
-                model: 'EvaluateIt.model.EvaluationAward'
+                model: 'EvaluateIt.model.EvaluationAward',
+                associationKey: 'evaluationAwardId'
             }
         ],
         hasMany: [
             {
-                model: 'EvaluateIt.model.EvaluationFactorScorecard '
+                model: 'EvaluateIt.model.EvaluationFactorScorecard',
+                name: 'evaluationFactorScorecards'
             },
             {
-                model: 'EvaluateIt.model.EvaluationFeature'
+                model: 'EvaluateIt.model.EvaluationFeature',
+                name: 'evaluationFactorFeatures'
+            }
+        ],
+        belongsTo: [
+            {
+                model: 'EvsluateIt.model.Site',
+                associationKey: 'siteId'
             }
         ]
     }

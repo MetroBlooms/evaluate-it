@@ -115,7 +115,7 @@ function parseJson (json) {
 
         // create a psuedo-nested JSON store
         // TODO:  resolve issues with model associations
-   		if (json[i].completed === '0') {
+   		if (json[i].completed === '1') {
 			siteEvaluations = Ext.getStore(SiteEvaluations);
 
             // need to see if evaluation exists in store

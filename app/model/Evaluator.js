@@ -16,14 +16,11 @@ Ext.define('EvaluateIt.model.Evaluator', {
             type: "sql", //"localstorage",
             database: 'Test'
         },
-	    belongsTo:
+	    hasOne:
 		[
 			{ 
 				model: 'EvaluateIt.model.Evaluation', 
-				associationKey: 'evaluationId',
-				name: 'evaluation',
-				instanceName: 'evaluation',
-				foreignKey: 'evaluation_id'
+				name: 'evaluation'
 			}
 		]
 
