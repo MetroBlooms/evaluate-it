@@ -3,8 +3,8 @@ Ext.require(['EvaluateIt.model.Site']);
 Ext.define('EvaluateIt.model.Address', {
     extend: 'Ext.data.Model',
     config: {
-        idProperty: 'id', // use with proxy.SQL 
-	    //identifier: 'uuid', // use with proxy.localstorage
+        //idProperty: 'id', // use with proxy.SQL
+	    identifier: 'uuid', // use with proxy.localstorage
         fields: [
 			{name: 'address', type: 'string'},
             {name: 'city', type: 'string'},

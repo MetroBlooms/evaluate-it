@@ -4,8 +4,8 @@ Ext.define('EvaluateIt.model.EvaluationImage', {
     extend: 'Ext.data.Model',
  
     config: {
-        idProperty: 'id', // use with proxy.SQL
-		//identifier: 'uuid', // use with proxy.localstorage 
+        //idProperty: 'id', // use with proxy.SQL
+		identifier: 'uuid', // use with proxy.localstorage
         fields: [
 				{name: 'srcUri', type: 'string'} // local image location
 		],

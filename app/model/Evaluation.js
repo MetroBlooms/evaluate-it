@@ -4,8 +4,8 @@ Ext.define('EvaluateIt.model.Evaluation', {
     extend: 'Ext.data.Model',
  
     config: {
-        idProperty: 'id', // use with proxy.SQL
-		//identifier: 'uuid', // use with proxy.localstorage 
+        //idProperty: 'id', // use with proxy.SQL
+		identifier: 'uuid', // use with proxy.localstorage
         fields: [
 			{name: 'id', type: 'string'}, // pk
 			{name: 'category', type: 'string'}, //used to categorize for selection of view 

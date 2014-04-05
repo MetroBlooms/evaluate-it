@@ -4,8 +4,8 @@ Ext.define('EvaluateIt.model.SiteMaintainer', {
     extend: 'Ext.data.Model',
     
     config: {
-        idProperty: 'id', // use with proxy.SQL
-        //identifier: 'uuid', // use with proxy.localstorage
+        //idProperty: 'id', // use with proxy.SQL
+        identifier: 'uuid', // use with proxy.localstorage
         fields: [
             {name: 'firstName', type: 'string'},
             {name: 'lastName', type: 'string'},
@@ -17,7 +17,7 @@ Ext.define('EvaluateIt.model.SiteMaintainer', {
         },
         associations: [
         {
-            type: ' belongsTo',
+            type: 'belongsTo',
             model: 'EvaluateIt.model.Site',
             associationKey: 'siteId'
         }]

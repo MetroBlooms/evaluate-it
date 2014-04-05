@@ -16,24 +16,24 @@ Ext.define('EvaluateIt.model.Site', {
         },
         associations:
         [
-			{   type: ' hasMany',
+			{   type: 'hasMany',
 				model: 'EvaluateIt.model.Evaluation', 
 				name: 'siteEvaluations'
 
 			},
 		    {
-                type: ' hasMany',
+                type: 'hasMany',
                 model: 'EvaluateIt.model.SiteMaintainer',
                 name: 'siteMaintainers'
             },
 			{
-                type: ' hasOne',
+                type: 'hasOne',
                 model: 'EvaluateIt.model.Geolocation',
                 associationKey: 'geolocationId'
 
 			},
             {
-                type: ' hasOne',
+                type: 'hasOne',
                 model: 'EvaluateIt.model.Address',
                 associationKey: 'addressId'
             }
