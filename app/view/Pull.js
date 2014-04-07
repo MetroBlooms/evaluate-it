@@ -121,7 +121,7 @@ function parseJson (json) {
             // need to see if evaluation exists in store
         	var match = siteEvaluations.find('address', json[i].garden.address.address);
 
-			console.log(siteEvaluations.find('remoteEvaluationeId', json[i].garden.evaluation_id)); 
+			console.log(siteEvaluations.find('remoteEvaluationId', json[i].garden.evaluation_id));
 					  
 			if (match === -1) {
 				console.log('Adding site!');
@@ -150,7 +150,45 @@ function parseJson (json) {
 			}
 			else { 
 				console.log('Evaluation exists!');
-			} 
+			}
+
+            // testing associations
+
+            // create model instance
+            var address = Ext.create('EvaluateIt.model.Address', {
+                address: json[i].garden.address.address
+            });
+
+            // save record and link to site record via callback
+            address_save(json[i].garden.address.address);
+
+            function address_save(json) {
+                address.save(function(record) {
+                    console.log('address.id ' + record.getId() + '  ' + json);
+                    address_id = record.getId();
+                    // callback to create linked site record
+                    site(address_id, json);
+                }, this);
+            }
+
+
+            function site(address_id, json) {
+                console.log('addressId ' + address_id);
+                // create model isntance
+                var site = Ext.create('EvaluateIt.model.Site', {
+                    address_id: address_id,
+                    remoteSiteId: json
+                });
+
+                // save model instance
+                site.getAddress(function(address, operation) {
+                    // do something with the address object
+                    console.log('Yesh' + address.get('id')); // alerts 20
+                }, this);
+
+                site.save();
+            }
+
 
 		
 		} // end if
@@ -175,7 +213,13 @@ function parseJson (json) {
 			Evaluators.sync();
 
 		}
-	 
-	}
+
+
+
+
+
+
+
+    }
 }
 

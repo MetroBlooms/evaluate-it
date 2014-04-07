@@ -271,7 +271,7 @@ function post_to_remote(obj, record, eval_type) {
 	//url +=  '/' +  EvaluateIt.config.testHttpResponse;//postResults;
 
         store = Ext.create('EvaluateIt.store.SiteEvaluations'),
-        //update_record = store.findExact('remoteEvaluationId', record.data.id);
+        update_record = store.findExact('remoteEvaluationId', record.data.id);
         update_record,
         now = new Date();
 

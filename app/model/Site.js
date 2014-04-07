@@ -3,11 +3,12 @@
 Ext.define('EvaluateIt.model.Site', {
     extend: 'Ext.data.Model',
     config: {
-        idProperty: 'id', // use with proxy.SQL
-        //identifier: 'uuid', // use with proxy.localstorage
+        //idProperty: 'id', // use with proxy.SQL
+        identifier: 'uuid', // use with proxy.localstorage
         fields: [
             {name: 'remoteSiteId', type: 'int'},
-            {name: 'siteName', type: 'string'} // does site have a formal name
+            {name: 'siteName', type: 'string'}, // does site have a formal name
+            {name: 'address_id', type: 'int'}
 
         ],
         proxy: {
