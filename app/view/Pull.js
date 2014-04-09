@@ -62,6 +62,7 @@ Ext.define('EvaluateIt.view.Pull', {
 							url += EvaluateIt.config.apiViewEvaluation;
 							url += EvaluateIt.config.pullCriterion;
 							url += sessionStorage.evaluator_id;
+                            // url += 265;
 							url += '?token=' + sessionStorage.sessionToken
 							console.log(url);
 
@@ -154,17 +155,18 @@ function parseJson (json) {
 
             // testing associations
 
+
             // create model instance
             var address = Ext.create('EvaluateIt.model.Address', {
                 address: json[i].garden.address.address
             });
 
             // save record and link to site record via callback
-            address_save(json[i].garden.address.address);
+            address_save(json[i]);
 
             function address_save(json) {
                 address.save(function(record) {
-                    console.log('address.id ' + record.getId() + '  ' + json);
+                    // console.log('address.id ' + record.getId() + '  ' + json);
                     address_id = record.getId();
                     // callback to create linked site record
                     site(address_id, json);
@@ -173,24 +175,48 @@ function parseJson (json) {
 
 
             function site(address_id, json) {
-                console.log('addressId ' + address_id);
-                // create model isntance
+                // console.log('addressId ' + address_id + '   ' + json);
+                // // create model isntance
                 var site = Ext.create('EvaluateIt.model.Site', {
                     address_id: address_id,
-                    remoteSiteId: json
+                    remoteSiteId: json.garden.address.address // TODO: Bug: this is setting the remote site id to the 1st number of the address.
                 });
-
-                // save model instance
+                // test an address lookup
                 site.getAddress(function(address, operation) {
                     // do something with the address object
-                    console.log('Yesh' + address.get('id')); // alerts 20
+                    //console.log('Yesh' + address.get('id')); // alerts 20
                 }, this);
 
-                site.save();
+                // save model instance
+                site.save(function(siteObj){
+                    // console.log('function siteObj id is ' + siteObj.getId());
+
+                    // once the site is saved we can save the evaluation for the site.
+                    var evaluation = Ext.create('EvaluateIt.model.Evaluation', {
+                        site_id:             siteObj.getId(),
+                        remoteEvaluationId : json.evaluation_id,
+                        dateOfEvaluation:    json.date_evaluated,
+                        comments:            json.comments,
+                        category:            json.category,
+                        remoteEvaluatorId:   json.evaluator_id,
+                        // datePostedToRemote:  json[i].date_assigned,
+                        evaluationType:      json.eval_type
+                        // noLongerExists:      json.garden.no_longer_exists
+
+                    });
+                    evaluation.save(function(record){
+                        // console.log('evaluation.id '+ record.getId() + '   ' + json);
+                    }, this);
+                }, this);
+                // test an evaluation lookup 2 different ways
+                var evaluations = site.siteEvaluations();
+
+                // console.log('evaluations = ' + evaluations.comments);
+
+                // site.getEvaluation(function(siteEval, operation){
+                //     console.log('siteEval id is '+ siteEval.get('id'));
+                // });
             }
-
-
-		
 		} // end if
 
         // reload store to show up-to-date data
@@ -213,13 +239,6 @@ function parseJson (json) {
 			Evaluators.sync();
 
 		}
-
-
-
-
-
-
-
     }
 }
 
