@@ -168,14 +168,6 @@ function parseJson (json) {
            function address_save(json) {
                 address.save(function(record) {
                     // console.log('address.id ' + record.getId() + '  ' + json);
-                    address_id = record.getId();
-                    // callback to create linked site record
-                    address.getSite( function(site, operation){
-                        console.log('tried to load site. this.site is now set to the site');
-                    } );
-
-                    //site(address_id, json);
-
                     var site = Ext.create('EvaluateIt.model.Site', {
                         remoteSiteId: json.garden.garden_id
                     });
