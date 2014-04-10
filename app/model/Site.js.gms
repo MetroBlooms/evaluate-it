@@ -3,9 +3,10 @@
 Ext.define('EvaluateIt.model.Site', {
     extend: 'Ext.data.Model',
     config: {
-        idProperty: 'id', // use with proxy.SQL
-        // identifier: 'uuid', // use with proxy.localstorage
+        //idProperty: 'id', // use with proxy.SQL
+        identifier: 'id', // use with proxy.localstorage
         fields: [
+            {name: 'id', type: 'int'},
             {name: 'remoteSiteId', type: 'int'},
             {name: 'siteName', type: 'string'}, // does site have a formal name
             {name: 'address_id', type: 'int'}
@@ -36,10 +37,7 @@ Ext.define('EvaluateIt.model.Site', {
             {
                 type: 'hasOne',
                 model: 'EvaluateIt.model.Address',
-                associationKey: 'addressId',
-                getterName: 'getAddress',
-                setterName: 'setAddress',
-                name: 'address'
+                associationKey: 'addressId'
             }
 		] 
     }

@@ -161,30 +161,49 @@ function parseJson (json) {
                 address: json[i].garden.address.address
             });
 
-            // save record and link to site record via callback
-            address_save(json[i]);
+            // save record and link to site via setter method
+           address_save(json[i]);
 
-            function address_save(json) {
+
+           function address_save(json) {
                 address.save(function(record) {
                     // console.log('address.id ' + record.getId() + '  ' + json);
                     address_id = record.getId();
                     // callback to create linked site record
-                    site(address_id, json);
-                }, this);
+                    address.getSite( function(site, operation){
+                        console.log('tried to load site. this.site is now set to the site');
+                    } );
+
+                    //site(address_id, json);
+
+                    var site = Ext.create('EvaluateIt.model.Site', {
+                        remoteSiteId: json.garden.garden_id
+                    });
+
+                    site.setAddress(record.getId());
+                    site.save();
+
+               }, this);
             }
 
 
+
+
+/*
             function site(address_id, json) {
                 // console.log('addressId ' + address_id + '   ' + json);
-                // // create model isntance
+                // // create model instance
                 var site = Ext.create('EvaluateIt.model.Site', {
-                    address_id: address_id,
-                    remoteSiteId: json.garden.address.address // TODO: Bug: this is setting the remote site id to the 1st number of the address.
+                    //address_id: address_id,
+                    remoteSiteId: json.garden.garden_id
                 });
+
+                site.setAddress(address.get('id'));
+
                 // test an address lookup
                 site.getAddress(function(address, operation) {
                     // do something with the address object
-                    //console.log('Yesh' + address.get('id')); // alerts 20
+                    console.log('Yesh' + address.get('id'));
                 }, this);
 
                 // save model instance
@@ -194,7 +213,7 @@ function parseJson (json) {
                     // once the site is saved we can save the evaluation for the site.
                     var evaluation = Ext.create('EvaluateIt.model.Evaluation', {
                         site_id:             siteObj.getId(),
-                        remoteEvaluationId : json.evaluation_id,
+                        remoteEvaluationId: json.evaluation_id,
                         dateOfEvaluation:    json.date_evaluated,
                         comments:            json.comments,
                         category:            json.category,
@@ -217,6 +236,9 @@ function parseJson (json) {
                 //     console.log('siteEval id is '+ siteEval.get('id'));
                 // });
             }
+
+            */
+
 		} // end if
 
         // reload store to show up-to-date data

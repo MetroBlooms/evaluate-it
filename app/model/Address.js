@@ -15,7 +15,18 @@ Ext.define('EvaluateIt.model.Address', {
 		proxy: {
            	type: "sql", //"localstorage",
 			database: 'Test'
-        }
+        },
+        associations: [
+        {
+            type: 'belongsTo',
+            model: 'EvaluateIt.model.Site',
+            associationKey: 'siteId',
+            name: 'site',
+            instanceName: 'site',
+            getterName: 'getSite',
+            setterName: 'setSite',
+            foreignKey: 'site_id'
+        }]
 
     }
 });
