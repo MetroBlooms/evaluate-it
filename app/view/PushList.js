@@ -21,9 +21,9 @@ Ext.define('EvaluateIt.view.PushList', {
 			new Ext.XTemplate(
                 '<tpl for=".">',
                 // TODO: Somehow grab datePostedToRemote from Evaluation store
-                '<tpl if="Sites.evaluations.datePostedToRemote !=== \'null\'">',
+                '<tpl if="Sites.evaluations.datePostedToRemote !== \'null\'">',
                 '<div><strong>Address: {Sites.address.address}: PUSHED!</strong></div> ',
-                '<tpl if="Sitesevaluations.datePostedToRemote === \'null\'">',
+                '<tpl if="Sites.evaluations.datePostedToRemote === \'null\'">',
                 '<div><strong>Address: {Sites.address.address} </strong></div> ',
                 '</tpl>',
                 '</tpl>'),
