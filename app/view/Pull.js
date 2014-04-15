@@ -178,59 +178,6 @@ function parseJson (json) {
                }, this);
             }
 
-
-
-
-/*
-            function site(address_id, json) {
-                // console.log('addressId ' + address_id + '   ' + json);
-                // // create model instance
-                var site = Ext.create('EvaluateIt.model.Site', {
-                    //address_id: address_id,
-                    remoteSiteId: json.garden.garden_id
-                });
-
-                site.setAddress(address.get('id'));
-
-                // test an address lookup
-                site.getAddress(function(address, operation) {
-                    // do something with the address object
-                    console.log('Yesh' + address.get('id'));
-                }, this);
-
-                // save model instance
-                site.save(function(siteObj){
-                    // console.log('function siteObj id is ' + siteObj.getId());
-
-                    // once the site is saved we can save the evaluation for the site.
-                    var evaluation = Ext.create('EvaluateIt.model.Evaluation', {
-                        site_id:             siteObj.getId(),
-                        remoteEvaluationId: json.evaluation_id,
-                        dateOfEvaluation:    json.date_evaluated,
-                        comments:            json.comments,
-                        category:            json.category,
-                        remoteEvaluatorId:   json.evaluator_id,
-                        // datePostedToRemote:  json[i].date_assigned,
-                        evaluationType:      json.eval_type
-                        // noLongerExists:      json.garden.no_longer_exists
-
-                    });
-                    evaluation.save(function(record){
-                        // console.log('evaluation.id '+ record.getId() + '   ' + json);
-                    }, this);
-                }, this);
-                // test an evaluation lookup 2 different ways
-                var evaluations = site.siteEvaluations();
-
-                // console.log('evaluations = ' + evaluations.comments);
-
-                // site.getEvaluation(function(siteEval, operation){
-                //     console.log('siteEval id is '+ siteEval.get('id'));
-                // });
-            }
-
-            */
-
 		} // end if
 
         // reload store to show up-to-date data

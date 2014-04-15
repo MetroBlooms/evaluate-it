@@ -1,7 +1,8 @@
 //Ext.require(['Ext.data.proxy.SQL']);
 
 Ext.define('EvaluateIt.model.Site', {
-    extend: 'Ext.data.Model',
+    //extend: 'Ext.data.Model',
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
         idProperty: 'id', // use with proxy.SQL
         // identifier: 'uuid', // use with proxy.localstorage
@@ -19,7 +20,7 @@ Ext.define('EvaluateIt.model.Site', {
         [
 			{   type: 'hasMany',
 				model: 'EvaluateIt.model.Evaluation', 
-				name: 'siteEvaluations'
+				name: 'evaluations'
 
 			},
 		    {

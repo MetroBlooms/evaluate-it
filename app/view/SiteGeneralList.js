@@ -14,6 +14,7 @@ Ext.define('EvaluateIt.view.SiteGeneralList', {
          */
 		itemTpl: [
 			'<div><strong>Address: {address}</strong></div> '
+
 		],
 		variableHeights: false
     }

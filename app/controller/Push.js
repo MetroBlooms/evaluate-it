@@ -275,9 +275,6 @@ function post_to_remote(obj, record, eval_type) {
         update_record,
         now = new Date();
 
-
-
-
 	// new API with authorization token
 	url =  EvaluateIt.config.protocol;
 
