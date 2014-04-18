@@ -2,7 +2,7 @@
  * Widget, with template to render displayed sites to evaluate 
 */
 Ext.define('EvaluateIt.view.SiteGeneralList', {
-    extend: 'Ext.dataview.List', //'Ext.tab.Panel',
+    extend: 'Ext.List',
 	alias : 'widget.siteGeneralList',
     config: {
 		width: Ext.os.deviceType == 'Phone' ? null : 300,

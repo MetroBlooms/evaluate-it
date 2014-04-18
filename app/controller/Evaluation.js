@@ -21,9 +21,9 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 				itemtap: 'onSelectEvaluation'
 			},
 			'siteEvaluationForm button[itemId=save]' : {
-				tap : 'onSaveEvaluation' 
+				tap : 'onSaveEvaluation'
 			}
-		}	  
+		}
 
  	},
 
@@ -44,9 +44,9 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
 		// calculatee sum of factor ratings:
         if (form.getValues().visualImpact !== null
-			&& form.getValues().varietyAndHealth !== null 
-			&& form.getValues().design !== null 
-			&& form.getValues().maintenance !== null 
+			&& form.getValues().varietyAndHealth !== null
+			&& form.getValues().design !== null
+			&& form.getValues().maintenance !== null
 			&& form.getValues().environmentalStewardship !== null) {
 
             /**
@@ -72,7 +72,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 			alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
 
 			form.setValues({
-				sumRating: sumRating 
+				sumRating: sumRating
 			})
 
 			values = form.getValues();
@@ -97,7 +97,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
 			images.queryBy(function(iRecord,id){
 				images = Ext.getStore(images);
-				
+
 				if (images.getCount() > 0) {
 					var uri  = iRecord.get('src'); // changed to iRecord form record: what is effect?
 
@@ -107,7 +107,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 					//var siteId = iRecord.get('site_id');
 
 					form.setValues({
-						imageUri: uri 
+						imageUri: uri
 					})
 
                     // refresh values with new data
@@ -137,7 +137,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
 		if(!siteEvaluationForm){
 			siteEvaluationForm = Ext.widget('siteEvaluationForm');
-		}	 
+		}
 		siteEvaluationForm.setRecord(record);
 		siteEvaluationForm.showBy(target);
 	}

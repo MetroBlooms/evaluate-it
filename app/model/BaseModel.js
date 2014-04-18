@@ -3,6 +3,139 @@ Ext.define("EvaluateIt.model.BaseModel", {
 
     linkedAssociations: false,
 
+    config: {
+        // Use uuid strategy for creating new ids
+       // idProperty: {
+       //     type: 'id'
+       // }
+        proxy: {
+            type: "sql",
+            database: 'Test'
+        }
+    },
+
+    inheritableStatics: {
+
+        /**
+         * The relation path mapper.
+         *
+         * @return A map of all the objects this model has relations to en their possible paths.
+         */
+        // TODO: check if we really want to cache this.
+        getAllPaths: function() {
+            var name;
+            if(this.pathHistory) {
+                return this.pathHistory;
+            }
+            this.pathHistory = { };
+
+            name = this.modelName.substr(this.modelName.lastIndexOf('.') + 1);
+            this.pathHistory[name] = {
+                paths:  [ [ name ] ]
+            };
+
+            this._getPaths(this, name, this.pathHistory);
+            return this.pathHistory;
+        },
+
+        _getPaths: function(root, mypath, history) {
+            var i, asoc, asocModel, name, sub;
+            // hasMany, belongsTo, hasOne
+            if(this.associations) {
+                // For every association.
+                for(i = 0; i < this.associations.all.length; i += 1) {
+                    asoc = this.associations.all[i].config;
+                    asocModel = Ext.ModelManager.getModel(asoc.associatedModel);
+                    name = asoc.name;
+
+                    sub = mypath + '.';
+                    // We already know this object in our current path.
+                    if(sub.search(new RegExp("(\\.|^)"+name+"\\.","g")) !== -1) {
+                        continue;
+                    }
+
+                    sub += name;
+                    // New path, record and descend.
+                    if(!history[name] || !this._contains(history[name].paths, sub)) {
+                        history[name] = history[name] ||  { paths: [] };
+                        // Add a new path to object 'name' to list of paths to the object.
+                        history[name].paths.push(sub.split('.'));
+                        asocModel._getPaths(root, sub, history); // Descend.
+                    }
+                }
+            }
+        },
+
+        getModelName: function() {
+            var name = this.getName();
+            return name.substr(name.lastIndexOf('.') + 1);
+        },
+
+        _contains: function(array, value) {
+            var i;
+            for(i = 0; i < array.length; i += 1) {
+                if(array[i] === value) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    },
+
+    getModelName: function() {
+        return this.self.getModelName();
+    },
+
+    /**
+     * Finds all associated records belonging to this instance.
+     *
+     * this uses the pathMapper and first path found from this object to it's destination.
+     * this uses a step by step finder using memory resident records.
+     * For every part in path
+     *   get all records in current level from records from previous level
+     *
+     * Start level is the starting instance [ this ]
+     *
+     * @param modelName to find all records from.
+     * @return {Array} of associated records.
+     */
+    getAssociatedRecords: function(modelName) {
+        var i, o, asoc, list, newList, split, paths = this.self.getAllPaths(), parent;
+        if(!paths[modelName]) {
+            throw new Error('There is no path between ' + this.getModelName() + ' and ' + modelName);
+        }
+
+        split = paths[modelName].paths[0];
+        list = [ this ]; // Start level
+        newList = []; // Next level.
+        // Skip the first entry(self);
+        for(i = 1; i < split.length; i += 1) { // Descend.
+            if(list.length === 0) {
+                return [];
+            }
+            // Find association for this level
+            asoc = list[0].associations.get(split[i]);
+            if(!asoc) {
+                throw new Error('Cannot find association ' + split[i] + ' on ' + list[0].getModelName());
+            }
+
+            // Get all sub records from current level.
+            for(o = 0; o < list.length; o += 1) {
+                if(asoc.getType().toLowerCase() === 'hasmany') {
+                    newList = newList.concat(list[o].getChildren(split[i]));
+                } else {
+                    parent = list[o].getParent(split[i]);
+                    if(parent !== null) {
+                        newList.push(parent);
+                    }
+                }
+            }
+            list = newList; // Move next level to current level.
+            newList = [];
+        }
+        return list;
+    },
+
     /* uses information from the associations to fetch a parent from an associated store */
     getParent: function(assocName) {
         var assoc = this.associations.get(assocName);
@@ -13,8 +146,7 @@ Ext.define("EvaluateIt.model.BaseModel", {
         if (!store) {
             return null;
         }
-
-        return store.findRecord(assoc.config.primaryKey, this.get(assoc.config.foreignKey)) || undefined;
+        return store.findRecordAll(assoc.config.primaryKey, this.get(assoc.config.foreignKey));
     },
 
     getChildren: function(assocName) {
@@ -29,28 +161,48 @@ Ext.define("EvaluateIt.model.BaseModel", {
             return null;
         }
 
-        store.suspendEvents(); /* make sure the store does not fire all sorts of events, triggering stuff we dont want */
-        store.clearFilter();
-        store.filterBy(function(record) {
+        return store.findRecordsAll(function(record) {
             return record.get(assoc.config.foreignKey) === id;
         });
+    },
 
-        var range = store.getRange(); // return array of records
-        store.clearFilter();
-        store.resumeEvents();
-
-        return range;
+    getChildrenData: function(assocName){
+        var records = this.getChildren(assocName);
+        var rt = [];
+        for(var i in records){
+            rt.push(records[i].data);
+        }
+        return rt;
     },
 
     /* warning, recursive down in combination with up can be dangerous when there are loops in associations */
     getData: function(includeAssociated,down) {
         if (includeAssociated && !this.linkedAssociations) {
             this.linkedAssociations = true;
-            this.linkChildAssociations(includeAssociated);
             this.linkAssociations(includeAssociated);
         }
 
         var data = this.callParent(arguments);
+
+        if (down) {
+            var childData = this.getAllChildData();
+            Ext.apply(data, childData);
+        }
+
+        return data;
+    },
+
+    getRawData: function(strict) {
+        var i, meta, data = Ext.apply({}, this.getData(false));
+        if(!SalesForce.metaStore[this.self.getSfName()]) {
+            return data;
+        }
+        meta = SalesForce.metaStore[this.self.getSfName()];
+        for(i in data) {
+            if(!meta.fieldMap[i] || (strict && !meta.fieldMap[i].createable)) {
+                delete data[i];
+            }
+        }
         return data;
     },
 
@@ -91,7 +243,8 @@ Ext.define("EvaluateIt.model.BaseModel", {
 
     /* this function ONLY recurses upwards (belongsTo), otherwise the data structure could become infinite */
     linkAssociations: function(includeAssociated, count) {
-        var associations = this.associations.items,
+        var me = this,
+            associations = this.associations.items,
             associationCount = associations.length,
             associationName,
             association,
@@ -117,32 +270,27 @@ Ext.define("EvaluateIt.model.BaseModel", {
                 continue;
             }
 
-            if (type.toLowerCase() == 'belongsto' || type.toLowerCase() == 'hasone') {
+            if (type.toLowerCase() === 'belongsto' || type.toLowerCase() === 'hasone') {
                 associatedRecord = this.getParent(associationName);
                 if (associatedRecord) {
                     this[association.getInstanceName()] = associatedRecord;
                     associatedRecord.linkAssociations(includeAssociated, (count+1));
+                } else if (this.get(association.config.foreignKey)) {
+                    console.log('Warning, model association not found ');
                 }
             }
         }
     },
 
-    linkChildAssociations: function(includeAssociated, count) {
+    getAllChildData: function() {
         var associations = this.associations.items,
             associationCount = associations.length,
             associationName,
             association,
-            associatedRecord,
             i,
             type,
-            foreignStore;
-
-        count = count || 0;
-
-        if (count > 10) {
-            console.log('Too deep recursion in linkAssociations');
-            return;
-        }
+            foreignStore,
+            childData = {};
 
         for (i = 0; i < associationCount; i++) {
             association = associations[i];
@@ -155,14 +303,11 @@ Ext.define("EvaluateIt.model.BaseModel", {
             }
 
             if (type.toLowerCase() == 'hasmany') {
-                var children = this.getChildren(associationName);
-                association.setStoreName('hasMany_'+associationName+'_'+Ext.id());
-                var store = Ext.create('Ext.data.Store',{
-                    model: association.config.associatedModel
-                });
-                store.add(children);
-                this[association.getStoreName()] = store;
+                var children = this.getChildrenData(associationName);
+                childData[associationName] = children;
             }
         }
+
+        return childData;
     }
 });

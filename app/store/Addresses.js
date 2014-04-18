@@ -1,4 +1,5 @@
 Ext.define('EvaluateIt.store.Addresses', {
+   // extend: 'EvaluateIt.store.BaseStore',
     extend: 'Ext.data.Store',
 	alias: 'store.Addresses',
     config:{

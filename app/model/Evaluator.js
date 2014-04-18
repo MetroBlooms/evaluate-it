@@ -2,16 +2,16 @@ Ext.define('EvaluateIt.model.Evaluator', {
     extend: 'Ext.data.Model',
     
     config: {
-        //idProperty: 'id', // use with proxy.SQL
-        identifier: 'uuid', // use with proxy.localstorage
+        idProperty: 'id',
         fields: [
+            {name: 'id', type: 'int'}, // pk
             {name: 'remoteEvaluatorId', type: 'int'}, // linking id to remote JSON
             {name: 'firstName', type: 'auto'},
             {name: 'lastName', type: 'auto'},
 	    	{name: 'email', type: 'auto'}
         ],
         proxy: {
-            type: "sql", //"localstorage",
+            type: "sql",
             database: 'Test'
         },
 	    associations:

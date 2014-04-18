@@ -1,10 +1,8 @@
-Ext.require(['EvaluateIt.model.Site']);
-
 Ext.define('EvaluateIt.model.Address', {
-    //extend: 'Ext.data.Model',
-    extend: 'EvaluateIt.model.BaseModel',
+    extend: 'Ext.data.Model',
+    //extend: 'EvaluateIt.model.BaseModel',
     config: {
-        idProperty: 'id', // use with proxy.SQL
+        idProperty: 'id',
         fields: [
             {name: 'id', type: 'int'},
             {name: 'address', type: 'string'},
@@ -12,11 +10,11 @@ Ext.define('EvaluateIt.model.Address', {
             {name: 'state', type: 'string'},
             {name: 'zipcode', type: 'string'},
 			{name: 'county', type: 'string'}
-        ],
-		proxy: {
-           	type: "sql", //"localstorage",
+        ]
+		/*proxy: {
+           	type: "sql",
 			database: 'Test'
-        }
+        }*/
 
     }
 });

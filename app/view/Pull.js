@@ -61,9 +61,9 @@ Ext.define('EvaluateIt.view.Pull', {
 							url += EvaluateIt.config.domain;
 							url += EvaluateIt.config.apiViewEvaluation;
 							url += EvaluateIt.config.pullCriterion;
-							url += sessionStorage.evaluator_id;
-                            // url += 265;
-							url += '?token=' + sessionStorage.sessionToken
+							//url += sessionStorage.evaluator_id;
+                            url += 265;
+							url += '?token=' + '07H2nV8imNAx2I8eMXyd' //sessionStorage.sessionToken
 							console.log(url);
 
                             // make cors request for cross domain access for data
@@ -167,7 +167,7 @@ function parseJson (json) {
 
            function address_save(json) {
                 address.save(function(record) {
-                    // console.log('address.id ' + record.getId() + '  ' + json);
+                    console.log('address.id ' + record.getId() + '  ' + json);
                     var site = Ext.create('EvaluateIt.model.Site', {
                         remoteSiteId: json.garden.garden_id
                     });
