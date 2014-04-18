@@ -26,6 +26,7 @@ Ext.Loader.addClassPathMappings({
 Ext.ClassManager.addNameAlternateMappings({
   "EvaluateIt.controller.Evaluation": [],
   "EvaluateIt.controller.EvaluationAward": [],
+  "EvaluateIt.controller.Evaluations": [],
   "EvaluateIt.controller.Login": [],
   "EvaluateIt.controller.Main": [],
   "EvaluateIt.controller.Push": [],
@@ -36,6 +37,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "EvaluateIt.controller.phone.Main": [],
   "EvaluateIt.controller.tablet.Main": [],
   "EvaluateIt.model.Address": [],
+  "EvaluateIt.model.BaseModel": [],
   "EvaluateIt.model.Evaluation": [],
   "EvaluateIt.model.EvaluationAward": [],
   "EvaluateIt.model.EvaluationFeature": [],
@@ -51,6 +53,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "EvaluateIt.profile.Phone": [],
   "EvaluateIt.profile.Tablet": [],
   "EvaluateIt.store.Addresses": [],
+  "EvaluateIt.store.BaseStore": [],
   "EvaluateIt.store.EvaluationAwards": [],
   "EvaluateIt.store.EvaluationFeatures": [],
   "EvaluateIt.store.EvaluationImages": [],
@@ -732,6 +735,7 @@ Ext.ClassManager.addNameAlternateMappings({
 Ext.ClassManager.addNameAliasMappings({
   "EvaluateIt.controller.Evaluation": [],
   "EvaluateIt.controller.EvaluationAward": [],
+  "EvaluateIt.controller.Evaluations": [],
   "EvaluateIt.controller.Login": [],
   "EvaluateIt.controller.Main": [],
   "EvaluateIt.controller.Push": [],
@@ -742,6 +746,7 @@ Ext.ClassManager.addNameAliasMappings({
   "EvaluateIt.controller.phone.Main": [],
   "EvaluateIt.controller.tablet.Main": [],
   "EvaluateIt.model.Address": [],
+  "EvaluateIt.model.BaseModel": [],
   "EvaluateIt.model.Evaluation": [],
   "EvaluateIt.model.EvaluationAward": [],
   "EvaluateIt.model.EvaluationFeature": [],
@@ -759,21 +764,28 @@ Ext.ClassManager.addNameAliasMappings({
   "EvaluateIt.store.Addresses": [
     "store.Addresses"
   ],
+  "EvaluateIt.store.BaseStore": [],
   "EvaluateIt.store.EvaluationAwards": [
     "store.EvaluationAwards"
   ],
   "EvaluateIt.store.EvaluationFeatures": [
     "store.EvaluationFeatures"
   ],
-  "EvaluateIt.store.EvaluationImages": [],
+  "EvaluateIt.store.EvaluationImages": [
+    "store.EvaluationImages"
+  ],
   "EvaluateIt.store.EvaluationScorecards": [
     "store.EvaluationScorecards"
   ],
   "EvaluateIt.store.Evaluations": [
     "store.Evaluations"
   ],
-  "EvaluateIt.store.Evaluators": [],
-  "EvaluateIt.store.Geolocations": [],
+  "EvaluateIt.store.Evaluators": [
+    "store.Evaluations"
+  ],
+  "EvaluateIt.store.Geolocations": [
+    "store.Geolocations"
+  ],
   "EvaluateIt.store.ImageQueue": [
     "widget.imagesqueue"
   ],
@@ -783,7 +795,9 @@ Ext.ClassManager.addNameAliasMappings({
   "EvaluateIt.store.SiteEvaluations": [
     "store.SiteEvaluations"
   ],
-  "EvaluateIt.store.SiteMaintainers": [],
+  "EvaluateIt.store.SiteMaintainers": [
+    "store.SiteMaintainers"
+  ],
   "EvaluateIt.store.Sites": [
     "store.Sites"
   ],
