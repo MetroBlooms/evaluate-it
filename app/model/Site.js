@@ -1,18 +1,18 @@
 Ext.define('EvaluateIt.model.Site', {
-    extend: 'Ext.data.Model',
-    //extend: 'EvaluateIt.model.BaseModel',
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
         idProperty: 'id',
         fields: [
+            {name: 'id', type: 'int'},
             {name: 'remoteSiteId', type: 'int'},
             {name: 'siteName', type: 'string'}, // does site have a formal name
-            {name: 'address_id', type: 'int'}
+            {name: 'address_id', type: 'string'}
 
         ],
-        /*proxy: {
+        proxy: {
             type: "sql",
             database: 'Test'
-        },*/
+        },
         associations:
         [
 			{   type: 'hasMany',

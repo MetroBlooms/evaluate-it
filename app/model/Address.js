@@ -1,6 +1,5 @@
 Ext.define('EvaluateIt.model.Address', {
-    extend: 'Ext.data.Model',
-    //extend: 'EvaluateIt.model.BaseModel',
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
         idProperty: 'id',
         fields: [
@@ -9,12 +8,24 @@ Ext.define('EvaluateIt.model.Address', {
             {name: 'city', type: 'string'},
             {name: 'state', type: 'string'},
             {name: 'zipcode', type: 'string'},
-			{name: 'county', type: 'string'}
-        ]
-		/*proxy: {
-           	type: "sql",
-			database: 'Test'
-        }*/
+			{name: 'county', type: 'string'},
+            {name: 'site_id', type: 'string'}
+        ],
+
+        hasOne:	 [{
+            model: 'EvaluateIt.model.Site',
+            name: 'Site',
+            primaryKey: 'id',
+            getterName: 'getSite',
+            setterName: 'setSite',
+            foreignKey: 'site_id',
+            foreignStore: 'Sites'
+
+        }],
+        proxy: {
+            type: "sql",
+            database: 'Test'
+        }
 
     }
 });

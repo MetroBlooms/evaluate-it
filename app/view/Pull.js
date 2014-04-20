@@ -63,7 +63,7 @@ Ext.define('EvaluateIt.view.Pull', {
 							url += EvaluateIt.config.pullCriterion;
 							//url += sessionStorage.evaluator_id;
                             url += 265;
-							url += '?token=' + '07H2nV8imNAx2I8eMXyd' //sessionStorage.sessionToken
+							url += '?token=' + 'cGC2me9lG53fzlY0G1W0' //sessionStorage.sessionToken
 							console.log(url);
 
                             // make cors request for cross domain access for data
@@ -161,24 +161,25 @@ function parseJson (json) {
                 address: json[i].garden.address.address
             });
 
+
             // save record and link to site via setter method
-           address_save(json[i]);
+
+            console.log('address.id ' + address.id);
+
+            var site = Ext.create('EvaluateIt.model.Site', {
+                remoteSiteId: json[i].garden.garden_id
+            });
+
+            site.setAddress(address.id);
+
+            site.save();
+
+            address.setSite(site.id);
+
+            address.save();
 
 
-           function address_save(json) {
-                address.save(function(record) {
-                    console.log('address.id ' + record.getId() + '  ' + json);
-                    var site = Ext.create('EvaluateIt.model.Site', {
-                        remoteSiteId: json.garden.garden_id
-                    });
-
-                    site.setAddress(record.getId());
-                    site.save();
-
-               }, this);
-            }
-
-		} // end if
+        } // end if
 
         // reload store to show up-to-date data
         Ext.StoreMgr.get('SiteEvaluations').load();
@@ -200,6 +201,24 @@ function parseJson (json) {
 			Evaluators.sync();
 
 		}
+
+        update_test(json[i]);
     }
+
+
 }
 
+
+
+
+function update_test(json) {
+    var store = Ext.create('EvaluateIt.store.Sites'),
+        select_record = store.findExact('remoteSiteId', json.garden.garden_id);
+
+    console.log('site.id____' + select_record.id);
+
+    /* store = Ext.getStore(store);
+     update_record = store.findRecord('id', record.data.id );
+     update_record.set('datePostedToRemote', now);
+     store.sync();*/
+}

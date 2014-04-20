@@ -5,12 +5,8 @@ Ext.define("EvaluateIt.model.BaseModel", {
 
     config: {
         // Use uuid strategy for creating new ids
-       // idProperty: {
-       //     type: 'id'
-       // }
-        proxy: {
-            type: "sql",
-            database: 'Test'
+        identifier: {
+            type: 'uuid'
         }
     },
 
