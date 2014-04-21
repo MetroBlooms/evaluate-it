@@ -11,17 +11,19 @@ Ext.define('EvaluateIt.model.Address', {
 			{name: 'county', type: 'string'},
             {name: 'site_id', type: 'string'}
         ],
+        associations: [
+            {
+                type: 'hasOne',
+                model: 'EvaluateIt.model.Site',
+                name: 'site',
+                primaryKey: 'id',
+                getterName: 'getSite',
+                setterName: 'setSite',
+                foreignKey: 'site_id',
+                foreignStore: 'Sites'
 
-        hasOne:	 [{
-            model: 'EvaluateIt.model.Site',
-            name: 'Site',
-            primaryKey: 'id',
-            getterName: 'getSite',
-            setterName: 'setSite',
-            foreignKey: 'site_id',
-            foreignStore: 'Sites'
-
-        }],
+            }
+        ],
         proxy: {
             type: "sql",
             database: 'Test'

@@ -61,9 +61,9 @@ Ext.define('EvaluateIt.view.Pull', {
 							url += EvaluateIt.config.domain;
 							url += EvaluateIt.config.apiViewEvaluation;
 							url += EvaluateIt.config.pullCriterion;
-							//url += sessionStorage.evaluator_id;
-                            url += 265;
-							url += '?token=' + 'cGC2me9lG53fzlY0G1W0' //sessionStorage.sessionToken
+							url += sessionStorage.evaluator_id;
+                            //url += 265;
+							url += '?token=' + sessionStorage.sessionToken
 							console.log(url);
 
                             // make cors request for cross domain access for data
@@ -172,11 +172,23 @@ function parseJson (json) {
 
             site.setAddress(address.id);
 
+            var evaluation = site.evaluation();
+
+            evaluation.add ({
+                site_id: site.id,
+                remoteEvaluationId: json[i].evaluation_id
+            });
+
+
+            evaluation.sync();
+            //site.setEvaluation(evaluation.id);
+
             site.save();
 
             address.setSite(site.id);
 
             address.save();
+
 
 
         } // end if
@@ -202,23 +214,7 @@ function parseJson (json) {
 
 		}
 
-        update_test(json[i]);
     }
 
 
-}
-
-
-
-
-function update_test(json) {
-    var store = Ext.create('EvaluateIt.store.Sites'),
-        select_record = store.findExact('remoteSiteId', json.garden.garden_id);
-
-    console.log('site.id____' + select_record.id);
-
-    /* store = Ext.getStore(store);
-     update_record = store.findRecord('id', record.data.id );
-     update_record.set('datePostedToRemote', now);
-     store.sync();*/
 }

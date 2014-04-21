@@ -1,6 +1,5 @@
 Ext.define('EvaluateIt.model.EvaluationAward', {
-    extend: 'Ext.data.Model',
-    
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
         idProperty: 'id',
         fields: [

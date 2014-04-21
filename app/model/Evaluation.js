@@ -1,5 +1,5 @@
 Ext.define('EvaluateIt.model.Evaluation', {
-    extend: 'Ext.data.Model',
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
         idProperty: 'id',
 		fields: [
@@ -10,7 +10,7 @@ Ext.define('EvaluateIt.model.Evaluation', {
             {name: 'dateOfEvaluation', type: 'date'}, // date evaluation done
             {name: 'datePostedToRemote', type: 'date'}, // date successfully uploaded to remote
 	    	{name: 'evaluationType', type: 'int'}, // type of evaluation done - to be added in the future`
-			{name: 'site_id', type: 'int'},	// linking id for associations
+			{name: 'site_id', type: 'string'},	// linking id for associations
  			{name: 'noLongerExists', type: 'boolean'}, // invalid site: nothing to evaluate!
             {name: 'comments', type: 'string'} // general comments
 
@@ -21,6 +21,14 @@ Ext.define('EvaluateIt.model.Evaluation', {
         },
 		associations: [
 
+            {
+                type: 'belongsTo',
+                model: 'EvaluateIt.model.Site',
+                name: 'site',
+                primaryKey: 'id',
+                foreignKey: 'site_id',
+                foreignStore: 'Sites'
+            },
             {
                 type: 'hasOne',
                 model:	'EvaluateIt.model.Evaluator',
@@ -40,12 +48,9 @@ Ext.define('EvaluateIt.model.Evaluation', {
                 type: 'hasMany',
                 model: 'EvaluateIt.model.EvaluationFeature',
                 name: 'evaluationFactorFeatures'
-            },
-            {
-                type: 'belongsTo',
-                model: 'EvaluateIt.model.Site',
-                associationKey: 'siteId'
             }
+
+
         ]
     }
 });

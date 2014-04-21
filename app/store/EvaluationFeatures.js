@@ -1,5 +1,5 @@
 Ext.define('EvaluateIt.store.EvaluationFeatures', {
-    extend: 'Ext.data.Store',
+    extend: 'EvaluateIt.store.BaseStore',
 	alias: 'store.EvaluationFeatures',
     config:{
         model: 'EvaluateIt.model.EvaluationFeature',

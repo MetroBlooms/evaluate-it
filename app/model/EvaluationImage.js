@@ -1,8 +1,5 @@
-Ext.require(['EvaluateIt.model.Site','EvaluateIt.model.Evaluator']);
-
 Ext.define('EvaluateIt.model.EvaluationImage', {
-    extend: 'Ext.data.Model',
- 
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
         idProperty: 'id',
         fields: [

@@ -1,6 +1,5 @@
 Ext.define('EvaluateIt.model.SiteMaintainer', {
-    extend: 'Ext.data.Model',
-    
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
         idProperty: 'id',
         fields: [

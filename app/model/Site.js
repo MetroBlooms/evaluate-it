@@ -7,7 +7,6 @@ Ext.define('EvaluateIt.model.Site', {
             {name: 'remoteSiteId', type: 'int'},
             {name: 'siteName', type: 'string'}, // does site have a formal name
             {name: 'address_id', type: 'string'}
-
         ],
         proxy: {
             type: "sql",
@@ -16,8 +15,11 @@ Ext.define('EvaluateIt.model.Site', {
         associations:
         [
 			{   type: 'hasMany',
-				model: 'EvaluateIt.model.Evaluation', 
-				name: 'evaluations'
+				model: 'EvaluateIt.model.Evaluation',
+               	name: 'evaluation',
+                primaryKey: 'id',
+                foreignKey: 'evaluation_id',
+                foreignStore: 'Evaluations'
 
 			},
 		    {
@@ -34,10 +36,9 @@ Ext.define('EvaluateIt.model.Site', {
             {
                 type: 'hasOne',
                 model: 'EvaluateIt.model.Address',
-                //associationKey: 'addressId',
                 getterName: 'getAddress',
                 setterName: 'setAddress',
-                name: 'Address',
+                name: 'address',
                 primaryKey: 'id',
                 foreignKey: 'address_id',
                 foreignStore: 'Addresses'
