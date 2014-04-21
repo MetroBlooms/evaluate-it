@@ -49,8 +49,7 @@ Ext.define('EvaluateIt.view.Pull', {
                            	url =  EvaluateIt.config.protocol;
 
 
-                            // select mode of API access
-                            // value set via {EvaluateIt.config.protocol
+                            // select mode of API access, value set via {EvaluateIt.config.protocol
                           	if (EvaluateIt.config.mode === 'test') {
 								url += EvaluateIt.config.test;
 							}
@@ -161,9 +160,6 @@ function parseJson (json) {
                 address: json[i].garden.address.address
             });
 
-
-            // save record and link to site via setter method
-
             console.log('address.id ' + address.id);
 
             var site = Ext.create('EvaluateIt.model.Site', {
@@ -179,9 +175,7 @@ function parseJson (json) {
                 remoteEvaluationId: json[i].evaluation_id
             });
 
-
             evaluation.sync();
-            //site.setEvaluation(evaluation.id);
 
             site.save();
 
