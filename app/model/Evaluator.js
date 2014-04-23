@@ -1,5 +1,5 @@
 Ext.define('EvaluateIt.model.Evaluator', {
-    extend: 'Ext.data.Model',
+    extend: 'EvaluateIt.model.BaseModel',
     
     config: {
         idProperty: 'id',
@@ -17,9 +17,11 @@ Ext.define('EvaluateIt.model.Evaluator', {
 	    associations:
 		[
 			{
-                type: 'hasOne',
-				model: 'EvaluateIt.model.Evaluation', 
-				name: 'evaluation'
+                type: 'hasMany',
+				model: 'EvaluateIt.model.Evaluation',
+				name: 'evaluation',
+                primaryKey: 'id',
+                foreignStore: 'Evaluations'
 			}
 		]
 
