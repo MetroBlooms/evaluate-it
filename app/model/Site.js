@@ -18,9 +18,8 @@ Ext.define('EvaluateIt.model.Site', {
 				model: 'EvaluateIt.model.Evaluation',
                	name: 'evaluation',
                 primaryKey: 'id',
-                foreignKey: 'evaluation_id',
+                //foreignKey: 'evaluation_id',
                 foreignStore: 'Evaluations'
-
 			},
 		    {
                 type: 'hasMany',
@@ -31,7 +30,6 @@ Ext.define('EvaluateIt.model.Site', {
                 type: 'hasOne',
                 model: 'EvaluateIt.model.Geolocation',
                 associationKey: 'geolocationId'
-
 			},
             {
                 type: 'hasOne',

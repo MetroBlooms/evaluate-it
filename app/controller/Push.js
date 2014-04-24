@@ -63,11 +63,12 @@ Ext.define('EvaluateIt.controller.Push', {
 			record.set(values);
 		}
 		form.hide();
-		//save the data to the Web local Storage
+
+		//save the data to the Web SQL
 		Ext.getStore('SiteEvaluations').sync();
 
 		// assemble record and push to remote server
-        EvaluateIt.utils.DataService.assemble(record);
+        EvaluateIt.utils.DataService.push(record);
 
 	},
 

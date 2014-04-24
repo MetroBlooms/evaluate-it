@@ -30,14 +30,6 @@ Ext.define('EvaluateIt.model.Evaluation', {
                 foreignStore: 'Sites'
             },
             {
-                type: 'belongsTo',
-                model: 'EvaluateIt.model.Evaluator',
-                name: 'evaluator',
-                primaryKey: 'id',
-                foreignKey: 'evaluator_id',
-                foreignStore: 'Evaluators'
-            },
-            {
                 type: 'hasOne',
                 model: 'EvaluateIt.model.EvaluationAward',
                 associationKey: 'evaluationAwardId'

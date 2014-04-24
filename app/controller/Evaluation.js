@@ -54,7 +54,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
              * Compute sum of scorecard factores
              * @type {Integer}
              */
-			sumRating = EvaluateIt.utils.Global.sum_factor_ratings(
+			sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
                 form.getValues().visualImpact,
                 form.getValues().varietyAndHealth,
                 form.getValues().design,
@@ -63,10 +63,10 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
             /**
              * Determine ranking of evaluation
-             * calls global function
+             * calls UtilityService function
              * @type {String}
              */
-            evaluationRating = EvaluateIt.utils.Global.evaluation_rating (sumRating);
+            evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
 
             // TODO: display on form
 			alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
@@ -99,13 +99,11 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 				images = Ext.getStore(images);
 
 				if (images.getCount() > 0) {
-					var uri  = iRecord.get('src'); // changed to iRecord form record: what is effect?
+					var uri  = iRecord.get('src'); // changed to iRecord from Record: what is effect?
 
 					console.log('URI: ' +  uri);
 
-					// update store with image uri
-					//var siteId = iRecord.get('site_id');
-
+					// update form with image uri
 					form.setValues({
 						imageUri: uri
 					})

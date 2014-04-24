@@ -1,10 +1,10 @@
 /**
- * Global functions
+ * UtilityService functions
  *
  */
 Ext.define('EvaluateIt.utils.DataService', {
     singleton : true,
-    alias : 'widget.global',
+    alias : 'widget.UtilityService',
     constructor: function(config) {
         this.initConfig(config);
     },
@@ -137,6 +137,7 @@ Ext.define('EvaluateIt.utils.DataService', {
             Ext.StoreMgr.get('SiteEvaluations').load();
             Ext.StoreMgr.get('Sites').load();
             Ext.StoreMgr.get('Evaluations').load();
+            Ext.StoreMgr.get('Addresses').load();
 
         }
 
@@ -173,7 +174,7 @@ Ext.define('EvaluateIt.utils.DataService', {
              * Compute sum of scorecard factores
              * @type {Integer}
              */
-            score = EvaluateIt.utils.Global.sum_factor_ratings(record.data.visualImpact,
+            score = EvaluateIt.utils.UtilityService.sum_factor_ratings(record.data.visualImpact,
                 record.data.varietyAndHealth,
                 record.data.design,
                 record.data.maintenance,
@@ -183,10 +184,10 @@ Ext.define('EvaluateIt.utils.DataService', {
             // get rating for given score
             /**
              * Determine ranking of evaluation
-             * calls global function
+             * calls UtilityService function
              * @type {String}
              */
-            rating = EvaluateIt.utils.Global.evaluation_rating (score);
+            rating = EvaluateIt.utils.UtilityService.evaluation_rating (score);
 
             console.log("rating" + rating);
         }
@@ -196,7 +197,7 @@ Ext.define('EvaluateIt.utils.DataService', {
         }
 
         // get award if given
-        award = EvaluateIt.utils.Global.evaluation_award(record.data.awardId);
+        award = EvaluateIt.utils.UtilityService.evaluation_award(record.data.awardId);
         console.log("award" + award.bestof + ' ' + award.nate_seigel);
 
         if (record.data.noLongerExists === 'true' || record.data.noLongerExists === true) {
@@ -209,7 +210,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
         /**
          * Core data set for sending to remote server
-         * @type {{evaluation: {garden_id: (parseJson.remoteSiteId|*), eval_type: number, score: *, rating: *, rating_year: number, bestof: (*|EvaluateIt.utils.Global.evaluation_award.bestof|core.evaluation.bestof|evaluation_award.bestof), special_award_specified: *, evaluator_id: (*|core.evaluation.evaluator_id|sessionStorage.evaluator_id), nate_siegel_award: (EvaluateIt.utils.Global.evaluation_award.nate_seigel|*|evaluation_award.nate_seigel), date_evaluated: *, comments: (*|Function|Docs.Settings.defaults.comments|core.evaluation.comments|Docs.view.comments), scoresheet: {color: *, plant_variety: *, design: (*|core.evaluation.scoresheet.design), maintenance: (*|core.evaluation.scoresheet.maintenance), environmental_stewardship: *}}, geolocation: {latitude: (*|Number|latitude|core.geolocation.latitude|sessionStorage.latitude), longitude: (*|Number|longitude|core.geolocation.longitude|sessionStorage.longitude), accuracy: (*|Number|accuracy|Ext.chart.series.Pie.accuracy|core.geolocation.accuracy|sessionStorage.accuracy)}}}
+         * @type {{evaluation: {garden_id: (parseJson.remoteSiteId|*), eval_type: number, score: *, rating: *, rating_year: number, bestof: (*|EvaluateIt.utils.UtilityService.evaluation_award.bestof|core.evaluation.bestof|evaluation_award.bestof), special_award_specified: *, evaluator_id: (*|core.evaluation.evaluator_id|sessionStorage.evaluator_id), nate_siegel_award: (EvaluateIt.utils.UtilityService.evaluation_award.nate_seigel|*|evaluation_award.nate_seigel), date_evaluated: *, comments: (*|Function|Docs.Settings.defaults.comments|core.evaluation.comments|Docs.view.comments), scoresheet: {color: *, plant_variety: *, design: (*|core.evaluation.scoresheet.design), maintenance: (*|core.evaluation.scoresheet.maintenance), environmental_stewardship: *}}, geolocation: {latitude: (*|Number|latitude|core.geolocation.latitude|sessionStorage.latitude), longitude: (*|Number|longitude|core.geolocation.longitude|sessionStorage.longitude), accuracy: (*|Number|accuracy|Ext.chart.series.Pie.accuracy|core.geolocation.accuracy|sessionStorage.accuracy)}}}
          */
         core = {
             evaluation: {
@@ -318,10 +319,10 @@ Ext.define('EvaluateIt.utils.DataService', {
                 now = new Date();
 
             if (eval_type === 'existing') {
-                url = EvaluateIt.utils.Global.url('existing');
+                url = EvaluateIt.utils.UtilityService.url('existing');
             }
             if (eval_type === 'new') {
-                url = EvaluateIt.utils.Global.url('new');
+                url = EvaluateIt.utils.UtilityService.url('new');
             }
 
             console.log('new url: ' + url);
