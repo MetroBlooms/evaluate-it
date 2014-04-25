@@ -98,8 +98,8 @@ Ext.define('EvaluateIt.utils.DataService', {
                 var evaluation = site.evaluation();
 
                 evaluation.add ({
-                    siteId: site.id,
-                    remoteEvaluatorId: json[i].evaluator.evaluator_id,
+                    site_id: site.id,
+                    evaluator_id: json[i].evaluator.evaluator_id,
                     remoteEvaluationId: json[i].evaluation_id
                 });
 
@@ -113,7 +113,6 @@ Ext.define('EvaluateIt.utils.DataService', {
             }
 
             // reload store to show up-to-date data
-            Ext.StoreMgr.get('SiteEvaluations').load();
             Ext.StoreMgr.get('Sites').load();
             Ext.StoreMgr.get('Evaluations').load();
             Ext.StoreMgr.get('Addresses').load();

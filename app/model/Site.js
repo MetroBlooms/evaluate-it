@@ -6,7 +6,7 @@ Ext.define('EvaluateIt.model.Site', {
             {name: 'id', type: 'int'},
             {name: 'remoteSiteId', type: 'int'},
             {name: 'siteName', type: 'string'}, // does site have a formal name
-            {name: 'addressId', type: 'string'}
+            {name: 'address_id', type: 'string'}
         ],
         proxy: {
             type: "sql",
@@ -17,8 +17,7 @@ Ext.define('EvaluateIt.model.Site', {
 			{   type: 'hasMany',
 				model: 'EvaluateIt.model.Evaluation',
                	name: 'evaluation',
-                primaryKey: 'id',
-                //foreignKey: 'evaluation_id',
+                //primaryKey: 'id',
                 foreignStore: 'Evaluations'
 			},
 		    {

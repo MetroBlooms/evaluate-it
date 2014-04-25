@@ -9,7 +9,7 @@ Ext.define('EvaluateIt.model.Address', {
             {name: 'state', type: 'string'},
             {name: 'zipcode', type: 'string'},
 			{name: 'county', type: 'string'},
-            {name: 'siteId', type: 'string'}
+            {name: 'site_id', type: 'string'}
         ],
         associations: [
             {
@@ -19,7 +19,7 @@ Ext.define('EvaluateIt.model.Address', {
                 primaryKey: 'id',
                 getterName: 'getSite',
                 setterName: 'setSite',
-                foreignKey: 'siteId',
+                foreignKey: 'site_id',
                 foreignStore: 'Sites'
 
             }
