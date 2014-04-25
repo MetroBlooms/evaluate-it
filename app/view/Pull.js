@@ -48,7 +48,7 @@ Ext.define('EvaluateIt.view.Pull', {
                             url = EvaluateIt.utils.DataService.url('pull');
 							console.log(url);
 
-                            // make cors request for cross domain access for data
+                            // cross domain access cors request for data
                            	Ext.Ajax.request({
 								cors: true,
 								url : url,

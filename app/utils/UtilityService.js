@@ -187,10 +187,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
             watchID = null;
             alert('GPS stopped!');
         }
-    },
-
-
-
+    }
 
 })
 

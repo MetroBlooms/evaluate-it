@@ -9,8 +9,10 @@ Ext.define('EvaluateIt.model.Evaluation', {
 			{name: 'dateOfEvaluation', type: 'date'}, // date evaluation done
             {name: 'datePostedToRemote', type: 'date'}, // date successfully uploaded to remote
 	    	{name: 'evaluationType', type: 'int'}, // type of evaluation done - to be added in the future`
-			{name: 'site_id', type: 'string'},	// linking id for associations
-            {name: 'evaluator_id', type: 'string'}, // linking id to remote JSON
+			{name: 'siteId', type: 'string'},	// linking id for associations
+            // sessionStorage.evaluator_id =  loginResponse.evaluator_id;
+            // Ajax response: json.evaluator.evaluator_id
+            {name: 'evaluator_id', type: 'int'},
  			{name: 'noLongerExists', type: 'boolean'}, // invalid site: nothing to evaluate!
             {name: 'comments', type: 'string'} // general comments
 
@@ -26,7 +28,7 @@ Ext.define('EvaluateIt.model.Evaluation', {
                 model: 'EvaluateIt.model.Site',
                 name: 'site',
                 primaryKey: 'id',
-                foreignKey: 'site_id',
+                foreignKey: 'siteId',
                 foreignStore: 'Sites'
             },
             {

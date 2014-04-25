@@ -6,7 +6,7 @@ Ext.define('EvaluateIt.model.Site', {
             {name: 'id', type: 'int'},
             {name: 'remoteSiteId', type: 'int'},
             {name: 'siteName', type: 'string'}, // does site have a formal name
-            {name: 'address_id', type: 'string'}
+            {name: 'addressId', type: 'string'}
         ],
         proxy: {
             type: "sql",

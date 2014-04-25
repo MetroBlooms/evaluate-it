@@ -123,29 +123,22 @@ Ext.define('EvaluateIt.controller.Login', {
     },
 
     onSignOffCommand: function () {
-		var	url;
+		var	url = EvaluateIt.utils.DataService.url('logout');
 
-        // assemble url
-        url = EvaluateIt.utils.DataService.url('logout');
         console.log(url);
-
-        var me = this;
 
         Ext.Ajax.request({
 			cors: true,
 			useDefaultXhrHeader: false,
             url: url,
 			method: 'get',
-            //params: {
-            //    sessionToken: me.sessionToken
-            //},
-            success: function (response) {
-				
-				var logoutResponse = Ext.JSON.decode(response.responseText);
 
+            success: function (response) {
+				var logoutResponse = Ext.JSON.decode(response.responseText);
 				alert('Logoff!!' + logoutResponse.success + ' ' + logoutResponse.message);
             },
             failure: function (response) {
+                var logoutResponse = Ext.JSON.decode(response.responseText);
 				alert('Error in logoff!!' + logoutResponse.success + ' ' + logoutResponse.message);
             }
         });

@@ -25,8 +25,7 @@ Ext.define('EvaluateIt.view.PushList', {
                     '<tpl if="Sites.evaluations.datePostedToRemote === \'null\'">',
                     '<div><strong>Address: {Address.address} </strong></div> ',
                     '</tpl>',
-                '</tpl>'),
-
+                '</tpl>')
 		],
 		variableHeights: false
     }

@@ -71,34 +71,13 @@ Ext.define('EvaluateIt.utils.DataService', {
     pull: function(json) {
 
         var i,
-            max,
-            newEvaluator,
-            Evaluators = Ext.create('EvaluateIt.store.Evaluators');
+            max;
 
         for (i = 0, max = json.length; i < max; i += 1) {
 
             if (json[i].completed === '1') {
 
                 // new model
-
-                Evaluators = Ext.getStore(Evaluators);
-
-                // need to see if evaluation exists in store
-                var match = Evaluators.find('remoteEvaluatorId',  json[i].evaluator.evaluator_id);
-
-                console.log(Evaluators.find('remoteEvaluatorId', + json[i].evaluator.evaluator_id));
-
-                if (match === -1) {
-                    console.log('Adding Evaluator!');
-                    newEvaluator = {remoteEvaluatorId: json[i].evaluator.evaluator_id, firstName: json[i].evaluator.firstname, lastName: json[i].evaluator.lastname, email: json[i].evaluator.email};
-                    console.log('Evaluator' + Evaluators.findRecord('remoteEvaluatorId', + json[i].evaluator.evaluator_id));
-                    Evaluators.add(newEvaluator);
-                    Evaluators.sync();
-                }
-
-                Evaluators = Ext.getStore(Evaluators);
-                var evaluator = Evaluators.findRecord('remoteEvaluatorId', + json[i].evaluator.evaluator_id);
-                console.log('Evaluator' + evaluator.id);
 
                 var address = Ext.create('EvaluateIt.model.Address', {
                     address: json[i].garden.address.address,
@@ -119,8 +98,8 @@ Ext.define('EvaluateIt.utils.DataService', {
                 var evaluation = site.evaluation();
 
                 evaluation.add ({
-                    site_id: site.id,
-                    evaluator_id: evaluator.id,
+                    siteId: site.id,
+                    remoteEvaluatorId: json[i].evaluator.evaluator_id,
                     remoteEvaluationId: json[i].evaluation_id
                 });
 
