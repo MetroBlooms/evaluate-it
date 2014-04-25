@@ -1,16 +1,13 @@
-Ext.require(['EvaluateIt.model.Site','EvaluateIt.model.Evaluator']);
-
 Ext.define('EvaluateIt.model.EvaluationImage', {
-    extend: 'Ext.data.Model',
- 
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
-        //idProperty: 'id', // use with proxy.SQL
-		identifier: 'uuid', // use with proxy.localstorage
+        idProperty: 'id',
         fields: [
-				{name: 'srcUri', type: 'string'} // local image location
+            {name: 'id', type: 'int'}, // pk
+			{name: 'srcUri', type: 'string'} // local image location
 		],
         proxy: {
-            type: "sql", //"localstorage",
+            type: "sql",
             database: 'Test'
         },
 		associations: [

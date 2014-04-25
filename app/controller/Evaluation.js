@@ -21,9 +21,9 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 				itemtap: 'onSelectEvaluation'
 			},
 			'siteEvaluationForm button[itemId=save]' : {
-				tap : 'onSaveEvaluation' 
+				tap : 'onSaveEvaluation'
 			}
-		}	  
+		}
 
  	},
 
@@ -44,9 +44,9 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
 		// calculatee sum of factor ratings:
         if (form.getValues().visualImpact !== null
-			&& form.getValues().varietyAndHealth !== null 
-			&& form.getValues().design !== null 
-			&& form.getValues().maintenance !== null 
+			&& form.getValues().varietyAndHealth !== null
+			&& form.getValues().design !== null
+			&& form.getValues().maintenance !== null
 			&& form.getValues().environmentalStewardship !== null) {
 
             /**
@@ -54,7 +54,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
              * Compute sum of scorecard factores
              * @type {Integer}
              */
-			sumRating = EvaluateIt.utils.Global.sum_factor_ratings(
+			sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
                 form.getValues().visualImpact,
                 form.getValues().varietyAndHealth,
                 form.getValues().design,
@@ -63,16 +63,16 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
             /**
              * Determine ranking of evaluation
-             * calls global function
+             * calls UtilityService function
              * @type {String}
              */
-            evaluationRating = EvaluateIt.utils.Global.evaluation_rating (sumRating);
+            evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
 
             // TODO: display on form
 			alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
 
 			form.setValues({
-				sumRating: sumRating 
+				sumRating: sumRating
 			})
 
 			values = form.getValues();
@@ -97,17 +97,15 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
 			images.queryBy(function(iRecord,id){
 				images = Ext.getStore(images);
-				
+
 				if (images.getCount() > 0) {
-					var uri  = iRecord.get('src'); // changed to iRecord form record: what is effect?
+					var uri  = iRecord.get('src'); // changed to iRecord from Record: what is effect?
 
 					console.log('URI: ' +  uri);
 
-					// update store with image uri
-					//var siteId = iRecord.get('site_id');
-
+					// update form with image uri
 					form.setValues({
-						imageUri: uri 
+						imageUri: uri
 					})
 
                     // refresh values with new data
@@ -137,7 +135,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
 		if(!siteEvaluationForm){
 			siteEvaluationForm = Ext.widget('siteEvaluationForm');
-		}	 
+		}
 		siteEvaluationForm.setRecord(record);
 		siteEvaluationForm.showBy(target);
 	}

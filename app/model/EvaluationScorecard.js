@@ -1,15 +1,14 @@
 Ext.define('EvaluateIt.model.EvaluationScorecard', {
-    extend: 'Ext.data.Model',
-    
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
-        //idProperty: 'id', // use with proxy.SQL
-	    identifier: 'uuid', // use with proxy.localstorage
+        idProperty: 'id',
         fields: [
+            {name: 'id', type: 'int'}, // pk
             {name: 'score', type: 'int'}, // score: valid value in (0, 4)
             {name: 'factorType', type: 'int'} // linking id for lookup
         ],
         proxy: {
-            type: "sql", //"localstorage",
+            type: "sql",
             database: 'Test'
         },
 	    associations: [

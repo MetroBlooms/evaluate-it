@@ -1,6 +1,6 @@
 Ext.define('EvaluateIt.store.Sites', {
-    extend: 'Ext.data.Store',
-	alias: 'store.Sites',
+    extend: 'EvaluateIt.store.BaseStore',
+    alias: 'store.Sites',
     config:{
         model: 'EvaluateIt.model.Site',
 		autoLoad: true

@@ -58,7 +58,7 @@ Ext.define('EvaluateIt.controller.Main', {
 		// control view selection based on category passed from routing call
 		if (category === 'evaluations' || category === 'push') {
 
-			console.log('what it is: ' + category);
+			console.log('forms category: ' + category);
 
 			// create filter based on filtered use case	
 			var listStore = Ext.data.StoreManager.lookup('SiteEvaluations'); 

@@ -1,35 +1,35 @@
-Ext.require(['EvaluateIt.model.Site','EvaluateIt.model.Evaluator']);
-
 Ext.define('EvaluateIt.model.Evaluation', {
-    extend: 'Ext.data.Model',
- 
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
-        idProperty: 'id', // use with proxy.SQL
-		// identifier: 'uuid', // use with proxy.localstorage
-        fields: [
+        idProperty: 'id',
+		fields: [
 			{name: 'id', type: 'int'}, // pk
 			{name: 'category', type: 'string'}, //used to categorize for selection of view 
 	    	{name: 'remoteEvaluationId', type: 'int'}, // linking id to remote JSON
-			{name: 'remoteEvaluatorId', type: 'int'}, // linking id to remote JSON
-            {name: 'dateOfEvaluation', type: 'date'}, // date evaluation done
+			{name: 'dateOfEvaluation', type: 'date'}, // date evaluation done
             {name: 'datePostedToRemote', type: 'date'}, // date successfully uploaded to remote
-	    	// {name: 'evaluation_id', type: 'int'}, // linking id for associations
-            {name: 'evaluationType', type: 'int'}, // type of evaluation done - to be added in the future`
-			{name: 'site_id', type: 'int'},	// linking id for associations
+	    	{name: 'evaluationType', type: 'int'}, // type of evaluation done - to be added in the future`
+			{name: 'site_id', type: 'string'},	// linking id for associations
+            // sessionStorage.evaluator_id =  loginResponse.evaluator_id;
+            // Ajax response: json.evaluator.evaluator_id
+            {name: 'evaluator_id', type: 'int'},
  			{name: 'noLongerExists', type: 'boolean'}, // invalid site: nothing to evaluate!
             {name: 'comments', type: 'string'} // general comments
 
         ],
         proxy: {
-            type: "sql", //"localstorage",
+            type: "sql",
             database: 'Test'
         },
 		associations: [
 
             {
-                type: 'hasOne',
-                model:	'EvaluateIt.model.Evaluator',
-                associationKey: 'evaluatorId'
+                type: 'belongsTo',
+                model: 'EvaluateIt.model.Site',
+                name: 'site',
+                primaryKey: 'id',
+                foreignKey: 'site_id',
+                foreignStore: 'Sites'
             },
             {
                 type: 'hasOne',
@@ -45,12 +45,9 @@ Ext.define('EvaluateIt.model.Evaluation', {
                 type: 'hasMany',
                 model: 'EvaluateIt.model.EvaluationFeature',
                 name: 'evaluationFactorFeatures'
-            },
-            {
-                type: 'belongsTo',
-                model: 'EvaluateIt.model.Site',
-                associationKey: 'siteId'
             }
+
+
         ]
     }
 });

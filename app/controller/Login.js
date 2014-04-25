@@ -44,18 +44,11 @@ Ext.define('EvaluateIt.controller.Login', {
 
         var me = this,
             loginView = me.getLoginView(),
-			url =  EvaluateIt.config.protocol;
+			url;
 
-		// select mode of API access
-		if (EvaluateIt.config.mode === 'test') {
-			url += EvaluateIt.config.test;
-		}
-		if (EvaluateIt.config.mode === 'live') {
-			url += EvaluateIt.config.production;
-		}
-
-		url += EvaluateIt.config.domain;
-		url += EvaluateIt.config.login;
+        // assemble url
+        url = EvaluateIt.utils.DataService.url('login');
+        console.log(url);
 
 		console.log('url: ' + url);
 
@@ -130,38 +123,22 @@ Ext.define('EvaluateIt.controller.Login', {
     },
 
     onSignOffCommand: function () {
-		var	url =  EvaluateIt.config.protocol;
+		var	url = EvaluateIt.utils.DataService.url('logout');
 
-		// select mode of API access
-		if (EvaluateIt.config.mode === 'test') {
-			url += EvaluateIt.config.test;
-		}
-		if (EvaluateIt.config.mode === 'live') {
-			url += EvaluateIt.config.production;
-		}
-
-		url += EvaluateIt.config.domain;
-		url += EvaluateIt.config.logout;
-		url += '?token=';
-		
-		
-        var me = this;
+        console.log(url);
 
         Ext.Ajax.request({
 			cors: true,
 			useDefaultXhrHeader: false,
-            url: url + sessionStorage.sessionToken,
+            url: url,
 			method: 'get',
-            //params: {
-            //    sessionToken: me.sessionToken
-            //},
-            success: function (response) {
-				
-				var logoutResponse = Ext.JSON.decode(response.responseText);
 
+            success: function (response) {
+				var logoutResponse = Ext.JSON.decode(response.responseText);
 				alert('Logoff!!' + logoutResponse.success + ' ' + logoutResponse.message);
             },
             failure: function (response) {
+                var logoutResponse = Ext.JSON.decode(response.responseText);
 				alert('Error in logoff!!' + logoutResponse.success + ' ' + logoutResponse.message);
             }
         });
@@ -169,37 +146,5 @@ Ext.define('EvaluateIt.controller.Login', {
     }
 });
 
-function test_token() {
-	
-	var url = 'http://staging.metroblooms.org/api/scoring/secure?token=' + sessionStorage.sessionToken,
-		testdate = new Date('5/17/2013 14:00'),
-		diff = Math.abs(new Date(sessionStorage.sessionCreatedWhen) - new Date(testdate)),
-		minutes = Math.floor((diff/1000)/60);
-	console.log('url ' + url + ' ' + minutes);
 
-
-	Ext.Ajax.request({
-		cors: true,
-		useDefaultXhrHeader: false,
-		url: url, 
-		method: 'get',
-		success: function (response) {
-
-			var tokenResponse = Ext.JSON.decode(response.responseText);
-
-			console.log('response/message... ' + tokenResponse.success + ' ' + sessionStorage.sessionToken ); 
-
-			if (tokenResponse && !tokenResponse.success) {
-				console.log('Token worked!' + response.responseText);	
-			} else {
-				console.log(tokenResponse.message);	
-			}
-		},
-		failure: function (response) {
-			console.log(response.message + ';;; ' + sessionStorage.sessionToken );
-			
-		}
-	});
-
-}
 

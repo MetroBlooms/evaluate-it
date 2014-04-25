@@ -11,7 +11,6 @@ Ext.define('EvaluateIt.view.Push', {
 		extend: 'Ext.Container',
       	fullscreen: true,
 		alias: 'widget.pushview',
-		
 		config: {
 			layout: 'vbox',
 			layout: 'fit',

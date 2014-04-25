@@ -12,8 +12,7 @@ Ext.define('EvaluateIt.view.PushForm', {
         'Ext.form.FieldSet',
         'Ext.field.Number',
         'Ext.field.DatePicker',
-        'Ext.field.Select',
-        'Ext.field.Hidden'
+        'Ext.field.Select'
     ],
 	config: {
 

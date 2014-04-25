@@ -1,5 +1,5 @@
 Ext.define('EvaluateIt.store.EvaluationScorecards', {
-    extend: 'Ext.data.Store',
+    extend: 'EvaluateIt.store.BaseStore',
     alias: 'store.EvaluationScorecards',
     config:{
         model: 'EvaluateIt.model.EvaluationScorecard',

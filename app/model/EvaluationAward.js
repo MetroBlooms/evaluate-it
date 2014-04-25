@@ -1,15 +1,14 @@
 Ext.define('EvaluateIt.model.EvaluationAward', {
-    extend: 'Ext.data.Model',
-    
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
-         //idProperty: 'id', // use with proxy.SQL 
-	    identifier: 'uuid', // use with proxy.localstorage
+        idProperty: 'id',
         fields: [
+            {name: 'id', type: 'int'}, // pk
             {name: 'specialAwardSpecified', type: 'auto'}, // string description for choice of "other"
             {name: 'awardType', type: 'int'} // linking id for lookup
         ],
         proxy: {
-            type: "sql", //"localstorage",
+            type: "sql",
             database: 'Test'
         },
         associations: [

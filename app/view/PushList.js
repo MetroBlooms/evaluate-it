@@ -11,13 +11,21 @@ Ext.define('EvaluateIt.view.PushList', {
 		width: Ext.os.deviceType == 'Phone' ? null : 300,
 		height: Ext.os.deviceType == 'Phone' ? null : 500,
 		xtype: 'list',
-		store: 'SiteEvaluations',
-
+		store: 'Sites',
         /**
          * Template to display list
          */
+
 		itemTpl: [
-			'<div><strong>Address: {address}</strong></div> '
+			new Ext.XTemplate(
+                '<tpl for=".">',
+                // TODO: Somehow grab datePostedToRemote from Evaluation store
+                    '<tpl if="Sites.evaluations.datePostedToRemote !== \'null\'">',
+                    '<div><strong>Address: {Address.address}: PUSHED!</strong></div> ',
+                    '<tpl if="Sites.evaluations.datePostedToRemote === \'null\'">',
+                    '<div><strong>Address: {Address.address} </strong></div> ',
+                    '</tpl>',
+                '</tpl>')
 		],
 		variableHeights: false
     }

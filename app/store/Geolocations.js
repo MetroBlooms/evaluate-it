@@ -1,5 +1,5 @@
 Ext.define('EvaluateIt.store.Geolocations', {
-    extend: 'Ext.data.Store',
+    extend: 'EvaluateIt.store.BaseStore',
     alias: 'store.Geolocations',
     config:{
         model: 'EvaluateIt.model.Geolocation',

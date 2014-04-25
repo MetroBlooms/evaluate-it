@@ -35,13 +35,11 @@ Ext.define('EvaluateIt.controller.RemoveRecord', {
 		Ext.Msg.show({
 			title:'Are you sure?',
 			buttons: Ext.MessageBox.YESNO,
-			//animateTarget: 'mb4',
-			//icon: Ext.MessageBox.WARNING,
+
 			fn: function(buttonId) {
-				//alert('You pressed the "' + buttonId + '" button.');
-			
+
 				if (buttonId === 'yes') {
-					evaluationsStore = Ext.getStore(evaluationStore); 
+					evaluationStore = Ext.getStore(evaluationStore);
 					index = evaluationStore.findExact('id', id); // get index of record
 
 					console.log('index: ' + index);
