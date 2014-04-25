@@ -17,7 +17,6 @@ Ext.define('EvaluateIt.model.Site', {
 			{   type: 'hasMany',
 				model: 'EvaluateIt.model.Evaluation',
                	name: 'evaluation',
-                //primaryKey: 'id',
                 foreignStore: 'Evaluations'
 			},
 		    {
