@@ -8,7 +8,7 @@
  *
  * TODO: rename to Site as per normalized model
  */
-Ext.define('EvaluateIt.view.SiteGeneral', {
+Ext.define('EvaluateIt.view.Site', {
 		extend: 'Ext.Container',
       	fullscreen: true,
 		config: {
@@ -33,7 +33,7 @@ Ext.define('EvaluateIt.view.SiteGeneral', {
 				},
 				{
 					flex: 1,
-					xtype: 'siteGeneralList' //widget reference to EvaluateIt.view.EvaluationList
+					xtype: 'siteList' //widget reference to EvaluateIt.view.EvaluationList
 
 				}
 			]

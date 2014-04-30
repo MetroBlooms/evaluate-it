@@ -305,5 +305,49 @@ Ext.define("EvaluateIt.model.BaseModel", {
         }
 
         return childData;
+    },
+
+    /**
+     * setFlattenedData(data) method to allow updating of baseModel using form data created using getFlattenedData approach (dot notation names)
+     *		or another baseModels getFlattenedData(true) output.
+     *		* Typical Usage: yourBaseModelInstance.setFlattenedData( form.getValues() )
+     *
+     * @param {object} values - model field members and values to set
+     * @return {object} this.getFlattenedData(true) - (updated data set) or empty object if values param not an object
+     */
+    setFlattenedData: function(values) {
+        var sFuncs=[],aName=[],dFuncs=[],
+            i=0,j=0,
+            name,sFnc,sDirty;
+        if(typeof values != 'object'){
+            return {};
+        } else {
+            this.setDirty();
+            for (name in values) {
+                if(typeof values[name] != 'object'){
+                    sFnc='this.';
+                    sDirty='this.';
+                    aName = name.split('.')
+                    while(aName.length > 1){
+                        sFnc=sFnc+'get'+aName[0]+'().';
+                        sDirty=sDirty+'get'+aName[0]+'().';
+                        dFuncs[j] = sDirty+'setDirty()';
+                        j++;
+                        aName.shift();
+                    }
+                    sFnc=sFnc+'set("'+aName[0]+'","'+values[name]+'")';
+                    sFuncs[i]=sFnc;
+                    i++;
+                }
+            }
+            for(i=0;i<sFuncs.length;i++){
+                eval(sFuncs[i]);
+            }
+            for(i=0;i<dFuncs.length;i++){
+                eval(dFuncs[i]);
+            }
+            return this.getFlattenedData(true);
+        }
     }
+
 });

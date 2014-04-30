@@ -5,9 +5,9 @@
  *
  * TODO: set height/width for tablet, rename alias, etc. to fit normalized model: EvaluateIt.model.Site and EvaluateIt.model.Address
  */
-Ext.define('EvaluateIt.view.SiteGeneralForm', {
+Ext.define('EvaluateIt.view.SiteForm', {
 	extend: 'Ext.form.Panel',
-	alias : 'widget.siteGeneralForm',
+	alias : 'widget.siteForm',
 	requires: [
         'Ext.form.Panel',
         'Ext.form.FieldSet',
@@ -59,65 +59,40 @@ Ext.define('EvaluateIt.view.SiteGeneralForm', {
 			},
 			{	
        			xtype: 'textfield',
-		   		name: 'address',
+		   		name: 'address.address',
 		   		label: 'Address',
-		   		itemId: 'address' 
+		   		itemId: 'address.address'
 			},   
 			{	
        			xtype: 'textfield',
-		   		name: 'city',
+		   		name: 'address.city',
 		   		label: 'City',
-		   		itemId: 'city' 
+		   		itemId: 'address.city'
 			},  
 			{ 
        			xtype: 'textfield',
-		   		name: 'state',
+		   		name: 'address.state',
 		   		label: 'State',
-		   		itemId: 'state' 
+		   		itemId: 'address.state'
 			},
 			{   
        			xtype: 'textfield',
-		   		name: 'zipcode',
+		   		name: 'address.zipcode',
 		   		label: 'Zipcode',
-		   		itemId: 'zipcode' 
+		   		itemId: 'address.zipcode'
 			},   
 			{   
        			xtype: 'textfield',
-		   		name: 'neighborhood',
+		   		name: 'address.neighborhood',
 		   		label: 'Neighborhood',
-		   		itemId: 'neighborhood' 
+		   		itemId: 'address.neighborhood'
 			},   
 			{   
        			xtype: 'textfield',
-		   		name: 'county',
+		   		name: 'address.county',
 		   		label: 'County',
-		   		itemId: 'county' 
-			},   
-			{	
-       			xtype: 'textfield',
-		   		name: 'name',
-		   		label: 'Gardener name',
-		   		itemId: 'name'
-				//value: 'Me!' 
-			},  
-			{
-				xtype: 'checkboxfield',
-				itemId: 'noLongerExists',
-				name: 'noLongerExists',
-				label: 'Site no longer exists!'
-			},  
-			{
-				xtype: 'checkboxfield',
-				itemId: 'rainGarden',
-				name: 'rainGarden',
-				label: 'There is a raingarden'
-			},  
-			{	
-       			xtype: 'textfield',
-		   		name: 'comments',
-		   		label: 'Comments',
-		   		itemId: 'comments' 
-			},   
+		   		itemId: 'address.county'
+			},
 			{
 				xtype: 'button',
 				itemId: 'save',

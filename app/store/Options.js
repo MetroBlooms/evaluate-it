@@ -15,9 +15,9 @@
                 cls: 'launchscreen',
                 items: [
 					{
-                        text: 'SiteGeneral',
+                        text: 'Site',
                         leaf: true,
-                        id: 'siteGeneral',
+                        id: 'Site',
             			category: 'evaluations'
                     }, 
                     {
