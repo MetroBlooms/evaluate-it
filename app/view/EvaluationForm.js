@@ -57,12 +57,15 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
 		items: [
 			{
        			xtype: 'textfield',
-		   		name: 'address',
+		   		name: 'Site.Address.address',
 		   		readOnly: true
 			},
+            {
+                xtype: 'textfield',
+                name: 'Site.remoteSiteId',
 
-
-			{
+            },
+            {
 				xtype: 'selectfield',
 				itemId: 'visualImpact',
 				name: 'visualImpact',
@@ -153,7 +156,7 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
 				name: 'imageUri',
 				itemId: 'imageId'
 			},
-            {
+           {
                 xtype: 'button',
                 itemId: 'siteImage',
                 text: 'Select Photo'

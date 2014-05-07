@@ -14,9 +14,10 @@ Ext.define('EvaluateIt.model.Site', {
         },
         associations:
         [
-			{   type: 'hasMany',
+			{
+                type: 'hasMany',
 				model: 'EvaluateIt.model.Evaluation',
-               	name: 'evaluation',
+               	name: 'Evaluation',
                 foreignStore: 'Evaluations'
 			},
 		    {
@@ -34,12 +35,12 @@ Ext.define('EvaluateIt.model.Site', {
                 model: 'EvaluateIt.model.Address',
                 getterName: 'getAddress',
                 setterName: 'setAddress',
-                name: 'address',
+                name: 'Address',
                 primaryKey: 'id',
                 foreignKey: 'address_id',
                 foreignStore: 'Addresses'
             }
-		] 
+		]
     }
 });
 

@@ -13,15 +13,13 @@ Ext.define('EvaluateIt.model.Address', {
         ],
         associations: [
             {
-                type: 'hasOne',
+                type: 'belongsTo',
                 model: 'EvaluateIt.model.Site',
-                name: 'site',
+                name: 'Site',
                 primaryKey: 'id',
-                getterName: 'getSite',
-                setterName: 'setSite',
                 foreignKey: 'site_id',
-                foreignStore: 'Sites'
-
+                getterName: 'getSite',
+                setterName: 'setSite'
             }
         ],
         proxy: {

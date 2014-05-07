@@ -22,14 +22,12 @@ Ext.define('EvaluateIt.model.Evaluation', {
             database: 'Test'
         },
 		associations: [
-
             {
                 type: 'belongsTo',
                 model: 'EvaluateIt.model.Site',
-                name: 'site',
+                name: 'Site',
                 primaryKey: 'id',
-                foreignKey: 'site_id',
-                foreignStore: 'Sites'
+                foreignKey: 'site_id'
             },
             {
                 type: 'hasOne',

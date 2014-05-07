@@ -3,8 +3,8 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
 
     config: {
         profile: Ext.os.deviceType.toLowerCase(),
-        stores : ['Sites'],
-        models : ['Site'],
+        stores : ['Addresses', 'Sites'],
+        models : ['Address', 'Site'],
         refs: {
             mySiteGeneralList: 'siteList'
         },
@@ -16,7 +16,7 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
             'container button[itemId=addSiteGeneral]' : {
                 tap : 'onAddSiteGeneral'
             },
-            'siteGeneralForm button[itemId=save]' : {
+            'siteForm button[itemId=save]' : {
                 tap : 'onSaveSiteGeneral'
             }
         }
@@ -39,36 +39,96 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
     },
 
     onSaveSiteGeneral: function(button) {
+
         console.log('Button Click for Save');
-        var form = button.up('panel');
-        //get the record
-        var record = form.getRecord();
-        //get the form values
-        var values = form.getValues();
-        //if a new siteEvaluation
+
+        //console.log(this.$className);
+
+
+
+        console.log('Button Click for Save');
+        var form = button.up('panel'),
+            //get the model
+            record = form.getRecord(),
+            //get the form values
+            values = form.getValues( false, false, false, true );
+
+       // console.log('data: ' + record.setFlattenedData(values));
+
+        console.log(record.getData(true)); // to see the record before
+        record.setFlattenedData(values);  // persist the form data back to the record
+        console.log(record.getData(true)); // to see the record after
+
+
+        //console.log('setFlattenedData( form.getValues())' +  record.setFlattenedData( values ));
+
+        //var myAddress = EvaluateIt.model.Address;
+        //var address = new myAddress();
+
+        //this.setAddress( { 'address':'1100 block, north side on Cedar Lake Road' } );
+
+        //var mySite = EvaluateIt.model.Site;
+        //var site = new mySite();
+        //console.log('site.id' + site.id);
+        //site.getAddress({reload:true});
+
+        /*var address = record.getAddress({
+            reload:true,
+            success: function (record,operation) {
+                console.log('SUCCESS');
+            },
+
+            failure: function(record,operation) {
+                console.log('FAILURE');
+            }
+        });*/
+
+
+         // can either use just callback config (called on fail or success) or success/failure configs
+
+
+
+        //site.setAddress({reload:true});
+
+        //site.save();
+
+        //address.setSite(site.id);
+
+        //console.log('site.id ' + site.id + ' ' + site.address);
+
+        //address.save();
+        //address.setFlattenedData( values )
+
+
+        //console.log('setFlattenedData( form.getValues()) !!' +  this.getAddress());
+
         if(!record){
-            var newRecord = new EvaluateIt.model.SiteEvaluation(values);
-            Ext.getStore('SiteEvaluations').add(newRecord);
+
+            //console.log('setFlattenedData( form.getValues())' +  model.setFlattenedData( form.getValues(false, false, false, true)) );
+
         }
         //existing siteEvaluation
         else {
-            record.set(values);
+           // add relevant code here
         }
         form.hide();
-        //save the data to the Web local Storage
-        Ext.getStore('SiteEvaluations').sync();
+
+
 
     },
 
     onSelectSiteGeneral: function(view, index, target, record, event) {
-        console.log('Selected a SiteGeneral from the list');
-        var siteForm = Ext.Viewport.down('siteForm');
+        console.log('Selected a Site from the list');
+        var siteForm = Ext.widget('siteForm');
 
-        if(!siteForm){
-            siteForm = Ext.widget('siteForm');
-        }
+        siteForm.setRecord(record);
+
+        record.getAddress();  // This will instantiate a missing Address hasOne if not already in the data or do nothing if there is one
         siteForm.setValues(record.getFlattenedData(true));
         siteForm.showBy(target);
+
+
+
 
     }
 

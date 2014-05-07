@@ -14,11 +14,20 @@ Ext.define('EvaluateIt.view.SiteList', {
          */
 		itemTpl: [
             '<div>',
-            '<strong>Address: {address.address}</strong>',
+            '<strong>Address: {Address.address}</strong>',
             '</div> '
 
 		],
-		variableHeights: false
+        listeners: {
+            select: function(list) {
+                setTimeout(function() {list.deselectAll();},1); // With the timeout we allow the select to finish setting the selected class before deselecting
+                return false; // prevent selection
+            }
+        },
+        // item
+
+        variableHeights: false
+
     }
 
 }); 

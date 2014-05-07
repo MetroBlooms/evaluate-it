@@ -95,7 +95,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
                 site.setAddress(address.id);
 
-                var evaluation = site.evaluation();
+                var evaluation = site.Evaluation();
 
                 evaluation.add ({
                     site_id: site.id,
@@ -269,7 +269,7 @@ Ext.define('EvaluateIt.utils.DataService', {
         // new
         else {
             obj = Ext.Object.merge(core, ad_hoc);
-            obj.evaluation.uuid = record.data.id; // new usees uuid as linking id
+            obj.evaluation.uuid = record.data.id; // new uses uuid as linking id
             console.log('new');
             eval_type = 'new';
         }

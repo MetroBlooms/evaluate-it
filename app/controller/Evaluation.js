@@ -10,8 +10,8 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
 	config: {
 		profile: Ext.os.deviceType.toLowerCase(),
-  		stores : ['SiteEvaluations'],
-  		models : ['SiteEvaluation'],
+  		stores : ['Evaluations', 'Sites'],
+  		models : ['Evaluation', 'Site'],
   		refs: {
    			myEvaluationList: 'evaluationList'
   		},
@@ -41,6 +41,32 @@ Ext.define('EvaluateIt.controller.Evaluation', {
             values = Ext.clone(form.getValues()),
 			sumRating,
             evaluationRating;
+
+        // test
+
+        var values = form.getValues( false, false, false, true );
+        //var address = record.getAssociatedRecords('Site');
+
+        console.log('evalu.id' + record.id);
+
+
+        var mySite = EvaluateIt.model.Site;
+        var site = new mySite();
+
+
+        console.log('site.id ' + site.id);
+
+        site.Evaluation();
+
+
+        //address.save();
+        site.setFlattenedData( values )
+
+        console.log('setFlattenedData( form.getValues())' +  site.setFlattenedData( values ));
+
+        //
+
+        console.log('record' + record.id);
 
 		// calculatee sum of factor ratings:
         if (form.getValues().visualImpact !== null
@@ -138,6 +164,16 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 		}
 		siteEvaluationForm.setRecord(record);
 		siteEvaluationForm.showBy(target);
+
+        console.log('Selected a Site from the list');
+        var siteEvaluationForm = Ext.widget('siteEvaluationForm');
+
+        siteEvaluationForm.setRecord(record);
+        //record.evaluation();
+        siteEvaluationForm.setValues(record.getFlattenedData(true));
+        siteEvaluationForm.showBy(target);
+
+
 	}
 
 });
