@@ -57,15 +57,26 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
 		items: [
 			{
        			xtype: 'textfield',
-		   		name: 'Site.Address.address',
+		   		name: 'Address.address',
 		   		readOnly: true
 			},
             {
                 xtype: 'textfield',
-                name: 'Site.remoteSiteId',
+                name: 'Evaluation.remoteEvaluationId',
 
             },
             {
+                xtype: 'datepickerfield',
+                destroyPickerOnHide: true,
+                name : 'Evaluation.dateOfEvaluation',
+                label: 'Date of evaluation',
+                dateFormat: 'm/d/Y',
+                value: new Date(),
+                picker: {
+                    yearFrom: 2014
+                }
+            },
+           /* {
 				xtype: 'selectfield',
 				itemId: 'visualImpact',
 				name: 'visualImpact',
@@ -163,7 +174,7 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
             },
             {
                 html: 'Selected image:<img style="display:none;" id="selectedImage" src="" />'
-            },
+            },*/
            	{
 				xtype: 'button',
 				itemId: 'save',

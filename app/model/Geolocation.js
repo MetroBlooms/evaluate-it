@@ -13,9 +13,8 @@ Ext.define('EvaluateIt.model.Geolocation', {
             type: "sql",
             database: 'Test'
         },
-	    associations: [
+        belongsTo: [
             {
-                type: 'hasOne',
                 model: 'EvaluateIt.model.Site'
             }
         ]

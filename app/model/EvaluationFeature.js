@@ -10,8 +10,8 @@ Ext.define('EvaluateIt.model.EvaluationFeature', {
             type: "sql",
             database: 'Test'
         },
-	    associations: [
-            {   type: 'belongsTo',
+        belongsTo: [
+            {
                 model: 'EvaluateIt.model.Evaluation',
                 associationKey: 'evaluationId'
             }

@@ -95,20 +95,24 @@ Ext.define('EvaluateIt.utils.DataService', {
 
                 site.setAddress(address.id);
 
-                var evaluation = site.Evaluation();
+                var recArray;
+                var evaluationRecs = site.Evaluations();
+                var evalModel = Ext.ModelManager.getModel('EvaluateIt.model.Evaluation');
 
-                evaluation.add ({
-                    site_id: site.id,
-                    evaluator_id: json[i].evaluator.evaluator_id,
-                    remoteEvaluationId: json[i].evaluation_id
-                });
+                if (evaluationRecs.getCount() === 0){
+                    recArray = evaluationRecs.add(evalModel);
+                    recArray[0].set({evaluator_id: json[i].evaluator.evaluator_id, remoteEvaluationId: json[i].evaluation_id});
+                }
 
-                evaluation.sync();
+                evaluationRecs.sync();
+
 
                 site.save();
 
                 address.setSite(site.id);
                 address.save();
+
+                console.log(site.getData(true));
 
             }
 

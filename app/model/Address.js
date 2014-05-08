@@ -11,9 +11,8 @@ Ext.define('EvaluateIt.model.Address', {
 			{name: 'county', type: 'string'},
             {name: 'site_id', type: 'string'}
         ],
-        associations: [
+        belongsTo: [
             {
-                type: 'belongsTo',
                 model: 'EvaluateIt.model.Site',
                 name: 'Site',
                 primaryKey: 'id',

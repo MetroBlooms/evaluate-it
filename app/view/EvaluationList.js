@@ -9,13 +9,13 @@ Ext.define('EvaluateIt.view.EvaluationList', {
 		width: Ext.os.deviceType == 'Phone' ? null : 300,
 		height: Ext.os.deviceType == 'Phone' ? null : 500,
 		xtype: 'list',
-		store: 'Evaluations',
+		store: 'Sites',
         /**
          * Template to display list
          */
 		itemTpl: [
             '<div>',
-            '<strong>Address: {Site.Address.address}</strong>',
+            '<strong>Address: {Evaluations.remoteEvaluationId}</strong>',
             '</div> '
 		],
         listeners: {

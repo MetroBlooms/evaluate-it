@@ -11,9 +11,8 @@ Ext.define('EvaluateIt.model.EvaluationAward', {
             type: "sql",
             database: 'Test'
         },
-        associations: [
+        belongsTo: [
             {
-                type: 'belongsTo',
                 model: 'EvaluateIt.model.Evaluation'
             }
         ]

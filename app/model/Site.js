@@ -12,26 +12,26 @@ Ext.define('EvaluateIt.model.Site', {
             type: "sql",
             database: 'Test'
         },
-        associations:
+        hasMany:
         [
 			{
-                type: 'hasMany',
 				model: 'EvaluateIt.model.Evaluation',
-               	name: 'Evaluation',
-                foreignStore: 'Evaluations'
-			},
+               	name: 'Evaluations',
+                primaryKey: 'id',
+                foreignKey: 'site_id',
+                associationKey: 'siteEvaluations'
+			}/*,
 		    {
-                type: 'hasMany',
                 model: 'EvaluateIt.model.SiteMaintainer',
                 name: 'siteMaintainers'
-            },
-			{
-                type: 'hasOne',
+            }*/
+        ],
+        hasOne: [
+           /* {
                 model: 'EvaluateIt.model.Geolocation',
                 associationKey: 'geolocationId'
-			},
+			},*/
             {
-                type: 'hasOne',
                 model: 'EvaluateIt.model.Address',
                 getterName: 'getAddress',
                 setterName: 'setAddress',

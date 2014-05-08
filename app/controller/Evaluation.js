@@ -10,8 +10,8 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
 	config: {
 		profile: Ext.os.deviceType.toLowerCase(),
-  		stores : ['Evaluations', 'Sites'],
-  		models : ['Evaluation', 'Site'],
+  		stores : ['Addresses', 'Evaluations', 'Sites'],
+  		models : ['Address', 'Evaluation', 'Site'],
   		refs: {
    			myEvaluationList: 'evaluationList'
   		},
@@ -35,64 +35,52 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 		console.log('Button Click for Save');
 		var form = button.up('panel'),
 		    // get the record
-		    record = form.getRecord(),
+		    // record = form.getRecord(),
 		    // return a clone for updating of values
             // TODO: Determine why I did this
-            values = Ext.clone(form.getValues()),
-			sumRating,
-            evaluationRating;
+
+           // values = Ext.clone(form.getValues()),
+		   // sumRating,
+           // evaluationRating;
 
         // test
 
-        var values = form.getValues( false, false, false, true );
-        //var address = record.getAssociatedRecords('Site');
+            values = form.getValues( false, false, false, true),
+        //get the model
+            record = form.getRecord();
 
-        console.log('evalu.id' + record.id);
-
-
-        var mySite = EvaluateIt.model.Site;
-        var site = new mySite();
-
-
-        console.log('site.id ' + site.id);
-
-        site.Evaluation();
+        console.log(record.getData(true)); // to see the record before
+        record.setFlattenedData(values);  // persist the form data back to the record
+        console.log(record.getData(true)); // to see the record after
 
 
-        //address.save();
-        site.setFlattenedData( values )
 
-        console.log('setFlattenedData( form.getValues())' +  site.setFlattenedData( values ));
 
-        //
-
-        console.log('record' + record.id);
-
-		// calculatee sum of factor ratings:
-        if (form.getValues().visualImpact !== null
+        // calculatee sum of factor ratings:
+       /*if (form.getValues().visualImpact !== null
 			&& form.getValues().varietyAndHealth !== null
 			&& form.getValues().design !== null
 			&& form.getValues().maintenance !== null
-			&& form.getValues().environmentalStewardship !== null) {
+			&& form.getValues().environmentalStewardship !== null) {*/
 
             /**
              *
              * Compute sum of scorecard factores
              * @type {Integer}
              */
-			sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
+			/*sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
                 form.getValues().visualImpact,
                 form.getValues().varietyAndHealth,
                 form.getValues().design,
                 form.getValues().maintenance,
-                form.getValues().environmentalStewardship);
+                form.getValues().environmentalStewardship);*/
 
             /**
              * Determine ranking of evaluation
              * calls UtilityService function
              * @type {String}
              */
-            evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
+          /*  evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
 
             // TODO: display on form
 			alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
@@ -108,10 +96,10 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 		}
 		else {
 			alert('missing factor rating!');
-		}
+		}*/
 
 		//if a new siteEvaluation
-		if(!record){
+		/*if(!record){
 			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
 			Ext.getStore('SiteEvaluations').add(newRecord);
 		}
@@ -143,7 +131,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
 			// do stuff
 			record.set(values);
-		}
+		}*/
 		form.hide();
 		//save the data to localStorage
 		Ext.getStore('SiteEvaluations').sync();
@@ -156,21 +144,17 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 		var lostor = Ext.getStore('theImageQueue');
 		lostor.getProxy().clear();
 
-		console.log('Selected a SiteEvaluation from the list');
-		var siteEvaluationForm = Ext.Viewport.down('siteEvaluationForm');
-
-		if(!siteEvaluationForm){
-			siteEvaluationForm = Ext.widget('siteEvaluationForm');
-		}
-		siteEvaluationForm.setRecord(record);
-		siteEvaluationForm.showBy(target);
-
         console.log('Selected a Site from the list');
         var siteEvaluationForm = Ext.widget('siteEvaluationForm');
 
         siteEvaluationForm.setRecord(record);
-        //record.evaluation();
+
         siteEvaluationForm.setValues(record.getFlattenedData(true));
+
+        console.log('Yorple!' + Ext.encode(record.getFlattenedData(true)));
+
+        console.log(record.getData(true));
+
         siteEvaluationForm.showBy(target);
 
 
