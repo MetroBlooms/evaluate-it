@@ -60,44 +60,44 @@ Ext.define('EvaluateIt.view.SiteForm', {
             {
                 xtype: 'textfield',
                 name: 'address_id',
-                label: 'address.id',
+                label: 'Address.id',
                 itemId: 'address_id'
             },
             {
        			xtype: 'textfield',
-		   		name: 'address.address',
+		   		name: 'Address.address',
 		   		label: 'Address',
 		   		itemId: 'address'
 			},
 			{	
        			xtype: 'textfield',
-		   		name: 'address.city',
+		   		name: 'Address.city',
 		   		label: 'City',
-		   		itemId: 'address.city'
+		   		itemId: 'Address.city'
 			},  
 			{ 
        			xtype: 'textfield',
-		   		name: 'address.state',
+		   		name: 'Address.state',
 		   		label: 'State',
-		   		itemId: 'address.state'
+		   		itemId: 'Address.state'
 			},
 			{   
        			xtype: 'textfield',
-		   		name: 'address.zipcode',
+		   		name: 'Address.zipcode',
 		   		label: 'Zipcode',
-		   		itemId: 'address.zipcode'
+		   		itemId: 'Address.zipcode'
 			},   
 			{   
        			xtype: 'textfield',
-		   		name: 'address.neighborhood',
+		   		name: 'Address.neighborhood',
 		   		label: 'Neighborhood',
-		   		itemId: 'address.neighborhood'
+		   		itemId: 'Address.neighborhood'
 			},   
 			{   
        			xtype: 'textfield',
-		   		name: 'address.county',
+		   		name: 'Address.county',
 		   		label: 'County',
-		   		itemId: 'address.county'
+		   		itemId: 'Address.county'
 			},
 			{
 				xtype: 'button',

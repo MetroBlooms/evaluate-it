@@ -50,7 +50,7 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
             values = form.getValues( false, false, false, true );
 
         console.log(record.getData(true)); // to see the record
-        //record.setFlattenedData(values);  // persist the form data back to the record
+        record.setFlattenedData(values);  // persist the form data back to the record
         console.log(record.getAssociatedData(true)); // to see the record associations
 
         if(!record){

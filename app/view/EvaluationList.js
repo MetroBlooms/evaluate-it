@@ -15,7 +15,7 @@ Ext.define('EvaluateIt.view.EvaluationList', {
          */
 		itemTpl: [
             '<div>',
-            '<strong>Address: {site.address.address}</strong>',
+            '<strong>Address: {Site.Address.address}</strong>',
             '</div> '
 		],
         listeners: {

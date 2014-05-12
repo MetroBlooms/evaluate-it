@@ -23,7 +23,7 @@ Ext.define('EvaluateIt.model.Evaluation', {
         belongsTo: [
             {
                 model: 'EvaluateIt.model.Site',
-                name: 'site',
+                name: 'Site',
                 primaryKey: 'id',
                 foreignKey: 'site_id',
                 foreignStore: 'Sites'

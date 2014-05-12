@@ -97,7 +97,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
                 // set hasMany evaluation by creating a blank association
                 var recArray;
-                var evaluationRecs = site.evaluation();
+                var evaluationRecs = site.Evaluation();
                 var evalModel = Ext.ModelManager.getModel('EvaluateIt.model.Evaluation'); // Get the model from the application models auto-getter
 
                 if (evaluationRecs.getCount() === 0){

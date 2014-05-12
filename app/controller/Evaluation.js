@@ -47,9 +47,9 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         //get the model
         record = form.getRecord();
 
-        // console.log(record.getData(true)); // to see the record before
-        //record.setFlattenedData(values);  // persist the form data back to the record
-        //console.log(record.getData(true)); // to see the record after
+        console.log(record.getData(true)); // to see the record before
+        record.setFlattenedData(values);  // persist the form data back to the record
+        console.log(record.getData(true)); // to see the record after
 
         // calculatee sum of factor ratings:
         if (form.getValues().visualImpact !== null
@@ -145,6 +145,8 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
         console.log('Selected a Site from the list');
         var siteEvaluationForm = Ext.widget('siteEvaluationForm');
+
+        siteEvaluationForm.setRecord(record);
 
         // bind flattened record to form
         siteEvaluationForm.setValues(record.getFlattenedData(true));

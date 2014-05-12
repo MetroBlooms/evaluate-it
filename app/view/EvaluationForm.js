@@ -57,7 +57,7 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
 		items: [
 			{
        			xtype: 'textfield',
-		   		name: 'site.address.address',
+		   		name: 'Site.Address.address',
 		   		readOnly: true
 			},
             {
