@@ -9,17 +9,17 @@ Ext.define('EvaluateIt.model.Site', {
             {name: 'address_id', type: 'string'}
         ],
         proxy: {
-            type: "sql",
-            database: 'Test'
+            type: 'localstorage'
         },
         hasMany:
         [
 			{
 				model: 'EvaluateIt.model.Evaluation',
-               	name: 'Evaluations',
+               	name: 'evaluation',
                 primaryKey: 'id',
                 foreignKey: 'site_id',
-                associationKey: 'siteEvaluations'
+                associationKey: 'evaluation',
+                foreignStore: 'Evaluations'
 			}/*,
 		    {
                 model: 'EvaluateIt.model.SiteMaintainer',
@@ -35,7 +35,7 @@ Ext.define('EvaluateIt.model.Site', {
                 model: 'EvaluateIt.model.Address',
                 getterName: 'getAddress',
                 setterName: 'setAddress',
-                name: 'Address',
+                name: 'address',
                 primaryKey: 'id',
                 foreignKey: 'address_id',
                 foreignStore: 'Addresses'

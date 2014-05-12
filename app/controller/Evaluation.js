@@ -24,7 +24,6 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 				tap : 'onSaveEvaluation'
 			}
 		}
-
  	},
 
 	onActivate: function() {
@@ -32,81 +31,82 @@ Ext.define('EvaluateIt.controller.Evaluation', {
  	},
 
 	onSaveEvaluation: function(button) {
-		console.log('Button Click for Save');
-		var form = button.up('panel'),
-		    // get the record
-		    // record = form.getRecord(),
-		    // return a clone for updating of values
+        console.log('Button Click for Save');
+        var form = button.up('panel'),
+            // get the record
+            // record = form.getRecord(),
+            // return a clone for updating of values
             // TODO: Determine why I did this
-
-           // values = Ext.clone(form.getValues()),
-		   // sumRating,
-           // evaluationRating;
+              values = Ext.clone(form.getValues()),
+              sumRating,
+              evaluationRating;
 
         // test
 
-            values = form.getValues( false, false, false, true),
+        values = form.getValues( false, false, false, true),
         //get the model
-            record = form.getRecord();
+        record = form.getRecord();
 
-        console.log(record.getData(true)); // to see the record before
-        record.setFlattenedData(values);  // persist the form data back to the record
-        console.log(record.getData(true)); // to see the record after
-
-
-
+        // console.log(record.getData(true)); // to see the record before
+        //record.setFlattenedData(values);  // persist the form data back to the record
+        //console.log(record.getData(true)); // to see the record after
 
         // calculatee sum of factor ratings:
-       /*if (form.getValues().visualImpact !== null
-			&& form.getValues().varietyAndHealth !== null
-			&& form.getValues().design !== null
-			&& form.getValues().maintenance !== null
-			&& form.getValues().environmentalStewardship !== null) {*/
+        if (form.getValues().visualImpact !== null
+            && form.getValues().varietyAndHealth !== null
+            && form.getValues().design !== null
+            && form.getValues().maintenance !== null
+            && form.getValues().environmentalStewardship !== null) {
 
             /**
              *
              * Compute sum of scorecard factores
              * @type {Integer}
              */
-			/*sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
+        sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
                 form.getValues().visualImpact,
                 form.getValues().varietyAndHealth,
                 form.getValues().design,
                 form.getValues().maintenance,
-                form.getValues().environmentalStewardship);*/
+                form.getValues().environmentalStewardship);
 
             /**
              * Determine ranking of evaluation
              * calls UtilityService function
              * @type {String}
              */
-          /*  evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
 
-            // TODO: display on form
-			alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
+        evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
 
-			form.setValues({
-				sumRating: sumRating
-			})
+        // TODO: display on form
+        alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
 
-			values = form.getValues();
-			record = form.getRecord();
+        form.setValues({
+            sumRating: sumRating
+        })
 
+        values = form.getValues();
+        record = form.getRecord();
 
 		}
 		else {
 			alert('missing factor rating!');
-		}*/
-
-		//if a new siteEvaluation
-		/*if(!record){
-			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
-			Ext.getStore('SiteEvaluations').add(newRecord);
 		}
+
+		//if a new Evaluation
+		if(!record){
+			// something went horribly wrong, since a new Evaluation association hierarchy should have been created
+            // when entering a new Site/Address as per controller.SiteGeneral onSaveSiteGeneral method
+      	}
 		//existing siteEvaluation
 		else {
 
+            //console.log('setFlattenedData( form.getValues())' +  model.setFlattenedData( form.getValues(false, false, false, true)) );
+            // TODO: update record using setFlattenedData method in BaseModel
+
+            // do stuff
 			// get image uri
+            // TODO: redo this!
 			var images = Ext.create('EvaluateIt.store.ImageQueue');
 
 			images.queryBy(function(iRecord,id){
@@ -129,9 +129,8 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 				}
 			});
 
-			// do stuff
 			record.set(values);
-		}*/
+		}
 		form.hide();
 		//save the data to localStorage
 		Ext.getStore('SiteEvaluations').sync();
@@ -147,14 +146,17 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         console.log('Selected a Site from the list');
         var siteEvaluationForm = Ext.widget('siteEvaluationForm');
 
-        siteEvaluationForm.setRecord(record);
-
+        // bind flattened record to form
         siteEvaluationForm.setValues(record.getFlattenedData(true));
+        console.log('Evaluation belongsTo hierarchy:: ' + Ext.encode(record.getFlattenedData(true)));
 
-        console.log('Yorple!' + Ext.encode(record.getFlattenedData(true)));
+        console.log('evaluation.id:' +  ' ' + record.id);
 
         console.log(record.getData(true));
+        console.log(record.getAssociatedData(true));
+        console.log(record.$className + ' ' + record.getId())
 
+        // open form
         siteEvaluationForm.showBy(target);
 
 

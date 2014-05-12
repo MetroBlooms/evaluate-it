@@ -7,8 +7,7 @@ Ext.define('EvaluateIt.model.EvaluationImage', {
 			{name: 'srcUri', type: 'string'} // local image location
 		],
         proxy: {
-            type: "sql",
-            database: 'Test'
+            type: 'localstorage'
         },
         belongsTo: [
 			{

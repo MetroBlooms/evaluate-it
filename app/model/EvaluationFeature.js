@@ -7,8 +7,7 @@ Ext.define('EvaluateIt.model.EvaluationFeature', {
             {name: 'featureType', type: 'int'} // linking id for lookup
         ],
         proxy: {
-            type: "sql",
-            database: 'Test'
+            type: 'localstorage'
         },
         belongsTo: [
             {

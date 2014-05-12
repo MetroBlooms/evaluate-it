@@ -14,7 +14,7 @@ Ext.define('EvaluateIt.model.Address', {
         belongsTo: [
             {
                 model: 'EvaluateIt.model.Site',
-                name: 'Site',
+                name: 'site',
                 primaryKey: 'id',
                 foreignKey: 'site_id',
                 getterName: 'getSite',
@@ -22,8 +22,7 @@ Ext.define('EvaluateIt.model.Address', {
             }
         ],
         proxy: {
-            type: "sql",
-            database: 'Test'
+            type: 'localstorage'
         }
 
     }

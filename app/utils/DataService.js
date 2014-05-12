@@ -97,7 +97,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
                 // set hasMany evaluation by creating a blank association
                 var recArray;
-                var evaluationRecs = site.Evaluations();
+                var evaluationRecs = site.evaluation();
                 var evalModel = Ext.ModelManager.getModel('EvaluateIt.model.Evaluation'); // Get the model from the application models auto-getter
 
                 if (evaluationRecs.getCount() === 0){
@@ -107,15 +107,20 @@ Ext.define('EvaluateIt.utils.DataService', {
                     recArray[0].set({evaluator_id: json[i].evaluator.evaluator_id, remoteEvaluationId: json[i].evaluation_id});
                 }
 
+                //evaluationRecs.load();
                 evaluationRecs.sync();
 
-
                 site.save();
+
+                var test = evaluationRecs.first();
+                console.log('!test!' + Ext.encode(test.getFlattenedData(true)));
 
                 address.setSite(site.id);
                 address.save();
 
-                console.log(site.getData(true));
+                //console.log(site.getData(true));
+                //console.log(site.getAssociatedData());
+                //console.log('!!' + Ext.encode(site.getFlattenedData(true)));
 
             }
 

@@ -20,7 +20,6 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
                 tap : 'onSaveSiteGeneral'
             }
         }
-
     },
 
     onActivate: function() {
@@ -43,9 +42,6 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
         console.log('Button Click for Save');
 
         //console.log(this.$className);
-
-
-
         console.log('Button Click for Save');
         var form = button.up('panel'),
             //get the model
@@ -53,67 +49,21 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
             //get the form values
             values = form.getValues( false, false, false, true );
 
-       // console.log('data: ' + record.setFlattenedData(values));
-
-        console.log(record.getData(true)); // to see the record before
-        record.setFlattenedData(values);  // persist the form data back to the record
-        console.log(record.getData(true)); // to see the record after
-
-
-        //console.log('setFlattenedData( form.getValues())' +  record.setFlattenedData( values ));
-
-        //var myAddress = EvaluateIt.model.Address;
-        //var address = new myAddress();
-
-        //this.setAddress( { 'address':'1100 block, north side on Cedar Lake Road' } );
-
-        //var mySite = EvaluateIt.model.Site;
-        //var site = new mySite();
-        //console.log('site.id' + site.id);
-        //site.getAddress({reload:true});
-
-        /*var address = record.getAddress({
-            reload:true,
-            success: function (record,operation) {
-                console.log('SUCCESS');
-            },
-
-            failure: function(record,operation) {
-                console.log('FAILURE');
-            }
-        });*/
-
-
-         // can either use just callback config (called on fail or success) or success/failure configs
-
-
-
-        //site.setAddress({reload:true});
-
-        //site.save();
-
-        //address.setSite(site.id);
-
-        //console.log('site.id ' + site.id + ' ' + site.address);
-
-        //address.save();
-        //address.setFlattenedData( values )
-
-
-        //console.log('setFlattenedData( form.getValues()) !!' +  this.getAddress());
+        console.log(record.getData(true)); // to see the record
+        //record.setFlattenedData(values);  // persist the form data back to the record
+        console.log(record.getAssociatedData(true)); // to see the record associations
 
         if(!record){
 
-            //console.log('setFlattenedData( form.getValues())' +  model.setFlattenedData( form.getValues(false, false, false, true)) );
-
+            //TODO: instantiate new Site and Address models, and create new blank Evaluation associations per utils.DataService Pull method
         }
         //existing siteEvaluation
         else {
-           // add relevant code here
+
+            //TODO: console.log('setFlattenedData( form.getValues())' +  model.setFlattenedData( form.getValues(false, false, false, true)) );
+            // update record using setFlattenedData method in BaseModel
         }
         form.hide();
-
-
 
     },
 
@@ -122,13 +72,13 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
         var siteForm = Ext.widget('siteForm');
 
         siteForm.setRecord(record);
+        console.log(record.$className + ' ' + record.getId())
 
         record.getAddress();  // This will instantiate a missing Address hasOne if not already in the data or do nothing if there is one
         siteForm.setValues(record.getFlattenedData(true));
+        console.log('Site hasOne hierarchy: ' +  Ext.encode(record.getFlattenedData( true )));
+
         siteForm.showBy(target);
-
-
-
 
     }
 

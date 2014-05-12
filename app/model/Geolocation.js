@@ -10,8 +10,7 @@ Ext.define('EvaluateIt.model.Geolocation', {
             {name: 'datestamp', type: 'string'}
         ],
         proxy: {
-            type: "sql",
-            database: 'Test'
+            type: 'localstorage'
         },
         belongsTo: [
             {

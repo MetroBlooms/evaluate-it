@@ -9,8 +9,7 @@ Ext.define('EvaluateIt.model.SiteMaintainer', {
             {name: 'emailAddress', type: 'string'}
         ],
         proxy: {
-            type: "sql",
-            database: 'Test'
+            type: 'localstorage'
         },
         belongsTo: [
         {

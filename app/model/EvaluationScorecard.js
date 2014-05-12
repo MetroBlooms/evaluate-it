@@ -8,8 +8,7 @@ Ext.define('EvaluateIt.model.EvaluationScorecard', {
             {name: 'factorType', type: 'int'} // linking id for lookup
         ],
         proxy: {
-            type: "sql",
-            database: 'Test'
+            type: 'localstorage'
         },
         belongsTo: [
             {

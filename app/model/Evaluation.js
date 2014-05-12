@@ -18,15 +18,15 @@ Ext.define('EvaluateIt.model.Evaluation', {
 
         ],
         proxy: {
-            type: "sql",
-            database: 'Test'
+            type: 'localstorage'
         },
         belongsTo: [
             {
                 model: 'EvaluateIt.model.Site',
-                name: 'Site',
+                name: 'site',
                 primaryKey: 'id',
-                foreignKey: 'site_id'
+                foreignKey: 'site_id',
+                foreignStore: 'Sites'
             }
         ]/*,
         hasOne: [
