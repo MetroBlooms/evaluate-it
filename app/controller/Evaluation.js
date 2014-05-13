@@ -49,7 +49,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
         console.log(record.getData(true)); // to see the record before
         record.setFlattenedData(values);  // persist the form data back to the record
-        console.log(record.getData(true)); // to see the record after
+        console.log(record.getAssociatedData(true)); // to see the record after
 
         // calculatee sum of factor ratings:
         if (form.getValues().visualImpact !== null

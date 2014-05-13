@@ -76,6 +76,18 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
                     yearFrom: 2014
                 }
             },
+            {
+                xtype: 'textfield',
+                name: 'comments',
+                label: 'City',
+                itemId: 'comments'
+            },
+            {
+                xtype: 'checkboxfield',
+                name: 'noLongerExists',
+                label: 'State',
+                itemId: 'noLongerExists'
+            },
            /* {
 				xtype: 'selectfield',
 				itemId: 'visualImpact',

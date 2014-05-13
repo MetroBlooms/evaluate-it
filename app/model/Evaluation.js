@@ -14,7 +14,8 @@ Ext.define('EvaluateIt.model.Evaluation', {
             // Ajax response: json.evaluator.evaluator_id
             {name: 'evaluator_id', type: 'int'},
  			{name: 'noLongerExists', type: 'boolean'}, // invalid site: nothing to evaluate!
-            {name: 'comments', type: 'string'} // general comments
+            {name: 'comments', type: 'string'}, // general comments
+            {name: 'evaluationAward_id', type: 'string'}
 
         ],
         proxy: {
@@ -28,23 +29,36 @@ Ext.define('EvaluateIt.model.Evaluation', {
                 foreignKey: 'site_id',
                 foreignStore: 'Sites'
             }
-        ]/*,
+        ],
         hasOne: [
             {
                 model: 'EvaluateIt.model.EvaluationAward',
-                associationKey: 'evaluationAwardId'
+                getterName: 'getEvaluationAward',
+                setterName: 'setEvaluationAward',
+                name: 'EvaluationAward',
+                primaryKey: 'id',
+                foreignKey: 'evaluationAward_id',
+                foreignStore: 'EvaluationAwards'
             }
         ],
         hasMany: [
             {
-                model: 'EvaluateIt.model.EvaluationFactorScorecard',
-                name: 'evaluationFactorScorecards'
+                model: 'EvaluateIt.model.EvaluationScorecard',
+                name: 'EvaluationScorecard',
+                primaryKey: 'id',
+                foreignKey: 'evaluation_id',
+                associationKey: 'EvaluationScorecard',
+                foreignStore: 'EvaluationScorecards'
             },
             {
                 model: 'EvaluateIt.model.EvaluationFeature',
-                name: 'evaluationFactorFeatures'
+                name: 'EvaluationFeature',
+                primaryKey: 'id',
+                foreignKey: 'evaluation_id',
+                associationKey: 'EvaluationFeature',
+                foreignStore: 'EvaluationFeatures'
             }
-        ]*/
+        ]
     }
 });
 

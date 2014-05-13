@@ -6,7 +6,8 @@ Ext.define('EvaluateIt.model.Site', {
             {name: 'id', type: 'int'},
             {name: 'remoteSiteId', type: 'int'},
             {name: 'siteName', type: 'string'}, // does site have a formal name
-            {name: 'address_id', type: 'string'}
+            {name: 'address_id', type: 'string'},
+            {name: 'geolocation_id', type: 'string'}
         ],
         proxy: {
             type: 'localstorage'
@@ -20,17 +21,26 @@ Ext.define('EvaluateIt.model.Site', {
                 foreignKey: 'site_id',
                 associationKey: 'Evaluation',
                 foreignStore: 'Evaluations'
-			}/*,
+			},
 		    {
                 model: 'EvaluateIt.model.SiteMaintainer',
-                name: 'siteMaintainers'
-            }*/
+                name: 'SiteMaintainer',
+                primaryKey: 'id',
+                foreignKey: 'site_id',
+                associationKey: 'SiteMaintainer',
+                foreignStore: 'SiteMaintainers'
+            }
         ],
         hasOne: [
-           /* {
+            {
                 model: 'EvaluateIt.model.Geolocation',
-                associationKey: 'geolocationId'
-			},*/
+                getterName: 'getGeolocation',
+                setterName: 'setGeolocation',
+                name: 'Geolocation',
+                primaryKey: 'id',
+                foreignKey: 'geolocation_id',
+                foreignStore: 'Geolocations'
+			},
             {
                 model: 'EvaluateIt.model.Address',
                 getterName: 'getAddress',

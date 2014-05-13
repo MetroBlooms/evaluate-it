@@ -5,7 +5,8 @@ Ext.define('EvaluateIt.model.EvaluationScorecard', {
         fields: [
             {name: 'id', type: 'int'}, // pk
             {name: 'score', type: 'int'}, // score: valid value in (0, 4)
-            {name: 'factorType', type: 'int'} // linking id for lookup
+            {name: 'factorType', type: 'int'}, // linking id for lookup
+            {name: 'evaluation_id', type: 'string'}
         ],
         proxy: {
             type: 'localstorage'
@@ -13,7 +14,10 @@ Ext.define('EvaluateIt.model.EvaluationScorecard', {
         belongsTo: [
             {
                 model: 'EvaluateIt.model.Evaluation',
-                associationKey: 'evaluationId'
+                name: 'Evaluation',
+                primaryKey: 'id',
+                foreignKey: 'evaluation_id',
+                foreignStore: 'Evaluations'
             }
         ]
     }

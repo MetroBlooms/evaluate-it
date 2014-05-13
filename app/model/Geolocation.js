@@ -7,6 +7,7 @@ Ext.define('EvaluateIt.model.Geolocation', {
             {name: 'latitude', type: 'float'},
             {name: 'longitude', type: 'float'},
             {name: 'accuracy', type: 'float'},
+            {name: 'site_id', type: 'string'},
             {name: 'datestamp', type: 'string'}
         ],
         proxy: {
@@ -14,7 +15,12 @@ Ext.define('EvaluateIt.model.Geolocation', {
         },
         belongsTo: [
             {
-                model: 'EvaluateIt.model.Site'
+                model: 'EvaluateIt.model.Site',
+                name: 'Site',
+                primaryKey: 'id',
+                foreignKey: 'site_id',
+                getterName: 'getSite',
+                setterName: 'setSite'
             }
         ]
     }
