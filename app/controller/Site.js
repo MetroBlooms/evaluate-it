@@ -1,4 +1,4 @@
-Ext.define('EvaluateIt.controller.SiteGeneral', {
+Ext.define('EvaluateIt.controller.Site', {
     extend : 'Ext.app.Controller',
 
     config: {
@@ -6,18 +6,18 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
         stores : ['Addresses', 'Sites'],
         models : ['Address', 'Site'],
         refs: {
-            mySiteGeneralList: 'siteList'
+            mySiteList: 'siteList'
         },
         control: {
             'siteList': {
                 activate: 'onActivate',
-                itemtap: 'onSelectSiteGeneral'
+                itemtap: 'onSelectSite'
             },
-            'container button[itemId=addSiteGeneral]' : {
-                tap : 'onAddSiteGeneral'
+            'container button[itemId=addSite]' : {
+                tap : 'onAddSite'
             },
             'siteForm button[itemId=save]' : {
-                tap : 'onSaveSiteGeneral'
+                tap : 'onSaveSite'
             }
         }
     },
@@ -26,18 +26,18 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
         console.log('Main container is active');
     },
 
-    onAddSiteGeneral: function(button) {
+    onAddSite: function(button) {
         console.log('Button Click');
-        var siteGeneralForm = Ext.Viewport.down('siteGeneralForm');
+        var siteForm = Ext.Viewport.down('siteForm');
         //create the siteEvaluation edit window if it doesn't exists
-        if(!siteGeneralForm){
-            siteGeneralForm = Ext.widget('siteGeneralForm');
+        if(!siteForm){
+            siteForm = Ext.widget('siteForm');
         }
-        siteGeneralForm.reset();
-        siteGeneralForm.showBy(button);
+        siteForm.reset();
+        siteForm.showBy(button);
     },
 
-    onSaveSiteGeneral: function(button) {
+    onSaveSite: function(button) {
 
         console.log('Button Click for Save');
 
@@ -55,7 +55,7 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
 
         if(!record){
 
-            //TODO: instantiate new Site and Address models, and create new blank Evaluation associations per utils.DataService Pull method
+            //TODO: instantiate new Site and  models, and create new blank Evaluation associations per utils.DataService Pull method
         }
         //existing siteEvaluation
         else {
@@ -67,14 +67,14 @@ Ext.define('EvaluateIt.controller.SiteGeneral', {
 
     },
 
-    onSelectSiteGeneral: function(view, index, target, record, event) {
+    onSelectSite: function(view, index, target, record, event) {
         console.log('Selected a Site from the list');
         var siteForm = Ext.widget('siteForm');
 
         siteForm.setRecord(record);
         console.log(record.$className + ' ' + record.getId())
 
-        record.getAddress();  // This will instantiate a missing Address hasOne if not already in the data or do nothing if there is one
+        record.get();  // This will instantiate a missing Address hasOne if not already in the data or do nothing if there is one
         siteForm.setValues(record.getFlattenedData(true));
         console.log('Site hasOne hierarchy: ' +  Ext.encode(record.getFlattenedData( true )));
 

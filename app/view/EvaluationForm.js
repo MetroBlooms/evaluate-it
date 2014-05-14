@@ -79,13 +79,13 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
             {
                 xtype: 'textfield',
                 name: 'comments',
-                label: 'City',
+                label: 'Comments',
                 itemId: 'comments'
             },
             {
                 xtype: 'checkboxfield',
                 name: 'noLongerExists',
-                label: 'State',
+                label: 'NoLongerExists  ',
                 itemId: 'noLongerExists'
             },
            /* {
