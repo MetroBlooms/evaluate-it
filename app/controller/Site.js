@@ -18,6 +18,9 @@ Ext.define('EvaluateIt.controller.Site', {
             },
             'siteForm button[itemId=save]' : {
                 tap : 'onSaveSite'
+            },
+            'siteForm button[itemId=cancel]' : {
+                tap : 'onCancelSite'
             }
         }
     },
@@ -35,6 +38,13 @@ Ext.define('EvaluateIt.controller.Site', {
         }
         siteForm.reset();
         siteForm.showBy(button);
+    },
+
+    onCancelSite: function(button) {
+        console.log('Button Click for Cancel');
+        var form = button.up('panel');
+        form.hide();
+        form.destroy();
     },
 
     onSaveSite: function(button) {
@@ -72,7 +82,7 @@ Ext.define('EvaluateIt.controller.Site', {
         var siteForm = Ext.widget('siteForm');
 
         siteForm.setRecord(record);
-        console.log(record.$className + ' ' + record.getId())
+        console.log(record.$className + ' ' + record.getId());
 
         record.get();  // This will instantiate a missing Address hasOne if not already in the data or do nothing if there is one
         siteForm.setValues(record.getFlattenedData(true));

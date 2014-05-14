@@ -103,7 +103,12 @@ Ext.define('EvaluateIt.view.SiteForm', {
 				xtype: 'button',
 				itemId: 'save',
 				text: 'Save'
-			}
+			},
+            {
+                xtype: 'button',
+                itemId: 'cancel',
+                text: 'Cancel'
+            }
             
         ]
     }
