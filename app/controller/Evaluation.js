@@ -22,13 +22,23 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 			},
 			'siteEvaluationForm button[itemId=save]' : {
 				tap : 'onSaveEvaluation'
-			}
+			},
+            'siteEvaluationForm button[itemId=cancel]' : {
+                tap : 'onCancelEvaluation'
+            }
 		}
  	},
 
 	onActivate: function() {
   		console.log('Main container is active');
  	},
+
+    onCancelEvaluation: function(button){
+        console.log('Button Click for Cancel');
+        var form=button.up('panel');
+        form.hide();
+        form.destroy();
+    },
 
 	onSaveEvaluation: function(button) {
         console.log('Button Click for Save');

@@ -62,7 +62,7 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
 			},
             {
                 xtype: 'textfield',
-                name: 'remoteEvaluationId',
+                name: 'remoteEvaluationId'
 
             },
             {
@@ -191,7 +191,12 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
 				xtype: 'button',
 				itemId: 'save',
 				text: 'Save'
-			}
+			},
+            {
+                xtype: 'button',
+                itemId: 'cancel',
+                text: 'Cancel'
+            }
 
         ]
     }
