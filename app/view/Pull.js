@@ -59,7 +59,7 @@ Ext.define('EvaluateIt.view.Pull', {
                                    EvaluateIt.utils.DataService.pull(json);
                                    panel.setHtml(response.responseText);
                                    panel.getParent().unmask();
-								   console.log('data: ' + response.responseText);
+								   //console.log('data: ' + response.responseText);
 								},
 								fail: function (e, jqxhr, settings, exception) {
 									console.log(e);

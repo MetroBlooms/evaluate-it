@@ -4,8 +4,11 @@ Ext.define('EvaluateIt.model.EvaluationScorecard', {
         idProperty: 'id',
         fields: [
             {name: 'id', type: 'int'}, // pk
-            {name: 'score', type: 'int'}, // score: valid value in (0, 4)
-            {name: 'factorType', type: 'int'}, // linking id for lookup
+            {name: 'design', type: 'int'},
+            {name: 'varietyAndHealth', type: 'int'},
+            {name: 'visualImpact', type: 'int'},
+            {name: 'maintenance', type: 'int'},
+            {name: 'environmentalStewardship', type: 'int'},
             {name: 'evaluation_id', type: 'string'}
         ],
         proxy: {

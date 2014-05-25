@@ -39,17 +39,19 @@ Ext.define('EvaluateIt.model.Evaluation', {
                 primaryKey: 'id',
                 foreignKey: 'evaluationAward_id',
                 foreignStore: 'EvaluationAwards'
-            }
-        ],
-        hasMany: [
+            },
             {
                 model: 'EvaluateIt.model.EvaluationScorecard',
+                getterName: 'getEvaluationScorecard',
+                setterName: 'setEvaluationScorecard',
                 name: 'EvaluationScorecard',
                 primaryKey: 'id',
                 foreignKey: 'evaluation_id',
-                associationKey: 'EvaluationScorecard',
                 foreignStore: 'EvaluationScorecards'
-            },
+            }
+        ],
+        hasMany: [
+
             {
                 model: 'EvaluateIt.model.EvaluationFeature',
                 name: 'EvaluationFeature',

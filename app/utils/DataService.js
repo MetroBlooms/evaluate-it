@@ -71,13 +71,12 @@ Ext.define('EvaluateIt.utils.DataService', {
     pull: function(json) {
 
         var i,
+            j,
             max;
 
         for (i = 0, max = json.length; i < max; i += 1) {
 
             if (json[i].completed === '1') {
-
-                // new model
 
                 var address = Ext.create('EvaluateIt.model.Address', {
                     address: json[i].garden.address.address,
@@ -95,28 +94,50 @@ Ext.define('EvaluateIt.utils.DataService', {
 
                 site.setAddress(address.id);
 
+                // create blank award
+                var award = Ext.create('EvaluateIt.model.EvaluationAward', {
+                    awardType: 1
+                });
+
+                // create blank scorecard
+                var scorecard = Ext.create('EvaluateIt.model.EvaluationScorecard', {
+                });
+
+                //console.log('award.id ' + award.id);
+
                 // set hasMany evaluation by creating a blank association
-                var recArray;
-                var evaluationRecs = site.Evaluation();
-                var evalModel = Ext.ModelManager.getModel('EvaluateIt.model.Evaluation'); // Get the model from the application models auto-getter
+                var recArray,
+                    evaluationRecs = site.Evaluation(),
+                    evalModel = Ext.ModelManager.getModel('EvaluateIt.model.Evaluation'); // Get the model from the application models auto-getter
 
                 if (evaluationRecs.getCount() === 0){
                     //  Note: .add(model) returns an array of model instances
                     recArray = evaluationRecs.add(evalModel);
                     // set values
-                    recArray[0].set({evaluator_id: json[i].evaluator.evaluator_id, remoteEvaluationId: json[i].evaluation_id});
+                    recArray[0].set({evaluator_id: json[i].evaluator.evaluator_id,
+                        remoteEvaluationId: json[i].evaluation_id
+                    });
+
+                    // grab model instance from store and set associations
+                    console.log('stuff: ' + evaluationRecs.first().id);
+
+                    award.setEvaluation(evaluationRecs.first().id);
+                    evaluationRecs.first().setEvaluationAward(award.id);
+
+                    scorecard.setEvaluation(evaluationRecs.first().id);
+                    evaluationRecs.first().setEvaluationScorecard(scorecard.id);
                 }
 
-                //evaluationRecs.load();
                 evaluationRecs.sync();
-
                 site.save();
 
-                var test = evaluationRecs.first();
-                console.log('!test!' + Ext.encode(test.getFlattenedData(true)));
+                //var test = evaluationRecs.first();
+                //console.log('!test!' + Ext.encode(test.getFlattenedData(true)));
 
                 address.setSite(site.id);
                 address.save();
+                award.save();
+                scorecard.save();
 
                 //console.log(site.getData(true));
                 //console.log(site.getAssociatedData());
@@ -132,6 +153,8 @@ Ext.define('EvaluateIt.utils.DataService', {
         }
 
     },
+
+
 
     /**
      * push assembled json to remote

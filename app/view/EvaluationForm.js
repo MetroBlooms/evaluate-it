@@ -10,7 +10,7 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
 // TODO: Not sure why this was implemented like this?
 // Need to determine (may have something to do with a destroy issued later)
 	extend: 'Ext.form.Panel',
-	alias : 'widget.siteEvaluationForm',
+	alias : 'widget.evaluationForm',
 	requires: [
         'Ext.form.Panel',
         'Ext.form.FieldSet',
@@ -62,8 +62,7 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
 			},
             {
                 xtype: 'textfield',
-                name: 'remoteEvaluationId'
-
+                name: 'remoteEvaluationId',
             },
             {
                 xtype: 'datepickerfield',
@@ -88,105 +87,14 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
                 label: 'NoLongerExists  ',
                 itemId: 'noLongerExists'
             },
-           /* {
-				xtype: 'selectfield',
-				itemId: 'visualImpact',
-				name: 'visualImpact',
-				label: 'Visual impact',
-				autoSelect: false,
-				placeHolder: 'Select a score',
-				options: [
-					{text: ''},
-					{text: '0',  value: '0'},
-					{text: '1',  value: '1'},
-					{text: '2',  value: '2'},
-					{text: '3',  value: '3'},
-					{text: '4',  value: '4'}
-				]
-			},
-			{
-				xtype: 'selectfield',
-				itemId: 'varietyAndHealth',
-				name: 'varietyAndHealth',
-				label: 'Plant variety and health',
-				autoSelect: false,
-				placeHolder: 'Select a score',
-				options: [
-					{text: ''},
-					{text: '0',  value: '0'},
-					{text: '1',  value: '1'},
-					{text: '2',  value: '2'},
-					{text: '3',  value: '3'},
-					{text: '4',  value: '4'}
-				]
-			},
-			{
-				xtype: 'selectfield',
-				itemId: 'design',
-				name: 'design',
-				label: 'Design',
-				autoSelect: false,
-				placeHolder: 'Select a score',
-				options: [
-					{text: ''},
-					{text: '0',  value: '0'},
-					{text: '1',  value: '1'},
-					{text: '2',  value: '2'},
-					{text: '3',  value: '3'},
-					{text: '4',  value: '4'}
-				]
-			},
-			{
-				xtype: 'selectfield',
-				itemId: 'maintenance',
-				name: 'maintenance',
-				label: 'Maintenance',
-				autoSelect: false,
-				placeHolder: 'Select a score',
-				options: [
-					{text: ''},
-					{text: '0',  value: '0'},
-					{text: '1',  value: '1'},
-					{text: '2',  value: '2'},
-					{text: '3',  value: '3'},
-					{text: '4',  value: '4'}
-				]
-			},
-			{
-				xtype: 'selectfield',
-				itemId: 'environmentalStewardship',
-				name: 'environmentalStewardship',
-				label: 'Environmental Stewardship',
-				autoSelect: false,
-				placeHolder: 'Select a score',
-				options: [
-					{text: ''},
-					{text: '0',  value: '0'},
-					{text: '1',  value: '1'},
-					{text: '2',  value: '2'},
-					{text: '3',  value: '3'},
-					{text: '4',  value: '4'}
-				]
-			},
-			{
-				xtype: 'textfield',
-				label: 'Total score:',
-				name: 'sumRating',
-				readOnly: true
-			},
-			{
-				xtype: 'hiddenfield',
-				name: 'imageUri',
-				itemId: 'imageId'
-			},
-           {
+            {
                 xtype: 'button',
                 itemId: 'siteImage',
                 text: 'Select Photo'
             },
             {
                 html: 'Selected image:<img style="display:none;" id="selectedImage" src="" />'
-            },*/
+            },
            	{
 				xtype: 'button',
 				itemId: 'save',

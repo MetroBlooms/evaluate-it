@@ -63,6 +63,8 @@ Ext.define('EvaluateIt.controller.Site', {
         record.setFlattenedData(values);  // persist the form data back to the record
         console.log(record.getAssociatedData(true)); // to see the record associations
 
+        record.save();
+
         if(!record){
 
             //TODO: instantiate new Site and  models, and create new blank Evaluation associations per utils.DataService Pull method

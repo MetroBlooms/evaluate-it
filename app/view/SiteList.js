@@ -8,13 +8,13 @@ Ext.define('EvaluateIt.view.SiteList', {
 		width: Ext.os.deviceType == 'Phone' ? null : 300,
 		height: Ext.os.deviceType == 'Phone' ? null : 500,
 		xtype: 'list',
-		store: 'Sites',
+		store: 'Addresses',
         /**
          * Template to display list
          */
 		itemTpl: [
             '<div>',
-            '<strong>Address: {Address.address}</strong>',
+            '<strong>Address: {address}</strong>',
             '</div> '
 
 		],

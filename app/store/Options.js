@@ -26,7 +26,13 @@
                         id: 'evaluation',
             			category: 'evaluations'
                     },
-					{
+                    {
+                        text: 'EvaluationScorecard',
+                        leaf: true,
+                        id: 'evaluationScorecard',
+                        category: 'evaluations'
+                    },
+                    {
                         text: 'EvaluationAward',
                         leaf: true,
                         id: 'evaluationAward',

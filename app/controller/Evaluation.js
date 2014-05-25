@@ -6,60 +6,57 @@
  *
  */
 Ext.define('EvaluateIt.controller.Evaluation', {
-	extend : 'Ext.app.Controller',
+    extend : 'Ext.app.Controller',
 
-	config: {
-		profile: Ext.os.deviceType.toLowerCase(),
-  		stores : ['Addresses', 'Evaluations', 'Sites'],
-  		models : ['Address', 'Evaluation', 'Site'],
-  		refs: {
-   			myEvaluationList: 'evaluationList'
-  		},
-		control: {
-			'evaluationList': {
-				activate: 'onActivate',
-				itemtap: 'onSelectEvaluation'
-			},
-			'siteEvaluationForm button[itemId=save]' : {
-				tap : 'onSaveEvaluation'
-			},
-            'siteEvaluationForm button[itemId=cancel]' : {
+    config: {
+        profile: Ext.os.deviceType.toLowerCase(),
+        stores : ['Addresses', 'Evaluations', 'Sites'],
+        models : ['Address', 'Evaluation', 'Site'],
+        refs: {
+            myEvaluationList: 'evaluationList'
+        },
+        control: {
+            'evaluationList': {
+                activate: 'onActivate',
+                itemtap: 'onSelectEvaluation'
+            },
+            'evaluationForm button[itemId=save]' : {
+                tap : 'onSaveEvaluation'
+            },
+            'evaluationForm button[itemId=cancel]' : {
                 tap : 'onCancelEvaluation'
             }
-		}
- 	},
+        }
+    },
 
-	onActivate: function() {
-  		console.log('Main container is active');
- 	},
+    onActivate: function() {
+        console.log('Main container is active');
+    },
 
-    onCancelEvaluation: function(button){
+    onCancelEvaluation: function(button) {
         console.log('Button Click for Cancel');
-        var form=button.up('panel');
+        var form = button.up('panel');
         form.hide();
         form.destroy();
     },
 
-	onSaveEvaluation: function(button) {
+    onSaveEvaluation: function(button) {
+        console.log('Button Click for Save');
+
+        //console.log(this.$className);
         console.log('Button Click for Save');
         var form = button.up('panel'),
-            // get the record
-            // record = form.getRecord(),
-            // return a clone for updating of values
-            // TODO: Determine why I did this
-              values = Ext.clone(form.getValues()),
-              sumRating,
-              evaluationRating;
-
-        // test
-
-        values = form.getValues( false, false, false, true),
         //get the model
-        record = form.getRecord();
+            record = form.getRecord(),
+        //get the form values
+            values = form.getValues( false, false, false, true );
 
-        console.log(record.getData(true)); // to see the record before
+        console.log(record.getData(true)); // to see the record
         record.setFlattenedData(values);  // persist the form data back to the record
-        console.log(record.getAssociatedData(true)); // to see the record after
+        console.log(record.getAssociatedData(true)); // to see the record associations
+
+        record.save();
+
 
         // calculatee sum of factor ratings:
         if (form.getValues().visualImpact !== null
@@ -73,7 +70,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
              * Compute sum of scorecard factores
              * @type {Integer}
              */
-        sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
+            sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
                 form.getValues().visualImpact,
                 form.getValues().varietyAndHealth,
                 form.getValues().design,
@@ -86,72 +83,72 @@ Ext.define('EvaluateIt.controller.Evaluation', {
              * @type {String}
              */
 
-        evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
+            evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
 
-        // TODO: display on form
-        alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
+            // TODO: display on form
+            alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
 
-        form.setValues({
-            sumRating: sumRating
-        })
+            form.setValues({
+                sumRating: sumRating
+            })
 
-        values = form.getValues();
-        record = form.getRecord();
+            values = form.getValues();
+            record = form.getRecord();
 
-		}
-		else {
-			alert('missing factor rating!');
-		}
+        }
+        else {
+            alert('missing factor rating!');
+        }
 
-		//if a new Evaluation
-		if(!record){
-			// something went horribly wrong, since a new Evaluation association hierarchy should have been created
+        //if a new Evaluation
+        if(!record){
+            // something went horribly wrong, since a new Evaluation association hierarchy should have been created
             // when entering a new Site/Address as per controller.SiteGeneral onSaveSiteGeneral method
-      	}
-		//existing siteEvaluation
-		else {
+        }
+        //existing siteEvaluation
+        else {
 
             //console.log('setFlattenedData( form.getValues())' +  model.setFlattenedData( form.getValues(false, false, false, true)) );
             // TODO: update record using setFlattenedData method in BaseModel
 
             // do stuff
-			// get image uri
+            // get image uri
             // TODO: redo this!
-			var images = Ext.create('EvaluateIt.store.ImageQueue');
+            var images = Ext.create('EvaluateIt.store.ImageQueue');
 
-			images.queryBy(function(iRecord,id){
-				images = Ext.getStore(images);
+            images.queryBy(function(iRecord,id){
+                images = Ext.getStore(images);
 
-				if (images.getCount() > 0) {
-					var uri  = iRecord.get('src'); // changed to iRecord from Record: what is effect?
+                if (images.getCount() > 0) {
+                    var uri  = iRecord.get('src'); // changed to iRecord from Record: what is effect?
 
-					console.log('URI: ' +  uri);
+                    console.log('URI: ' +  uri);
 
-					// update form with image uri
-					form.setValues({
-						imageUri: uri
-					})
+                    // update form with image uri
+                    form.setValues({
+                        imageUri: uri
+                    })
 
                     // refresh values with new data
-					values = form.getValues();
-					record = form.getRecord();
+                    values = form.getValues();
+                    record = form.getRecord();
 
-				}
-			});
+                }
+            });
 
-			record.set(values);
-		}
-		form.hide();
-		//save the data to localStorage
-		Ext.getStore('SiteEvaluations').sync();
+            record.set(values);
+        }
+        form.hide();
+        //save the data to localStorage
+        Ext.getStore('SiteEvaluations').sync();
 
-	},
+    },
 
-	onSelectEvaluation: function(view, index, target, record, event) {
+    onSelectEvaluation: function(view, index, target, record, event) {
 
-		// clear content from image queue store to initialize
-		var lostor = Ext.getStore('theImageQueue');
-		lostor.getProxy().clear();
+        // clear content from image queue store to initialize
+        var lostor = Ext.getStore('theImageQueue');
+        lostor.getProxy().clear();
 
         console.log('Selected a Site from the list');
         var siteEvaluationForm = Ext.widget('siteEvaluationForm');
@@ -172,7 +169,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         siteEvaluationForm.showBy(target);
 
 
-	}
+    }
 
 });
 

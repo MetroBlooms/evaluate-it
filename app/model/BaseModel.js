@@ -433,6 +433,8 @@ Ext.define("EvaluateIt.model.BaseModel", {
                         aName.shift();
                     }
                     sFnc=sFnc+'set("'+aName[0]+'","'+values[name]+'")';
+                    console.log('sFnc' + sFnc);
+                    console.log(this.$className);
                     sFuncs[i]=sFnc;
                     i++;
                 }

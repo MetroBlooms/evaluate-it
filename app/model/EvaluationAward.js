@@ -3,9 +3,9 @@ Ext.define('EvaluateIt.model.EvaluationAward', {
     config: {
         idProperty: 'id',
         fields: [
-            {name: 'id', type: 'int'}, // pk
-            {name: 'specialAwardSpecified', type: 'auto'}, // string description for choice of "other"
-            {name: 'awardType', type: 'int'}, // linking id for lookup
+            {name: 'id', type: 'int'},
+            {name: 'specialAwardSpecified', type: 'auto'},
+            {name: 'awardType', type: 'int'},
             {name: 'evaluation_id', type: 'string'}
         ],
         proxy: {
@@ -18,6 +18,9 @@ Ext.define('EvaluateIt.model.EvaluationAward', {
                 primaryKey: 'id',
                 foreignKey: 'evaluation_id',
                 foreignStore: 'Evaluations'
+                //getterName: 'getEvaluation',
+                //setterName: 'setEvaluation'
+
             }
         ]
     }

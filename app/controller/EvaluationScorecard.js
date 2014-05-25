@@ -1,20 +1,20 @@
-Ext.define('EvaluateIt.controller.EvaluationAward', {
+Ext.define('EvaluateIt.controller.EvaluationScorecard', {
 	extend : 'Ext.app.Controller',
 
 	config: {
   		profile: Ext.os.deviceType.toLowerCase(),
-  		stores : ['Evaluations','EvaluationAwards','Sites','Addresses'],
-  		models : ['Evaluation','EvaluationAward','Site','Address'],
+  		stores : ['Evaluations','EvaluationScorecards','Sites','Addresses'],
+  		models : ['Evaluation','EvaluationScorecard','Site','Address'],
 		refs: {
-   			myEvaluationAwardList: 'evaluationAwardList'
+   			myEvaluationScorecardList: 'evaluationScorecardList'
   		},
 		control: {
-			'evaluationAwardList': {
+			'evaluationScorecardList': {
 				activate: 'onActivate',
-				itemtap: 'onSelectEvaluationAward'
+				itemtap: 'onSelectEvaluationScorecard'
 			},
-			'evaluationAwardForm button[itemId=save]' : {
-				tap : 'onSaveEvaluationAward' 
+			'evaluationScorecardForm button[itemId=save]' : {
+				tap : 'onSaveEvaluationScorecard' 
 			}
 		}	  
 
@@ -24,7 +24,7 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
   		console.log('Main container is active');
  	},
 
-	onSaveEvaluationAward: function(button) {
+	onSaveEvaluationScorecard: function(button) {
         console.log('Button Click for Save');
 
         //console.log(this.$className);
@@ -41,6 +41,7 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
 
         record.save();
 
+
 		if(!record){
 			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
 			Ext.getStore('SiteEvaluations').add(newRecord);
@@ -55,18 +56,18 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
 
 	},
 
-	onSelectEvaluationAward: function(view, index, target, record, event) {
-		console.log('Selected a Award from the list');
-        var evaluationAwardForm = Ext.widget('evaluationAwardForm');
+	onSelectEvaluationScorecard: function(view, index, target, record, event) {
+		console.log('Selected a Scorecard from the list');
+        var evaluationScorecardForm = Ext.widget('evaluationScorecardForm');
 
-        evaluationAwardForm.setRecord(record);
+        evaluationScorecardForm.setRecord(record);
         console.log(record.$className + ' ' + record.getId())
 
         record.get();  // This will instantiate a missing Address hasOne if not already in the data or do nothing if there is one
-        evaluationAwardForm.setValues(record.getFlattenedData(true));
-        console.log('Award hasOne hierarchy: ' +  Ext.encode(record.getFlattenedData( true )));
+        evaluationScorecardForm.setValues(record.getFlattenedData(true));
+        console.log('Scorecard hasOne hierarchy: ' +  Ext.encode(record.getFlattenedData( true )));
 
-        evaluationAwardForm.showBy(target);
+        evaluationScorecardForm.showBy(target);
 
     }
 
