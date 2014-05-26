@@ -71,7 +71,6 @@ Ext.define('EvaluateIt.utils.DataService', {
     pull: function(json) {
 
         var i,
-            j,
             max;
 
         for (i = 0, max = json.length; i < max; i += 1) {
@@ -88,37 +87,38 @@ Ext.define('EvaluateIt.utils.DataService', {
 
                 console.log('address.id ' + address.id);
 
+                // create model using remote data
                 var site = Ext.create('EvaluateIt.model.Site', {
                     remoteSiteId: json[i].garden.garden_id
                 });
 
+                // set hasOne association using model's getter
                 site.setAddress(address.id);
 
                 // create blank award
                 var award = Ext.create('EvaluateIt.model.EvaluationAward', {
-                    awardType: 1
                 });
 
                 // create blank scorecard
                 var scorecard = Ext.create('EvaluateIt.model.EvaluationScorecard', {
                 });
 
-                //console.log('award.id ' + award.id);
-
-                // set hasMany evaluation by creating a blank association
-                var recArray,
-                    evaluationRecs = site.Evaluation(),
+                // set hasMany evaluation by creating a blank record
+                var evalArray,
+                    evaluationRecs = site.Evaluation(), // set association
                     evalModel = Ext.ModelManager.getModel('EvaluateIt.model.Evaluation'); // Get the model from the application models auto-getter
 
                 if (evaluationRecs.getCount() === 0){
-                    //  Note: .add(model) returns an array of model instances
-                    recArray = evaluationRecs.add(evalModel);
-                    // set values
-                    recArray[0].set({evaluator_id: json[i].evaluator.evaluator_id,
+                    //  Note: .add(model) returns an array/store of model instances
+                    evalArray = evaluationRecs.add(evalModel);
+                    // set values using remote data
+                    evalArray[0].set({
+                        evaluator_id: json[i].evaluator.evaluator_id,
                         remoteEvaluationId: json[i].evaluation_id
                     });
 
-                    // grab model instance from store and set associations
+                    // grab first and only model instance from store
+                    // and set associations
                     console.log('stuff: ' + evaluationRecs.first().id);
 
                     award.setEvaluation(evaluationRecs.first().id);
@@ -128,33 +128,21 @@ Ext.define('EvaluateIt.utils.DataService', {
                     evaluationRecs.first().setEvaluationScorecard(scorecard.id);
                 }
 
+                // save everything
                 evaluationRecs.sync();
                 site.save();
-
-                //var test = evaluationRecs.first();
-                //console.log('!test!' + Ext.encode(test.getFlattenedData(true)));
-
                 address.setSite(site.id);
                 address.save();
                 award.save();
                 scorecard.save();
-
-                //console.log(site.getData(true));
-                //console.log(site.getAssociatedData());
-                //console.log('!!' + Ext.encode(site.getFlattenedData(true)));
-
             }
 
-            // reload store to show up-to-date data
+            // reload store to show up-to-date data in Xtemplates
             Ext.StoreMgr.get('Sites').load();
             Ext.StoreMgr.get('Evaluations').load();
             Ext.StoreMgr.get('Addresses').load();
-
-        }
-
+       }
     },
-
-
 
     /**
      * push assembled json to remote

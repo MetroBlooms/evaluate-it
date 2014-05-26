@@ -6,6 +6,9 @@
  * which gets its filtered data
  * (on category = 'evaluations' by regex for existing address in EvaluateIt.controller.Main) from the store
  *
+ * Ad hoc evaluation creates address model through user input with all other model instances being blank,
+ * until data have been entered
+ *
  * TODO: rename to Site as per normalized model
  */
 Ext.define('EvaluateIt.view.Site', {
@@ -24,7 +27,7 @@ Ext.define('EvaluateIt.view.Site', {
 						{
 							xtype: 'button',
 							itemId: 'addSite',
-							text: 'Add evaluation',
+							text: 'Ad hoc evaluation',
 							iconCls: 'arrow_right',
 							iconMask: true 
 						}

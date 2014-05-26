@@ -20,7 +20,9 @@ Ext.define('EvaluateIt.model.EvaluationScorecard', {
                 name: 'Evaluation',
                 primaryKey: 'id',
                 foreignKey: 'evaluation_id',
-                foreignStore: 'Evaluations'
+                foreignStore: 'Evaluations',
+                getterName: 'getEvaluation',
+                setterName: 'setEvaluation'
             }
         ]
     }

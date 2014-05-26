@@ -17,9 +17,9 @@ Ext.define('EvaluateIt.model.EvaluationAward', {
                 name: 'Evaluation',
                 primaryKey: 'id',
                 foreignKey: 'evaluation_id',
-                foreignStore: 'Evaluations'
-                //getterName: 'getEvaluation',
-                //setterName: 'setEvaluation'
+                foreignStore: 'Evaluations',
+                getterName: 'getEvaluation',
+                setterName: 'setEvaluation'
 
             }
         ]
