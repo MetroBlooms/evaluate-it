@@ -77,7 +77,12 @@ Ext.define('EvaluateIt.view.EvaluationAwardForm', {
 				xtype: 'button',
 				itemId: 'save',
 				text: 'Save'
-			}
+			},
+            {
+                xtype: 'button',
+                itemId: 'cancel',
+                text: 'Cancel'
+            }
             
         ]
     }

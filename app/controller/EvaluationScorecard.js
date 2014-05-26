@@ -15,14 +15,24 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
 			},
 			'evaluationScorecardForm button[itemId=save]' : {
 				tap : 'onSaveEvaluationScorecard' 
-			}
-		}	  
+			},
+            'evaluationScorecardForm button[itemId=cancel]' : {
+                tap : 'onCancelEvaluationScorecard'
+            }
+    	}
 
  	},
 
 	onActivate: function() {
   		console.log('Main container is active');
  	},
+
+    onCancelEvaluationScorecard: function(button) {
+        console.log('Button Click for Cancel');
+        var form = button.up('panel');
+        form.hide();
+        form.destroy();
+    },
 
 	onSaveEvaluationScorecard: function(button) {
         console.log('Button Click for Save');

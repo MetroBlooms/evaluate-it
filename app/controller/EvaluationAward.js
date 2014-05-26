@@ -15,7 +15,10 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
 			},
 			'evaluationAwardForm button[itemId=save]' : {
 				tap : 'onSaveEvaluationAward' 
-			}
+			},
+            'evaluationAwardForm button[itemId=cancel]' : {
+                tap : 'onCancelEvaluationAward'
+            }
 		}	  
 
  	},
@@ -23,6 +26,13 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
 	onActivate: function() {
   		console.log('Main container is active');
  	},
+
+    onCancelEvaluationAward: function(button) {
+        console.log('Button Click for Cancel');
+        var form = button.up('panel');
+        form.hide();
+        form.destroy();
+    },
 
 	onSaveEvaluationAward: function(button) {
         console.log('Button Click for Save');
