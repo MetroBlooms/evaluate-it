@@ -56,15 +56,6 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
          */
 		items: [
 			{
-       			xtype: 'textfield',
-		   		name: 'Site.Address.address',
-		   		readOnly: true
-			},
-            {
-                xtype: 'textfield',
-                name: 'remoteEvaluationId',
-            },
-            {
                 xtype: 'datepickerfield',
                 destroyPickerOnHide: true,
                 name : 'dateOfEvaluation',

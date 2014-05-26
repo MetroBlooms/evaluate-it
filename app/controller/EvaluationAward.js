@@ -35,23 +35,17 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
         //get the form values
             values = form.getValues( false, false, false, true );
 
-        console.log(record.getData(true)); // to see the record
-        record.setFlattenedData(values);  // persist the form data back to the record
-        console.log(record.getAssociatedData(true)); // to see the record associations
-
-        record.save();
-
 		if(!record){
-			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
-			Ext.getStore('SiteEvaluations').add(newRecord);
+			// something went horribly wrong!
 		}
 		//existing siteEvaluation
 		else {
-			record.set(values);
-		}
+            console.log(record.getData(true)); // to see the record
+            record.setFlattenedData(values);  // persist the form data back to the record
+            console.log(record.getAssociatedData(true)); // to see the record associations
+            record.save();
+        }
 		form.hide();
-		//save the data to the Web local Storage
-		Ext.getStore('SiteEvaluations').sync();
 
 	},
 

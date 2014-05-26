@@ -38,12 +38,7 @@ Ext.define('EvaluateIt.view.EvaluationScorecardForm', {
 			labelWrap: true
 		},
 		items: [
-			{	
-       			xtype: 'textfield',
-                name: 'Evaluation.Site.Address.address',
-		   		readOnly: true 
-			},
-            {
+			{
                 xtype: 'selectfield',
                 itemId: 'visualImpact',
                 name: 'visualImpact',

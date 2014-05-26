@@ -28,31 +28,64 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
         console.log('Button Click for Save');
 
         //console.log(this.$className);
-        console.log('Button Click for Save');
         var form = button.up('panel'),
         //get the model
             record = form.getRecord(),
         //get the form values
             values = form.getValues( false, false, false, true );
 
-        console.log(record.getData(true)); // to see the record
-        record.setFlattenedData(values);  // persist the form data back to the record
-        console.log(record.getAssociatedData(true)); // to see the record associations
+        // calculatee sum of factor ratings:
+        if (form.getValues().visualImpact !== null
+            && form.getValues().varietyAndHealth !== null
+            && form.getValues().design !== null
+            && form.getValues().maintenance !== null
+            && form.getValues().environmentalStewardship !== null) {
 
-        record.save();
+            /**
+             *
+             * Compute sum of scorecard factores
+             * @type {Integer}
+             */
+            sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
+                form.getValues().visualImpact,
+                form.getValues().varietyAndHealth,
+                form.getValues().design,
+                form.getValues().maintenance,
+                form.getValues().environmentalStewardship);
 
+            /**
+             * Determine ranking of evaluation
+             * calls UtilityService function
+             * @type {String}
+             */
+            evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
+
+            // TODO: display on form
+            alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
+
+            form.setValues({
+                sumRating: sumRating
+            })
+
+            values = form.getValues();
+            record = form.getRecord();
+
+        }
+        else {
+            alert('missing factor rating!');
+        }
 
 		if(!record){
-			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
-			Ext.getStore('SiteEvaluations').add(newRecord);
+			// something went horribly wrong!
 		}
 		//existing siteEvaluation
 		else {
-			record.set(values);
+            console.log(record.getData(true)); // to see the record
+            record.setFlattenedData(values);  // persist the form data back to the record
+            console.log(record.getAssociatedData(true)); // to see the record associations
+            record.save();
 		}
 		form.hide();
-		//save the data to the Web local Storage
-		Ext.getStore('SiteEvaluations').sync();
 
 	},
 

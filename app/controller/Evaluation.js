@@ -51,96 +51,19 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         //get the form values
             values = form.getValues( false, false, false, true );
 
-        console.log(record.getData(true)); // to see the record
-        record.setFlattenedData(values);  // persist the form data back to the record
-        console.log(record.getAssociatedData(true)); // to see the record associations
-
-        record.save();
-
-
-        // calculatee sum of factor ratings:
-        if (form.getValues().visualImpact !== null
-            && form.getValues().varietyAndHealth !== null
-            && form.getValues().design !== null
-            && form.getValues().maintenance !== null
-            && form.getValues().environmentalStewardship !== null) {
-
-            /**
-             *
-             * Compute sum of scorecard factores
-             * @type {Integer}
-             */
-            sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
-                form.getValues().visualImpact,
-                form.getValues().varietyAndHealth,
-                form.getValues().design,
-                form.getValues().maintenance,
-                form.getValues().environmentalStewardship);
-
-            /**
-             * Determine ranking of evaluation
-             * calls UtilityService function
-             * @type {String}
-             */
-
-            evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
-
-            // TODO: display on form
-            alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
-
-            form.setValues({
-                sumRating: sumRating
-            })
-
-            values = form.getValues();
-            record = form.getRecord();
-
-        }
-        else {
-            alert('missing factor rating!');
-        }
-
-        //if a new Evaluation
         if(!record){
             // something went horribly wrong, since a new Evaluation association hierarchy should have been created
             // when entering a new Site/Address as per controller.SiteGeneral onSaveSiteGeneral method
         }
         //existing siteEvaluation
         else {
+            console.log(record.getData(true)); // to see the record
+            record.setFlattenedData(values);  // persist the form data back to the record
+            console.log(record.getAssociatedData(true)); // to see the record associations
+            record.save();
 
-            //console.log('setFlattenedData( form.getValues())' +  model.setFlattenedData( form.getValues(false, false, false, true)) );
-            // TODO: update record using setFlattenedData method in BaseModel
-
-            // do stuff
-            // get image uri
-            // TODO: redo this!
-            var images = Ext.create('EvaluateIt.store.ImageQueue');
-
-            images.queryBy(function(iRecord,id){
-                images = Ext.getStore(images);
-
-                if (images.getCount() > 0) {
-                    var uri  = iRecord.get('src'); // changed to iRecord from Record: what is effect?
-
-                    console.log('URI: ' +  uri);
-
-                    // update form with image uri
-                    form.setValues({
-                        imageUri: uri
-                    })
-
-                    // refresh values with new data
-                    values = form.getValues();
-                    record = form.getRecord();
-
-                }
-            });
-
-            record.set(values);
         }
         form.hide();
-        //save the data to localStorage
-        Ext.getStore('SiteEvaluations').sync();
 
     },
 

@@ -50,30 +50,25 @@ Ext.define('EvaluateIt.controller.Site', {
     onSaveSite: function(button) {
 
         console.log('Button Click for Save');
-
         //console.log(this.$className);
-        console.log('Button Click for Save');
         var form = button.up('panel'),
             //get the model
             record = form.getRecord(),
             //get the form values
             values = form.getValues( false, false, false, true );
 
-        console.log(record.getData(true)); // to see the record
-        record.setFlattenedData(values);  // persist the form data back to the record
-        console.log(record.getAssociatedData(true)); // to see the record associations
-
-        record.save();
-
         if(!record){
 
-            //TODO: instantiate new Site and  models, and create new blank Evaluation associations per utils.DataService Pull method
-        }
-        //existing siteEvaluation
-        else {
+            //TODO: instantiate  blank Site, Evaluation, EvaluationAward, EvaluationAward models,
+            // with associations per utils.DataService Pull method along with new Address record from SiteForm
 
-            //TODO: console.log('setFlattenedData( form.getValues())' +  model.setFlattenedData( form.getValues(false, false, false, true)) );
-            // update record using setFlattenedData method in BaseModel
+        }
+        //existing site evaluation
+        else {
+            console.log(record.getData(true)); // to see the record
+            record.setFlattenedData(values);  // persist the form data back to the record
+            console.log(record.getAssociatedData(true)); // to see the record associations
+            record.save();
         }
         form.hide();
 
