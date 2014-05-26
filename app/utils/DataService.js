@@ -95,6 +95,15 @@ Ext.define('EvaluateIt.utils.DataService', {
                 // set hasOne association using model's getter
                 site.setAddress(address.id);
 
+                // create blank geolocation
+                var geolocation = Ext.create('EvaluateIt.model.Geolocation', {
+                });
+
+                console.log('geolocation.id ' + geolocation.id);
+
+                // set hasOne association using model's getter
+                site.setGeolocation(geolocation.id);
+
                 // create blank award
                 var award = Ext.create('EvaluateIt.model.EvaluationAward', {
                 });
@@ -131,16 +140,21 @@ Ext.define('EvaluateIt.utils.DataService', {
                 // save everything
                 evaluationRecs.sync();
                 site.save();
+                geolocation.setSite(site.id);
+                geolocation.save();
                 address.setSite(site.id);
                 address.save();
                 award.save();
                 scorecard.save();
             }
 
-            // reload store to show up-to-date data in Xtemplates
+            // reload stores to show up-to-date data in Xtemplates
             Ext.StoreMgr.get('Sites').load();
             Ext.StoreMgr.get('Evaluations').load();
             Ext.StoreMgr.get('Addresses').load();
+            Ext.StoreMgr.get('EvaluationAwards').load();
+            Ext.StoreMgr.get('EvaluationScorecards').load();
+            Ext.StoreMgr.get('Geolocations').load();
        }
     },
 

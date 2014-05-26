@@ -8,16 +8,10 @@ Ext.define('EvaluateIt.view.SiteGeolocationList', {
 		width: Ext.os.deviceType == 'Phone' ? null : 300,
 		height: Ext.os.deviceType == 'Phone' ? null : 500,
 		xtype: 'list',
-		store: 'Sites', //getRange(0, 9),
-		itemTpl:  new Ext.XTemplate(//[
-            /**
-             * Template to display list
-             */
-			'<tpl if="values.accuracy !== null"> {accuracy} m for</tpl>' +
-                '<div>',
-                '<strong>Address: {Address.address}</strong>',
-                '</div> '
-		),
+		store: 'Geolocations', //getRange(0, 9),
+        itemTpl: [
+            '<div><strong>Address: {Site.Address.address}</strong></div> '
+        ],
 		variableHeights: false
     }
 

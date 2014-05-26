@@ -46,23 +46,6 @@ Ext.define('EvaluateIt.view.SiteForm', {
          * TODO: create enumeration
          */
         items: [
-            /*{
-             xtype: 'datepickerfield',
-             destroyPickerOnHide: true,
-             name : 'dateOfEvaluation',
-             label: 'Date of evaluation',
-             dateFormat: 'm/d/Y',
-             value: new Date(),
-             picker: {
-             yearFrom: 2014
-             }
-             },*/
-            {
-                xtype: 'textfield',
-                name: 'address_id',
-                label: 'id',
-                itemId: 'address_id'
-            },
             {
                 xtype: 'textfield',
                 name: 'address',

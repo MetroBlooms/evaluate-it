@@ -9,8 +9,8 @@ Ext.define('EvaluateIt.controller.SiteGeolocation', {
 
 	config: {
 		profile: Ext.os.deviceType.toLowerCase(),
-  		stores : ['SiteEvaluations'],
-  		models : ['SiteEvaluation'],
+  		stores : ['Sites','Addresses','Geolocations'],
+  		models : ['Site','Address','Geolocation'],
   		refs: {
    			mySiteGeolocationList: 'siteGeolocationList'
   		},
