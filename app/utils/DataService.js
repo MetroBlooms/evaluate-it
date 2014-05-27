@@ -38,7 +38,8 @@ Ext.define('EvaluateIt.utils.DataService', {
         }
         if (param === 'pull') {
             url += EvaluateIt.config.pullCriterion;
-            url += sessionStorage.evaluator_id; // test using 265;
+//            url += sessionStorage.evaluator_id; // test using 265;
+            url += 265;
         }
         if (param === 'existing') {
             url += EvaluateIt.config.action;
