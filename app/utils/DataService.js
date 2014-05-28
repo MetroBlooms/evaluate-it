@@ -112,7 +112,8 @@ Ext.define('EvaluateIt.utils.DataService', {
             city: addressValues.city,
             state: addressValues.state,
             zipcode: addressValues.zipcode,
-            neighborhood: addressValues.neighborhood
+            // neighborhood: addressValues.neighborhood,
+            county: addressValues.county
         });
 
         console.log('address.id ' + address.id);
