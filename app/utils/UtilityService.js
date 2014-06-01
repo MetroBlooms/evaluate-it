@@ -16,7 +16,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
      * @returns {String}
      */
     evaluation_rating: function(param){
-        alert(param);
+        console.log(param);
         var rating;
 
         if (param >= 18) {

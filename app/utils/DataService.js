@@ -38,7 +38,8 @@ Ext.define('EvaluateIt.utils.DataService', {
         }
         if (param === 'pull') {
             url += EvaluateIt.config.pullCriterion;
-            url += sessionStorage.evaluator_id; // test using 265;
+//            url += sessionStorage.evaluator_id; // test using 265;
+            url += 265;
         }
         if (param === 'existing') {
             url += EvaluateIt.config.action;
@@ -76,76 +77,16 @@ Ext.define('EvaluateIt.utils.DataService', {
         for (i = 0, max = json.length; i < max; i += 1) {
 
             if (json[i].completed === '1') {
-
-                var address = Ext.create('EvaluateIt.model.Address', {
+                /*var address = Ext.create('EvaluateIt.model.Address', {
                     address: json[i].garden.address.address,
                     city: json[i].garden.address.city,
                     state: json[i].garden.address.state,
                     zipcode: json[i].garden.address.zip,
                     neighborhood: json[i].garden.address.neighborhood
                 });
-
-                console.log('address.id ' + address.id);
-
-                // create model using remote data
-                var site = Ext.create('EvaluateIt.model.Site', {
-                    remoteSiteId: json[i].garden.garden_id
-                });
-
-                // set hasOne association using model's getter
-                site.setAddress(address.id);
-
-                // create blank geolocation
-                var geolocation = Ext.create('EvaluateIt.model.Geolocation', {
-                });
-
-                console.log('geolocation.id ' + geolocation.id);
-
-                // set hasOne association using model's getter
-                site.setGeolocation(geolocation.id);
-
-                // create blank award
-                var award = Ext.create('EvaluateIt.model.EvaluationAward', {
-                });
-
-                // create blank scorecard
-                var scorecard = Ext.create('EvaluateIt.model.EvaluationScorecard', {
-                });
-
-                // set hasMany evaluation by creating a blank record
-                var evalArray,
-                    evaluationRecs = site.Evaluation(), // set association
-                    evalModel = Ext.ModelManager.getModel('EvaluateIt.model.Evaluation'); // Get the model from the application models auto-getter
-
-                if (evaluationRecs.getCount() === 0){
-                    //  Note: .add(model) returns an array/store of model instances
-                    evalArray = evaluationRecs.add(evalModel);
-                    // set values using remote data
-                    evalArray[0].set({
-                        evaluator_id: json[i].evaluator.evaluator_id,
-                        remoteEvaluationId: json[i].evaluation_id
-                    });
-
-                    // grab first and only model instance from store
-                    // and set associations
-                    console.log('stuff: ' + evaluationRecs.first().id);
-
-                    award.setEvaluation(evaluationRecs.first().id);
-                    evaluationRecs.first().setEvaluationAward(award.id);
-
-                    scorecard.setEvaluation(evaluationRecs.first().id);
-                    evaluationRecs.first().setEvaluationScorecard(scorecard.id);
-                }
-
-                // save everything
-                evaluationRecs.sync();
-                site.save();
-                geolocation.setSite(site.id);
-                geolocation.save();
-                address.setSite(site.id);
-                address.save();
-                award.save();
-                scorecard.save();
+                 */
+                var addressValues = json[i].garden.address ;
+                this.newEvaluation(addressValues, json[i].garden.garden_id, json[i].evaluator.evaluator_id,json[i].evaluator.evaluation_id);
             }
 
             // reload stores to show up-to-date data in Xtemplates
@@ -156,6 +97,91 @@ Ext.define('EvaluateIt.utils.DataService', {
             Ext.StoreMgr.get('EvaluationScorecards').load();
             Ext.StoreMgr.get('Geolocations').load();
        }
+    },
+
+    /**
+     *
+     * @param addressValues required dictionary with EvaluateIt.model.address elements
+     * @param gardenId optional
+     * @param evaluatorId optional
+     * @param evaluationId optional
+     */
+    newEvaluation: function( addressValues, gardenId, evaluatorId, evaluationId ){
+        var address = Ext.create('EvaluateIt.model.Address', {
+            address: addressValues.address,
+            city: addressValues.city,
+            state: addressValues.state,
+            zipcode: addressValues.zipcode,
+            // neighborhood: addressValues.neighborhood,
+            county: addressValues.county
+        });
+
+        console.log('address.id ' + address.id);
+
+        // create model using remote data
+        if(gardenId == null) {
+            var site = Ext.create('EvaluateIt.model.Site', {
+            });
+        } else {
+            var site = Ext.create('EvaluateIt.model.Site', {
+                remoteSiteId: gardenId
+        });
+        }
+
+        // set hasOne association using model's getter
+        site.setAddress(address.id);
+
+        // create blank geolocation
+        var geolocation = Ext.create('EvaluateIt.model.Geolocation', {
+        });
+
+        console.log('geolocation.id ' + geolocation.id);
+
+        // set hasOne association using model's getter
+        site.setGeolocation(geolocation.id);
+
+        // create blank award
+        var award = Ext.create('EvaluateIt.model.EvaluationAward', {
+        });
+
+        // create blank scorecard
+        var scorecard = Ext.create('EvaluateIt.model.EvaluationScorecard', {
+        });
+
+        // set hasMany evaluation by creating a blank record
+        var evalArray,
+            evaluationRecs = site.Evaluation(), // set association
+            evalModel = Ext.ModelManager.getModel('EvaluateIt.model.Evaluation'); // Get the model from the application models auto-getter
+
+        if (evaluationRecs.getCount() === 0){
+            //  Note: .add(model) returns an array/store of model instances
+            evalArray = evaluationRecs.add(evalModel);
+            // set values using remote data
+            evalArray[0].set({
+                evaluator_id: evaluatorId,
+                remoteEvaluationId: evaluationId
+            });
+
+            // grab first and only model instance from store
+            // and set associations
+            console.log('stuff: ' + evaluationRecs.first().id);
+
+            award.setEvaluation(evaluationRecs.first().id);
+            evaluationRecs.first().setEvaluationAward(award.id);
+
+            scorecard.setEvaluation(evaluationRecs.first().id);
+            evaluationRecs.first().setEvaluationScorecard(scorecard.id);
+        }
+
+        // save everything
+        evaluationRecs.sync();
+        site.save();
+        geolocation.setSite(site.id);
+        geolocation.save();
+        address.setSite(site.id);
+        address.save();
+        award.save();
+        scorecard.save();
     },
 
     /**

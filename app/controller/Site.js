@@ -37,6 +37,7 @@ Ext.define('EvaluateIt.controller.Site', {
             siteForm = Ext.widget('siteForm');
         }
         siteForm.reset();
+        siteForm.setValues('[]');
         siteForm.showBy(button);
     },
 
@@ -61,7 +62,14 @@ Ext.define('EvaluateIt.controller.Site', {
 
             //TODO: instantiate  blank Site, Evaluation, EvaluationAward, EvaluationAward models,
             // with associations per utils.DataService Pull method along with new Address record from SiteForm
+            EvaluateIt.utils.DataService.newEvaluation(values);
 
+            Ext.StoreMgr.get('Sites').load();
+            Ext.StoreMgr.get('Evaluations').load();
+            Ext.StoreMgr.get('Addresses').load();
+            Ext.StoreMgr.get('EvaluationAwards').load();
+            Ext.StoreMgr.get('EvaluationScorecards').load();
+            Ext.StoreMgr.get('Geolocations').load();
         }
         //existing site evaluation
         else {
