@@ -60,7 +60,7 @@ Ext.define('EvaluateIt.controller.Main', {
 
 			console.log('forms category: ' + category);
 
-			// create filter based on filtered use case	
+			// create filter based on use case
 			var listStore = Ext.data.StoreManager.lookup('SiteEvaluations'); 
 			listStore.clearFilter();
 
@@ -83,14 +83,15 @@ Ext.define('EvaluateIt.controller.Main', {
 				});
 
 			}
+
 			// only display those evaluations deemed as "complete"
 			if (category === 'push') {
 				console.log('we are in: ' + category);
-				// nothing to evaluate
 
+                // condition for complete evaluation
 				listStore.filterBy(function(record, id) {
-   	 				if (record.get('noLongerExists') === true || 
-						(record.get('useOfColor') !== null 
+   	 				if (record.get('noLongerExists') === true || // in Evaluation model
+						(record.get('useOfColor') !== null // in EvaluationScorecard model
 						&& record.get('varietyAndHealth') !== null 
 						&& record.get('design') !== null 
 						&& record.get('maintenance') !== null 
