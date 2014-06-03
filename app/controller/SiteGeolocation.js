@@ -121,7 +121,7 @@ Ext.define('EvaluateIt.controller.SiteGeolocation', {
 							record.set('accuracy',sessionStorage.accuracy);
 
 							// update store with new values	
-							Ext.getStore('SiteEvaluations').sync();
+							Ext.getStore('Geolocations').sync();
 							alert('Location was saved successfully!');
 
 						}

@@ -32,7 +32,7 @@
 						iconCls: 'arrow_right',
 						iconMask: true,
 						handler: function() {
-                            EvaluateIt.utils.Global.get_position();
+                            EvaluateIt.utils.UtilityService.get_position();
 						}
 					},
             		{
@@ -42,7 +42,7 @@
 						iconCls: 'arrow_right',
 						iconMask: true,
 						handler: function() {
-                            EvaluateIt.utils.Global.clear_watch();
+                            EvaluateIt.utils.UtilityService.clear_watch();
 						}
 					}
 
