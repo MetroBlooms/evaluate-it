@@ -7,8 +7,8 @@ Ext.define('EvaluateIt.controller.Push', {
 
 	config: {
 		profile: Ext.os.deviceType.toLowerCase(),
-  		stores: ['SiteEvaluations'],
-  		models: ['SiteEvaluation'],
+  		stores: ['Sites'],
+  		models: ['Site'],
   		refs: {
    			myPushList: 'pushList'
   		},
@@ -56,7 +56,7 @@ Ext.define('EvaluateIt.controller.Push', {
 		//if a new push
 		if(!record){
 			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
-			Ext.getStore('SiteEvaluations').add(newRecord);
+			Ext.getStore('Sites').add(newRecord);
 		}
 		//existing push
 		else {
@@ -65,7 +65,7 @@ Ext.define('EvaluateIt.controller.Push', {
 		form.hide();
 
 		//save the data to the Web SQL
-		Ext.getStore('SiteEvaluations').sync();
+		Ext.getStore('Sites').sync();
 
 		// assemble record and push to remote server
         EvaluateIt.utils.DataService.push(record);

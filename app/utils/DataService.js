@@ -203,25 +203,57 @@ Ext.define('EvaluateIt.utils.DataService', {
             ad_hoc = {},
             eval_type;
 
+        console.log('id:' + record.data.id)
+
+        // get all data
+
+        addressStore = Ext.create('EvaluateIt.store.Addresses');
+        address = addressStore.findRecord('site_id', record.data.id);
+        console.log(address.getData(true));
+        console.log('address.id:' + address.get('id'));
+
+        geolocationStore = Ext.create('EvaluateIt.store.Geolocations');
+        geolocation = geolocationStore.findRecord('site_id', record.data.id);
+        console.log(geolocation.getData(true));
+        console.log('geolocation.id:' + geolocation.get('id'));
+
+        evaluationStore = Ext.create('EvaluateIt.store.Evaluations');
+        evaluation = evaluationStore.findRecord('site_id', record.data.id);
+        console.log(evaluation.getData(true));
+        console.log('evaluation.id:' + evaluation.get('id'));
+
+        EvaluationScorecardStore = Ext.create('EvaluateIt.store.EvaluationScorecards');
+        evaluationScorecard = EvaluationScorecardStore .findRecord('evaluation_id', evaluation.get('id'));
+        console.log(evaluationScorecard.getData(true));
+        console.log('evaluationScorecard.id:' + evaluationScorecard.get('id'));
+
+        EvaluationAwardStore = Ext.create('EvaluateIt.store.EvaluationAwards');
+        evaluationAward = EvaluationAwardStore .findRecord('evaluation_id', evaluation.get('id'));
+        console.log(evaluationAward.getData(true));
+        console.log('evaluationAward.id:' + evaluationAward.get('id'));
+
+
+
+
         // compute score: TODO: check for null/isInt!
-        if (record.data.visualImpact !== null
-            && !record.data.varietyAndHealth !== null
-            && !record.data.design !== null
-            && !record.data.maintenance !== null
-            && !record.data.environmentalStewardship !== null) {
+        if (evaluationScorecard.get('visualImpact') !== null
+            && evaluationScorecard.get('varietyAndHealth') !== null
+            && evaluationScorecard.get('design') !== null
+            && evaluationScorecard.get('maintenance') !== null
+            && evaluationScorecard.get('environmentalStewardship') !== null) {
 
             /**
              *
              * Compute sum of scorecard factores
              * @type {Integer}
              */
-            score = EvaluateIt.utils.UtilityService.sum_factor_ratings(record.data.visualImpact,
-                record.data.varietyAndHealth,
-                record.data.design,
-                record.data.maintenance,
-                record.data.environmentalStewardship);
+            score = EvaluateIt.utils.UtilityService.sum_factor_ratings(evaluationScorecard.get('visualImpact'),
+                evaluationScorecard.get('varietyAndHealth'),
+                evaluationScorecard.get('design'),
+                evaluationScorecard.get('maintenance'),
+                evaluationScorecard.get('environmentalStewardship'));
 
-
+            console.log('score: ' + score);
             // get rating for given score
             /**
              * Determine ranking of evaluation
@@ -230,7 +262,7 @@ Ext.define('EvaluateIt.utils.DataService', {
              */
             rating = EvaluateIt.utils.UtilityService.evaluation_rating (score);
 
-            console.log("rating" + rating);
+            console.log('rating: ' + rating);
         }
         else {
             score = null;
@@ -238,10 +270,10 @@ Ext.define('EvaluateIt.utils.DataService', {
         }
 
         // get award if given
-        award = EvaluateIt.utils.UtilityService.evaluation_award(record.data.awardId);
-        console.log("award" + award.bestof + ' ' + award.nate_seigel);
+        award = EvaluateIt.utils.UtilityService.evaluation_award(evaluationAward.get('id'));
+        console.log('award ' + award.bestof + ' ' + award.nate_seigel);
 
-        if (record.data.noLongerExists === 'true' || record.data.noLongerExists === true) {
+        if (evaluation.get('noLongerExists') === 'true' || evaluation.get('noLongerExists') === true) {
             no_longer_exists = 1;
         }
 
@@ -261,23 +293,23 @@ Ext.define('EvaluateIt.utils.DataService', {
                 rating: rating,
                 rating_year: currentYear,
                 bestof: award.bestof,
-                special_award_specified: record.data.specialAwardSpecified,
+                special_award_specified: evaluationAward.get('specialAwardSpecified'),
                 evaluator_id: sessionStorage.evaluator_id, // would use remoteEvaluatorId, but if ad hoc this will not exist
                 nate_siegel_award: award.nate_seigel,
-                date_evaluated: Ext.Date.format(record.data.dateOfEvaluation, 'm/d/Y'), // formatted as mm/dd/yyyy
-                comments: record.data.comments,
+                date_evaluated: Ext.Date.format(evaluation.get('dateOfEvaluation'), 'm/d/Y'), // formatted as mm/dd/yyyy
+                comments: evaluation.get('comments'),
                 scoresheet: {
-                    color: record.data.visualImpact,
-                    plant_variety: record.data.varietyAndHealth,
-                    design: record.data.design,
-                    maintenance: record.data.maintenance,
-                    environmental_stewardship: record.data.environmentalStewardship
+                    color: evaluationScorecard.get('visualImpact'),
+                    plant_variety: evaluationScorecard.get('varietyAndHealth'),
+                    design: evaluationScorecard.get('design'),
+                    maintenance: evaluationScorecard.get('maintenance'),
+                    environmental_stewardship: evaluationScorecard.get('environmentalStewardship')
                 }
             },
             geolocation: {
-                latitude: record.data.latitude,
-                longitude: record.data.longitude,
-                accuracy: record.data.accuracy
+                latitude: geolocation.get('latitude'),
+                longitude: geolocation.get('longitude'),
+                accuracy: geolocation.get('accuracy')
             }
 
         };
@@ -309,12 +341,12 @@ Ext.define('EvaluateIt.utils.DataService', {
                 nominator_name: sessionStorage.firstname + ' ' + sessionStorage.lastname,
                 nominator_email: sessionStorage.email,
                 gardener_name: record.data.name,
-                address: record.data.address,
-                city: record.data.city,
-                state: record.data.state,
-                zip: record.data.zipcode,
-                neighborhood: record.data.neighborhood,
-                county: record.data.county
+                address: address.get('address'),
+                city: address.get('city'),
+                state: address.get('state'),
+                zip: address.get('zipcode'),
+                neighborhood: address.get('neighborhood'),
+                county: address.get('county')
             },
             garden: {}
         };
@@ -355,22 +387,22 @@ Ext.define('EvaluateIt.utils.DataService', {
              *
              */
             var url,
-                store = Ext.create('EvaluateIt.store.SiteEvaluations'),
-                update_record = store.findExact('remoteEvaluationId', record.data.id),
+                store = Ext.create('EvaluateIt.store.Evaluations'),
+                //update_record = store.findExact('remoteEvaluationId', record.data.id),
                 now = new Date();
 
             if (eval_type === 'existing') {
-                url = EvaluateIt.utils.UtilityService.url('existing');
+                url = EvaluateIt.utils.DataService.url('existing');
             }
             if (eval_type === 'new') {
-                url = EvaluateIt.utils.UtilityService.url('new');
+                url = EvaluateIt.utils.DataService.url('new');
             }
 
             console.log('new url: ' + url);
 
             Ext.Ajax.request({
                 type: 'POST',
-                url: url,
+                //url: url,
                 jsonData: obj,
 
                 success: function (response) {
@@ -380,7 +412,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
                     // flag as uploaded by updating store attribute datePostedToRemote with date
                     store = Ext.getStore(store);
-                    update_record = store.findRecord('id', record.data.id );
+                    update_record = store.findRecord('site_id', record.data.id );
                     update_record.set('datePostedToRemote', now);
                     store.sync();
 

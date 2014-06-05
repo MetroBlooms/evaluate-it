@@ -61,7 +61,7 @@ Ext.define('EvaluateIt.controller.Main', {
 			console.log('forms category: ' + category);
 
 			// create filter based on use case
-			var listStore = Ext.data.StoreManager.lookup('SiteEvaluations'); 
+			var listStore = Ext.data.StoreManager.lookup('Evaluations');
 			listStore.clearFilter();
 
 			if (category === 'evaluations') { 
@@ -85,7 +85,7 @@ Ext.define('EvaluateIt.controller.Main', {
 			}
 
 			// only display those evaluations deemed as "complete"
-			if (category === 'push') {
+			/*if (category === 'push') {
 				console.log('we are in: ' + category);
 
                 // condition for complete evaluation
@@ -99,7 +99,7 @@ Ext.define('EvaluateIt.controller.Main', {
         					return true;
 						}
 				});
-			}
+			}*/
 		
 
 		}

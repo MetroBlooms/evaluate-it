@@ -58,7 +58,8 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
 			{
                 xtype: 'datepickerfield',
                 destroyPickerOnHide: true,
-                name : 'dateOfEvaluation',
+                //name : 'dateOfEvaluation',
+                itemId : 'dateOfEvaluation',
                 label: 'Date of evaluation',
                 dateFormat: 'm/d/Y',
                 value: new Date(),

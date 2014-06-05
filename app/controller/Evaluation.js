@@ -49,7 +49,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         //get the model
             record = form.getRecord(),
         //get the form values
-            values = form.getValues( false, false, false, true );
+            values = form.getValues( false, false, false, true);
 
         if(!record){
             // something went horribly wrong, since a new Evaluation association hierarchy should have been created
@@ -60,11 +60,17 @@ Ext.define('EvaluateIt.controller.Evaluation', {
             console.log(record.getData(true)); // to see the record
             record.setFlattenedData(values);  // persist the form data back to the record
             console.log(record.getAssociatedData(true)); // to see the record associations
+
+            values = form.getValues( false, false, false, true)
+
+            record = form.getRecord()
+
+
             record.save();
 
         }
         form.hide();
-
+        Ext.getStore('Evaluations').sync();
     },
 
     onSelectEvaluation: function(view, index, target, record, event) {

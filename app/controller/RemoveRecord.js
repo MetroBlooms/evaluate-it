@@ -6,8 +6,8 @@ Ext.define('EvaluateIt.controller.RemoveRecord', {
 
 	config: {
   		profile: Ext.os.deviceType.toLowerCase(),
-  		stores : ['SiteEvaluations'],
-  		models : ['SiteEvaluation'],
+  		stores : ['Sites'],
+  		models : ['Site'],
 		refs: {
    			myRemoveRecordList: 'removeRecordList'
   		},
