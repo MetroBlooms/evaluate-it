@@ -7,7 +7,7 @@ Ext.define('EvaluateIt.view.SiteList', {
     config: {
 		width: Ext.os.deviceType == 'Phone' ? null : 300,
 		height: Ext.os.deviceType == 'Phone' ? null : 500,
-       xtype: 'list',
+        xtype: 'list',
 		store: 'Addresses',
         /**
          * Template to display list

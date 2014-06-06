@@ -13,7 +13,6 @@ Ext.define('EvaluateIt.view.Push', {
 		alias: 'widget.pushview',
 		config: {
 			layout: 'vbox',
-			layout: 'fit',
 			items: [
 				{
 					xtype: 'toolbar',

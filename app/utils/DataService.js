@@ -33,7 +33,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
         url += EvaluateIt.config.domain;
 
-        if (param === 'pull' || param === 'existing' || param === 'new' || param === 'file') {
+        if (param === 'pull' || param === 'existing' || param === 'file') {
             url += EvaluateIt.config.apiViewEvaluation;
         }
         if (param === 'new') {
@@ -80,14 +80,6 @@ Ext.define('EvaluateIt.utils.DataService', {
         for (i = 0, max = json.length; i < max; i += 1) {
 
             if (json[i].completed === '1') {
-                /*var address = Ext.create('EvaluateIt.model.Address', {
-                    address: json[i].garden.address.address,
-                    city: json[i].garden.address.city,
-                    state: json[i].garden.address.state,
-                    zipcode: json[i].garden.address.zip,
-                    neighborhood: json[i].garden.address.neighborhood
-                });
-                 */
                 var addressValues = json[i].garden.address ;
                 this.newEvaluation(addressValues, json[i].garden.garden_id, json[i].evaluator.evaluator_id,json[i].evaluation_id);
             }
@@ -361,7 +353,7 @@ Ext.define('EvaluateIt.utils.DataService', {
         console.log('stuff: ' + record.data.remoteSiteId + ' ' +  evaluation.get('remoteEvaluationId') + ' ' + evaluation.get('evaluator_id'))
         if (record.data.remoteSiteId && evaluation.get('remoteEvaluationId') && evaluation.get('evaluator_id')) {
             obj = Ext.Object.merge(core, existing);
-            obj.evaluation.evaluation_id = record.data.remoteEvaluationId;
+            obj.evaluation.evaluation_id = evaluation.get('remoteEvaluationId');
             console.log('existing');
             eval_type = 'existing';
         }
@@ -408,7 +400,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 type: 'POST',
                 url: url,
                 jsonData: obj,
-
+                //cors: true,
                 success: function (response) {
                     console.log('success: ' + response.responseText);
 
@@ -432,7 +424,7 @@ Ext.define('EvaluateIt.utils.DataService', {
             // check if image exists in store
             if (evaluation.get('imageUri') !== null && evaluation.get('imageUri') !== '') {
                 console.log('file exists!');
-                file_post(record,evaluation);
+                //file_post(record,evaluation);
             }
         }
 
@@ -454,7 +446,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 //options = new FileUploadOptions(),
                 //ft = new FileTransfer();
 
-            uri = record.data.imageUri; // local path to image
+            uri = evaluation.get('imageUri'); // local path to image
             url = EvaluateIt.utils.DataService.url('file');
 
             console.log('upload uri: ' + uri + 'url: ' + url);
