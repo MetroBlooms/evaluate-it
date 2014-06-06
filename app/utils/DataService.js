@@ -17,7 +17,7 @@ Ext.define('EvaluateIt.utils.DataService', {
      */
     url: function(param){
     // utilize API as per web site standard
-        // value set via {EvaluateIt.config}
+        // value set via {EvaluateIt.config} in app.js
 
         console.log('Service test:' + param);
 
@@ -35,6 +35,9 @@ Ext.define('EvaluateIt.utils.DataService', {
 
         if (param === 'pull' || param === 'existing' || param === 'new' || param === 'file') {
             url += EvaluateIt.config.apiViewEvaluation;
+        }
+        if (param === 'new') {
+            url += EvaluateIt.config.apiViewNomination;
         }
         if (param === 'pull') {
             url += EvaluateIt.config.pullCriterion;
@@ -86,7 +89,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 });
                  */
                 var addressValues = json[i].garden.address ;
-                this.newEvaluation(addressValues, json[i].garden.garden_id, json[i].evaluator.evaluator_id,json[i].evaluator.evaluation_id);
+                this.newEvaluation(addressValues, json[i].garden.garden_id, json[i].evaluator.evaluator_id,json[i].evaluation_id);
             }
 
             // reload stores to show up-to-date data in Xtemplates
@@ -296,7 +299,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 special_award_specified: evaluationAward.get('specialAwardSpecified'),
                 evaluator_id: sessionStorage.evaluator_id, // would use remoteEvaluatorId, but if ad hoc this will not exist
                 nate_siegel_award: award.nate_seigel,
-                date_evaluated: Ext.Date.format(evaluation.get('dateOfEvaluation'), 'm/d/Y'), // formatted as mm/dd/yyyy
+                //date_evaluated: Ext.Date.format(evaluation.get('dateOfEvaluation'), 'm/d/Y'), // formatted as mm/dd/yyyy
                 comments: evaluation.get('comments'),
                 scoresheet: {
                     color: evaluationScorecard.get('visualImpact'),
@@ -354,14 +357,15 @@ Ext.define('EvaluateIt.utils.DataService', {
         console.log('Assembled ad_hoc to push: ' + Ext.encode(ad_hoc));
 
         // Assemble json for submission
-        // existing:
-        if (record.data.remoteSiteId && record.data.remoteEvaluationId && record.data.remoteEvaluatorId) {
+        // existing site evaluation
+        console.log('stuff: ' + record.data.remoteSiteId + ' ' +  evaluation.get('remoteEvaluationId') + ' ' + evaluation.get('evaluator_id'))
+        if (record.data.remoteSiteId && evaluation.get('remoteEvaluationId') && evaluation.get('evaluator_id')) {
             obj = Ext.Object.merge(core, existing);
             obj.evaluation.evaluation_id = record.data.remoteEvaluationId;
             console.log('existing');
             eval_type = 'existing';
         }
-        // new
+        // new site evaluation
         else {
             obj = Ext.Object.merge(core, ad_hoc);
             obj.evaluation.uuid = record.data.id; // new uses uuid as linking id
@@ -371,7 +375,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
         console.log('Assembled object to push: ' + Ext.encode(obj));
 
-        post(obj, record, eval_type);
+        post(obj, record, evaluation, eval_type);
 
         /**
          * Ajax to remote REST service
@@ -380,7 +384,7 @@ Ext.define('EvaluateIt.utils.DataService', {
          * @param record
          * @param eval_type
          */
-        function post(obj, record, eval_type) {
+        function post(obj, record, evaluation, eval_type) {
 
             /**
              * Assemble url as per API definition
@@ -402,7 +406,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
             Ext.Ajax.request({
                 type: 'POST',
-                //url: url,
+                url: url,
                 jsonData: obj,
 
                 success: function (response) {
@@ -423,9 +427,12 @@ Ext.define('EvaluateIt.utils.DataService', {
                 }
             });
 
+            console.log('yar! ' + evaluation.get('imageUri'));
+
             // check if image exists in store
-            if (record.get('imageUri') !== null && record.get('imageUri') !== '') {
-                file_post(record);
+            if (evaluation.get('imageUri') !== null && evaluation.get('imageUri') !== '') {
+                console.log('file exists!');
+                file_post(record,evaluation);
             }
         }
 
@@ -439,24 +446,24 @@ Ext.define('EvaluateIt.utils.DataService', {
          * @param url
          * @param evaluation_kvp
          */
-        function file_post(record) {
+        function file_post(record,evaluation) {
 
             var uri,
                 url,
-                evaluation_kvp = {},
-                options = new FileUploadOptions(),
-                ft = new FileTransfer();
+                evaluation_kvp = {};
+                //options = new FileUploadOptions(),
+                //ft = new FileTransfer();
 
             uri = record.data.imageUri; // local path to image
             url = EvaluateIt.utils.DataService.url('file');
 
             console.log('upload uri: ' + uri + 'url: ' + url);
 
-            console.log('evaluation_id, uuid ' + record.data.remoteEvaluationId + ', ' + record.data.id );
+            console.log('evaluation_id, uuid ' + evaluation.get('remoteEvaluationId') + ', ' + record.data.id );
 
             // assemble key value pair for use in file transfer object for: existing evaluation
-            if (record.data.remoteEvaluationId !== null) {
-                evaluation_kvp.evaluation_id = record.data.remoteEvaluationId;
+            if (evaluation.get('remoteEvaluationId') !== null) {
+                evaluation_kvp.evaluation_id = evaluation.get('remoteEvaluationId');
                 console.log('evaluation_id ' + Ext.encode(evaluation_kvp));
             }
             // new nomination/evaluation: use uuid as identifier
@@ -465,14 +472,12 @@ Ext.define('EvaluateIt.utils.DataService', {
                 console.log('uuid ' + Ext.encode(evaluation_kvp));
             }
 
-            EvaluateIt.controller.Push.post_file(uri, url, evaluation_kvp);
-
             options.fileKey = 'userfile';
             options.mimeType = 'image/jpeg';
             options.chunkedMode = false;
             options.params = evaluation_kvp; // attached key value pair
 
-            ft.upload(uri, encodeURI(url), post_success, post_error, options);
+           // ft.upload(uri, encodeURI(url), post_success, post_error, options);
         }
 
         function post_success(r) {

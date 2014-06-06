@@ -57,15 +57,33 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         }
         //existing siteEvaluation
         else {
+
+            // get image uri
+            var images = Ext.create('EvaluateIt.store.ImageQueue');
+            images.queryBy(function(iRecord,id){
+                images = Ext.getStore(images);
+
+                if (images.getCount() > 0) {
+                    var uri  = iRecord.get('src');
+
+                    console.log('URI: ' +  uri);
+
+
+                    // update form with URI
+                    form.setValues({
+                        imageUri: uri
+                    })
+
+                    // reset values with newly added data
+                    values = form.getValues(false, false, false, true);
+                    record = form.getRecord();
+
+                }
+            });
+
             console.log(record.getData(true)); // to see the record
             record.setFlattenedData(values);  // persist the form data back to the record
             console.log(record.getAssociatedData(true)); // to see the record associations
-
-            values = form.getValues( false, false, false, true)
-
-            record = form.getRecord()
-
-
             record.save();
 
         }

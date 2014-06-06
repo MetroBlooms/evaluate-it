@@ -61,10 +61,10 @@ Ext.define('EvaluateIt.controller.Main', {
 			console.log('forms category: ' + category);
 
 			// create filter based on use case
-			var listStore = Ext.data.StoreManager.lookup('Evaluations');
+			var listStore = Ext.data.StoreManager.lookup('Addresses');
 			listStore.clearFilter();
 
-			if (category === 'evaluations') { 
+			//if (category === 'evaluations') {
 				//listStore.clearFilter();
 				console.log('we are in: ' + category);
 
@@ -82,7 +82,7 @@ Ext.define('EvaluateIt.controller.Main', {
 					}
 				});
 
-			}
+			//}
 
 			// only display those evaluations deemed as "complete"
 			/*if (category === 'push') {

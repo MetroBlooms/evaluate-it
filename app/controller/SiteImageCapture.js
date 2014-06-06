@@ -1,6 +1,6 @@
 /**
  *
- * Controls writing image uri to datastore
+ * Controls writing image uri to data store
  */
 
 Ext.define('EvaluateIt.controller.SiteImageCapture',{
@@ -13,7 +13,7 @@ Ext.define('EvaluateIt.controller.SiteImageCapture',{
             myEvaluationList: 'evaluationList'
         },
         control:{
-            'siteEvaluationForm button[itemId=siteImage]' : {
+            'evaluationForm button[itemId=siteImage]' : {
                 tap : 'openCamera'
             }
         }

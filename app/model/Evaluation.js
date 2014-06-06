@@ -15,6 +15,7 @@ Ext.define('EvaluateIt.model.Evaluation', {
             {name: 'evaluator_id', type: 'int'},
  			{name: 'noLongerExists', type: 'boolean'}, // invalid site: nothing to evaluate!
             {name: 'comments', type: 'string'}, // general comments
+            {name: 'imageUri', type: 'string'}, //device's uri of image to be uploaded
             {name: 'evaluationAward_id', type: 'string'}
 
         ],

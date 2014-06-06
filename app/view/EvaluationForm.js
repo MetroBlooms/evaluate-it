@@ -61,10 +61,19 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
                 //name : 'dateOfEvaluation',
                 itemId : 'dateOfEvaluation',
                 label: 'Date of evaluation',
-                dateFormat: 'm/d/Y',
+                placeHolder: 'mm/dd/yyyy',
+                //dateFormat: 'm/d/Y',
                 value: new Date(),
+                //picker: {
+                //    yearFrom: 2014
+                //}
                 picker: {
-                    yearFrom: 2014
+                    useTitles: true,
+                    slotOrder: [
+                        'day',
+                        'month',
+                        'year'
+                    ]
                 }
             },
             {
@@ -76,8 +85,13 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
             {
                 xtype: 'checkboxfield',
                 name: 'noLongerExists',
-                label: 'NoLongerExists  ',
+                label: 'NoLongerExists',
                 itemId: 'noLongerExists'
+            },
+            {
+                xtype: 'hiddenfield',
+                name: 'imageUri',
+                itemId: 'imageId'
             },
             {
                 xtype: 'button',
