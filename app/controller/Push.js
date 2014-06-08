@@ -7,8 +7,8 @@ Ext.define('EvaluateIt.controller.Push', {
 
 	config: {
 		profile: Ext.os.deviceType.toLowerCase(),
-  		stores: ['Sites'],
-  		models: ['Site'],
+  		stores: ['Sites','EvaluationScorecards'],
+  		models: ['Site','EvaluationScorecard'],
   		refs: {
    			myPushList: 'pushList'
   		},
