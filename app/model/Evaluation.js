@@ -11,7 +11,7 @@ Ext.define('EvaluateIt.model.Evaluation', {
             {name: 'datePostedToRemote', type: 'date'}, // date successfully uploaded to remote
 	    	{name: 'evaluationType', type: 'int'}, // type of evaluation done - to be added in the future`
 			{name: 'site_id', type: 'string'},	// linking id for associations
-            {name: 'site_maintainer', type: 'string'}, // TODO: implement as hasMany
+            {name: 'siteMaintainer', type: 'string'}, // TODO: implement as hasMany from Site
             // sessionStorage.evaluator_id =  loginResponse.evaluator_id;
             // Ajax response: json.evaluator.evaluator_id
             {name: 'evaluator_id', type: 'int'},

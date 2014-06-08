@@ -155,7 +155,7 @@ Ext.define('EvaluateIt.utils.DataService', {
             evalArray[0].set({
                 evaluator_id: evaluatorId,
                 remoteEvaluationId: evaluationId,
-                site_maintainer: siteMaintainer
+                siteMaintainer: siteMaintainer
             });
 
             // grab first and only model instance from store

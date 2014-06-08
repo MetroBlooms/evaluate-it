@@ -91,6 +91,12 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
             },
             {
                 xtype: 'textfield',
+                name: 'siteMaintainer',
+                label: 'Gardener',
+                itemId: 'siteMaintainer'
+            },
+            {
+                xtype: 'textfield',
                 name: 'comments',
                 label: 'Comments',
                 itemId: 'comments'
