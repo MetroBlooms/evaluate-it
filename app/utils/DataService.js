@@ -81,7 +81,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
             if (json[i].completed === '1') {
                 var addressValues = json[i].garden.address ;
-                this.newEvaluation(addressValues, json[i].garden.garden_id, json[i].evaluator.evaluator_id,json[i].evaluation_id);
+                this.newEvaluation(addressValues, json[i].garden.garden_id, json[i].evaluator.evaluator_id,json[i].evaluation_id,json[i].garden.gardener.name0);
             }
 
             // reload stores to show up-to-date data in Xtemplates
@@ -101,7 +101,7 @@ Ext.define('EvaluateIt.utils.DataService', {
      * @param evaluatorId optional
      * @param evaluationId optional
      */
-    newEvaluation: function( addressValues, gardenId, evaluatorId, evaluationId ){
+    newEvaluation: function( addressValues, gardenId, evaluatorId, evaluationId, siteMaintainer ){
         var address = Ext.create('EvaluateIt.model.Address', {
             address: addressValues.address,
             city: addressValues.city,
@@ -154,7 +154,8 @@ Ext.define('EvaluateIt.utils.DataService', {
             // set values using remote data
             evalArray[0].set({
                 evaluator_id: evaluatorId,
-                remoteEvaluationId: evaluationId
+                remoteEvaluationId: evaluationId,
+                site_maintainer: siteMaintainer
             });
 
             // grab first and only model instance from store

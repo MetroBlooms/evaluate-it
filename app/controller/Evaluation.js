@@ -25,7 +25,10 @@ Ext.define('EvaluateIt.controller.Evaluation', {
             },
             'evaluationForm button[itemId=cancel]' : {
                 tap : 'onCancelEvaluation'
-            }
+            },
+           //'datepickerfield[itemId=date_raw]': {
+           //     change: 'onDatepickerfieldChange'
+           // }
         }
     },
 
@@ -40,12 +43,27 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         form.destroy();
     },
 
+   /* onDatepickerfieldChange: function (datepickerfield, newDate, oldDate, eOpts) {
+            //var evaluationForm = Ext.Viewport.up('evaluationForm');
+        var form = datepickerfield.up('panel');
+
+            console.log(this.$className);
+            //console.log('Change event trigged');
+
+            //Ext.getCmp('yesh').setValue(datepicker.getFormattedValue());
+            form.setValue(datepickerfield.getFormattedValue())
+
+            //this.getForm().Ext.Cmp('#dateOfEvaluation').setValue(datepicker.getFormattedValue());
+
+    },*/
+
     onSaveEvaluation: function(button) {
         console.log('Button Click for Save');
 
         //console.log(this.$className);
         console.log('Button Click for Save');
         var form = button.up('panel'),
+            now = new Date(),
         //get the model
             record = form.getRecord(),
         //get the form values
@@ -59,25 +77,27 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         else {
 
             // get image uri
-            var images = Ext.create('EvaluateIt.store.ImageQueue');
-            images.queryBy(function(iRecord,id){
+            var images = Ext.create('EvaluateIt.store.ImageQueue'),
+                now = new Date();
+
+
+            images.queryBy(function(imageRecord,id){
                 images = Ext.getStore(images);
 
                 if (images.getCount() > 0) {
-                    var uri  = iRecord.get('src');
+                    var uri  = imageRecord.get('src');
 
-                    console.log('URI: ' +  uri);
-
+                    console.log('URI: ' +  uri + ' ' + now);
 
                     // update form with URI
                     form.setValues({
                         imageUri: uri
+                        //dateOfEvaluation: Ext.Date.format(now, 'n/j/Y')
                     })
 
                     // reset values with newly added data
                     values = form.getValues(false, false, false, true);
                     record = form.getRecord();
-
                 }
             });
 

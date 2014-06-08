@@ -21,7 +21,7 @@ Ext.define('EvaluateIt.model.Site', {
                 foreignKey: 'site_id',
                 associationKey: 'Evaluation',
                 foreignStore: 'Evaluations'
-			},
+			}/*,
 		    {
                 model: 'EvaluateIt.model.SiteMaintainer',
                 name: 'SiteMaintainer',
@@ -29,7 +29,7 @@ Ext.define('EvaluateIt.model.Site', {
                 foreignKey: 'site_id',
                 associationKey: 'SiteMaintainer',
                 foreignStore: 'SiteMaintainers'
-            }
+            }*/
         ],
         hasOne: [
             {

@@ -6,11 +6,9 @@
  */
 
 Ext.define('EvaluateIt.view.EvaluationForm', {
-//var formPanel = Ext.define('EvaluateIt.view.EvaluationForm', {
-// TODO: Not sure why this was implemented like this?
-// Need to determine (may have something to do with a destroy issued later)
 	extend: 'Ext.form.Panel',
-	alias : 'widget.evaluationForm',
+	//alias : 'widget.evaluationForm',
+    xtype: 'evaluationForm',
 	requires: [
         'Ext.form.Panel',
         'Ext.form.FieldSet',
@@ -19,7 +17,6 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
         'Ext.field.Hidden'
     ],
 	config: {
-
 
         // We give it a left and top property to make it floating by default
 
@@ -55,26 +52,42 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
          * TODO: create enumeration
          */
 		items: [
-			{
+			/*{
                 xtype: 'datepickerfield',
                 destroyPickerOnHide: true,
-                //name : 'dateOfEvaluation',
-                itemId : 'dateOfEvaluation',
+                name : 'dateOfEvaluation',
+                //itemId: 'dateOfEvaluation',
                 label: 'Date of evaluation',
-                placeHolder: 'mm/dd/yyyy',
                 //dateFormat: 'm/d/Y',
                 value: new Date(),
-                //picker: {
-                //    yearFrom: 2014
-                //}
                 picker: {
-                    useTitles: true,
-                    slotOrder: [
-                        'day',
-                        'month',
-                        'year'
-                    ]
-                }
+                    yearFrom: 2014
+                },
+                //listeners: {
+                    change : function( datepicker ) {
+                        //var evaluationForm = Ext.Viewport.up('evaluationForm');
+                        console.log(datepicker);
+                        //console.log('Change event trigged');
+                        //var form = datepicker.up('evaluationForm');
+                        //var picker = form.down('#dateOfEvaluation');
+
+                        console.log(picker);
+
+                        this.up().down('#dateOfEvaluation').setValue(datepicker.getFormattedValue());
+
+
+                        //this.getForm().Ext.Cmp('#dateOfEvaluation').setValue(datepicker.getFormattedValue());
+
+                     }
+
+                //}
+            },*/
+            {
+                xtype: 'textfield',
+                itemId: 'dateOfEvaluation',
+                label: 'Date',
+                //id: 'yesh',
+                name: 'dateOfEvaluation' // change this with something logical
             },
             {
                 xtype: 'textfield',

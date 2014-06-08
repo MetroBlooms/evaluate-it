@@ -4,6 +4,7 @@ Ext.define('EvaluateIt.model.EvaluationScorecard', {
         idProperty: 'id',
         fields: [
             {name: 'id', type: 'int'}, // pk
+            {name: 'noLongerExists', type: 'boolean'}, // invalid site: nothing to evaluate!
             {name: 'design', type: 'int'},
             {name: 'varietyAndHealth', type: 'int'},
             {name: 'visualImpact', type: 'int'},

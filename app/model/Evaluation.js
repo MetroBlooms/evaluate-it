@@ -7,14 +7,15 @@ Ext.define('EvaluateIt.model.Evaluation', {
 			{name: 'category', type: 'string'}, //used to categorize for selection of view 
 	    	{name: 'remoteEvaluationId', type: 'int'}, // linking id to remote JSON
 			{name: 'dateOfEvaluation', type: 'date'}, // date evaluation done
+            //{name: 'date_raw', type: 'string'}, // date evaluation done
             {name: 'datePostedToRemote', type: 'date'}, // date successfully uploaded to remote
 	    	{name: 'evaluationType', type: 'int'}, // type of evaluation done - to be added in the future`
 			{name: 'site_id', type: 'string'},	// linking id for associations
+            {name: 'site_maintainer', type: 'string'}, // TODO: implement as hasMany
             // sessionStorage.evaluator_id =  loginResponse.evaluator_id;
             // Ajax response: json.evaluator.evaluator_id
             {name: 'evaluator_id', type: 'int'},
- 			{name: 'noLongerExists', type: 'boolean'}, // invalid site: nothing to evaluate!
-            {name: 'comments', type: 'string'}, // general comments
+ 			{name: 'comments', type: 'string'}, // general comments
             {name: 'imageUri', type: 'string'}, //device's uri of image to be uploaded
             {name: 'evaluationAward_id', type: 'string'}
 
