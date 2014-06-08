@@ -96,12 +96,6 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
                 itemId: 'comments'
             },
             {
-                xtype: 'checkboxfield',
-                name: 'noLongerExists',
-                label: 'NoLongerExists',
-                itemId: 'noLongerExists'
-            },
-            {
                 xtype: 'hiddenfield',
                 name: 'imageUri',
                 itemId: 'imageId'

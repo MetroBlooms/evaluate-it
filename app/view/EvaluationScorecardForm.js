@@ -38,6 +38,12 @@ Ext.define('EvaluateIt.view.EvaluationScorecardForm', {
 			labelWrap: true
 		},
 		items: [
+            {
+                xtype: 'checkboxfield',
+                name: 'noLongerExists',
+                label: 'NoLongerExists',
+                itemId: 'noLongerExists'
+            },
 			{
                 xtype: 'selectfield',
                 itemId: 'visualImpact',
