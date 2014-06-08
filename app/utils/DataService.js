@@ -269,7 +269,7 @@ Ext.define('EvaluateIt.utils.DataService', {
         award = EvaluateIt.utils.UtilityService.evaluation_award(evaluationAward.get('id'));
         console.log('award ' + award.bestof + ' ' + award.nate_seigel);
 
-        if (evaluation.get('noLongerExists') === 'true' || evaluation.get('noLongerExists') === true) {
+        if (evaluationScorecard.get('noLongerExists') === 'true' || evaluationScorecard.get('noLongerExists') === true) {
             no_longer_exists = 1;
         }
 

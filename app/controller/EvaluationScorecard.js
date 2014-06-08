@@ -44,48 +44,56 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
         //get the form values
             values = form.getValues( false, false, false, true );
 
-        // calculatee sum of factor ratings:
-        if (form.getValues().visualImpact !== null
-            && form.getValues().varietyAndHealth !== null
-            && form.getValues().design !== null
-            && form.getValues().maintenance !== null
-            && form.getValues().environmentalStewardship !== null) {
+        if (form.getValues().noLongerExists === 'false' ||
+            form.getValues().noLongerExists === false ||
+            form.getValues().noLongerExists === ''||
+            form.getValues().noLongerExists === null ) {
+            // calculatee sum of factor ratings:
+            if (form.getValues().visualImpact !== null
+                && form.getValues().varietyAndHealth !== null
+                && form.getValues().design !== null
+                && form.getValues().maintenance !== null
+                && form.getValues().environmentalStewardship !== null) {
 
-            /**
-             *
-             * Compute sum of scorecard factores
-             * @type {Integer}
-             */
-            sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
-                form.getValues().visualImpact,
-                form.getValues().varietyAndHealth,
-                form.getValues().design,
-                form.getValues().maintenance,
-                form.getValues().environmentalStewardship);
+                /**
+                 *
+                 * Compute sum of scorecard factores
+                 * @type {Integer}
+                 */
+                sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
+                    form.getValues().visualImpact,
+                    form.getValues().varietyAndHealth,
+                    form.getValues().design,
+                    form.getValues().maintenance,
+                    form.getValues().environmentalStewardship);
 
-            /**
-             * Determine ranking of evaluation
-             * calls UtilityService function
-             * @type {String}
-             */
-            evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
+                /**
+                 * Determine ranking of evaluation
+                 * calls UtilityService function
+                 * @type {String}
+                 */
+                evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
 
-            // TODO: display on form
-            alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
+                // TODO: display on form
+                alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
 
-            form.setValues({
-                sumRating: sumRating
-            })
+                form.setValues({
+                    sumRating: sumRating
+                })
 
-            values = form.getValues();
-            record = form.getRecord();
+                values = form.getValues();
+                record = form.getRecord();
 
+            }
+            else {
+                alert('missing factor rating!');
+            }
         }
         else {
-            alert('missing factor rating!');
+            alert('Site no longer exists!');
         }
 
-		if(!record){
+        if(!record){
 			// something went horribly wrong!
 		}
 		//existing siteEvaluation
