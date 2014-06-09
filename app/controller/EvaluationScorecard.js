@@ -44,53 +44,67 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
         //get the form values
             values = form.getValues( false, false, false, true );
 
-        if (form.getValues().noLongerExists === 'false' ||
-            form.getValues().noLongerExists === false ||
-            form.getValues().noLongerExists === ''||
-            form.getValues().noLongerExists === null ) {
-            // calculatee sum of factor ratings:
-            if (form.getValues().visualImpact !== null
+        if ((form.getValues().noLongerExists === 'true' ||
+            form.getValues().noLongerExists === true ||
+            form.getValues().noLongerExists !== ''||
+            form.getValues().noLongerExists !== null ) &&
+            (form.getValues().visualImpact !== null
                 && form.getValues().varietyAndHealth !== null
                 && form.getValues().design !== null
                 && form.getValues().maintenance !== null
-                && form.getValues().environmentalStewardship !== null) {
+                && form.getValues().environmentalStewardship !== null)){
 
-                /**
-                 *
-                 * Compute sum of scorecard factores
-                 * @type {Integer}
-                 */
-                sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
-                    form.getValues().visualImpact,
-                    form.getValues().varietyAndHealth,
-                    form.getValues().design,
-                    form.getValues().maintenance,
-                    form.getValues().environmentalStewardship);
+            alert('Cannot rate a non-exist garden; please correct this!' )
+        }
+        else{
+            if (form.getValues().noLongerExists === 'false' ||
+                form.getValues().noLongerExists === false ||
+                form.getValues().noLongerExists === ''||
+                form.getValues().noLongerExists === null ) {
+                // calculatee sum of factor ratings:
+                if (form.getValues().visualImpact !== null
+                    && form.getValues().varietyAndHealth !== null
+                    && form.getValues().design !== null
+                    && form.getValues().maintenance !== null
+                    && form.getValues().environmentalStewardship !== null) {
 
-                /**
-                 * Determine ranking of evaluation
-                 * calls UtilityService function
-                 * @type {String}
-                 */
-                evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
+                    /**
+                     *
+                     * Compute sum of scorecard factores
+                     * @type {Integer}
+                     */
+                    sumRating = EvaluateIt.utils.UtilityService.sum_factor_ratings(
+                        form.getValues().visualImpact,
+                        form.getValues().varietyAndHealth,
+                        form.getValues().design,
+                        form.getValues().maintenance,
+                        form.getValues().environmentalStewardship);
 
-                // TODO: display on form
-                alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
+                    /**
+                     * Determine ranking of evaluation
+                     * calls UtilityService function
+                     * @type {String}
+                     */
+                    evaluationRating = EvaluateIt.utils.UtilityService.evaluation_rating (sumRating);
 
-                form.setValues({
-                    sumRating: sumRating
-                })
+                    // TODO: display on form
+                    alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
 
-                values = form.getValues();
-                record = form.getRecord();
+                    form.setValues({
+                        sumRating: sumRating
+                    })
 
+                    values = form.getValues();
+                    record = form.getRecord();
+
+                }
+                else {
+                    alert('missing factor rating!');
+                }
             }
             else {
-                alert('missing factor rating!');
+                alert('Site no longer exists!');
             }
-        }
-        else {
-            alert('Site no longer exists!');
         }
 
         if(!record){

@@ -92,6 +92,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
                     // update form with URI
                     form.setValues({
                         imageUri: uri
+                        // test update date:
                         //dateOfEvaluation: Ext.Date.format(now, 'n/j/Y')
                     })
 

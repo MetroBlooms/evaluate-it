@@ -186,6 +186,7 @@ Ext.define('EvaluateIt.utils.DataService', {
      * @param record
      */
     push: function (record) {
+        // TODO: refactor as new method/function
 
         var	score,
             award,
@@ -197,39 +198,48 @@ Ext.define('EvaluateIt.utils.DataService', {
             core = {},
             existing = {},
             ad_hoc = {},
-            eval_type;
+            eval_type,
+            evaluation_id = record.data.evaluation_id,
+            eevaluationStore = Ext.create('EvaluateIt.store.Evaluations'),
+            evaluation,
+            EvaluationScorecardStore = Ext.create('EvaluateIt.store.EvaluationScorecards'),
+            evaluationScorecard,
+            EvaluationAwardStore = Ext.create('EvaluateIt.store.EvaluationAwards'),
+            evaluationAward,
+            SiteStore = Ext.create('EvaluateIt.store.Sites'),
+            site,
+            addressStore = Ext.create('EvaluateIt.store.Addresses'),
+            address,
+            geolocationStore = Ext.create('EvaluateIt.store.Geolocations'),
+            geolocation;
 
         console.log('id:' + record.data.id)
 
-        // get all data
-
-        addressStore = Ext.create('EvaluateIt.store.Addresses');
-        address = addressStore.findRecord('site_id', record.data.id);
-        console.log(address.getData(true));
-        console.log('address.id:' + address.get('id'));
-
-        geolocationStore = Ext.create('EvaluateIt.store.Geolocations');
-        geolocation = geolocationStore.findRecord('site_id', record.data.id);
-        console.log(geolocation.getData(true));
-        console.log('geolocation.id:' + geolocation.get('id'));
-
-        evaluationStore = Ext.create('EvaluateIt.store.Evaluations');
-        evaluation = evaluationStore.findRecord('site_id', record.data.id);
+        // get all data: record refers to EvaluationScorecard
+        evaluation = evaluationStore.findRecord('id', evaluation_id);
         console.log(evaluation.getData(true));
-        console.log('evaluation.id:' + evaluation.get('id'));
+        console.log('evaluation.id:' + evaluation.get('id') + ' ' + record.data.evaluation_id);
+        console.log('site.id:' + evaluation.get('site_id'));
 
-        EvaluationScorecardStore = Ext.create('EvaluateIt.store.EvaluationScorecards');
-        evaluationScorecard = EvaluationScorecardStore .findRecord('evaluation_id', evaluation.get('id'));
+        evaluationScorecard = EvaluationScorecardStore.findRecord('evaluation_id', evaluation.get('id'));
         console.log(evaluationScorecard.getData(true));
-        console.log('evaluationScorecard.id:' + evaluationScorecard.get('id'));
+        console.log('evaluationScorecard.id:' + record.data.id);
 
-        EvaluationAwardStore = Ext.create('EvaluateIt.store.EvaluationAwards');
-        evaluationAward = EvaluationAwardStore .findRecord('evaluation_id', evaluation.get('id'));
+        evaluationAward = EvaluationAwardStore.findRecord('evaluation_id', evaluation.get('id'));
         console.log(evaluationAward.getData(true));
         console.log('evaluationAward.id:' + evaluationAward.get('id'));
 
+        site = SiteStore.findRecord('id', evaluation.get('site_id'));
+        console.log(site.getData(true));
+        console.log('site.id:' + evaluation.get('site_id'));
 
+        address = addressStore.findRecord('site_id', site.get('id'));
+        console.log(address.getData(true));
+        console.log('address.id:' + address.get('id'));
 
+        geolocation = geolocationStore.findRecord('site_id', site.get('id'));
+        console.log(geolocation.getData(true));
+        console.log('geolocation.id:' + geolocation.get('id'));
 
         // compute score: TODO: check for null/isInt!
         if (evaluationScorecard.get('visualImpact') !== null
@@ -256,7 +266,7 @@ Ext.define('EvaluateIt.utils.DataService', {
              * calls UtilityService function
              * @type {String}
              */
-            rating = EvaluateIt.utils.UtilityService.evaluation_rating (score);
+            rating = EvaluateIt.utils.UtilityService.evaluation_rating(score);
 
             console.log('rating: ' + rating);
         }
@@ -283,7 +293,7 @@ Ext.define('EvaluateIt.utils.DataService', {
          */
         core = {
             evaluation: {
-                garden_id: record.data.remoteSiteId,
+                garden_id: site.get('remoteSiteId'),
                 eval_type: 1,// null, // change!
                 score: score,
                 rating: rating,
@@ -318,8 +328,8 @@ Ext.define('EvaluateIt.utils.DataService', {
          */
         existing = {
             garden: {
-                garden_id: record.data.remoteSiteId,
-                name:  record.data.name,
+                garden_id: site.get('remoteSiteId'),
+                name:  site.get('name'),
                 no_longer_exists: no_longer_exists,
                 raingarden: rain_garden
             }
@@ -336,7 +346,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 nominator_id: sessionStorage.evaluator_id,
                 nominator_name: sessionStorage.firstname + ' ' + sessionStorage.lastname,
                 nominator_email: sessionStorage.email,
-                gardener_name: record.data.name,
+                gardener_name: evaluation.get('name'),
                 address: address.get('address'),
                 city: address.get('city'),
                 state: address.get('state'),
@@ -351,8 +361,8 @@ Ext.define('EvaluateIt.utils.DataService', {
 
         // Assemble json for submission
         // existing site evaluation
-        console.log('stuff: ' + record.data.remoteSiteId + ' ' +  evaluation.get('remoteEvaluationId') + ' ' + evaluation.get('evaluator_id'))
-        if (record.data.remoteSiteId && evaluation.get('remoteEvaluationId') && evaluation.get('evaluator_id')) {
+        console.log('stuff: ' + site.get('remoteSiteId') + ' ' +  evaluation.get('remoteEvaluationId') + ' ' + evaluation.get('evaluator_id'))
+        if (site.get('remoteSiteId') && evaluation.get('remoteEvaluationId') && evaluation.get('evaluator_id')) {
             obj = Ext.Object.merge(core, existing);
             obj.evaluation.evaluation_id = evaluation.get('remoteEvaluationId');
             console.log('existing');
@@ -361,14 +371,14 @@ Ext.define('EvaluateIt.utils.DataService', {
         // new site evaluation
         else {
             obj = Ext.Object.merge(core, ad_hoc);
-            obj.evaluation.uuid = record.data.id; // new uses uuid as linking id
+            obj.evaluation.uuid = site.get('id'); // new uses uuid as linking id
             console.log('new');
             eval_type = 'new';
         }
 
         console.log('Assembled object to push: ' + Ext.encode(obj));
 
-        post(obj, record, evaluation, eval_type);
+        post(obj, site, evaluation, eval_type);
 
         /**
          * Ajax to remote REST service
@@ -377,7 +387,7 @@ Ext.define('EvaluateIt.utils.DataService', {
          * @param record
          * @param eval_type
          */
-        function post(obj, record, evaluation, eval_type) {
+        function post(obj, site, evaluation, eval_type) {
 
             /**
              * Assemble url as per API definition
@@ -409,7 +419,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
                     // flag as uploaded by updating store attribute datePostedToRemote with date
                     store = Ext.getStore(store);
-                    update_record = store.findRecord('site_id', record.data.id );
+                    update_record = store.findRecord('site_id', site.get('id'));
                     update_record.set('datePostedToRemote', now);
                     store.sync();
 
@@ -420,12 +430,12 @@ Ext.define('EvaluateIt.utils.DataService', {
                 }
             });
 
-            console.log('yar! ' + evaluation.get('imageUri'));
+            console.log('imageUri! ' + evaluation.get('imageUri'));
 
             // check if image exists in store
             if (evaluation.get('imageUri') !== null && evaluation.get('imageUri') !== '') {
                 console.log('file exists!');
-                //file_post(record,evaluation);
+                //file_post(site,evaluation);
             }
         }
 
@@ -439,20 +449,20 @@ Ext.define('EvaluateIt.utils.DataService', {
          * @param url
          * @param evaluation_kvp
          */
-        function file_post(record,evaluation) {
+        function file_post(site,evaluation) {
 
             var uri,
                 url,
                 evaluation_kvp = {};
-                //options = new FileUploadOptions(),
-                //ft = new FileTransfer();
+                options = new FileUploadOptions(),
+                ft = new FileTransfer();
 
             uri = evaluation.get('imageUri'); // local path to image
             url = EvaluateIt.utils.DataService.url('file');
 
             console.log('upload uri: ' + uri + 'url: ' + url);
 
-            console.log('evaluation_id, uuid ' + evaluation.get('remoteEvaluationId') + ', ' + record.data.id );
+            console.log('evaluation_id, uuid ' + evaluation.get('remoteEvaluationId') + ', ' + site.get('id'));
 
             // assemble key value pair for use in file transfer object for: existing evaluation
             if (evaluation.get('remoteEvaluationId') !== null) {
@@ -461,7 +471,7 @@ Ext.define('EvaluateIt.utils.DataService', {
             }
             // new nomination/evaluation: use uuid as identifier
             else {
-                evaluation_kvp.uuid = record.data.id;
+                evaluation_kvp.uuid = site.get('id');
                 console.log('uuid ' + Ext.encode(evaluation_kvp));
             }
 
