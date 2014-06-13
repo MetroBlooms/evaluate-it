@@ -25,10 +25,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
             },
             'evaluationForm button[itemId=cancel]' : {
                 tap : 'onCancelEvaluation'
-            },
-           //'datepickerfield[itemId=date_raw]': {
-           //     change: 'onDatepickerfieldChange'
-           // }
+            }
         }
     },
 
@@ -42,20 +39,6 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         form.hide();
         form.destroy();
     },
-
-   /* onDatepickerfieldChange: function (datepickerfield, newDate, oldDate, eOpts) {
-            //var evaluationForm = Ext.Viewport.up('evaluationForm');
-        var form = datepickerfield.up('panel');
-
-            console.log(this.$className);
-            //console.log('Change event trigged');
-
-            //Ext.getCmp('yesh').setValue(datepicker.getFormattedValue());
-            form.setValue(datepickerfield.getFormattedValue())
-
-            //this.getForm().Ext.Cmp('#dateOfEvaluation').setValue(datepicker.getFormattedValue());
-
-    },*/
 
     onSaveEvaluation: function(button) {
         console.log('Button Click for Save');
@@ -119,13 +102,20 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         lostor.getProxy().clear();
 
         console.log('Selected a Site from the list');
-        var siteEvaluationForm = Ext.widget('siteEvaluationForm');
+        var siteEvaluationForm = Ext.widget('evaluationForm');
 
         siteEvaluationForm.setRecord(record);
 
         // bind flattened record to form
-        siteEvaluationForm.setValues(record.getFlattenedData(true));
-        console.log('Evaluation belongsTo hierarchy:: ' + Ext.encode(record.getFlattenedData(true)));
+        var flatData = record.getFlattenedData(true);
+        var datePicker = siteEvaluationForm.down('#dateOfEvaluationPicker');
+        var dateVal = flatData['dateOfEvaluation'];
+        if(dateVal !== null){
+            var evalDate = new Date(dateVal);
+            datePicker.setValue(evalDate)
+        }
+        siteEvaluationForm.setValues(flatData);
+        console.log('Evaluation belongsTo hierarchy:: ' + Ext.encode(flatData));
 
         console.log('evaluation.id:' +  ' ' + record.id);
 

@@ -20,6 +20,9 @@ Ext.define('EvaluateIt.controller.Push', {
 			'pushForm button[itemId=save]': {
 				tap: 'onSavePush' 
 			},
+            'pushForm button[itemId=cancel]': {
+            tap: 'onCancelPush'
+        },
 			'container button[itemId=loginButton]': {
 				tap: 'onLoginPush' 
 			},
@@ -45,6 +48,10 @@ Ext.define('EvaluateIt.controller.Push', {
 		loginForm.reset();
 		loginForm.showBy(button);
 	},
+
+    onCancelPush: function(button) {
+        console.log('Cancel Click');
+    },
 
 	onSavePush: function(button) {
 		console.log('Button Click for Save');

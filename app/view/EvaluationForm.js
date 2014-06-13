@@ -7,7 +7,7 @@
 
 Ext.define('EvaluateIt.view.EvaluationForm', {
 	extend: 'Ext.form.Panel',
-	//alias : 'widget.evaluationForm',
+	alias : 'widget.evaluationForm',
     xtype: 'evaluationForm',
 	requires: [
         'Ext.form.Panel',
@@ -52,43 +52,44 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
          * TODO: create enumeration
          */
 		items: [
-			/*{
+			{
                 xtype: 'datepickerfield',
                 destroyPickerOnHide: true,
-                name : 'dateOfEvaluation',
-                //itemId: 'dateOfEvaluation',
+                name : 'dateOfEvaluationPicker',
+                itemId: 'dateOfEvaluationPicker',
                 label: 'Date of evaluation',
-                //dateFormat: 'm/d/Y',
+                dateFormat: 'm/d/Y',
                 value: new Date(),
                 picker: {
                     yearFrom: 2014
                 },
-                //listeners: {
+                listeners: {
                     change : function( datepicker ) {
-                        //var evaluationForm = Ext.Viewport.up('evaluationForm');
-                        console.log(datepicker);
-                        //console.log('Change event trigged');
-                        //var form = datepicker.up('evaluationForm');
-                        //var picker = form.down('#dateOfEvaluation');
-
-                        console.log(picker);
-
-                        this.up().down('#dateOfEvaluation').setValue(datepicker.getFormattedValue());
-
-
-                        //this.getForm().Ext.Cmp('#dateOfEvaluation').setValue(datepicker.getFormattedValue());
-
+                        var form = datepicker.up();
+                        if( form !== undefined ){
+                            var hiddenText = form.down('#dateOfEvaluationTextId');
+                            if(hiddenText !== undefined && datepicker !== undefined){
+                                var v = datepicker.getFormattedValue();
+                                if(v !== null && hiddenText !== null){
+                                    hiddenText.setValue(v);
+                                }
+                            }
+                        }
                      }
-
-                //}
-            },*/
+                }
+            },
             {
+                xtype: 'hiddenfield',
+                name: 'dateOfEvaluation',
+                itemId: 'dateOfEvaluationTextId'
+            },
+            /*{
                 xtype: 'textfield',
                 itemId: 'dateOfEvaluation',
                 label: 'Date',
                 //id: 'yesh',
                 name: 'dateOfEvaluation' // change this with something logical
-            },
+            },*/
             {
                 xtype: 'textfield',
                 name: 'siteMaintainer',

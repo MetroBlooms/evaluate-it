@@ -48,7 +48,12 @@ Ext.define('EvaluateIt.view.PushForm', {
 				xtype: 'button',
 				itemId: 'save',
 				text: 'Push to server'
-			}
+			},
+            {
+                xtype: 'button',
+                itemId: 'cancel',
+                text: 'Cancel'
+            }
             
         ]
     }
