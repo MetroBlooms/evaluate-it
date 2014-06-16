@@ -45,9 +45,7 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
             values = form.getValues( false, false, false, true );
 
         if ((form.getValues().noLongerExists === 'true' ||
-            form.getValues().noLongerExists === true ||
-            form.getValues().noLongerExists !== ''||
-            form.getValues().noLongerExists !== null ) &&
+            form.getValues().noLongerExists === true) &&
             (form.getValues().visualImpact !== null
                 && form.getValues().varietyAndHealth !== null
                 && form.getValues().design !== null

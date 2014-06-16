@@ -128,7 +128,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
      */
     get_position: function () {
 
-        var options = { frequency: 10000, enableHighAccuracy: true};
+        var options = {frequency: 10000, enableHighAccuracy: true};
         watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
 
         /**

@@ -200,7 +200,7 @@ Ext.define('EvaluateIt.utils.DataService', {
             ad_hoc = {},
             eval_type,
             evaluation_id = record.data.evaluation_id,
-            eevaluationStore = Ext.create('EvaluateIt.store.Evaluations'),
+            EvaluationStore = Ext.create('EvaluateIt.store.Evaluations'),
             evaluation,
             EvaluationScorecardStore = Ext.create('EvaluateIt.store.EvaluationScorecards'),
             evaluationScorecard,
@@ -208,15 +208,15 @@ Ext.define('EvaluateIt.utils.DataService', {
             evaluationAward,
             SiteStore = Ext.create('EvaluateIt.store.Sites'),
             site,
-            addressStore = Ext.create('EvaluateIt.store.Addresses'),
+            AddressStore = Ext.create('EvaluateIt.store.Addresses'),
             address,
-            geolocationStore = Ext.create('EvaluateIt.store.Geolocations'),
+            GeolocationStore = Ext.create('EvaluateIt.store.Geolocations'),
             geolocation;
 
         console.log('id:' + record.data.id)
 
         // get all data: record refers to EvaluationScorecard
-        evaluation = evaluationStore.findRecord('id', evaluation_id);
+        evaluation = EvaluationStore.findRecord('id', evaluation_id);
         console.log(evaluation.getData(true));
         console.log('evaluation.id:' + evaluation.get('id') + ' ' + record.data.evaluation_id);
         console.log('site.id:' + evaluation.get('site_id'));
@@ -233,11 +233,11 @@ Ext.define('EvaluateIt.utils.DataService', {
         console.log(site.getData(true));
         console.log('site.id:' + evaluation.get('site_id'));
 
-        address = addressStore.findRecord('site_id', site.get('id'));
+        address = AddressStore.findRecord('site_id', site.get('id'));
         console.log(address.getData(true));
         console.log('address.id:' + address.get('id'));
 
-        geolocation = geolocationStore.findRecord('site_id', site.get('id'));
+        geolocation = GeolocationStore.findRecord('site_id', site.get('id'));
         console.log(geolocation.getData(true));
         console.log('geolocation.id:' + geolocation.get('id'));
 
@@ -475,12 +475,12 @@ Ext.define('EvaluateIt.utils.DataService', {
                 console.log('uuid ' + Ext.encode(evaluation_kvp));
             }
 
-            options.fileKey = 'userfile';
+            options.fileKey = 'photoPath';
             options.mimeType = 'image/jpeg';
             options.chunkedMode = false;
-            options.params = evaluation_kvp; // attached key value pair
+            options.params = evaluation_kvp; // attached key value pair to tie image to above json
 
-           // ft.upload(uri, encodeURI(url), post_success, post_error, options);
+            ft.upload(uri, encodeURI(url), post_success, post_error, options);
         }
 
         function post_success(r) {
@@ -498,6 +498,106 @@ Ext.define('EvaluateIt.utils.DataService', {
                 alert("An error has occurred: Code = " + error.code);
                 console.log("An error has occurred: Code = " + error.code);
         }
+
+    },
+
+    clear_all: function() {
+
+        var AddressStore = Ext.getStore('Addresses'),
+            EvaluationStore = Ext.getStore('Evaluations'),
+            EvaluationScorecardStore = Ext.getStore('EvaluationScorecards'),
+            EvaluationAwardStore = Ext.getStore('EvaluationAwards'),
+            GeolocationStore = Ext.getStore('Geolocations'),
+            SiteStore = Ext.getStore('Sites');
+
+        AddressStore.removeAll();
+        EvaluationStore.removeAll();
+        EvaluationScorecardStore.removeAll();
+        EvaluationAwardStore.removeAll();
+        GeolocationStore.removeAll();
+        SiteStore.removeAll();
+
+        AddressStore.sync();
+        EvaluationStore.sync();
+        EvaluationScorecardStore.sync();
+        EvaluationAwardStore.sync();
+        GeolocationStore.sync();
+        SiteStore.sync();
+
+    },
+
+    remove_record: function(id) {
+        var index,
+            address_id,
+            evaluation_id,
+            evaluation_award_id,
+            evaluation_scorecard_id,
+            geolocation_id,
+            AddressStore = Ext.getStore('Addresses'),
+            address,
+            EvaluationStore = Ext.getStore('Evaluations'),
+            evaluation,
+            evaluationModel,
+            EvaluationScorecardStore = Ext.getStore('EvaluationScorecards'),
+            evaluationScorecard,
+            EvaluationAwardStore = Ext.getStore('EvaluationAwards'),
+            evaluationAward,
+            GeolocationStore = Ext.getStore('Geolocations'),
+            geolocation,
+            SiteStore = Ext.getStore('Sites'),
+            site;
+
+
+        site = Ext.getStore(SiteStore);
+        index = site.findExact('id', id); // get index of record
+
+        address = Ext.getStore(AddressStore);
+        address_index = address.findExact('site_id', id);
+
+        geolocation = Ext.getStore(GeolocationStore);
+        geolocation_id = geolocation.findExact('site_id', id);
+
+        evaluation = Ext.getStore(EvaluationStore);
+        evaluation_index = evaluation.findExact('site_id', id);
+        evaluationModel = evaluation.findRecord('site_id', id);
+
+        evaluationAward = Ext.getStore(EvaluationAwardStore);
+        evaluation_award_index = evaluationAward.findExact('evaluation_id', evaluationModel.get('id'));
+
+        evaluationScorecard = Ext.getStore(EvaluationScorecardStore);
+        evaluation_scorecard_index = evaluationScorecard.findExact('evaluation_id', evaluationModel.get('id'));
+
+        console.log('index: ' + index);
+        site.removeAt(index); // remove record by index
+        site.sync();
+        //alert('site is gone!');
+
+        console.log('address_index: ' + address_index);
+        address.removeAt(address_index); // remove record by index
+        address.sync();
+        //alert('address is gone!');
+
+        console.log('evaluation_index: ' + evaluation_index);
+        evaluation.removeAt(evaluation_index); // remove record by index
+        evaluation.sync();
+        //alert('evaluation is gone!');
+
+        console.log('evaluation_award_index: ' + evaluation_award_index);
+        evaluationAward.removeAt(evaluation_award_index); // remove record by index
+        evaluationAward.sync();
+        //alert('evaluationAward is gone!');
+
+        console.log('evaluation_scorecard_index: ' + evaluation_scorecard_index);
+        evaluationScorecard.removeAt(evaluation_scorecard_index); // remove record by index
+        evaluationScorecard.sync();
+        //alert('evaluationScorecard is gone!');
+
+        console.log('geolocation_id: ' + geolocation_id);
+        geolocation.removeAt(geolocation_id); // remove record by index
+        geolocation.sync();
+        //alert('geolocation is gone!');
+
+        Ext.StoreMgr.get('Sites').load();
 
     }
 })
