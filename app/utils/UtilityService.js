@@ -153,7 +153,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
             // Success achieved when desired accuracy reached
 
             if (accuracy <= EvaluateIt.config.accuracy) {
-                console.log('success! geoLocation is ready to use!' + ' accuracy ' + accuracy);
+                alert('success! geoLocation is ready to use!' + ' accuracy ' + accuracy);
 
                 // Write to sessionStorage for update to Geolocation model
                 sessionStorage.latitude = latitude;

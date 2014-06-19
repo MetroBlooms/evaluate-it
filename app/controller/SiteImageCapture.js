@@ -24,7 +24,7 @@ Ext.define('EvaluateIt.controller.SiteImageCapture',{
 			failure: this.onCaptureFailure,
             scope: this,
             quality: 50,//for testing having this at 50 does faster uploads
-            source: 'library',
+            source: 'album',
             destination: 'file'
         });
     },
