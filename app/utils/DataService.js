@@ -435,7 +435,7 @@ Ext.define('EvaluateIt.utils.DataService', {
             // check if image exists in store
             if (evaluation.get('imageUri') !== null && evaluation.get('imageUri') !== '') {
                 console.log('file exists!');
-                //file_post(site,evaluation);
+                file_post(site,evaluation);
             }
         }
 
@@ -498,11 +498,9 @@ Ext.define('EvaluateIt.utils.DataService', {
                 alert("An error has occurred: Code = " + error.code);
                 console.log("An error has occurred: Code = " + error.code);
         }
-
     },
 
     clear_all: function() {
-
         var AddressStore = Ext.getStore('Addresses'),
             EvaluationStore = Ext.getStore('Evaluations'),
             EvaluationScorecardStore = Ext.getStore('EvaluationScorecards'),
@@ -523,16 +521,15 @@ Ext.define('EvaluateIt.utils.DataService', {
         EvaluationAwardStore.sync();
         GeolocationStore.sync();
         SiteStore.sync();
-
     },
 
     remove_record: function(id) {
         var index,
-            address_id,
-            evaluation_id,
-            evaluation_award_id,
-            evaluation_scorecard_id,
-            geolocation_id,
+            address_index,
+            evaluation_index,
+            evaluation_award_index,
+            evaluation_scorecard_index,
+            geolocation_index,
             AddressStore = Ext.getStore('Addresses'),
             address,
             EvaluationStore = Ext.getStore('Evaluations'),
@@ -547,7 +544,6 @@ Ext.define('EvaluateIt.utils.DataService', {
             SiteStore = Ext.getStore('Sites'),
             site;
 
-
         site = Ext.getStore(SiteStore);
         index = site.findExact('id', id); // get index of record
 
@@ -555,7 +551,7 @@ Ext.define('EvaluateIt.utils.DataService', {
         address_index = address.findExact('site_id', id);
 
         geolocation = Ext.getStore(GeolocationStore);
-        geolocation_id = geolocation.findExact('site_id', id);
+        geolocation_index = geolocation.findExact('site_id', id);
 
         evaluation = Ext.getStore(EvaluationStore);
         evaluation_index = evaluation.findExact('site_id', id);
@@ -592,8 +588,8 @@ Ext.define('EvaluateIt.utils.DataService', {
         evaluationScorecard.sync();
         //alert('evaluationScorecard is gone!');
 
-        console.log('geolocation_id: ' + geolocation_id);
-        geolocation.removeAt(geolocation_id); // remove record by index
+        console.log('geolocation_id: ' + geolocation_index);
+        geolocation.removeAt(geolocation_index); // remove record by index
         geolocation.sync();
         //alert('geolocation is gone!');
 
