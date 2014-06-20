@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.controller.EvaluationAward&#39;, {
+	extend : &#39;Ext.app.Controller&#39;,
+
+	config: {
+  		profile: Ext.os.deviceType.toLowerCase(),
+  		stores : [&#39;SiteEvaluations&#39;],
+  		models : [&#39;SiteEvaluation&#39;],
+		refs: {
+   			myEvaluationAwardList: &#39;evaluationAwardList&#39;
+  		},
+		control: {
+			&#39;evaluationAwardList&#39;: {
+				activate: &#39;onActivate&#39;,
+				itemtap: &#39;onSelectEvaluationAward&#39;
+			},
+			&#39;evaluationAwardForm button[itemId=save]&#39; : {
+				tap : &#39;onSaveEvaluationAward&#39; 
+			}
+		}	  
+
+ 	},
+
+	onActivate: function() {
+  		console.log(&#39;Main container is active&#39;);
+ 	},
+
+	onSaveEvaluationAward: function(button) {
+		console.log(&#39;Button Click for Save&#39;);
+		var form = button.up(&#39;panel&#39;);
+		//get the record 
+		var record = form.getRecord();
+		//get the form values
+		var values = form.getValues();
+		//if a new siteEvaluation
+		if(!record){
+			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
+			Ext.getStore(&#39;SiteEvaluations&#39;).add(newRecord);
+		}
+		//existing siteEvaluation
+		else {
+			record.set(values);
+		}
+		form.hide();
+		//save the data to the Web local Storage
+		Ext.getStore(&#39;SiteEvaluations&#39;).sync();
+
+	},
+
+	onSelectEvaluationAward: function(view, index, target, record, event) {
+		console.log(&#39;Selected a Award from the list&#39;);
+		var evaluationAwardForm = Ext.Viewport.down(&#39;evaluationAwardForm&#39;);
+
+		if(!evaluationAwardForm){
+			evaluationAwardForm = Ext.widget(&#39;evaluationAwardForm&#39;);
+		}	 
+		evaluationAwardForm.setRecord(record);
+		evaluationAwardForm.showBy(target);
+	}
+
+});
+</pre>
+</body>
+</html>

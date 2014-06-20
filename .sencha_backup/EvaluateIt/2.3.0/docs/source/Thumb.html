@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-slider-Thumb'>/**
+</span> * @private
+ * Utility class used by Ext.slider.Slider - should never need to be used directly.
+ */
+Ext.define(&#39;Ext.slider.Thumb&#39;, {
+    extend: &#39;Ext.Component&#39;,
+    xtype : &#39;thumb&#39;,
+
+    config: {
+<span id='Ext-slider-Thumb-cfg-baseCls'>        /**
+</span>         * @cfg
+         * @inheritdoc
+         */
+        baseCls: Ext.baseCSSPrefix + &#39;thumb&#39;,
+
+<span id='Ext-slider-Thumb-cfg-draggable'>        /**
+</span>         * @cfg
+         * @inheritdoc
+         */
+        draggable: {
+            direction: &#39;horizontal&#39;
+        }
+    },
+
+<span id='Ext-slider-Thumb-property-platformConfig'>    // Strange issue where the thumbs translation value is not being set when it is not visible. Happens when the thumb 
+</span>    // is contained within a modal panel.
+    platformConfig: [{
+        platform: [&#39;ie10&#39;],
+        draggable: {
+            translatable: {
+                translationMethod: &#39;csstransform&#39;
+            }
+        }
+    }],
+
+<span id='Ext-slider-Thumb-property-elementWidth'>    elementWidth: 0,
+</span>
+<span id='Ext-slider-Thumb-method-initialize'>    initialize: function() {
+</span>        this.callParent();
+
+        this.getDraggable().onBefore({
+            dragstart: &#39;onDragStart&#39;,
+            drag: &#39;onDrag&#39;,
+            dragend: &#39;onDragEnd&#39;,
+            scope: this
+        });
+
+        this.element.on(&#39;resize&#39;, &#39;onElementResize&#39;, this);
+    },
+
+<span id='Ext-slider-Thumb-method-onDragStart'>    onDragStart: function() {
+</span>        if (this.isDisabled()) {
+            return false;
+        }
+
+        this.relayEvent(arguments);
+    },
+
+<span id='Ext-slider-Thumb-method-onDrag'>    onDrag: function() {
+</span>        if (this.isDisabled()) {
+            return false;
+        }
+
+        this.relayEvent(arguments);
+    },
+
+<span id='Ext-slider-Thumb-method-onDragEnd'>    onDragEnd: function() {
+</span>        if (this.isDisabled()) {
+            return false;
+        }
+
+        this.relayEvent(arguments);
+    },
+
+<span id='Ext-slider-Thumb-method-onElementResize'>    onElementResize: function(element, info) {
+</span>        this.elementWidth = info.width;
+    },
+
+<span id='Ext-slider-Thumb-method-getElementWidth'>    getElementWidth: function() {
+</span>        return this.elementWidth;
+    }
+});
+</pre>
+</body>
+</html>

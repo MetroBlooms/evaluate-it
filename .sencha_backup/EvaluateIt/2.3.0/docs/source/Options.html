@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * Self firing function with menu structure of app using tree store data structure
+ * Roots are defined by function; leaves are end points for navigating to specified views
+ *
+**/
+(function () {
+
+    var root = {
+        id: &#39;root&#39;,
+        text: &#39;EvaluateIt!&#39;,
+        items: [
+            {
+                text: &#39;Manage Evaluations&#39;,
+                id: &#39;ui&#39;,
+                cls: &#39;launchscreen&#39;,
+                items: [
+					{
+                        text: &#39;SiteGeneral&#39;,
+                        leaf: true,
+                        id: &#39;siteGeneral&#39;,
+            			category: &#39;evaluations&#39;
+                    }, 
+                    {
+                        text: &#39;Evaluation&#39;,
+                        leaf: true,
+                        id: &#39;evaluation&#39;,
+            			category: &#39;evaluations&#39;
+                    },
+					{
+                        text: &#39;EvaluationAward&#39;,
+                        leaf: true,
+                        id: &#39;evaluationAward&#39;,
+            			category: &#39;evaluations&#39;
+                    },  
+					{
+                        text: &#39;Geoposition&#39;,
+                        leaf: true,
+                        id: &#39;geoposition&#39;
+                    },
+                    {
+                        text: &#39;SiteGeolocation&#39;,
+                        leaf: true,
+                        id: &#39;siteGeolocation&#39;,
+            			category: &#39;evaluations&#39;
+                    },
+                    {
+                        text: &#39;EvaluationCriteria&#39;,
+                        leaf: true,
+                        id: &#39;evaluationCriteria&#39;
+                    }
+		
+                ]
+            }
+        ]
+    };
+ 
+    root.items.push({ 
+        text: &#39;Manage Data&#39;,
+        id: &#39;data&#39;,
+		card: false,
+        items: [
+			// GET remote
+			{
+                text: &#39;Pull&#39;,
+                leaf: true,
+                id: &#39;pull&#39;
+            },
+			// POST data to remote
+		 	{
+                text: &#39;Push&#39;,
+                leaf: true,
+                id: &#39;push&#39;,
+				category: &#39;push&#39;
+            },
+			// clear data store
+			{
+                text: &#39;ClearAll&#39;,
+                leaf: true,
+                id: &#39;clearAll&#39;
+            },
+			{
+                text: &#39;RemoveRecord&#39;,
+                leaf: true,
+                id: &#39;removeRecord&#39;
+            }
+        ]
+    });
+
+    Ext.define(&#39;EvaluateIt.store.Options&#39;, {
+        alias: &#39;store.Options&#39;,
+        extend: &#39;Ext.data.TreeStore&#39;,
+        requires: [&#39;EvaluateIt.model.Option&#39;],
+
+        config: {
+            model: &#39;EvaluateIt.model.Option&#39;,
+            root: root,
+            defaultRootProperty: &#39;items&#39;
+        }
+    });
+})();
+</pre>
+</body>
+</html>

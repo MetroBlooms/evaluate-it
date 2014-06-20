@@ -475,7 +475,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 console.log('uuid ' + Ext.encode(evaluation_kvp));
             }
 
-            options.fileKey = 'photoPath';
+            options.fileKey = 'userfile';
             options.mimeType = 'image/jpeg';
             options.chunkedMode = false;
             options.params = evaluation_kvp; // attached key value pair to tie image to above json

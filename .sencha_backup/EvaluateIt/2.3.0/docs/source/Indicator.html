@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-carousel-Indicator'>/**
+</span> * A private utility class used by Ext.Carousel to create indicators.
+ * @private
+ */
+Ext.define(&#39;Ext.carousel.Indicator&#39;, {
+    extend: &#39;Ext.Component&#39;,
+    xtype : &#39;carouselindicator&#39;,
+    alternateClassName: &#39;Ext.Carousel.Indicator&#39;,
+
+    config: {
+<span id='Ext-carousel-Indicator-cfg-baseCls'>        /**
+</span>         * @cfg
+         * @inheritdoc
+         */
+        baseCls: Ext.baseCSSPrefix + &#39;carousel-indicator&#39;,
+
+<span id='Ext-carousel-Indicator-cfg-direction'>        direction: &#39;horizontal&#39;
+</span>    },
+
+<span id='Ext-carousel-Indicator-event-previous'>    /**
+</span>     * @event previous
+     * Fires when this indicator is tapped on the left half
+     * @param {Ext.carousel.Indicator} this
+     */
+
+<span id='Ext-carousel-Indicator-event-next'>    /**
+</span>     * @event next
+     * Fires when this indicator is tapped on the right half
+     * @param {Ext.carousel.Indicator} this
+     */
+
+    initialize: function() {
+        this.callParent();
+
+        this.indicators = [];
+
+        this.element.on({
+            tap: &#39;onTap&#39;,
+            scope: this
+        });
+    },
+
+<span id='Ext-carousel-Indicator-method-updateDirection'>    updateDirection: function(newDirection, oldDirection) {
+</span>        var baseCls = this.getBaseCls();
+
+        this.element.replaceCls(oldDirection, newDirection, baseCls);
+
+        if (newDirection === &#39;horizontal&#39;) {
+            this.setBottom(0);
+            this.setRight(null);
+        }
+        else {
+            this.setRight(0);
+            this.setBottom(null);
+        }
+    },
+
+<span id='Ext-carousel-Indicator-method-addIndicator'>    addIndicator: function() {
+</span>        this.indicators.push(this.element.createChild({
+            tag: &#39;span&#39;
+        }));
+    },
+
+<span id='Ext-carousel-Indicator-method-removeIndicator'>    removeIndicator: function() {
+</span>        var indicators = this.indicators;
+
+        if (indicators.length &gt; 0) {
+            indicators.pop().destroy();
+        }
+    },
+
+<span id='Ext-carousel-Indicator-method-setActiveIndex'>    setActiveIndex: function(index) {
+</span>        var indicators = this.indicators,
+            currentActiveIndex = this.activeIndex,
+            currentActiveItem = indicators[currentActiveIndex],
+            activeItem = indicators[index],
+            baseCls = this.getBaseCls();
+
+        if (currentActiveItem) {
+            currentActiveItem.removeCls(baseCls, null, &#39;active&#39;);
+        }
+
+        if (activeItem) {
+            activeItem.addCls(baseCls, null, &#39;active&#39;);
+        }
+
+        this.activeIndex = index;
+
+        return this;
+    },
+
+<span id='Ext-carousel-Indicator-method-onTap'>    // @private
+</span>    onTap: function(e) {
+        var touch = e.touch,
+            box = this.element.getPageBox(),
+            centerX = box.left + (box.width / 2),
+            centerY = box.top + (box.height / 2),
+            direction = this.getDirection();
+
+        if ((direction === &#39;horizontal&#39; &amp;&amp; touch.pageX &gt;= centerX) || (direction === &#39;vertical&#39; &amp;&amp; touch.pageY &gt;= centerY)) {
+            this.fireEvent(&#39;next&#39;, this);
+        }
+        else {
+            this.fireEvent(&#39;previous&#39;, this);
+        }
+    },
+
+<span id='Ext-carousel-Indicator-method-destroy'>    destroy: function() {
+</span>        var indicators = this.indicators,
+            i, ln, indicator;
+
+        for (i = 0,ln = indicators.length; i &lt; ln; i++) {
+            indicator = indicators[i];
+            indicator.destroy();
+        }
+
+        indicators.length = 0;
+
+        this.callParent();
+    }
+});
+</pre>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-view-TouchEvents'>/**
+</span> * Presents a large touch zone and reports all of the touch events fired when the user interacts with it
+ */
+Ext.define(&#39;EvaluateIt.view.TouchEvents&#39;, {
+    extend: &#39;Ext.Container&#39;,
+    xtype: &#39;touchevents&#39;,
+
+    requires: [
+        &#39;EvaluateIt.view.touchevent.Info&#39;,
+        &#39;EvaluateIt.view.touchevent.Logger&#39;,
+        &#39;EvaluateIt.view.touchevent.Pad&#39;
+    ],
+
+<span id='EvaluateIt-view-TouchEvents-method-initialize'>    initialize: function() {
+</span>        this.callParent(arguments);
+
+        var padElement = Ext.get(&#39;touchpad&#39;);
+
+        padElement.on([&#39;touchstart&#39;, &#39;touchend&#39;, &#39;touchmove&#39;,
+                        &#39;swipe&#39;, &#39;dragstart&#39;, &#39;drag&#39;, &#39;dragend&#39;,
+                        &#39;tap&#39;, &#39;doubletap&#39;, &#39;longpress&#39;, &#39;pinch&#39;, &#39;rotate&#39;],
+        &#39;onTouchPadEvent&#39;, this);
+    },
+
+<span id='EvaluateIt-view-TouchEvents-method-onTouchPadEvent'>    onTouchPadEvent: function(e, target, options, eventController) {
+</span>        this.down(&#39;toucheventlogger&#39;).addLog(eventController.info.eventName);
+    }
+});
+</pre>
+</body>
+</html>

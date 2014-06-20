@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-layout-Float'>/**
+</span> *
+ */
+Ext.define(&#39;Ext.layout.Float&#39;, {
+    extend: &#39;Ext.layout.Default&#39;,
+
+    alias: &#39;layout.float&#39;,
+
+    config: {
+<span id='Ext-layout-Float-cfg-direction'>        direction: &#39;left&#39;
+</span>    },
+
+<span id='Ext-layout-Float-property-layoutClass'>    layoutClass: &#39;layout-float&#39;,
+</span>
+<span id='Ext-layout-Float-property-itemClass'>    itemClass: &#39;layout-float-item&#39;,
+</span>
+<span id='Ext-layout-Float-method-setContainer'>    setContainer: function(container) {
+</span>        this.callSuper(arguments);
+
+        container.innerElement.addCls(this.layoutClass);
+    },
+
+<span id='Ext-layout-Float-method-onItemInnerStateChange'>    onItemInnerStateChange: function(item, isInner) {
+</span>        this.callSuper(arguments);
+        item.toggleCls(this.itemClass, isInner);
+    },
+
+<span id='Ext-layout-Float-method-updateDirection'>    updateDirection: function(direction, oldDirection) {
+</span>        var prefix = &#39;direction-&#39;;
+
+        this.container.innerElement.swapCls(prefix + direction, prefix + oldDirection);
+    }
+});
+</pre>
+</body>
+</html>

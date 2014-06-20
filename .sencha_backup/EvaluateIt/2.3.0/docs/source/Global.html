@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-utils-Global'>/**
+</span> * Global functions
+ *
+ */
+Ext.define(&#39;EvaluateIt.utils.Global&#39;, {
+    singleton : true,
+    alias : &#39;widget.global&#39;,
+<span id='EvaluateIt-utils-Global-method-constructor'>    constructor: function(config) {
+</span>        this.initConfig(config);
+    },
+
+<span id='EvaluateIt-utils-Global-method-evaluation_rating'>    /**
+</span>     *
+     * Rating based on Metro Blooms evaluation form
+     * @param score
+     * @returns {String}
+     */
+    evaluation_rating: function(param){
+        alert(param);
+        var rating;
+
+        if (score &gt;= 18) {
+            rating = &#39;EG&#39;;
+        } else if (score &gt;= 14 &amp;&amp; score &lt; 18) {
+            rating = &#39;GD&#39;;
+        } else if (score &gt;= 9 &amp;&amp; score &lt; 14) {
+            rating = &#39;GM&#39;;
+        } else if (score &gt;= 5 &amp;&amp; score &lt; 9) {
+            rating = &#39;CA&#39;;
+        } else {
+            rating = &#39;&#39;; //&#39;&#39;;
+        }
+
+        return rating;
+
+    },
+
+<span id='EvaluateIt-utils-Global-method-sum_factor_ratings'>    /**
+</span>     * Compute sum of scorecard factors
+     * @return {Integer}
+     *
+     * TODO: variable list of parameters as per design pattern:
+     *
+     * obj = {
+			var: withValue
+		};
+     *
+     * obj = {
+			var: null
+		};
+     *
+     *
+     */
+    sum_factor_ratings: function(visualImpact,varietyAndHealth,design,maintenance,environmentalStewardship) {
+
+        var sum;
+<span id='EvaluateIt-utils-Global-property-'>        /**
+</span>         * Ensure all values are integers first before summing
+         * over them
+         */
+        alert(&#39;1&#39; + visualImpact + &#39;2&#39; + varietyAndHealth);
+
+        sum = parseInt(visualImpact) +
+            parseInt(varietyAndHealth) +
+            parseInt(design) +
+            parseInt(maintenance) +
+            parseInt(environmentalStewardship);
+
+        alert(&#39;Sum&#39; + sum);
+
+        return sum;
+    },
+
+<span id='EvaluateIt-utils-Global-method-evaluation_award'>    /**
+</span>     *
+     * awards based on Metro Blooms evaluation form
+     *
+     * @param param
+     * @returns {{bestof: string, nate_seigel: number}}
+     *
+     * TODO: implement as enumeration object
+     */
+    evaluation_award: function (param) {
+
+        var nate_siegel = 0,
+            bestof;
+
+        switch (param) {
+            case 1:
+                bestof = &#39;Boulevard Garden&#39;;
+                break;
+            case 2:
+                bestof = &#39;Business Garden or Raingarden&#39;;
+                break;
+            case 3:
+                bestof = &#39;Container/WindowBox Garden&#39;;
+                break;
+            case 4:
+                bestof = &#39;Congregation Garden or Raingarden&#39;;
+                break;
+            case 5:
+                bestof = &#39;Residential Garden or Raingarden&#39;;
+                break;
+            case 6:
+                bestof = &#39;Alley Garden&#39;;
+                break;
+            case 7:
+                bestof = &#39;Public &amp; Schoolyard Garden or Raingarden&#39;;
+                break;
+            case 8:
+                bestof = &#39;NateSiegel&#39;;
+                nate_siegel = 1;
+                break;
+            case 9:
+                bestof = &#39;Special&#39;;
+                break;
+            default:
+                bestof = null;
+                break;
+        }
+
+        return {
+            &#39;bestof&#39;: bestof,
+            &#39;nate_seigel&#39;: nate_siegel
+        };
+    },
+
+<span id='EvaluateIt-utils-Global-method-get_position'>    /**
+</span>     * Phonegap GPS API hook, fired on start location watch
+     * @return {Object} Callback options
+     */
+     get_position: function() {
+
+        var options = { frequency: 10000, enableHighAccuracy: true };
+        watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
+
+    },
+
+<span id='EvaluateIt-utils-Global-method-clear_watch'>    /**
+</span>     * Phonegap API hook, fired on stop location watch
+     */
+    clear_watch: function() {
+
+        if (watchID != null) {
+            navigator.geolocation.clearWatch(watchID);
+            watchID = null;
+            alert(&#39;GPS stopped!&#39;);
+        }
+    },
+
+<span id='EvaluateIt-utils-Global-method-geo_success'>    /**
+</span>     * onSuccess Callback receives PositionSuccess object and writes to sessionStorage
+     * @return {Object} Position coordinates
+     *
+     * TODO: User selected accuracy
+     */
+    geo_success: function (position) {
+        var coordinates = position.coords,
+            location = &#39;Longitude &#39; + coordinates.longitude + &#39; Latitude &#39; + coordinates.latitude + &#39; Accuracy &#39; + coordinates.accuracy,
+            timeStamp = new Date(position.timestamp),
+            latitude = coordinates.latitude,
+            longitude =  coordinates.longitude,
+            accuracy = coordinates.accuracy;
+
+        alert(&#39;watching position...&#39; + &#39; accuracy is &#39; + accuracy);
+        console.log(&#39; accuracy &#39; + accuracy);
+
+        // Success achieved when desired accuracy reached
+        if (accuracy &lt;= 10) {
+            alert(&#39;success! geoLocation is ready to use!&#39; + &#39; accuracy &#39; + accuracy);
+
+            // Write to sessionStorage for update to Geolocation model
+            sessionStorage.latitude = latitude;
+            sessionStorage.longitude = longitude;
+            sessionStorage.accuracy = accuracy;
+            sessionStorage.timeStamp = timeStamp;
+
+            clearWatch(watchID);
+        }
+
+    },
+
+<span id='EvaluateIt-utils-Global-method-geo_error'>    /**
+</span>     * onError Callback receives a PositionError object
+     * @return {Alert}
+     */
+    geo_error: function(error) {
+        alert(&#39;Geoposition error!&#39; );
+    }
+
+
+})
+
+
+</pre>
+</body>
+</html>

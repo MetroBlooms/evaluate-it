@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">//Ext.require([&#39;Ext.data.proxy.SQL&#39;]);
+
+Ext.define(&#39;EvaluateIt.model.SiteEvaluation&#39;, {
+    extend: &#39;Ext.data.Model&#39;,
+	requires: [
+		&#39;Ext.data.identifier.Uuid&#39;
+	],
+	// TO DO: this is a temporary kludge until the following is implemented in its entirety: http://appointsolutions.com/2012/07/using-model-associations-in-sencha-touch-2-and-ext-js-4/
+
+    
+	config: {
+        //idProperty: &#39;id&#39;, // use with proxy.SQL 
+		identifier: &#39;uuid&#39;, // use with proxy.localstorage 
+        fields: [
+	
+			{name: &#39;site_id&#39;, type: &#39;int&#39;},	
+           	{name: &#39;remoteSiteId&#39;, type: &#39;int&#39;},
+
+			// TODO: normalize structure as per outlined sections below
+
+			// Address model
+			{name: &#39;address&#39;, mapping: &#39;site.address.address&#39;, type: &#39;string&#39;},
+            {name: &#39;city&#39;, mapping: &#39;site.address.city&#39;, type: &#39;string&#39;},
+            {name: &#39;state&#39;, mapping: &#39;site.address.state&#39;, type: &#39;string&#39;},
+            {name: &#39;zipcode&#39;, mapping: &#39;site.address.zipcode&#39;, type: &#39;string&#39;},
+			{name: &#39;neighborhood&#39;, mapping: &#39;site.address.neighborhood&#39;, type: &#39;string&#39;},
+			{name: &#39;county&#39;, mapping: &#39;site.address.county&#39;, type: &#39;string&#39;},
+
+			// Evaluation model
+			{name: &#39;category&#39;, mapping: &#39;evaluation.category&#39;, type: &#39;string&#39;}, //used to categorize for selection of view 
+	    	{name: &#39;remoteEvaluationId&#39;, mapping: &#39;evaluation.remoteEvaluationId&#39;, type: &#39;int&#39;},
+			{name: &#39;remoteEvaluatorId&#39;, mapping: &#39;evaluation.remoteEvaluatorId&#39;, type: &#39;int&#39;},
+            {name: &#39;sumRating&#39;, mapping: &#39;evaluation.sumRating&#39;, type: &#39;int&#39;},
+            {name: &#39;dateloadedToDevice&#39;, mapping: &#39;evaluation.dateloadedToDevice&#39;, type: &#39;date&#39;},
+            {name: &#39;datePostedToRemote&#39;, mapping: &#39;evaluation.datePostedToRemote&#39;, type: &#39;date&#39;},
+            {name: &#39;dateUpdated&#39;, mapping: &#39;evaluation.dateUpdated&#39;, type: &#39;date&#39;},
+            {name: &#39;dateOfEvaluation&#39;, mapping: &#39;evaluation.dateOfEvaluation&#39;, type: &#39;date&#39;}, 
+            {name: &#39;noLongerExists&#39;, mapping: &#39;evaluation.noLongerExists&#39;, type: &#39;boolean&#39;},
+            {name: &#39;comments&#39;, mapping: &#39;evaluation.comments&#39;, type: &#39;string&#39;},
+            {name: &#39;evaluationType&#39;, mapping: &#39;evaluation.evaluationType&#39;, type: &#39;int&#39;},
+			// EvaluationFactorScorecard model: must have all 5 categories
+			{name: &#39;visualImpact&#39;, mapping: &#39;evaluationFactorScorecard.useOfColoisualImpact&#39;, type: &#39;int&#39;},
+			{name: &#39;varietyAndHealth&#39;, mapping: &#39;evaluationFactorScorecard.varietyAndHealth&#39;, type: &#39;int&#39;},
+			{name: &#39;design&#39;, mapping: &#39;evaluationFactorScorecard.design&#39;, type: &#39;int&#39;},
+			{name: &#39;maintenance&#39;, mapping: &#39;evaluationFactorScorecard.maintenance&#39;, type: &#39;int&#39;},
+			{name: &#39;environmentalStewardship&#39;, mapping: &#39;evaluationFactorScorecard.environmentalStewardship&#39;, type: &#39;int&#39;},
+			
+			// SiteMaintainer
+			{name: &#39;name&#39;, mapping: &#39;site.siteMaintainer.name&#39;, type: &#39;string&#39;},
+
+			// Evaluator model
+			{name: &#39;remoteEvaluatorId&#39;, mapping: &#39;evaluator.remoteEvaluatorId&#39;, type: &#39;string&#39;},
+
+			// Geolocation model
+			{name: &#39;latitude&#39;, mapping: &#39;geolocation.latitude&#39;, type: &#39;float&#39;},
+            {name: &#39;longitude&#39;, mapping: &#39;geolocation.longitude&#39;, type: &#39;float&#39;},
+            {name: &#39;accuracy&#39;, mapping: &#39;geolocation.accuracy&#39;, type: &#39;float&#39;},
+            {name: &#39;datestamp&#39;, mapping:  &#39;geolocation.datestamp&#39;, type: &#39;string&#39;},             
+		
+			// EvaluationAward model	
+			{name: &#39;awardId&#39;, mapping:  &#39;evaluationAward.rainGarden&#39;, type: &#39;string&#39;},
+            {name: &#39;specialAwardSpecified&#39;, mapping:  &#39;evaluationAward.specialAwardSpecified&#39;, type: &#39;string&#39;},
+           
+			// EvaluationFeature model 
+			{name: &#39;rainGarden&#39;, mapping:  &#39;evaluationFeature.rainGarden&#39;, type: &#39;string&#39;},
+            //{name: &#39;rainBarrel&#39;, mapping:  &#39;evaluationFeature.rainBarrel&#39;, type: &#39;string&#39;},
+	
+			// need EvaluationImage model (see http://code.medula.cl/article_Picture-capture-and-uploader-app-with-ST2.html)	
+			{name: &#39;imageUri&#39;, mapping: &#39;siteImage.imageUri&#39;, type: &#39;string&#39;} // local path to image
+
+        ],
+		proxy: {
+        	type: &quot;localstorage&quot;,  //&quot;sql&quot;
+			reader : {
+            	type : &#39;json&#39;
+        	}
+
+           //database: &#39;Yo&#39;
+        }
+    }
+});
+
+</pre>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.view.touchevent.Info&#39;, {
+    extend: &#39;Ext.Component&#39;,
+    xtype: &#39;toucheventinfo&#39;,
+
+    config: {
+        styleHtmlContent: true,
+        html: [
+            &#39;&lt;p&gt;Sencha Touch comes with a multitude of touch events available on components. Included touch events that can be used are:&lt;/p&gt;&#39;,
+            &#39;&lt;ul&gt;&#39;,
+                &#39;&lt;li&gt;touchstart&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;touchmove&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;touchend&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;dragstart&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;drag&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;dragend&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;tap&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;singletap&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;doubletap&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;longpress&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;swipe&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;pinch (on iOS and Android 3+)&lt;/li&gt;&#39;,
+                &#39;&lt;li&gt;rotate (on iOS and Android 3+)&lt;/li&gt;&#39;,
+            &#39;&lt;/ul&gt;&#39;
+        ].join(&#39;&#39;)
+    }
+});
+</pre>
+</body>
+</html>

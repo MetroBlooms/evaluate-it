@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fc04ca85-7aad-4d6f-8bf5-65fd6457334c" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/utils/DataService.js" afterPath="$PROJECT_DIR$/app/utils/DataService.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controller/SiteImageCapture.js" afterPath="$PROJECT_DIR$/app/controller/SiteImageCapture.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bootstrap.js" afterPath="$PROJECT_DIR$/bootstrap.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bootstrap.json" afterPath="$PROJECT_DIR$/bootstrap.json" />
+    </list>
+    <ignored path="evaluate-it.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="evaluate-it" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="UtilityService.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/utils/UtilityService.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="155" column="89" selection-start="4054" selection-end="4189" vertical-scroll-proportion="0.0" vertical-offset="1245" max-vertical-offset="3000">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Geoposition.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/view/Geoposition.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="60" selection-start="1162" selection-end="1194" vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="1410">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Evaluation.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controller/Evaluation.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="77" column="44" selection-start="2438" selection-end="2438" vertical-scroll-proportion="0.0" vertical-offset="1230" max-vertical-offset="2100">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataService.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/utils/DataService.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="477" column="39" selection-start="19055" selection-end="19055" vertical-scroll-proportion="0.6859606" vertical-offset="6598" max-vertical-offset="9090">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SiteImageCapture.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controller/SiteImageCapture.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="31" selection-start="740" selection-end="740" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="825">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Evaluation.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/view/Evaluation.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="25" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="88" column="41" selection-start="2844" selection-end="2873" vertical-scroll-proportion="0.0" vertical-offset="930" max-vertical-offset="3270">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.json" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="10" selection-start="2163" selection-end="2237" vertical-scroll-proportion="-5.76" vertical-offset="372" max-vertical-offset="2175">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Site.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controller/Site.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="23" selection-start="1293" selection-end="1368" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1620">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Push.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controller/Push.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="55" column="23" selection-start="1243" selection-end="1243" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1605">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_USER" value="MetroBlooms" />
+    <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="evaluate-it" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/app/view/Site/SiteGeolocationList.js" />
+        <option value="$PROJECT_DIR$/app/view/Site/Site.js" />
+        <option value="$PROJECT_DIR$/app/view/Site/SiteForm.js" />
+        <option value="$PROJECT_DIR$/app/view/SiteGeolocation.js" />
+        <option value="$PROJECT_DIR$/app/view/Site/SiteList.js" />
+        <option value="$PROJECT_DIR$/app/model/evaluate-it.puml" />
+        <option value="$PROJECT_DIR$/touch/src/data/proxy/WebStorage.js" />
+        <option value="$PROJECT_DIR$/app/controller/SiteGeneral.js" />
+        <option value="$PROJECT_DIR$/app/model/SiteMaintainer.js" />
+        <option value="$PROJECT_DIR$/app/model/EvaluationFeature.js" />
+        <option value="$PROJECT_DIR$/app/model/EvaluationImage.js" />
+        <option value="$PROJECT_DIR$/app/controller/SiteAddress.js" />
+        <option value="$PROJECT_DIR$/app/model/BaseModel.js" />
+        <option value="$PROJECT_DIR$/app/view/EvaluationList.js" />
+        <option value="$PROJECT_DIR$/app/view/Pull.js" />
+        <option value="$PROJECT_DIR$/app/view/EvaluationAwardList.js" />
+        <option value="$PROJECT_DIR$/app/model/Address.js" />
+        <option value="$PROJECT_DIR$/app/view/EvaluationScorecard.js" />
+        <option value="$PROJECT_DIR$/app/store/Options.js" />
+        <option value="$PROJECT_DIR$/app/view/EvaluationScorecardList.js" />
+        <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/app/controller/Evaluation copy.js" />
+        <option value="$PROJECT_DIR$/app/model/EvaluationAward.js" />
+        <option value="$PROJECT_DIR$/app/view/Site.js" />
+        <option value="$PROJECT_DIR$/app/controller/EvaluationAward.js" />
+        <option value="$PROJECT_DIR$/app/view/EvaluationAwardForm.js" />
+        <option value="$PROJECT_DIR$/app/view/SiteForm.js" />
+        <option value="$PROJECT_DIR$/app/view/Geoposition.js" />
+        <option value="$PROJECT_DIR$/app/controller/SiteGeolocation.js" />
+        <option value="$PROJECT_DIR$/app/view/SiteGeolocationList.js" />
+        <option value="$PROJECT_DIR$/app/model/Geolocation.js" />
+        <option value="$PROJECT_DIR$/app/view/SiteList.js" />
+        <option value="$PROJECT_DIR$/app/view/Push.js" />
+        <option value="$PROJECT_DIR$/app/controller/Site.js" />
+        <option value="$PROJECT_DIR$/app/view/PushList.js" />
+        <option value="$PROJECT_DIR$/app/model/EvaluationScorecard.js" />
+        <option value="$PROJECT_DIR$/app/controller/Main.js" />
+        <option value="$PROJECT_DIR$/app/model/Site.js" />
+        <option value="$PROJECT_DIR$/app/view/EvaluationScorecardForm.js" />
+        <option value="$PROJECT_DIR$/app/view/EvaluationForm.js" />
+        <option value="$PROJECT_DIR$/app/model/Evaluation.js" />
+        <option value="$PROJECT_DIR$/app/controller/Evaluation.js" />
+        <option value="$PROJECT_DIR$/app/controller/EvaluationScorecard.js" />
+        <option value="$PROJECT_DIR$/app/view/ClearAll.js" />
+        <option value="$PROJECT_DIR$/app/view/RemoveRecordList.js" />
+        <option value="$PROJECT_DIR$/app/controller/RemoveRecord.js" />
+        <option value="$PROJECT_DIR$/app/controller/Push.js" />
+        <option value="$PROJECT_DIR$/app/utils/UtilityService.js" />
+        <option value="$PROJECT_DIR$/app.json" />
+        <option value="$PROJECT_DIR$/app/controller/SiteImageCapture.js" />
+        <option value="$PROJECT_DIR$/app/utils/DataService.js" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="evaluate-it" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="evaluate-it" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="evaluate-it" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="evaluate-it" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="evaluate-it" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cordova" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="evaluate-it" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="evaluate-it" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="evaluate-it" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="evaluate-it" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="evaluate-it" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="evaluate-it" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="151" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="153" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="options.lastSelected" value="reference.settings.ide.settings.web.browsers" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="151" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="156" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="950" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="950" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="156" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="153" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
+    <property name="FullScreen" value="true" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="recentsLimit" value="5" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/model/evaluate-it.png" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="SearchEverywhereHistory" value="&#10;[&#10;Puu" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/controller" />
+      <recent name="$PROJECT_DIR$/app/view" />
+      <recent name="$PROJECT_DIR$/app/model" />
+    </key>
+    <key name="OPEN_URL_DIALOG">
+      <recent name="http://localhost:63342/evaluate-it" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/view" />
+      <recent name="$PROJECT_DIR$/app/view/Site" />
+      <recent name="$PROJECT_DIR$/app/view/Evaluation" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.evaluate-it">
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="name" value="Dart" />
+      <option name="saveOutputToFile" value="false" />
+      <option name="showConsoleOnStdErr" value="false" />
+      <option name="showConsoleOnStdOut" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
+      <setting name="configLocationType" value="CONFIG_FILE" />
+      <setting name="settingsFile" value="" />
+      <setting name="serverType" value="INTERNAL" />
+      <setting name="preferredDebugBrowser" value="CHROME" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <browser start="false" url="" with-js-debugger="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="evaluate-it" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true" uri="http://localhost:63342/evaluate-it">
+      <RunnerSettings RunnerId="JavascriptDebugRunner" />
+      <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.evaluate-it" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="sslv3">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fc04ca85-7aad-4d6f-8bf5-65fd6457334c" name="Default" comment="" />
+      <created>1389925293296</created>
+      <updated>1389925293296</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Added site name, as per request form &quot;garden name&quot;">
+      <created>1390011578305</created>
+      <updated>1390011578305</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Clean up of more global functions; more JsDruckification&#10;">
+      <created>1393641805088</created>
+      <updated>1393641805089</updated>
+    </task>
+    <task id="LOCAL-00003" summary="cleanup&#10;">
+      <created>1398394428464</created>
+      <updated>1398394428464</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18053928" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="6.9444446E-4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.08611111" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16875" sideWeight="0.67058825" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39976552" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3282532" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12192263" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38921455" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USERS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
+    <MESSAGE value="Added site name, as per request form &quot;garden name&quot;" />
+    <MESSAGE value="aClean up of more global functions; more JsDruckification&#10;" />
+    <MESSAGE value="Clean up of more global functions; more JsDruckification&#10;" />
+    <MESSAGE value="cleanup&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanup&#10;" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/model/BaseModel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="436" column="49" selection-start="15986" selection-end="15986" vertical-scroll-proportion="0.0" vertical-offset="5265" max-vertical-offset="8295" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/store/Evaluations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="40" selection-start="12" selection-end="40" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/EvaluationAward.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="802" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/EvaluationAwardList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="10" selection-start="528" selection-end="620" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/SiteGeolocation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="123" column="54" selection-start="3183" selection-end="3183" vertical-scroll-proportion="0.0" vertical-offset="1598" max-vertical-offset="3150" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/SiteGeolocationList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="28" selection-start="359" selection-end="359" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/store/EvaluationAwards.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="802" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/EvaluationAward.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="44" selection-start="637" selection-end="665" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/Geolocation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="35" selection-start="720" selection-end="720" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/Address.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="35" selection-start="262" selection-end="262" vertical-scroll-proportion="0.12727273" vertical-offset="0" max-vertical-offset="825" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/tablet/Main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="88" selection-start="296" selection-end="298" vertical-scroll-proportion="-2.8846154" vertical-offset="0" max-vertical-offset="1230" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/phone/Main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="0" selection-start="3338" selection-end="3338" vertical-scroll-proportion="0.08010013" vertical-offset="1256" max-vertical-offset="2055" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/store/Options.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="48" selection-start="974" selection-end="974" vertical-scroll-proportion="0.56363636" vertical-offset="0" max-vertical-offset="1770" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/Option.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/EvaluationAward.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="0" selection-start="761" selection-end="761" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1245" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/store/ImageQueue.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="698" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/EvaluationList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="10" selection-start="540" selection-end="835" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/SiteList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="8" selection-start="291" selection-end="291" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/Site.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="31" selection-start="554" selection-end="554" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="750" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/Pull.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="37" selection-start="1900" selection-end="1900" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1380" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/EvaluationAwardForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="14" selection-start="1055" selection-end="1164" vertical-scroll-proportion="0.0" vertical-offset="428" max-vertical-offset="1440" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/EvaluationScorecardList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="36" selection-start="454" selection-end="474" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/PushList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="55" selection-start="961" selection-end="961" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/SiteMaintainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="45" selection-start="387" selection-end="387" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/Site.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="15" selection-start="1054" selection-end="1054" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="945" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/EvaluationScorecard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="92" selection-start="290" selection-end="290" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/EvaluationScorecardForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="14" selection-start="1213" selection-end="1213" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="2355" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/Main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="16" selection-start="1331" selection-end="1343" vertical-scroll-proportion="0.0" vertical-offset="169" max-vertical-offset="2925" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/EvaluationScorecard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="47" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/EvaluationScorecard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="52" selection-start="1442" selection-end="1442" vertical-scroll-proportion="0.0" vertical-offset="541" max-vertical-offset="2145">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/SiteGeolocation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="28" selection-start="651" selection-end="651" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/RemoveRecordList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="4" selection-start="533" selection-end="533" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/ClearAll.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="69" selection-start="796" selection-end="825" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/RemoveRecord.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="45" selection-start="608" selection-end="608" vertical-scroll-proportion="0.0" vertical-offset="112" max-vertical-offset="870">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="http://localhost:63342/evaluate-it">
+      <provider selected="true" editor-type-id="httpFileEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="30" selection-start="2779" selection-end="2779" vertical-scroll-proportion="0.0" vertical-offset="1450" max-vertical-offset="2400">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/SiteForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="12" selection-start="1433" selection-end="1433" vertical-scroll-proportion="0.0" vertical-offset="645" max-vertical-offset="1575">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/Push.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="27" selection-start="565" selection-end="565" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="930">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/PushForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="55" selection-start="576" selection-end="576" vertical-scroll-proportion="0.18181819" vertical-offset="195" max-vertical-offset="1020">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/Site.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="23" selection-start="1293" selection-end="1368" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1620">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/Push.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="23" selection-start="1243" selection-end="1243" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1605">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/Evaluation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="25" selection-start="769" selection-end="769" vertical-scroll-proportion="0.018181818" vertical-offset="180" max-vertical-offset="1110">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/Evaluation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="44" selection-start="2438" selection-end="2438" vertical-scroll-proportion="0.0" vertical-offset="1230" max-vertical-offset="2100">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="41" selection-start="2844" selection-end="2873" vertical-scroll-proportion="0.0" vertical-offset="1005" max-vertical-offset="3270">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/Geoposition.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="60" selection-start="1162" selection-end="1194" vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="1410">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="10" selection-start="2163" selection-end="2237" vertical-scroll-proportion="-5.76" vertical-offset="372" max-vertical-offset="2175">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/EvaluationForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="28" selection-start="2975" selection-end="2975" vertical-scroll-proportion="0.24242425" vertical-offset="1225" max-vertical-offset="2070">
+          <folding>
+            <marker date="1402757217000" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/Evaluation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="25" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controller/SiteImageCapture.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="31" selection-start="740" selection-end="740" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/utils/UtilityService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="155" column="89" selection-start="4054" selection-end="4189" vertical-scroll-proportion="0.0" vertical-offset="1170" max-vertical-offset="3000">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/utils/DataService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="477" column="39" selection-start="19055" selection-end="19055" vertical-scroll-proportion="0.6859606" vertical-offset="6598" max-vertical-offset="9090">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
+

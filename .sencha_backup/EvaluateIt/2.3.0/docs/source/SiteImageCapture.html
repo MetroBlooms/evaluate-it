@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-controller-SiteImageCapture'>/**
+</span> *
+ * Controls writing image uri to datastore
+ */
+
+Ext.define(&#39;EvaluateIt.controller.SiteImageCapture&#39;,{
+    extend : &#39;Ext.app.Controller&#39;,
+    requires: [
+        &#39;Ext.device.Camera&#39;
+    ],
+    config: {
+<span id='EvaluateIt-controller-SiteImageCapture-cfg-refs'>        refs: {
+</span>            myEvaluationList: &#39;evaluationList&#39;
+        },
+<span id='EvaluateIt-controller-SiteImageCapture-cfg-control'>        control:{
+</span>            &#39;siteEvaluationForm button[itemId=siteImage]&#39; : {
+                tap : &#39;openCamera&#39;
+            }
+        }
+    },
+<span id='EvaluateIt-controller-SiteImageCapture-method-openCamera'>    openCamera: function(button,eve){
+</span>        Ext.device.Camera.capture({
+            success: this.onCaptureSuccess,
+			failure: this.onCaptureFailure,
+            scope: this,
+            quality: 50,//for testing having this at 50 does faster uploads
+            source: &#39;library&#39;,
+            destination: &#39;file&#39;
+        });
+    },
+<span id='EvaluateIt-controller-SiteImageCapture-method-onCaptureSuccess'>    onCaptureSuccess: function(uri) {
+</span>        console.log(&#39;got foto:&#39;+uri);
+        var lostor = Ext.getStore(&#39;theImageQueue&#39;);
+        lostor.add({
+            src: uri
+        });
+        lostor.sync();
+    },
+<span id='EvaluateIt-controller-SiteImageCapture-method-onCaptureFailure'>	onCaptureFailure: function() {
+</span>
+		console.log(&#39;capture failure&#39;);
+	}
+});
+</pre>
+</body>
+</html>

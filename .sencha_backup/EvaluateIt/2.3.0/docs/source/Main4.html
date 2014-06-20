@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.view.Main&#39;, {
+    extend: &#39;Ext.tab.Panel&#39;,
+    xtype: &#39;main&#39;,
+    requires: [
+        &#39;Ext.TitleBar&#39;,
+        &#39;Ext.Video&#39;
+    ],
+    config: {
+        tabBarPosition: &#39;bottom&#39;,
+
+        items: [
+            {
+                title: &#39;Welcome&#39;,
+                iconCls: &#39;home&#39;,
+
+                styleHtmlContent: true,
+                scrollable: true,
+
+                items: {
+                    docked: &#39;top&#39;,
+                    xtype: &#39;titlebar&#39;,
+                    title: &#39;Welcome to Sencha Touch 2&#39;
+                },
+
+                html: [
+                    &quot;You&#39;ve just generated a new Sencha Touch 2 project. What you&#39;re looking at right now is the &quot;,
+                    &quot;contents of &lt;a target=&#39;_blank&#39; href=\&quot;app/view/Main.js\&quot;&gt;app/view/Main.js&lt;/a&gt; - edit that file &quot;,
+                    &quot;and refresh to change what&#39;s rendered here.&quot;
+                ].join(&quot;&quot;)
+            },
+            {
+                title: &#39;Get Started&#39;,
+                iconCls: &#39;action&#39;,
+
+                items: [
+                    {
+                        docked: &#39;top&#39;,
+                        xtype: &#39;titlebar&#39;,
+                        title: &#39;Getting Started&#39;
+                    },
+                    {
+                        xtype: &#39;video&#39;,
+                        url: &#39;http://av.vimeo.com/64284/137/87347327.mp4?token=1330978144_f9b698fea38cd408d52a2393240c896c&#39;,
+                        posterUrl: &#39;http://b.vimeocdn.com/ts/261/062/261062119_640.jpg&#39;
+                    }
+                ]
+            }
+        ]
+    }
+});
+</pre>
+</body>
+</html>

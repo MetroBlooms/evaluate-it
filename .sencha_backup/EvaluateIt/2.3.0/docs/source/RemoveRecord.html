@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-controller-RemoveRecord'>/**
+</span> * Controls record removal from data store
+ */
+Ext.define(&#39;EvaluateIt.controller.RemoveRecord&#39;, {
+	extend : &#39;Ext.app.Controller&#39;,
+
+	config: {
+<span id='EvaluateIt-controller-RemoveRecord-cfg-profile'>  		profile: Ext.os.deviceType.toLowerCase(),
+</span><span id='EvaluateIt-controller-RemoveRecord-cfg-stores'>  		stores : [&#39;SiteEvaluations&#39;],
+</span><span id='EvaluateIt-controller-RemoveRecord-cfg-models'>  		models : [&#39;SiteEvaluation&#39;],
+</span><span id='EvaluateIt-controller-RemoveRecord-cfg-refs'>		refs: {
+</span>   			myRemoveRecordList: &#39;removeRecordList&#39;
+  		},
+<span id='EvaluateIt-controller-RemoveRecord-cfg-control'>		control: {
+</span>			&#39;removeRecordList&#39;: {
+				activate: &#39;onActivate&#39;,
+				itemtap: &#39;onSelectRemoveRecord&#39;
+			}
+		}	  
+
+ 	},
+
+<span id='EvaluateIt-controller-RemoveRecord-method-onActivate'>	onActivate: function() {
+</span>  		console.log(&#39;Main container is active&#39;);
+ 	},
+
+<span id='EvaluateIt-controller-RemoveRecord-method-onSelectRemoveRecord'>	onSelectRemoveRecord: function(view, index, target, record, event) {
+</span>		console.log(&#39;Selected a record for removal from the list&#39;);
+		var	id = record.get(&#39;id&#39;), // get key
+			evaluationStore = Ext.create(&#39;EvaluateIt.store.SiteEvaluations&#39;)
+			index;
+
+		console.log(&#39;id: &#39; + record.get(&#39;id&#39;));
+		
+		Ext.Msg.show({
+			title:&#39;Are you sure?&#39;,
+			buttons: Ext.MessageBox.YESNO,
+			//animateTarget: &#39;mb4&#39;,
+			//icon: Ext.MessageBox.WARNING,
+			fn: function(buttonId) {
+				//alert(&#39;You pressed the &quot;&#39; + buttonId + &#39;&quot; button.&#39;);
+			
+				if (buttonId === &#39;yes&#39;) {
+					evaluationsStore = Ext.getStore(evaluationStore); 
+					index = evaluationStore.findExact(&#39;id&#39;, id); // get index of record
+
+					console.log(&#39;index: &#39; + index);
+					evaluationStore.removeAt(index); // remove record by index 
+					evaluationStore.sync();
+					alert(&#39;It is gone!&#39;);
+
+            		Ext.StoreMgr.get(&#39;SiteEvaluations&#39;).load();
+					
+
+				}
+				else {
+					alert(&#39;Unscathed!&#39;);
+				}	
+			}	
+		});
+	}
+
+});
+</pre>
+</body>
+</html>

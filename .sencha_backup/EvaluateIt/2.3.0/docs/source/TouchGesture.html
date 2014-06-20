@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-event-publisher-TouchGesture'>/**
+</span> * @private
+ */
+Ext.define(&#39;Ext.event.publisher.TouchGesture&#39;, {
+
+    extend: &#39;Ext.event.publisher.Dom&#39;,
+
+    requires: [
+        &#39;Ext.util.Point&#39;,
+        &#39;Ext.event.Touch&#39;,
+        &#39;Ext.AnimationQueue&#39;
+    ],
+
+<span id='Ext-event-publisher-TouchGesture-property-isNotPreventable'>    isNotPreventable: /^(select|a)$/i,
+</span>
+<span id='Ext-event-publisher-TouchGesture-property-handledEvents'>    handledEvents: [&#39;touchstart&#39;, &#39;touchmove&#39;, &#39;touchend&#39;, &#39;touchcancel&#39;],
+</span>
+<span id='Ext-event-publisher-TouchGesture-property-mouseToTouchMap'>    mouseToTouchMap: {
+</span>        mousedown: &#39;touchstart&#39;,
+        mousemove: &#39;touchmove&#39;,
+        mouseup: &#39;touchend&#39;
+    },
+
+<span id='Ext-event-publisher-TouchGesture-property-lastEventType'>    lastEventType: null,
+</span>
+    config: {
+<span id='Ext-event-publisher-TouchGesture-cfg-moveThrottle'>        moveThrottle: 0,
+</span><span id='Ext-event-publisher-TouchGesture-cfg-recognizers'>        recognizers: {}
+</span>    },
+
+<span id='Ext-event-publisher-TouchGesture-method-constructor'>    constructor: function(config) {
+</span>        this.eventProcessors = {
+            touchstart: this.onTouchStart,
+            touchmove: this.onTouchMove,
+            touchend: this.onTouchEnd,
+            touchcancel: this.onTouchEnd
+        };
+
+        this.eventToRecognizerMap = {};
+
+        this.activeRecognizers = [];
+
+        this.touchesMap = {};
+
+        this.currentIdentifiers = [];
+
+        if (Ext.browser.is.Chrome &amp;&amp; Ext.os.is.Android) {
+            this.screenPositionRatio = Ext.browser.version.gt(&#39;18&#39;) ? 1 : 1 / window.devicePixelRatio;
+        }
+        else if (Ext.browser.is.AndroidStock4) {
+            this.screenPositionRatio = 1;
+        }
+        else if (Ext.os.is.BlackBerry) {
+            this.screenPositionRatio = 1 / window.devicePixelRatio;
+        }
+        else if (Ext.browser.engineName == &#39;WebKit&#39; &amp;&amp; Ext.os.is.Desktop) {
+            this.screenPositionRatio = 1;
+        }
+        else {
+            this.screenPositionRatio = window.innerWidth / window.screen.width;
+        }
+        this.initConfig(config);
+
+        return this.callSuper();
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-applyRecognizers'>    applyRecognizers: function(recognizers) {
+</span>        var i, recognizer;
+
+        for (i in recognizers) {
+            if (recognizers.hasOwnProperty(i)) {
+                recognizer = recognizers[i];
+
+                if (recognizer) {
+                    this.registerRecognizer(recognizer);
+                }
+            }
+        }
+
+        return recognizers;
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-handles'>    handles: function(eventName) {
+</span>        return this.callSuper(arguments) || this.eventToRecognizerMap.hasOwnProperty(eventName);
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-doesEventBubble'>    doesEventBubble: function() {
+</span>        // All touch events bubble
+        return true;
+    },
+<span id='Ext-event-publisher-TouchGesture-method-onEvent'>    onEvent: function(e) {
+</span>        var type = e.type,
+            lastEventType = this.lastEventType,
+            touchList = [e];
+
+        if (this.eventProcessors[type]) {
+            this.eventProcessors[type].call(this, e);
+            return;
+        }
+
+        if (&#39;button&#39; in e &amp;&amp; e.button &gt; 0) {
+            return;
+        }
+        else {
+            // Temporary fix for a recent Chrome bugs where events don&#39;t seem to bubble up to document
+            // when the element is being animated with webkit-transition (2 mousedowns without any mouseup)
+            if (type === &#39;mousedown&#39; &amp;&amp; lastEventType &amp;&amp; lastEventType !== &#39;mouseup&#39;) {
+                var fixedEvent = document.createEvent(&quot;MouseEvent&quot;);
+                    fixedEvent.initMouseEvent(&#39;mouseup&#39;, e.bubbles, e.cancelable,
+                        document.defaultView, e.detail, e.screenX, e.screenY, e.clientX,
+                        e.clientY, e.ctrlKey, e.altKey, e.shiftKey, e.metaKey, e.metaKey,
+                        e.button, e.relatedTarget);
+
+                this.onEvent(fixedEvent);
+            }
+
+            if (type !== &#39;mousemove&#39;) {
+                this.lastEventType = type;
+            }
+
+            e.identifier = 1;
+            e.touches = (type !== &#39;mouseup&#39;) ? touchList : [];
+            e.targetTouches = (type !== &#39;mouseup&#39;) ? touchList : [];
+            e.changedTouches = touchList;
+
+            this.eventProcessors[this.mouseToTouchMap[type]].call(this, e);
+        }
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-registerRecognizer'>    registerRecognizer: function(recognizer) {
+</span>        var map = this.eventToRecognizerMap,
+            activeRecognizers = this.activeRecognizers,
+            handledEvents = recognizer.getHandledEvents(),
+            i, ln, eventName;
+
+        recognizer.setOnRecognized(this.onRecognized);
+        recognizer.setCallbackScope(this);
+
+        for (i = 0,ln = handledEvents.length; i &lt; ln; i++) {
+            eventName = handledEvents[i];
+
+            map[eventName] = recognizer;
+        }
+
+        activeRecognizers.push(recognizer);
+
+        return this;
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-onRecognized'>    onRecognized: function(eventName, e, touches, info) {
+</span>        var targetGroups = [],
+            ln = touches.length,
+            targets, i, touch;
+
+        if (ln === 1) {
+            return this.publish(eventName, touches[0].targets, e, info);
+        }
+
+        for (i = 0; i &lt; ln; i++) {
+            touch = touches[i];
+            targetGroups.push(touch.targets);
+        }
+
+        targets = this.getCommonTargets(targetGroups);
+
+        this.publish(eventName, targets, e, info);
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-publish'>    publish: function(eventName, targets, event, info) {
+</span>        event.set(info);
+        return this.callSuper([eventName, targets, event]);
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-getCommonTargets'>    getCommonTargets: function(targetGroups) {
+</span>        var firstTargetGroup = targetGroups[0],
+            ln = targetGroups.length;
+
+        if (ln === 1) {
+            return firstTargetGroup;
+        }
+
+        var commonTargets = [],
+            i = 1,
+            target, targets, j;
+
+        while (true) {
+            target = firstTargetGroup[firstTargetGroup.length - i];
+
+            if (!target) {
+                return commonTargets;
+            }
+
+            for (j = 1; j &lt; ln; j++) {
+                targets = targetGroups[j];
+
+                if (targets[targets.length - i] !== target) {
+                    return commonTargets;
+                }
+            }
+
+            commonTargets.unshift(target);
+            i++;
+        }
+
+        return commonTargets;
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-invokeRecognizers'>    invokeRecognizers: function(methodName, e) {
+</span>        var recognizers = this.activeRecognizers,
+            ln = recognizers.length,
+            i, recognizer;
+
+        if (methodName === &#39;onStart&#39;) {
+            for (i = 0; i &lt; ln; i++) {
+                recognizers[i].isActive = true;
+            }
+        }
+
+        for (i = 0; i &lt; ln; i++) {
+            recognizer = recognizers[i];
+            if (recognizer.isActive &amp;&amp; recognizer[methodName].call(recognizer, e) === false) {
+                recognizer.isActive = false;
+            }
+        }
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-getActiveRecognizers'>    getActiveRecognizers: function() {
+</span>        return this.activeRecognizers;
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-updateTouch'>    updateTouch: function(touch) {
+</span>        var identifier = touch.identifier,
+            currentTouch = this.touchesMap[identifier],
+            target, x, y;
+
+        if (!currentTouch) {
+            target = this.getElementTarget(touch.target);
+
+            this.touchesMap[identifier] = currentTouch = {
+                identifier: identifier,
+                target: target,
+                targets: this.getBubblingTargets(target)
+            };
+
+            this.currentIdentifiers.push(identifier);
+        }
+
+        x  = touch.pageX;
+        y  = touch.pageY;
+
+        if (x === currentTouch.pageX &amp;&amp; y === currentTouch.pageY) {
+            return false;
+        }
+
+        currentTouch.pageX = x;
+        currentTouch.pageY = y;
+        currentTouch.timeStamp = touch.timeStamp;
+        currentTouch.point = new Ext.util.Point(x, y);
+
+        return currentTouch;
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-updateTouches'>    updateTouches: function(touches) {
+</span>        var i, ln, touch,
+            changedTouches = [];
+
+        for (i = 0, ln = touches.length; i &lt; ln; i++) {
+            touch = this.updateTouch(touches[i]);
+            if (touch) {
+                changedTouches.push(touch);
+            }
+        }
+
+        return changedTouches;
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-factoryEvent'>    factoryEvent: function(e) {
+</span>        return new Ext.event.Touch(e, null, this.touchesMap, this.currentIdentifiers);
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-onTouchStart'>    onTouchStart: function(e) {
+</span>        var changedTouches = e.changedTouches,
+            target = e.target,
+            ln = changedTouches.length,
+            isNotPreventable = this.isNotPreventable,
+            i, touch, parent;
+
+        this.updateTouches(changedTouches);
+
+        e = this.factoryEvent(e);
+        changedTouches = e.changedTouches;
+
+        for (i = 0; i &lt; ln; i++) {
+            touch = changedTouches[i];
+            this.publish(&#39;touchstart&#39;, touch.targets, e, {touch: touch});
+        }
+
+        if (!this.isStarted) {
+            this.isStarted = true;
+            this.invokeRecognizers(&#39;onStart&#39;, e);
+        }
+
+        this.invokeRecognizers(&#39;onTouchStart&#39;, e);
+
+        parent = target.parentNode || {};
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-onTouchMove'>    onTouchMove: function(e) {
+</span>        if (!this.isStarted) {
+            return;
+        }
+
+        if (!this.animationQueued) {
+            this.animationQueued = true;
+            Ext.AnimationQueue.start(&#39;onAnimationFrame&#39;, this);
+        }
+
+        this.lastMoveEvent = e;
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-onAnimationFrame'>    onAnimationFrame: function() {
+</span>        var event = this.lastMoveEvent;
+
+        if (event) {
+            this.lastMoveEvent = null;
+            this.doTouchMove(event);
+        }
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-doTouchMove'>    doTouchMove: function(e) {
+</span>        var changedTouches, i, ln, touch;
+
+        changedTouches = this.updateTouches(e.changedTouches);
+
+        ln = changedTouches.length;
+
+        e = this.factoryEvent(e);
+
+        for (i = 0; i &lt; ln; i++) {
+            touch = changedTouches[i];
+            this.publish(&#39;touchmove&#39;, touch.targets, e, {touch: touch});
+        }
+
+        if (ln &gt; 0) {
+            this.invokeRecognizers(&#39;onTouchMove&#39;, e);
+        }
+    },
+
+<span id='Ext-event-publisher-TouchGesture-method-onTouchEnd'>    onTouchEnd: function(e) {
+</span>        if (!this.isStarted) {
+            return;
+        }
+
+        if (this.lastMoveEvent) {
+            this.onAnimationFrame();
+        }
+
+        var touchesMap = this.touchesMap,
+            currentIdentifiers = this.currentIdentifiers,
+            changedTouches = e.changedTouches,
+            ln = changedTouches.length,
+            identifier, i, touch;
+
+        this.updateTouches(changedTouches);
+
+        changedTouches = e.changedTouches;
+
+        for (i = 0; i &lt; ln; i++) {
+            Ext.Array.remove(currentIdentifiers, changedTouches[i].identifier);
+        }
+
+        e = this.factoryEvent(e);
+
+        for (i = 0; i &lt; ln; i++) {
+            identifier = changedTouches[i].identifier;
+            touch = touchesMap[identifier];
+            delete touchesMap[identifier];
+            this.publish(&#39;touchend&#39;, touch.targets, e, {touch: touch});
+        }
+
+        this.invokeRecognizers(&#39;onTouchEnd&#39;, e);
+
+        // Only one touch currently active, and we&#39;re ending that one. So currentTouches should be 0 and clear the touchMap.
+        // This resolves an issue in iOS where it can sometimes not report a touchend/touchcancel
+        if (e.touches.length === 1 &amp;&amp; currentIdentifiers.length) {
+            currentIdentifiers.length = 0;
+            this.touchesMap = {};
+        }
+
+        if (currentIdentifiers.length === 0) {
+            this.isStarted = false;
+            this.invokeRecognizers(&#39;onEnd&#39;, e);
+            if (this.animationQueued) {
+                this.animationQueued = false;
+                Ext.AnimationQueue.stop(&#39;onAnimationFrame&#39;, this);
+            }
+        }
+    }
+
+}, function() {
+    if (Ext.feature.has.Pointer) {
+        this.override({
+            pointerToTouchMap: {
+                MSPointerDown: &#39;touchstart&#39;,
+                MSPointerMove: &#39;touchmove&#39;,
+                MSPointerUp: &#39;touchend&#39;,
+                MSPointerCancel: &#39;touchcancel&#39;,
+                pointerdown: &#39;touchstart&#39;,
+                pointermove: &#39;touchmove&#39;,
+                pointerup: &#39;touchend&#39;,
+                pointercancel: &#39;touchcancel&#39;
+            },
+
+            touchToPointerMap: {
+                touchstart: &#39;MSPointerDown&#39;,
+                touchmove: &#39;MSPointerMove&#39;,
+                touchend: &#39;MSPointerUp&#39;,
+                touchcancel: &#39;MSPointerCancel&#39;
+            },
+
+            attachListener: function(eventName, doc) {
+                eventName = this.touchToPointerMap[eventName];
+
+                if (!eventName) {
+                    return;
+                }
+
+                return this.callOverridden([eventName, doc]);
+            },
+
+            onEvent: function(e) {
+                if (&#39;button&#39; in e &amp;&amp; e.button &gt; 0) {
+                    return;
+                }
+
+                var type = this.pointerToTouchMap[e.type];
+
+                e.identifier = e.pointerId;
+                e.changedTouches = [e];
+
+                this.eventProcessors[type].call(this, e);
+            }
+        });
+    }
+    else if (!Ext.browser.is.Ripple &amp;&amp; (Ext.os.is.ChromeOS || !Ext.feature.has.Touch)) {
+        this.override({
+            handledEvents: [&#39;touchstart&#39;, &#39;touchmove&#39;, &#39;touchend&#39;, &#39;touchcancel&#39;, &#39;mousedown&#39;, &#39;mousemove&#39;, &#39;mouseup&#39;]
+        });
+    }
+});</pre>
+</body>
+</html>
