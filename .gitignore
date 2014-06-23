@@ -43,7 +43,11 @@ Thumbs.db
 *.sencha
 *.senchasdk
 
+boot*
 build.xml
+
+cordova/*
+build/*
 
 # Files with information that should not be made available to the public #
 ######################
