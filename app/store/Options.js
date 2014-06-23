@@ -39,11 +39,6 @@
             			category: 'evaluations'
                     },  
 					{
-                        text: 'Geoposition',
-                        leaf: true,
-                        id: 'geoposition'
-                    },
-                    {
                         text: 'SiteGeolocation',
                         leaf: true,
                         id: 'siteGeolocation',

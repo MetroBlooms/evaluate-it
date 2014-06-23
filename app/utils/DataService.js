@@ -588,7 +588,7 @@ Ext.define('EvaluateIt.utils.DataService', {
         evaluationScorecard.sync();
         //alert('evaluationScorecard is gone!');
 
-        console.log('geolocation_id: ' + geolocation_index);
+        console.log('geolocation_index: ' + geolocation_index);
         geolocation.removeAt(geolocation_index); // remove record by index
         geolocation.sync();
         //alert('geolocation is gone!');

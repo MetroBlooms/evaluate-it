@@ -126,45 +126,46 @@ Ext.define('EvaluateIt.utils.UtilityService', {
      * Phonegap GPS API, fired on start location watch
      * @return {Object} Callback options
      */
-    get_position: function () {
+    get_position: function (record) {
 
         var options = {frequency: 10000, enableHighAccuracy: true};
         watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
 
         /**
-         * onSuccess Callback receives PositionSuccess object and writes to sessionStorage
+         * onSuccess Callback receives PositionSuccess object and writes to sessionStorage/localStorage
          * @return {Object} Position coordinates
          *
-         * TODO: User selected accuracy
          */
 
         function geo_success (position) {
 
             var coordinates = position.coords,
-            //location = 'Longitude ' + coordinates.longitude + ' Latitude ' + coordinates.latitude + ' Accuracy ' + coordinates.accuracy,
                 timeStamp = new Date(position.timestamp),
                 latitude = coordinates.latitude,
                 longitude =  coordinates.longitude,
                 accuracy = coordinates.accuracy;
 
-            alert('watching position...' + ' accuracy is ' + accuracy);
+            alert('Position accuracy is ' + accuracy);
             console.log(' accuracy ' + accuracy);
 
             // Success achieved when desired accuracy reached
-
             if (accuracy <= EvaluateIt.config.accuracy) {
-                alert('success! geoLocation is ready to use!' + ' accuracy ' + accuracy);
 
-                // Write to sessionStorage for update to Geolocation model
+                // Write to sessionStorage for use in Google maps
                 sessionStorage.latitude = latitude;
                 sessionStorage.longitude = longitude;
                 sessionStorage.accuracy = accuracy;
                 sessionStorage.timeStamp = timeStamp;
 
                 navigator.geolocation.clearWatch(watchID);
-                //clear_watch();
-            }
 
+                record.set('latitude',latitude);
+                record.set('longitude',longitude);
+                record.set('accuracy',accuracy);
+                record.set('timeStamp',timeStamp);
+                Ext.getStore('Geolocations').sync();
+                alert('Success! Location has been set with an accuracy of:' + accuracy);
+            }
         }
 
         /**

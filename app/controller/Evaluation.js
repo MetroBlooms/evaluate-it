@@ -41,8 +41,6 @@ Ext.define('EvaluateIt.controller.Evaluation', {
     },
 
     onSaveEvaluation: function(button) {
-        console.log('Button Click for Save');
-
         //console.log(this.$className);
         console.log('Button Click for Save');
         var form = button.up('panel'),

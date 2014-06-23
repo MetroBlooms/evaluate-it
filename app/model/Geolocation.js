@@ -8,7 +8,7 @@ Ext.define('EvaluateIt.model.Geolocation', {
             {name: 'longitude', type: 'float'},
             {name: 'accuracy', type: 'float'},
             {name: 'site_id', type: 'string'},
-            {name: 'datestamp', type: 'string'}
+            {name: 'timeStamp', type: 'string'}
         ],
         proxy: {
             type: 'localstorage'
