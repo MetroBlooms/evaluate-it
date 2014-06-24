@@ -146,12 +146,6 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 accuracy = coordinates.accuracy,
                 panelOption;
 
-            // initialize sessionstorage items
-            sessionStorage.removeItem(latitude);
-            sessionStorage.removeItem(longitude);
-            sessionStorage.removeItem(timeStamp);
-            sessionStorage.removeItem(accuracy);
-
             alert('Position accuracy is ' + accuracy);
             console.log(' accuracy ' + accuracy);
 
@@ -164,7 +158,9 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 sessionStorage.accuracy = accuracy;
                 sessionStorage.timeStamp = timeStamp;
 
-                navigator.geolocation.clearWatch(watchID);
+                //navigator.geolocation.clearWatch(watchID);
+
+                EvaluateIt.utils.UtilityService.clear_watch();
 
                 record.set('latitude',latitude);
                 record.set('longitude',longitude);
@@ -205,12 +201,11 @@ Ext.define('EvaluateIt.utils.UtilityService', {
     // Google maps API stuff here
     map_panel: function(record,option){
 
-        var latitude = sessionStorage.latitude, //44.9616164;
-            longitude = sessionStorage.longitude; //-93.33539329999999,
-
         console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
 
-        var	position = new google.maps.LatLng(latitude, longitude),
+        var latitude = sessionStorage.latitude,
+            longitude = sessionStorage.longitude,
+            position = new google.maps.LatLng(latitude, longitude),
 
             infowindow = new google.maps.InfoWindow({
                 content: 'EvaluateIt!'
@@ -269,7 +264,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                             {text: 'med high',  value: 10},
                             {text: 'medium',  value: 15},
                             {text: 'med low',  value: 20},
-                            {text: 'low',  value: 60}
+                            {text: 'low',  value: 66}
                         ],
                         listeners: {
                             change: function(field, value) {

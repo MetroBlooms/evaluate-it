@@ -31,9 +31,12 @@ Ext.define('EvaluateIt.controller.SiteGeolocation', {
 	// spawns a new form panel with Google map centered on current location 
 	onSelectSiteGeolocation: function(view, index, target, record, event) {
 
+        sessionStorage.latitude = 44;
+        sessionStorage.longitude = -93;
+
         console.log('Selected a Geolocation from the list');
 
-        // try to set cooordinates to current position
+        // set cooordinates to current position
         EvaluateIt.utils.UtilityService.get_position(record);
 
         // initialize geo_panel components
