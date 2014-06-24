@@ -223,7 +223,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                         // destroy form.Panel overlay and return to tree store view
                         handler: function() {
                             //geo_panel.destroy();// destroy_panel();
-                            geo_panel.destroy;
+                            geo_panel.destroy();
                         }
                     },
                     {
