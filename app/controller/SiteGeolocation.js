@@ -31,8 +31,8 @@ Ext.define('EvaluateIt.controller.SiteGeolocation', {
 	// spawns a new form panel with Google map centered on current location 
 	onSelectSiteGeolocation: function(view, index, target, record, event) {
 
-        sessionStorage.latitude = 44;
-        sessionStorage.longitude = -93;
+        sessionStorage.latitude = 0;
+        sessionStorage.longitude = 0;
 
         console.log('Selected a Geolocation from the list');
 

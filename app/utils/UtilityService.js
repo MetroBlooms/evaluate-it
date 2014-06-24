@@ -146,7 +146,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 accuracy = coordinates.accuracy,
                 panelOption;
 
-            alert('Position accuracy is ' + accuracy);
+            alert('Coordinates captured  ' + accuracy);
             console.log(' accuracy ' + accuracy);
 
             // Success achieved when desired accuracy reached
@@ -157,8 +157,6 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 sessionStorage.longitude = longitude;
                 sessionStorage.accuracy = accuracy;
                 sessionStorage.timeStamp = timeStamp;
-
-                //navigator.geolocation.clearWatch(watchID);
 
                 EvaluateIt.utils.UtilityService.clear_watch();
 
@@ -171,7 +169,6 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 alert('Success! Location has been set with an accuracy of:' + accuracy);
                 // dispaly toolbar and google_map component
                 panelOption = 2;
-
                 EvaluateIt.utils.UtilityService.map_panel(record,panelOption);
             }
         }
@@ -208,23 +205,8 @@ Ext.define('EvaluateIt.utils.UtilityService', {
             position = new google.maps.LatLng(latitude, longitude),
 
             infowindow = new google.maps.InfoWindow({
-                content: 'EvaluateIt!'
+                content: 'Lat/Lng:' + latitude + '/'+ longitude
             }),
-
-        //Tracking Marker Image
-            image = new google.maps.MarkerImage(
-                'resources/images/point.png',
-                new google.maps.Size(32, 31),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(16, 31)
-            ),
-
-            shadow = new google.maps.MarkerImage(
-                'resources/images/shadow.png',
-                new google.maps.Size(64, 52),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(-5, 42)
-            ),
 
             toolbar = Ext.create('Ext.Toolbar', {
                 docked: 'top',
@@ -240,7 +222,8 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                         text: 'Back',
                         // destroy form.Panel overlay and return to tree store view
                         handler: function() {
-                            geo_panel.destroy();
+                            //geo_panel.destroy();// destroy_panel();
+                            geo_panel.destroy;
                         }
                     },
                     {
@@ -286,44 +269,47 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 ]
             });
 
-        var google_map = Ext.create('Ext.Map', {
-            alias : 'widget.whereAmI',
-
-            mapOptions : {
-                center : new google.maps.LatLng(latitude, longitude),
-                zoom : 12,
-                mapTypeId : google.maps.MapTypeId.ROADMAP,
-                navigationControl: true,
-                navigationControlOptions: {
-                    style: google.maps.NavigationControlStyle.DEFAULT
-                }
-            },
-
-            listeners: {
-                maprender: function(comp, map) {
-                    var marker = new google.maps.Marker({
-                        position: map.center,
-                        title : 'Weeeee!',
-                        map: map
-                    });
-
-                    google.maps.event.addListener(marker, 'click', function() {
-                        infowindow.open(map, marker);
-                    });
-
-                    setTimeout(function() {
-                        map.panTo(position);
-                    }, 100);
-                }
-            }
-        });
-
+        function destroy_panel () {
+            geo_panel.destroy();
+        }
         // construct geo_panel components
         if (option === 1) {
             var obj = [toolbar];
         }
         if (option === 2) {
-            var obj = [toolbar, google_map];
+
+            var google_map = Ext.create('Ext.Map', {
+                alias : 'widget.whereAmI',
+
+                mapOptions : {
+                    center : new google.maps.LatLng(latitude, longitude),
+                    zoom : 12,
+                    mapTypeId : google.maps.MapTypeId.ROADMAP,
+                    navigationControl: true,
+                    navigationControlOptions: {
+                        style: google.maps.NavigationControlStyle.DEFAULT
+                    }
+                },
+
+                listeners: {
+                    maprender: function(comp, map) {
+                        var marker = new google.maps.Marker({
+                            position: map.center,
+                            title : 'I am here!',
+                            map: map
+                        });
+
+                        google.maps.event.addListener(marker, 'click', function() {
+                            infowindow.open(map, marker);
+                        });
+
+                        setTimeout(function() {
+                            map.panTo(position);
+                        }, 100);
+                    }
+                }
+            }),
+                obj = [toolbar, google_map];
         }
 
         var geo_panel = new Ext.form.Panel({
@@ -333,7 +319,6 @@ Ext.define('EvaluateIt.utils.UtilityService', {
             items: obj
         });
 
-        geo_panel.setRecord(record);
         geo_panel.show();
     }
 
