@@ -39,6 +39,7 @@ Ext.define('EvaluateIt.controller.SiteImageCapture',{
 
         // display image in form panel
         selectedImage.style.display = 'block';
+        selectedImage.style.maxWidth = '25%';
         selectedImage.src = uri;
 
     },
