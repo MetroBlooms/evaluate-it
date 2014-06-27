@@ -204,7 +204,6 @@ Ext.define('EvaluateIt.utils.UtilityService', {
              * @type {Ext.form.Panel}
              */
             geo_panel = new Ext.form.Panel({
-                alias: 'widget.geo_panel',
                 useCurrentLocation: true,
                 fullscreen: true,
                 layout: 'fit',
@@ -284,9 +283,9 @@ Ext.define('EvaluateIt.utils.UtilityService', {
         }
 
         /**
-         * Define Google maps here
+         * Define Google map here
          * add as item to geo_panel
-         * 
+         *
          */
         function render_map () {
 
@@ -305,7 +304,6 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 }),
 
                 google_map = Ext.create('Ext.Map', {
-                    alias : 'widget.whereAmI',
 
                     mapOptions : {
                         center : position,
@@ -336,7 +334,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
 
                         }
                     }
-                })
+                });
 
             geo_panel.add(google_map);
 
