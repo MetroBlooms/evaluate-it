@@ -128,86 +128,11 @@ Ext.define('EvaluateIt.utils.UtilityService', {
      */
     get_position: function (record) {
 
-        var options = {frequency: 10000, enableHighAccuracy: true};
-        watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
-
-        /**
-         * onSuccess Callback receives PositionSuccess object and writes to sessionStorage/localStorage
-         * @return {Object} Position coordinates
-         *
-         */
-
-        function geo_success (position) {
-
-            var coordinates = position.coords,
-                timeStamp = new Date(position.timestamp),
-                latitude = coordinates.latitude,
-                longitude =  coordinates.longitude,
-                accuracy = coordinates.accuracy,
-                panelOption;
-
-            alert('Coordinates captured  ' + accuracy);
-            console.log(' accuracy ' + accuracy);
-
-            // Success achieved when desired accuracy reached
-            if (accuracy <= EvaluateIt.config.accuracy) {
-
-                // Write to sessionStorage for use in Google maps
-                sessionStorage.latitude = latitude;
-                sessionStorage.longitude = longitude;
-                sessionStorage.accuracy = accuracy;
-                sessionStorage.timeStamp = timeStamp;
-
-                EvaluateIt.utils.UtilityService.clear_watch();
-
-                record.set('latitude',latitude);
-                record.set('longitude',longitude);
-                record.set('accuracy',accuracy);
-                record.set('timeStamp',timeStamp);
-                Ext.getStore('Geolocations').sync();
-
-                alert('Success! Location has been set with an accuracy of:' + accuracy);
-                // dispaly toolbar and google_map component
-                panelOption = 2;
-                EvaluateIt.utils.UtilityService.map_panel(record,panelOption);
-            }
-        }
-
-        /**
-         * onError Callback receives a PositionError object
-         * @return {Alert}
-         */
-        function geo_error (error) {
-            alert('Geoposition error!' );
-        }
-
-    },
-
-    /**
-     * Phonegap API, fired on stop location watch
-     */
-    clear_watch: function  () {
-
-        if (watchID != null) {
-            navigator.geolocation.clearWatch(watchID);
-            watchID = null;
-            alert('GPS stopped!');
-        }
-    },
-
-    // Google maps API stuff here
-    map_panel: function(record,option){
-
-        console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
-
-        var latitude = sessionStorage.latitude,
-            longitude = sessionStorage.longitude,
-            position = new google.maps.LatLng(latitude, longitude),
-
-            infowindow = new google.maps.InfoWindow({
-                content: 'Lat/Lng:' + latitude + '/'+ longitude
-            }),
-
+        var options = {frequency: 10000, enableHighAccuracy: true},
+            /**
+             * toolbar object to render in geo_panel
+             *
+             */
             toolbar = Ext.create('Ext.Toolbar', {
                 docked: 'top',
                 alias : 'widget.geolocationToolbar',
@@ -222,8 +147,11 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                         text: 'Back',
                         // destroy form.Panel overlay and return to tree store view
                         handler: function() {
-                            //geo_panel.destroy();// destroy_panel();
-                            geo_panel.destroy();
+                            destroy_panel();
+                            sessionStorage.latitude = null;
+                            sessionStorage.longitude = null;
+                            sessionStorage.accuracy = null;
+                            sessionStorage.timeStamp = null;
                         }
                     },
                     {
@@ -233,7 +161,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                         iconCls: 'arrow_right',
                         iconMask: true,
                         handler: function() {
-                            EvaluateIt.utils.UtilityService.clear_watch();
+                            clear_watch();
                         }
                     },
                     {
@@ -267,61 +195,153 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                         }
                     }
                 ]
-            });
+            }),
+
+            /**
+             * Form panel to initially display toolbar
+             * add google_map when desired accuracy detected on geo_success
+             *
+             * @type {Ext.form.Panel}
+             */
+            geo_panel = new Ext.form.Panel({
+                alias: 'widget.geo_panel',
+                useCurrentLocation: true,
+                fullscreen: true,
+                layout: 'fit',
+                items: [toolbar]
+            }),
+
+            /**
+             * set watchID for geoPosition watch
+             * @type {Number}
+             */
+            watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
+
+        geo_panel.show();
+
+        /**
+         * onSuccess Callback receives PositionSuccess object and writes to sessionStorage/localStorage
+         * @return {Object} Position coordinates
+         *
+         */
+        function geo_success (position) {
+
+            var coordinates = position.coords,
+                timeStamp = new Date(position.timestamp),
+                latitude = coordinates.latitude,
+                longitude =  coordinates.longitude,
+                accuracy = coordinates.accuracy,
+                panelOption;
+
+            alert('Coordinates captured  ' + accuracy);
+            console.log(' accuracy ' + accuracy);
+
+            // Success achieved when desired accuracy reached
+            if (accuracy <= EvaluateIt.config.accuracy) {
+
+                // Write to sessionStorage for use in Google maps
+                sessionStorage.latitude = latitude;
+                sessionStorage.longitude = longitude;
+                sessionStorage.accuracy = accuracy;
+                sessionStorage.timeStamp = timeStamp;
+
+                // make sure to stop postion watch
+                clear_watch();
+
+                record.set('latitude',latitude);
+                record.set('longitude',longitude);
+                record.set('accuracy',accuracy);
+                record.set('timeStamp',timeStamp);
+                Ext.getStore('Geolocations').sync();
+
+                alert('Success! Location has been set with an accuracy of:' + accuracy);
+                render_map();
+            }
+        }
+
+        /**
+         * onError Callback receives a PositionError object
+         * @return {Alert}
+         */
+        function geo_error (error) {
+            alert('Geoposition error!' );
+        }
+
+        /**
+         * Phonegap API, fired on stop position watch
+         */
+        function clear_watch () {
+
+            if (watchID != null) {
+                navigator.geolocation.clearWatch(watchID);
+                watchID = null;
+                alert('GPS stopped!');
+            }
+        }
 
         function destroy_panel () {
             geo_panel.destroy();
         }
-        // construct geo_panel components
-        if (option === 1) {
-            var obj = [toolbar];
-        }
-        if (option === 2) {
 
-            var google_map = Ext.create('Ext.Map', {
-                alias : 'widget.whereAmI',
+        /**
+         * Define Google maps here
+         * add as item to geo_panel
+         * 
+         */
+        function render_map () {
 
-                mapOptions : {
-                    center : new google.maps.LatLng(latitude, longitude),
-                    zoom : 12,
-                    mapTypeId : google.maps.MapTypeId.ROADMAP,
-                    navigationControl: true,
-                    navigationControlOptions: {
-                        style: google.maps.NavigationControlStyle.DEFAULT
+            console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
+
+            var latitude = 0,
+                longitude = 0,
+                position = new google.maps.LatLng(latitude, longitude);
+
+            latitude = sessionStorage.latitude;
+            longitude = sessionStorage.longitude;
+            position = new google.maps.LatLng(latitude, longitude);
+
+            var infowindow = new google.maps.InfoWindow({
+                    content: 'Lat/Lng:' + latitude + '/'+ longitude
+                }),
+
+                google_map = Ext.create('Ext.Map', {
+                    alias : 'widget.whereAmI',
+
+                    mapOptions : {
+                        center : position,
+                        zoom : 12,
+                        mapTypeId : google.maps.MapTypeId.ROADMAP,
+                        navigationControl: true,
+                        navigationControlOptions: {
+                            style: google.maps.NavigationControlStyle.DEFAULT
+                        }
+                    },
+
+                    listeners: {
+                        maprender: function(comp, map) {
+
+                            var marker = new google.maps.Marker({
+                                position: map.center,
+                                title : 'I am here!',
+                                map: map
+                            });
+
+                            google.maps.event.addListener(marker, 'click', function() {
+                                infowindow.open(map, marker);
+                            });
+
+                            setTimeout(function() {
+                                map.panTo(position);
+                            }, 100);
+
+                        }
                     }
-                },
+                })
 
-                listeners: {
-                    maprender: function(comp, map) {
-                        var marker = new google.maps.Marker({
-                            position: map.center,
-                            title : 'I am here!',
-                            map: map
-                        });
+            geo_panel.add(google_map);
 
-                        google.maps.event.addListener(marker, 'click', function() {
-                            infowindow.open(map, marker);
-                        });
-
-                        setTimeout(function() {
-                            map.panTo(position);
-                        }, 100);
-                    }
-                }
-            }),
-                obj = [toolbar, google_map];
         }
-
-        var geo_panel = new Ext.form.Panel({
-            useCurrentLocation: true,
-            fullscreen: true,
-            layout: 'fit',
-            items: obj
-        });
-
-        geo_panel.show();
     }
-
 
 })
 

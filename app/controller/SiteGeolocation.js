@@ -40,8 +40,8 @@ Ext.define('EvaluateIt.controller.SiteGeolocation', {
         EvaluateIt.utils.UtilityService.get_position(record);
 
         // initialize geo_panel components
-        var panelOption = 1;
-        EvaluateIt.utils.UtilityService.map_panel(record,panelOption);
+        // var panelOption = 1;
+        //EvaluateIt.utils.UtilityService.get_position.render_map(record,panelOption);
 
 	}
 
