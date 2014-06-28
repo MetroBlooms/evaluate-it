@@ -113,11 +113,14 @@ Ext.define('EvaluateIt.controller.Evaluation', {
             datePicker.setValue(evalDate)
         }
 
-        // This does not work as hoped.  Attempting to display the image when he form is opened.
-        var selectedImage = siteEvaluationForm.down('#selectedImage');
-//        selectedImage.sethtml('<img style="display:block;" id="selectedImage" src="'+ flatData.imageUri + '" />');
-//        selectedImage.setValue('<img style="display:block;" id="selectedImage" src="'+ flatData.imageUri + '" />');
-//        selectedImage.src = flatData.imageUri ;
+        // Display the image when form is opened.
+        var img = Ext.create('Ext.Img', {
+            src: flatData.imageUri,
+            width: '50%',
+            height: '20%',
+            mode : 'image'
+        });
+        siteEvaluationForm.add(img);
 
         siteEvaluationForm.setValues(flatData);
         console.log('Evaluation belongsTo hierarchy:: ' + Ext.encode(flatData));
