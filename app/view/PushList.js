@@ -17,7 +17,7 @@ Ext.define('EvaluateIt.view.PushList', {
          */
 
 		itemTpl: [
-        // TODO: Somehow grab datePostedToRemote from Evaluation store
+        // flag with datePostedToRemote
             '<div><strong>Address: {Evaluation.Site.Address.address} </strong></div> ' +
             '<tpl if="postedToRemote === 1">' +
                 'Pushed on: {Evaluation.datePostedToRemote}' +

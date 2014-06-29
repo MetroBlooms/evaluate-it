@@ -112,6 +112,9 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
                 itemId: 'siteImage',
                 text: 'Select Photo'
             },
+            // display after selecting;
+            // once saved use Ext.Img component in onSelectEvaluation method to display
+            // TODO: combine as one element
             {
                 html: 'Selected image:<img style="display:none;" id="selectedImage" src="" />'
             },
