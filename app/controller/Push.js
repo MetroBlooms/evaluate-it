@@ -63,16 +63,8 @@ Ext.define('EvaluateIt.controller.Push', {
 		var record = form.getRecord();
 		//get the form values
 		var values = form.getValues();
-		//if a new push
-		if(!record){
-			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
-			Ext.getStore('Sites').add(newRecord);
-		}
-		//existing push
-		else {
-			record.set(values);
-		}
-		form.hide();
+
+        form.hide();
 
 		//save the data to the Web SQL
 		Ext.getStore('Sites').sync();

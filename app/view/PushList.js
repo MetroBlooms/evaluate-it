@@ -17,15 +17,11 @@ Ext.define('EvaluateIt.view.PushList', {
          */
 
 		itemTpl: [
-			//new Ext.XTemplate(
-                //'<tpl for=".">',
-                // TODO: Somehow grab datePostedToRemote from Evaluation store
-                    //'<tpl if="Sites.evaluations.datePostedToRemote !== \'null\'">',
-                    //'<div><strong>Address: {Address.address}: PUSHED!</strong></div> ',
-                    //'<tpl if="Sites.evaluations.datePostedToRemote === \'null\'">',
-                    '<div><strong>Address: {Evaluation.Site.Address.address} </strong></div> '
-                    //'</tpl>',
-                //'</tpl>')
+        // TODO: Somehow grab datePostedToRemote from Evaluation store
+            '<div><strong>Address: {Evaluation.Site.Address.address} </strong></div> ' +
+            '<tpl if="postedToRemote === 1">' +
+                'Pushed on: {Evaluation.datePostedToRemote}' +
+            '</tpl>'
 		],
         listeners: {
             select: function(list) {

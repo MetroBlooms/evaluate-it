@@ -10,6 +10,7 @@ Ext.define('EvaluateIt.model.EvaluationScorecard', {
             {name: 'visualImpact', type: 'int'},
             {name: 'maintenance', type: 'int'},
             {name: 'environmentalStewardship', type: 'int'},
+            {name: 'postedToRemote', type: 'int'},
             {name: 'evaluation_id', type: 'string'}
         ],
         proxy: {

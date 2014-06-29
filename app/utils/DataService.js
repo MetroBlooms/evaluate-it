@@ -394,8 +394,10 @@ Ext.define('EvaluateIt.utils.DataService', {
              *
              */
             var url,
-                store = Ext.create('EvaluateIt.store.Evaluations'),
-                //update_record = store.findExact('remoteEvaluationId', record.data.id),
+                evalStore = Ext.create('EvaluateIt.store.Evaluations'),
+                scoreStore = Ext.create('EvaluateIt.store.EvaluationScorecards'),
+                store,
+                update_record,
                 now = new Date();
 
             if (eval_type === 'existing') {
@@ -411,16 +413,21 @@ Ext.define('EvaluateIt.utils.DataService', {
                 type: 'POST',
                 url: url,
                 jsonData: obj,
-                //cors: true,
                 success: function (response) {
                     console.log('success: ' + response.responseText);
 
                     alert('Successfully uploaded: '+ response.responseText);
 
                     // flag as uploaded by updating store attribute datePostedToRemote with date
-                    store = Ext.getStore(store);
+                    store = Ext.getStore(evalStore);
                     update_record = store.findRecord('site_id', site.get('id'));
                     update_record.set('datePostedToRemote', now);
+                    store.sync();
+
+                    // use to control itmpTpl for list view
+                    store = Ext.getStore(scoreStore);
+                    update_record = store.findRecord('evaluation_id', evaluation.get('id'));
+                    update_record.set('postedToRemote', 1);
                     store.sync();
 
                 },
@@ -435,7 +442,7 @@ Ext.define('EvaluateIt.utils.DataService', {
             // check if image exists in store
             if (evaluation.get('imageUri') !== null && evaluation.get('imageUri') !== '') {
                 console.log('file exists!');
-                file_post(site,evaluation);
+                //file_post(site,evaluation);
             }
         }
 
