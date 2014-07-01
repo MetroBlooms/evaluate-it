@@ -15,6 +15,8 @@ Ext.define('EvaluateIt.model.Evaluation', {
             // sessionStorage.evaluator_id =  loginResponse.evaluator_id;
             // Ajax response: json.evaluator.evaluator_id
             {name: 'evaluator_id', type: 'int'},
+            {name: 'rainGarden',  type: 'boolean'},
+            {name: 'rainBarrel', type: 'boolean'},
  			{name: 'comments', type: 'string'}, // general comments
             {name: 'imageUri', type: 'string'}, //device's uri of image to be uploaded
             {name: 'evaluationAward_id', type: 'string'}

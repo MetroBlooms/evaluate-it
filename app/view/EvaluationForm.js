@@ -97,6 +97,11 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
                 itemId: 'siteMaintainer'
             },
             {
+            	xtype: 'checkboxfield',
+            	itemId: 'rainGarden',
+            	name: 'rainGarden'
+            },
+            {
                 xtype: 'textfield',
                 name: 'comments',
                 label: 'Comments',
@@ -112,8 +117,10 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
                 itemId: 'siteImage',
                 text: 'Select Photo'
             },
+            //
             // display after selecting;
             // once saved use Ext.Img component in onSelectEvaluation method to display
+            // z
             // TODO: combine as one element
             {
                 html: 'Selected image:<img style="display:none;" id="selectedImage" src="" />'
