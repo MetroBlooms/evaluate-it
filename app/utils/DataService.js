@@ -41,8 +41,8 @@ Ext.define('EvaluateIt.utils.DataService', {
         }
         if (param === 'pull') {
             url += EvaluateIt.config.pullCriterion;
-//            url += sessionStorage.evaluator_id; // test using 265;
-            url += 265;
+            url += sessionStorage.evaluator_id; // test using 265;
+            //url += 265;
         }
         if (param === 'existing') {
             url += EvaluateIt.config.action;
@@ -79,7 +79,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
         for (i = 0, max = json.length; i < max; i += 1) {
 
-            if (json[i].completed === '1') {
+            if (json[i].completed === '0') {
                 var addressValues = json[i].garden.address ;
                 this.newEvaluation(addressValues, json[i].garden.garden_id, json[i].evaluator.evaluator_id,json[i].evaluation_id,json[i].garden.gardener.name0);
             }
