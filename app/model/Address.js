@@ -9,6 +9,7 @@ Ext.define('EvaluateIt.model.Address', {
             {name: 'state', type: 'string'},
             {name: 'zipcode', type: 'string'},
 			{name: 'county', type: 'string'},
+            {name: 'neighborhood', type: 'string'},
             {name: 'site_id', type: 'string'},
             {name: 'correction', type: 'boolean'} // update to address
         ],
