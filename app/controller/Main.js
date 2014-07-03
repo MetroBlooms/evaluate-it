@@ -56,7 +56,7 @@ Ext.define('EvaluateIt.controller.Main', {
 		console.log('view ' + id);
 
 		// control view selection based on category passed from routing call
-		if (category === 'evaluations' || category === 'push') {
+		if (category === 'push') {
 
 			console.log('forms category: ' + category);
 
@@ -64,43 +64,19 @@ Ext.define('EvaluateIt.controller.Main', {
 			var listStore = Ext.data.StoreManager.lookup('EvaluationScorecards');
 			listStore.clearFilter();
 
-			//if (category === 'evaluations') {
-				//listStore.clearFilter();
-				console.log('we are in: ' + category);
-
-                /**
-                 * Regular expression test for valid data
-                 *
-                 * @type {RegExp}
-                 */
-				/*var reg = new RegExp('[A-Za-z0-9_]','i');
-				listStore.filterBy(function(record, id) {
-
-					var address = record.get('address');
-   	 				if (reg.test(address)) {
-        				return true;
-					}
-				});*/
-
-			//}
-
 			// only display those evaluations deemed as "complete"
-			if (category === 'push') {
-				console.log('we are in: ' + category);
+            console.log('we are in: ' + category);
 
-                // condition for complete evaluation
-				listStore.filterBy(function(record, id) {
-   	 				if (record.get('noLongerExists') === true || // in EvaluationScorecard model
-						(record.get('useOfColor') !== null // in EvaluationScorecard model
-						&& record.get('varietyAndHealth') !== null 
-						&& record.get('design') !== null 
-						&& record.get('maintenance') !== null 
-						&& record.get('environmentalStewardship') !== null)) {
-        					return true;
-						}
-				});
-			}
-		
+            listStore.filterBy(function(record, id) {
+                if (record.get('noLongerExists') === true || // in EvaluationScorecard model
+                    (record.get('useOfColor') !== null // in EvaluationScorecard model
+                    && record.get('varietyAndHealth') !== null
+                    && record.get('design') !== null
+                    && record.get('maintenance') !== null
+                    && record.get('environmentalStewardship') !== null)) {
+                        return true;
+                    }
+            });
 
 		}
 	

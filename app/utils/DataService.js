@@ -162,8 +162,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 siteMaintainer: siteMaintainer
             });
 
-            // grab first and only model instance from store
-            // and set associations
+            // grab first and only model instance from store and set associations
             console.log('stuff: ' + evaluationRecs.first().id);
 
             award.setEvaluation(evaluationRecs.first().id);

@@ -19,6 +19,7 @@ Ext.define('EvaluateIt.model.Address', {
                 name: 'Site',
                 primaryKey: 'id',
                 foreignKey: 'site_id',
+                foreignStore: 'Sites',
                 getterName: 'getSite',
                 setterName: 'setSite'
             }

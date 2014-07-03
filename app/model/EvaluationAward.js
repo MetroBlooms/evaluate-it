@@ -4,7 +4,7 @@ Ext.define('EvaluateIt.model.EvaluationAward', {
         idProperty: 'id',
         fields: [
             {name: 'id', type: 'int'},
-            {name: 'specialAwardSpecified', type: 'auto'},
+            {name: 'specialAwardSpecified', type: 'string'},
             {name: 'awardType', type: 'int'},
             {name: 'evaluation_id', type: 'string'}
         ],
@@ -20,7 +20,6 @@ Ext.define('EvaluateIt.model.EvaluationAward', {
                 foreignStore: 'Evaluations',
                 getterName: 'getEvaluation',
                 setterName: 'setEvaluation'
-
             }
         ]
     }
