@@ -55,7 +55,7 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
             console.log(record.getAssociatedData(true)); // to see the record associations
             record.save();
         }
-		form.hide();
+        form.hide();
 
 	},
 

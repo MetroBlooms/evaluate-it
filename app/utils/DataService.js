@@ -79,9 +79,13 @@ Ext.define('EvaluateIt.utils.DataService', {
 
         for (i = 0, max = json.length; i < max; i += 1) {
 
-            if (json[i].completed === '0') {
-                var addressValues = json[i].garden.address ;
-                this.newEvaluation(addressValues, json[i].garden.garden_id, json[i].evaluator.evaluator_id,json[i].evaluation_id,json[i].garden.gardener.name0);
+            if (json[i].completed === '1') {
+                var addressValues = json[i].garden.address;
+                this.newEvaluation(addressValues,
+                    json[i].garden.garden_id,
+                    json[i].evaluator.evaluator_id,
+                    json[i].evaluation_id,
+                    json[i].garden.gardener.name0);
             }
 
             // reload stores to show up-to-date data in Xtemplates
@@ -106,8 +110,8 @@ Ext.define('EvaluateIt.utils.DataService', {
             address: addressValues.address,
             city: addressValues.city,
             state: addressValues.state,
-            zipcode: addressValues.zipcode,
-            // neighborhood: addressValues.neighborhood,
+            zipcode: addressValues.zip,
+            neighborhood: addressValues.neighborhood,
             county: addressValues.county
         });
 
@@ -158,8 +162,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 siteMaintainer: siteMaintainer
             });
 
-            // grab first and only model instance from store
-            // and set associations
+            // grab first and only model instance from store and set associations
             console.log('stuff: ' + evaluationRecs.first().id);
 
             award.setEvaluation(evaluationRecs.first().id);
