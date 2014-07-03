@@ -39,11 +39,6 @@ Ext.define('EvaluateIt.view.EvaluationAwardForm', {
 			labelWrap: true
 		},
 		items: [
-			{	
-       			xtype: 'textfield',
-		   		name: 'Evaluation.Site.Address.address',
-		   		readOnly: true 
-			},
 
             // Awards given as per evaluation rules on instrument
             // TODO: create enumeration
