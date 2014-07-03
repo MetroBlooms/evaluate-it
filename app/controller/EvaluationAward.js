@@ -56,7 +56,7 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
             record.save();
         }
         form.hide();
-        
+
 	},
 
 	onSelectEvaluationAward: function(view, index, target, record, event) {

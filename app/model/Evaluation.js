@@ -19,7 +19,8 @@ Ext.define('EvaluateIt.model.Evaluation', {
             {name: 'rainBarrel', type: 'boolean'},
  			{name: 'comments', type: 'string'}, // general comments
             {name: 'imageUri', type: 'string'}, //device's uri of image to be uploaded
-            //{name: 'evaluationAward_id', type: 'string'}
+            {name: 'evaluationAward_id', type: 'string'},
+            {name: 'evaluationScorecard_id', type: 'string'},
 
         ],
         proxy: {
