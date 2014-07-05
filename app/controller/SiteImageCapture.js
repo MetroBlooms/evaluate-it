@@ -19,14 +19,16 @@ Ext.define('EvaluateIt.controller.SiteImageCapture',{
         }
     },
     openCamera: function(button,eve){
-        Ext.device.Camera.capture({
-            success: this.onCaptureSuccess,
-			failure: this.onCaptureFailure,
-            scope: this,
-            quality: 10, // 10 as per http://grandiz.com/phonegap-development/phonegap-file-transfer-error-code-3-solved/
-            source: 'album',
-            destination: 'file'
-        });
+        //Ext.device.Camera.capture
+        navigator.camera.getPicture(
+            this.onCaptureSuccess,
+			this.onCaptureFailure,
+            {
+                quality: 10, // 10 as per http://grandiz.com/phonegap-development/phonegap-file-transfer-error-code-3-solved/
+                sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+                destinationType:  Camera.DestinationType.FILE_URI
+            }
+        );
     },
     onCaptureSuccess: function(uri) {
         console.log('got foto:'+uri);

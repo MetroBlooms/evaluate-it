@@ -445,7 +445,7 @@ Ext.define('EvaluateIt.utils.DataService', {
             // check if image exists in store
             if (evaluation.get('imageUri') !== null && evaluation.get('imageUri') !== '') {
                 console.log('file exists!');
-                //file_post(site,evaluation);
+                file_post(site,evaluation);
             }
         }
 
