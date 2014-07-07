@@ -93,7 +93,7 @@ Ext.define('EvaluateIt.controller.Login', {
 					sessionStorage.email =  loginResponse.email;
 	
 					sessionStorage.sessionCreatedWhen = new Date(); 
-					console.log('sessionToken' + sessionStorage.sessionToken + ' ' + loginResponse.message);
+					console.log(loginResponse);
 					me.signInSuccess(loginResponse.message);     //Just simulating success.
                 } else {
 					console.log('sessionToken...' + sessionStorage.sessionToken);

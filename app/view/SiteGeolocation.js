@@ -16,62 +16,6 @@ Ext.define('EvaluateIt.view.SiteGeolocation', {
         layout: 'vbox',
         items: [
             {
-                docked: 'top',
-                xtype: 'toolbar',
-                /**
-                 * @cfg {button}
-                 * Start watching location;
-                 * Stop watching location
-                 */
-                items: [
-
-                    /*{
-                        xtype: 'button',
-                        itemId: 'setPosition',
-                        text: 'setPosition',
-                        iconCls: 'arrow_right',
-                        iconMask: true,
-                        handler: function() {
-                            EvaluateIt.utils.UtilityService.get_position();
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        itemId: 'stopWatch',
-                        text: 'StopWatch',
-                        iconCls: 'arrow_right',
-                        iconMask: true,
-                        handler: function() {
-                            EvaluateIt.utils.UtilityService.clear_watch();
-                        }
-                    },
-                    {
-                        xtype: 'selectfield',
-                        itemId: 'accuracy',
-                        autoSelect: false,
-                        placeHolder: 'accuracy',
-                        options: [
-                            {text: ''},
-                            {text: 'high',  value: 5},
-                            {text: 'med high',  value: 10},
-                            {text: 'medium',  value: 15},
-                            {text: 'med low',  value: 20},
-                            {text: 'low',  value: 40}
-                        ],
-                        listeners: {
-                            change: function(field, value) {
-                                if (value instanceof Ext.data.Model) {
-                                    value = value.get(field.getValueField());
-                                }
-                                console.log(value);
-                                // set accuracy as config variable
-                                EvaluateIt.config.accuracy = value;
-                            }
-                        }
-                    },*/
-                ]
-            },
-            {
                 flex: 1,
                 xtype: 'siteGeolocationList'
             }

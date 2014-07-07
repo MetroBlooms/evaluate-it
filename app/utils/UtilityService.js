@@ -175,7 +175,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                             {text: 'med high',  value: 10},
                             {text: 'medium',  value: 15},
                             {text: 'med low',  value: 20},
-                            {text: 'low',  value: 66}
+                            {text: 'low',  value: 30}
                         ],
                         listeners: {
                             change: function(field, value) {
