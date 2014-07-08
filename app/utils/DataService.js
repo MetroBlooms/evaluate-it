@@ -487,7 +487,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
             options.fileKey = 'userfile';
             options.mimeType = 'image/jpeg';
-            options.fileName= uri.substr(uri.lastIndexOf('/')+1);
+            options.fileName = 'image.jpg'; // uri.substr(uri.lastIndexOf('/')+1);
             options.chunkedMode = false;
             options.params = evaluation_kvp; // attached key value pair to tie image to above json
 

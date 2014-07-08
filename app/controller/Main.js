@@ -55,14 +55,12 @@ Ext.define('EvaluateIt.controller.Main', {
 		console.log('category: ' + category);
 		console.log('view ' + id);
 
+        // create filter based on use case
+        var listStore = Ext.data.StoreManager.lookup('EvaluationScorecards');
+        listStore.clearFilter();
+
 		// control view selection based on category passed from routing call
 		if (category === 'push') {
-
-			console.log('forms category: ' + category);
-
-			// create filter based on use case
-			var listStore = Ext.data.StoreManager.lookup('EvaluationScorecards');
-			listStore.clearFilter();
 
 			// only display those evaluations deemed as "complete"
             console.log('we are in: ' + category);

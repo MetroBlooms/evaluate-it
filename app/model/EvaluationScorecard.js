@@ -5,7 +5,7 @@ Ext.define('EvaluateIt.model.EvaluationScorecard', {
         fields: [
             {name: 'id', type: 'int'}, // pk
             {name: 'noLongerExists', type: 'boolean'}, // invalid site: nothing to evaluate!
-            {name: 'design', type: 'int'},
+            {name: 'design', type: 'int'},  // TODO: implement as hasMany from Evaluation (needed for adding other BMP types)
             {name: 'varietyAndHealth', type: 'int'},
             {name: 'visualImpact', type: 'int'},
             {name: 'maintenance', type: 'int'},
