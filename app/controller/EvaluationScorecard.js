@@ -94,6 +94,9 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
                     })
 
                     values = form.getValues();
+                    // When noLongerExists is null the store is not updated correctly. Explicitly set it false to
+                    // get the save to work properly.
+                    values.noLongerExists=false;
                     record = form.getRecord();
 
                 }
