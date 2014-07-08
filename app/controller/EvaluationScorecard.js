@@ -53,6 +53,7 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
                 && form.getValues().environmentalStewardship !== null)){
 
             alert('Cannot rate a non-exist garden; please correct this!' )
+
         }
         else{
             if (form.getValues().noLongerExists === 'false' ||
@@ -98,6 +99,7 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
                 }
                 else {
                     alert('missing factor rating!');
+
                 }
             }
             else {

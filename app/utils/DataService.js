@@ -286,7 +286,7 @@ Ext.define('EvaluateIt.utils.DataService', {
             no_longer_exists = 1;
         }
 
-        if (record.data.rainGarden === 'true' || record.data.rainGarden === true) {
+        if (evaluation.get('rainGarden') === 'true' || evaluation.get('rainGarden') === true) {
             rain_garden = 1;
         }
 
@@ -487,7 +487,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
             options.fileKey = 'userfile';
             options.mimeType = 'image/jpeg';
-            options.fileName=uri.substr(uri.lastIndexOf('/')+1);
+            options.fileName= uri.substr(uri.lastIndexOf('/')+1);
             options.chunkedMode = false;
             options.params = evaluation_kvp; // attached key value pair to tie image to above json
 
