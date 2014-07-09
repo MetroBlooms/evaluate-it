@@ -79,7 +79,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
         for (i = 0, max = json.length; i < max; i += 1) {
 
-            if (json[i].completed === '1') {
+            if (json[i].completed === '0') {
                 var addressValues = json[i].garden.address;
                 this.newEvaluation(addressValues,
                     json[i].garden.garden_id,
