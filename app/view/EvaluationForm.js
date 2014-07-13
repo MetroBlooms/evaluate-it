@@ -100,7 +100,7 @@ Ext.define('EvaluateIt.view.EvaluationForm', {
             	xtype: 'checkboxfield',
             	label: 'Raingarden',
             	name: 'rainGarden',
-                itemId: 'rainGarden',
+                itemId: 'rainGarden'
             },
             {
                 xtype: 'textfield',

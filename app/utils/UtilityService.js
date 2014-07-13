@@ -215,6 +215,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
              * @type {Number}
              */
             watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
+        console.log('watchID A' + watchID);
 
         geo_panel.show();
 
@@ -254,6 +255,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 Ext.getStore('Geolocations').sync();
 
                 alert('Success! Location has been set with an accuracy of:' + accuracy);
+                console.log('watchID B' + watchID);
                 render_map();
             }
         }
@@ -273,8 +275,10 @@ Ext.define('EvaluateIt.utils.UtilityService', {
 
             if (watchID != null) {
                 navigator.geolocation.clearWatch(watchID);
+                console.log('watchID C' + watchID);
                 watchID = null;
                 alert('GPS stopped!');
+                console.log('watchID D' + watchID);
             }
         }
 
