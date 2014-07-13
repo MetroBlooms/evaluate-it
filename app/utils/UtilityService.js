@@ -274,8 +274,8 @@ Ext.define('EvaluateIt.utils.UtilityService', {
         function clear_watch () {
 
             if (watchID != null) {
-                navigator.geolocation.clearWatch(watchID);
                 console.log('watchID C' + watchID);
+                navigator.geolocation.clearWatch(watchID);
                 watchID = null;
                 alert('GPS stopped!');
                 console.log('watchID D' + watchID);
