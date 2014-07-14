@@ -16,7 +16,9 @@ Ext.define('EvaluateIt.utils.UtilityService', {
      * @returns {String}
      */
     evaluation_rating: function(param){
-        console.log(param);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(param);
+        }
         var rating;
 
         if (param >= 18) {
@@ -182,7 +184,10 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                                 if (value instanceof Ext.data.Model) {
                                     value = value.get(field.getValueField());
                                 }
-                                console.log(value);
+                                if (EvaluateIt.config.mode === 'test') {
+                                    console.log(value);
+                                }
+                                alert('Accuracy threshold: ' + value);
                                 // set accuracy as config variable
                                 EvaluateIt.config.accuracy = value;
                             }
@@ -215,7 +220,9 @@ Ext.define('EvaluateIt.utils.UtilityService', {
              * @type {Number}
              */
             watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
-        console.log('watchID A' + watchID);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Initialize watchID' + watchID);
+        }
 
         geo_panel.show();
 
@@ -233,8 +240,10 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 accuracy = coordinates.accuracy,
                 panelOption;
 
-            // alert('Coordinates captured  ' + accuracy);
-            console.log(' accuracy ' + accuracy);
+            //alert('Coordinates captured  ' + accuracy);
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('Accuracy: ' + accuracy);
+            }
 
             // Success achieved when desired accuracy reached
             if (accuracy <= EvaluateIt.config.accuracy) {
@@ -255,7 +264,9 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 Ext.getStore('Geolocations').sync();
 
                 alert('Success! Location has been set with an accuracy of:' + accuracy);
-                console.log('watchID B' + watchID);
+                if (EvaluateIt.config.mode === 'test') {
+                    console.log('Success watchID:' + watchID);
+                }
                 render_map();
             }
         }
@@ -274,11 +285,15 @@ Ext.define('EvaluateIt.utils.UtilityService', {
         function clear_watch () {
 
             if (watchID != null) {
-                console.log('watchID C' + watchID);
+                if (EvaluateIt.config.mode === 'test') {
+                    console.log('Clear watchID before:' + watchID);
+                }
                 navigator.geolocation.clearWatch(watchID);
                 watchID = null;
                 alert('GPS stopped!');
-                console.log('watchID D' + watchID);
+                if (EvaluateIt.config.mode === 'test') {
+                    console.log('Clear watchID after' + watchID);
+                }
             }
         }
 
@@ -293,7 +308,9 @@ Ext.define('EvaluateIt.utils.UtilityService', {
          */
         function render_map () {
 
-            console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('latitude/longitude ...' + sessionStorage.latitude + ' ' + sessionStorage.longitude);
+            }
 
             var latitude = 0,
                 longitude = 0,

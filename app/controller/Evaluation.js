@@ -30,19 +30,21 @@ Ext.define('EvaluateIt.controller.Evaluation', {
     },
 
     onActivate: function() {
-        console.log('Main container is active');
+         if (EvaluateIt.config.mode === 'test') {console.log('Main container is active');}
     },
 
     onCancelEvaluation: function(button) {
-        console.log('Button Click for Cancel');
+        if (EvaluateIt.config.mode === 'test') {console.log('Button Click for Cancel');}
         var form = button.up('panel');
         form.hide();
         form.destroy();
     },
 
     onSaveEvaluation: function(button) {
-        //console.log(this.$className);
-        console.log('Button Click for Save');
+        // if (EvaluateIt.config.mode === 'test') {console.log(this.$className);
+        if (EvaluateIt.config.mode === 'test') {
+             console.log('Button Click for Save');
+        }
         var form = button.up('panel'),
             now = new Date(),
         //get the model
@@ -68,7 +70,9 @@ Ext.define('EvaluateIt.controller.Evaluation', {
                 if (images.getCount() > 0) {
                     var uri  = imageRecord.get('src');
 
-                    console.log('URI: ' +  uri + ' ' + now);
+                    if (EvaluateIt.config.mode === 'test') {
+                        console.log('URI: ' +  uri + ' ' + now);
+                    }
 
                     // update form with URI
                     form.setValues({
@@ -83,9 +87,13 @@ Ext.define('EvaluateIt.controller.Evaluation', {
                 }
             });
 
-            console.log(record.getData(true)); // to see the record
+            if (EvaluateIt.config.mode === 'test') {
+                console.log(record.getData(true));
+            } // to see the record
             record.setFlattenedData(values);  // persist the form data back to the record
-            console.log(record.getAssociatedData(true)); // to see the record associations
+            if (EvaluateIt.config.mode === 'test') {
+                 console.log(record.getAssociatedData(true));
+            } // to see the record associations
             record.save();
 
         }
@@ -99,7 +107,9 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         var lostor = Ext.getStore('theImageQueue');
         lostor.getProxy().clear();
 
-        console.log('Selected a Site from the list');
+        if (EvaluateIt.config.mode === 'test') {
+             console.log('Selected a Site from the list');
+        }
         var siteEvaluationForm = Ext.widget('evaluationForm');
 
         siteEvaluationForm.setRecord(record);
@@ -123,18 +133,15 @@ Ext.define('EvaluateIt.controller.Evaluation', {
         siteEvaluationForm.add(img);
 
         siteEvaluationForm.setValues(flatData);
-        console.log('Evaluation belongsTo hierarchy:: ' + Ext.encode(flatData));
-
-        console.log('evaluation.id:' +  ' ' + record.id);
-
-        console.log(record.getData(true));
-        console.log(record.getAssociatedData(true));
-        console.log(record.$className + ' ' + record.getId())
-
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Evaluation belongsTo hierarchy:: ' + Ext.encode(flatData));
+            console.log('evaluation.id:' +  ' ' + record.id);
+            console.log(record.getData(true));
+            console.log(record.getAssociatedData(true));
+            console.log(record.$className + ' ' + record.getId());
+        }
         // open form
         siteEvaluationForm.showBy(target);
-
-
     }
 
 });

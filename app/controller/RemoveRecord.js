@@ -21,15 +21,21 @@ Ext.define('EvaluateIt.controller.RemoveRecord', {
  	},
 
 	onActivate: function() {
-  		console.log('Main container is active');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Main container is active');
+        }
  	},
 
 	onSelectRemoveRecord: function(view, index, target, record, event) {
-		console.log('Selected a record for removal from the list');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Selected a record for removal from the list');
+        }
 		var	id = record.get('id'), // get key
 			index;
 
-		console.log('id: ' + record.get('id'));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('id: ' + record.get('id'));
+        }
 		
 		Ext.Msg.show({
 			title:'Are you sure?',

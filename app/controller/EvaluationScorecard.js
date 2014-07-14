@@ -24,18 +24,24 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
  	},
 
 	onActivate: function() {
-  		console.log('Main container is active');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Main container is active');
+        }
  	},
 
     onCancelEvaluationScorecard: function(button) {
-        console.log('Button Click for Cancel');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Button Click for Cancel');
+        }
         var form = button.up('panel');
         form.hide();
         form.destroy();
     },
 
 	onSaveEvaluationScorecard: function(button) {
-        console.log('Button Click for Save');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Button Click for Save');
+        }
 
         //console.log(this.$className);
         var form = button.up('panel'),
@@ -115,9 +121,13 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
 		}
 		//existing siteEvaluation
 		else {
-            console.log(record.getData(true)); // to see the record
+            if (EvaluateIt.config.mode === 'test') {
+                console.log(record.getData(true));
+            } // to see the record
             record.setFlattenedData(values);  // persist the form data back to the record
-            console.log(record.getAssociatedData(true)); // to see the record associations
+            if (EvaluateIt.config.mode === 'test') {
+                console.log(record.getAssociatedData(true));
+            } // to see the record associations
             record.save();
 		}
 		form.hide();
@@ -125,15 +135,21 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
 	},
 
 	onSelectEvaluationScorecard: function(view, index, target, record, event) {
-		console.log('Selected a Scorecard from the list');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Selected a Scorecard from the list');
+        }
         var evaluationScorecardForm = Ext.widget('evaluationScorecardForm');
 
         evaluationScorecardForm.setRecord(record);
-        console.log(record.$className + ' ' + record.getId())
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(record.$className + ' ' + record.getId())
+        }
 
         record.get();  // This will instantiate a missing Address hasOne if not already in the data or do nothing if there is one
         evaluationScorecardForm.setValues(record.getFlattenedData(true));
-        console.log('Scorecard hasOne hierarchy: ' +  Ext.encode(record.getFlattenedData( true )));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Scorecard hasOne hierarchy: ' +  Ext.encode(record.getFlattenedData( true )));
+        }
 
         evaluationScorecardForm.showBy(target);
 
