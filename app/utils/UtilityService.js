@@ -233,7 +233,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 accuracy = coordinates.accuracy,
                 panelOption;
 
-            alert('Coordinates captured  ' + accuracy);
+            // alert('Coordinates captured  ' + accuracy);
             console.log(' accuracy ' + accuracy);
 
             // Success achieved when desired accuracy reached
