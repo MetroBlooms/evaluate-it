@@ -46,7 +46,9 @@ Ext.define('EvaluateIt.view.Pull', {
 
                             // assemble url
                             url = EvaluateIt.utils.DataService.url('pull');
-							console.log(url);
+                            if (EvaluateIt.config.mode === 'test') {
+                                console.log(url);
+                            }
 
                             // cross domain access cors request for data
                            	Ext.Ajax.request({
@@ -62,7 +64,9 @@ Ext.define('EvaluateIt.view.Pull', {
 								   //console.log('data: ' + response.responseText);
 								},
 								fail: function (e, jqxhr, settings, exception) {
-									console.log(e);
+                                    if (EvaluateIt.config.mode === 'test') {
+                                        console.log(e);
+                                    }
 								}
 							});
                         }

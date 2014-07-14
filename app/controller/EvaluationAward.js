@@ -24,21 +24,26 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
  	},
 
 	onActivate: function() {
-  		console.log('Main container is active');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Main container is active');
+        }
  	},
 
     onCancelEvaluationAward: function(button) {
-        console.log('Button Click for Cancel');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Button Click for Cancel');
+        }
         var form = button.up('panel');
         form.hide();
         form.destroy();
     },
 
 	onSaveEvaluationAward: function(button) {
-        console.log('Button Click for Save');
-
-        //console.log(this.$className);
-        console.log('Button Click for Save');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Button Click for Save');
+            //console.log(this.$className);
+            console.log('Button Click for Save');
+        }
         var form = button.up('panel'),
         //get the model
             record = form.getRecord(),
@@ -50,9 +55,13 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
 		}
 		//existing siteEvaluation
 		else {
-            console.log(record.getData(true)); // to see the record
+            if (EvaluateIt.config.mode === 'test') {
+                console.log(record.getData(true)); // to see the record
+            }
             record.setFlattenedData(values);  // persist the form data back to the record
-            console.log(record.getAssociatedData(true)); // to see the record associations
+            if (EvaluateIt.config.mode === 'test') {
+                console.log(record.getAssociatedData(true));
+            } // to see the record associations
             record.save();
         }
         form.hide();
@@ -60,18 +69,22 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
 	},
 
 	onSelectEvaluationAward: function(view, index, target, record, event) {
-		console.log('Selected a Award from the list');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Selected a Award from the list');
+        }
         var evaluationAwardForm = Ext.widget('evaluationAwardForm');
 
         evaluationAwardForm.setRecord(record);
-        console.log(record.$className + ' ' + record.getId())
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(record.$className + ' ' + record.getId())
+        }
 
         record.get();  // This will instantiate a missing Address hasOne if not already in the data or do nothing if there is one
         evaluationAwardForm.setValues(record.getFlattenedData(true));
-        console.log('Award hasOne hierarchy: ' +  Ext.encode(record.getFlattenedData( true )));
-
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Award hasOne hierarchy: ' +  Ext.encode(record.getFlattenedData( true )));
+        }
         evaluationAwardForm.showBy(target);
-
     }
 
 });

@@ -40,7 +40,9 @@ Ext.define('EvaluateIt.controller.Login', {
 
     onSignInCommand: function (view, username, password) {
 
-        console.log('Username: ' + username + '\n' + 'Password: ' + password);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Username: ' + username + '\n' + 'Password: ' + password);
+        }
 
         var me = this,
             loginView = me.getLoginView(),
@@ -48,9 +50,10 @@ Ext.define('EvaluateIt.controller.Login', {
 
         // assemble url
         url = EvaluateIt.utils.DataService.url('login');
-        console.log(url);
-
-		console.log('url: ' + url);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(url);
+            console.log('url: ' + url);
+        }
 
         if (username.length === 0 || password.length === 0) {
 
@@ -77,7 +80,9 @@ Ext.define('EvaluateIt.controller.Login', {
 
                 var loginResponse = Ext.JSON.decode(response.responseText);
 
-				console.log('response/message ' + loginResponse.success + ' ' + loginResponse.message + ' ' + loginResponse.sessionToken + ' ' + loginResponse.evaluator_id + ' ' + loginResponse.firstname + ' ' + loginResponse.lastname + ' ' + loginResponse.email); 
+                if (EvaluateIt.config.mode === 'test') {
+                    console.log('response/message ' + loginResponse.success + ' ' + loginResponse.message + ' ' + loginResponse.sessionToken + ' ' + loginResponse.evaluator_id + ' ' + loginResponse.firstname + ' ' + loginResponse.lastname + ' ' + loginResponse.email);
+                }
 
 				alert('Welcome ' + ' ' + loginResponse.firstname + ' ' + loginResponse.lastname + '!');
 
@@ -92,11 +97,15 @@ Ext.define('EvaluateIt.controller.Login', {
 					sessionStorage.lastname =  loginResponse.lastname;
 					sessionStorage.email =  loginResponse.email;
 	
-					sessionStorage.sessionCreatedWhen = new Date(); 
-					console.log(loginResponse);
+					sessionStorage.sessionCreatedWhen = new Date();
+                    if (EvaluateIt.config.mode === 'test') {
+                        console.log(loginResponse);
+                    }
 					me.signInSuccess(loginResponse.message);     //Just simulating success.
                 } else {
-					console.log('sessionToken...' + sessionStorage.sessionToken);
+                    if (EvaluateIt.config.mode === 'test') {
+                        console.log('sessionToken...' + sessionStorage.sessionToken);
+                    }
                     me.signInFailure(loginResponse.message);
                 }
             },
@@ -108,7 +117,9 @@ Ext.define('EvaluateIt.controller.Login', {
     },
 
     signInSuccess: function (message) {
-        console.log('Signed in.');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Signed in.');
+        }
         var loginView = this.getLoginView();
 		loginView.showSignInSucceededMessage(message);
         loginView.setMasked(false);
@@ -116,7 +127,9 @@ Ext.define('EvaluateIt.controller.Login', {
     },
 
     signInFailure: function (message) {
-		console.log('message' + message);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('message' + message);
+        }
         var loginView = this.getLoginView();
         loginView.showSignInFailedMessage(message);
         loginView.setMasked(false);
@@ -125,7 +138,9 @@ Ext.define('EvaluateIt.controller.Login', {
     onSignOffCommand: function () {
 		var	url = EvaluateIt.utils.DataService.url('logout');
 
-        console.log(url);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(url);
+        }
 
         Ext.Ajax.request({
 			cors: true,

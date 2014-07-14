@@ -34,12 +34,16 @@ Ext.define('EvaluateIt.controller.Push', {
  	},
 
 	onActivate: function() {
-  		console.log('Main container is active');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Main container is active');
+        }
 		
  	},
 
 	onLoginPush: function(button) {
-		console.log('Button Click');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Button Click');
+        }
 		var loginForm = Ext.Viewport.down('login');
 		//create widget if it doesn't exist
 		if(!loginForm){
@@ -50,14 +54,18 @@ Ext.define('EvaluateIt.controller.Push', {
 	},
 
     onCancelPush: function(button) {
-        console.log('Cancel Click');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Cancel Click');
+        }
         var form = button.up('panel');
         form.hide();
         form.destroy();
     },
 
 	onSavePush: function(button) {
-		console.log('Button Click for Save');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Button Click for Save');
+        }
 		var form = button.up('panel');
 		//get the record 
 		var record = form.getRecord();
@@ -77,7 +85,9 @@ Ext.define('EvaluateIt.controller.Push', {
 	// TODO: add missing attributes to form; add image uploade using native or Cordova method
 	onSelectPush: function(view, index, target, record, event) {
 
-		console.log('Selected a SiteEvaluation from the list');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Selected a SiteEvaluation from the list');
+        }
 		var pushForm = Ext.Viewport.down('pushForm');
 
 		if(!pushForm){
@@ -86,7 +96,9 @@ Ext.define('EvaluateIt.controller.Push', {
 		pushForm.setRecord(record);
 		pushForm.showBy(target);
 
-		console.log('Selected a Push from the list ' + index + ' ' + record.data.address);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Selected a Push from the list ' + index + ' ' + record.data.address);
+        }
 	}
 
 });

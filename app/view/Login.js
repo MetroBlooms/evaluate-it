@@ -140,7 +140,9 @@ Ext.define('EvaluateIt.view.Login', {
     },
 	
     showSignInSucceededMessage: function (message) {
-		console.log('sign on: ' + message);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('sign on: ' + message);
+        }
         var label = this.down('#signInSucceededLabel');
         label.setHtml(message);
         label.show();

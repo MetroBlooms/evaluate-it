@@ -19,7 +19,9 @@ Ext.define('EvaluateIt.utils.DataService', {
     // utilize API as per web site standard
         // value set via {EvaluateIt.config} in app.js
 
-        console.log('Service test:' + param);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Service test:' + param);
+        }
 
         var url =  EvaluateIt.config.protocol;
 
@@ -63,9 +65,7 @@ Ext.define('EvaluateIt.utils.DataService', {
         if (param === 'existing' || param === 'new' || param === 'pull' || param === 'logout' || param === 'file') {
             url += '?token=' + sessionStorage.sessionToken
         }
-
         return url;
-
     },
 
     /**
@@ -115,7 +115,9 @@ Ext.define('EvaluateIt.utils.DataService', {
             county: addressValues.county
         });
 
-        console.log('address.id ' + address.id);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('address.id ' + address.id);
+        }
 
         // create model using remote data
         if(gardenId == null) {
@@ -134,7 +136,9 @@ Ext.define('EvaluateIt.utils.DataService', {
         var geolocation = Ext.create('EvaluateIt.model.Geolocation', {
         });
 
-        console.log('geolocation.id ' + geolocation.id);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('geolocation.id ' + geolocation.id);
+        }
 
         // set hasOne association using model's getter
         site.setGeolocation(geolocation.id);
@@ -163,7 +167,9 @@ Ext.define('EvaluateIt.utils.DataService', {
             });
 
             // grab first and only model instance from store and set associations
-            console.log('stuff: ' + evaluationRecs.first().id);
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('evalRecs model id: ' + evaluationRecs.first().id);
+            }
 
             award.setEvaluation(evaluationRecs.first().id);
             evaluationRecs.first().setEvaluationAward(award.id);
@@ -216,33 +222,47 @@ Ext.define('EvaluateIt.utils.DataService', {
             GeolocationStore = Ext.create('EvaluateIt.store.Geolocations'),
             geolocation;
 
-        console.log('id:' + record.data.id)
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('id:' + record.data.id)
+        }
 
         // get all data: record refers to EvaluationScorecard
         evaluation = EvaluationStore.findRecord('id', evaluation_id);
-        console.log(evaluation.getData(true));
-        console.log('evaluation.id:' + evaluation.get('id') + ' ' + record.data.evaluation_id);
-        console.log('site.id:' + evaluation.get('site_id'));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(evaluation.getData(true));
+            console.log('evaluation.id:' + evaluation.get('id') + ' ' + record.data.evaluation_id);
+            console.log('site.id:' + evaluation.get('site_id'));
+        }
 
         evaluationScorecard = EvaluationScorecardStore.findRecord('evaluation_id', evaluation.get('id'));
-        console.log(evaluationScorecard.getData(true));
-        console.log('evaluationScorecard.id:' + record.data.id);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(evaluationScorecard.getData(true));
+            console.log('evaluationScorecard.id:' + record.data.id);
+        }
 
         evaluationAward = EvaluationAwardStore.findRecord('evaluation_id', evaluation.get('id'));
-        console.log(evaluationAward.getData(true));
-        console.log('evaluationAward.id:' + evaluationAward.get('id'));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(evaluationAward.getData(true));
+            console.log('evaluationAward.id:' + evaluationAward.get('id'));
+        }
 
         site = SiteStore.findRecord('id', evaluation.get('site_id'));
-        console.log(site.getData(true));
-        console.log('site.id:' + evaluation.get('site_id'));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(site.getData(true));
+            console.log('site.id:' + evaluation.get('site_id'));
+        }
 
         address = AddressStore.findRecord('site_id', site.get('id'));
-        console.log(address.getData(true));
-        console.log('address.id:' + address.get('id'));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(address.getData(true));
+            console.log('address.id:' + address.get('id'));
+        }
 
         geolocation = GeolocationStore.findRecord('site_id', site.get('id'));
-        console.log(geolocation.getData(true));
-        console.log('geolocation.id:' + geolocation.get('id'));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(geolocation.getData(true));
+            console.log('geolocation.id:' + geolocation.get('id'));
+        }
 
         // compute score: TODO: check for null/isInt!
         if (evaluationScorecard.get('visualImpact') !== null
@@ -262,7 +282,9 @@ Ext.define('EvaluateIt.utils.DataService', {
                 evaluationScorecard.get('maintenance'),
                 evaluationScorecard.get('environmentalStewardship'));
 
-            console.log('score: ' + score);
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('score: ' + score);
+            }
             // get rating for given score
             /**
              * Determine ranking of evaluation
@@ -271,7 +293,9 @@ Ext.define('EvaluateIt.utils.DataService', {
              */
             rating = EvaluateIt.utils.UtilityService.evaluation_rating(score);
 
-            console.log('rating: ' + rating);
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('rating: ' + rating);
+            }
         }
         else {
             score = null;
@@ -280,7 +304,9 @@ Ext.define('EvaluateIt.utils.DataService', {
 
         // get award if given
         award = EvaluateIt.utils.UtilityService.evaluation_award(evaluationAward.get('id'));
-        console.log('award ' + award.bestof + ' ' + award.nate_seigel);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('award ' + award.bestof + ' ' + award.nate_seigel);
+        }
 
         if (evaluationScorecard.get('noLongerExists') === 'true' || evaluationScorecard.get('noLongerExists') === true) {
             no_longer_exists = 1;
@@ -323,7 +349,9 @@ Ext.define('EvaluateIt.utils.DataService', {
 
         };
 
-        console.log('Assembled core to push: ' + Ext.encode(core));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Assembled core to push: ' + Ext.encode(core));
+        }
 
         /**
          * Non ad hoc evaluation, minimal data elements
@@ -338,7 +366,9 @@ Ext.define('EvaluateIt.utils.DataService', {
             }
         };
 
-        console.log('Assembled existing to push: ' + Ext.encode(existing));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Assembled existing to push: ' + Ext.encode(existing));
+        }
 
         /**
          * Ad hoc nomination with attributes required to create new remote record
@@ -360,26 +390,35 @@ Ext.define('EvaluateIt.utils.DataService', {
             garden: {}
         };
 
-        console.log('Assembled ad_hoc to push: ' + Ext.encode(ad_hoc));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Assembled ad_hoc to push: ' + Ext.encode(ad_hoc));
+            console.log('stuff: ' + site.get('remoteSiteId') + ' ' +  evaluation.get('remoteEvaluationId') + ' ' + evaluation.get('evaluator_id'));
+        }
 
         // Assemble json for submission
         // existing site evaluation
-        console.log('stuff: ' + site.get('remoteSiteId') + ' ' +  evaluation.get('remoteEvaluationId') + ' ' + evaluation.get('evaluator_id'))
+
         if (site.get('remoteSiteId') && evaluation.get('remoteEvaluationId') && evaluation.get('evaluator_id')) {
             obj = Ext.Object.merge(core, existing);
             obj.evaluation.evaluation_id = evaluation.get('remoteEvaluationId');
-            console.log('existing');
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('existing');
+            }
             eval_type = 'existing';
         }
         // new site evaluation
         else {
             obj = Ext.Object.merge(core, ad_hoc);
             obj.evaluation.uuid = site.get('id'); // new uses uuid as linking id
-            console.log('new');
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('new');
+            }
             eval_type = 'new';
         }
 
-        console.log('Assembled object to push: ' + Ext.encode(obj));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Assembled object to push: ' + Ext.encode(obj));
+        }
 
         post(obj, site, evaluation, eval_type);
 
@@ -410,14 +449,18 @@ Ext.define('EvaluateIt.utils.DataService', {
                 url = EvaluateIt.utils.DataService.url('new');
             }
 
-            console.log('new url: ' + url);
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('new url: ' + url);
+            }
 
             Ext.Ajax.request({
                 type: 'POST',
                 url: url,
                 jsonData: obj,
                 success: function (response) {
-                    console.log('success: ' + response.responseText);
+                    if (EvaluateIt.config.mode === 'test') {
+                        console.log('Push success: ' + response.responseText);
+                    }
 
                     alert('Successfully uploaded: '+ response.responseText);
 
@@ -435,16 +478,22 @@ Ext.define('EvaluateIt.utils.DataService', {
 
                 },
                 fail: function (e, jqxhr, settings, exception) {
-                    console.log(e);
+                    if (EvaluateIt.config.mode === 'test') {
+                        console.log(e);
+                    }
                     alert(e);
                 }
             });
 
-            console.log('imageUri! ' + evaluation.get('imageUri'));
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('imageUri! ' + evaluation.get('imageUri'));
+            }
 
             // check if image exists in store
             if (evaluation.get('imageUri') !== null && evaluation.get('imageUri') !== '') {
-                console.log('file exists!');
+                if (EvaluateIt.config.mode === 'test') {
+                    console.log('file exists!');
+                }
                 file_post(site,evaluation);
             }
         }
@@ -470,19 +519,24 @@ Ext.define('EvaluateIt.utils.DataService', {
             uri = evaluation.get('imageUri'); // local path to image
             url = EvaluateIt.utils.DataService.url('file');
 
-            console.log('upload uri: ' + uri + 'url: ' + url);
-
-            console.log('evaluation_id, uuid ' + evaluation.get('remoteEvaluationId') + ', ' + site.get('id'));
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('upload uri: ' + uri + 'url: ' + url);
+                console.log('evaluation_id, uuid ' + evaluation.get('remoteEvaluationId') + ', ' + site.get('id'));
+            }
 
             // assemble key value pair for use in file transfer object for: existing evaluation
             if (evaluation.get('remoteEvaluationId') !== null) {
                 evaluation_kvp.evaluation_id = evaluation.get('remoteEvaluationId');
-                console.log('evaluation_id ' + Ext.encode(evaluation_kvp));
+                if (EvaluateIt.config.mode === 'test') {
+                    console.log('evaluation_id ' + Ext.encode(evaluation_kvp));
+                }
             }
             // new nomination/evaluation: use uuid as identifier
             else {
                 evaluation_kvp.uuid = site.get('id');
-                console.log('uuid ' + Ext.encode(evaluation_kvp));
+                if (EvaluateIt.config.mode === 'test') {
+                    console.log('uuid ' + Ext.encode(evaluation_kvp));
+                }
             }
 
             options.fileKey = 'userfile';
@@ -495,19 +549,23 @@ Ext.define('EvaluateIt.utils.DataService', {
         }
 
         function post_success(r) {
+            if (EvaluateIt.config.mode === 'test') {
                 console.log("Code = " + r.responseCode);
                 console.log("Response = " + r.response);
                 console.log("Sent = " + r.bytesSent);
-                alert(r.response);
                 console.log(r.response);
+            }
+            alert(r.response);
 
                 var response = Ext.JSON.decode(r.response);
                 alert(response.imageData.file_name);
         }
 
         function post_error (error) {
-                alert("An error has occurred: Code = " + error.code);
+            alert("An error has occurred: Code = " + error.code);
+            if (EvaluateIt.config.mode === 'test') {
                 console.log("An error has occurred: Code = " + error.code);
+            }
         }
     },
 
@@ -574,32 +632,44 @@ Ext.define('EvaluateIt.utils.DataService', {
         evaluationScorecard = Ext.getStore(EvaluationScorecardStore);
         evaluation_scorecard_index = evaluationScorecard.findExact('evaluation_id', evaluationModel.get('id'));
 
-        console.log('index: ' + index);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('index: ' + index);
+        }
         site.removeAt(index); // remove record by index
         site.sync();
         //alert('site is gone!');
 
-        console.log('address_index: ' + address_index);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('address_index: ' + address_index);
+        }
         address.removeAt(address_index); // remove record by index
         address.sync();
         //alert('address is gone!');
 
-        console.log('evaluation_index: ' + evaluation_index);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('evaluation_index: ' + evaluation_index);
+        }
         evaluation.removeAt(evaluation_index); // remove record by index
         evaluation.sync();
         //alert('evaluation is gone!');
 
-        console.log('evaluation_award_index: ' + evaluation_award_index);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('evaluation_award_index: ' + evaluation_award_index);
+        }
         evaluationAward.removeAt(evaluation_award_index); // remove record by index
         evaluationAward.sync();
         //alert('evaluationAward is gone!');
 
-        console.log('evaluation_scorecard_index: ' + evaluation_scorecard_index);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('evaluation_scorecard_index: ' + evaluation_scorecard_index);
+        }
         evaluationScorecard.removeAt(evaluation_scorecard_index); // remove record by index
         evaluationScorecard.sync();
         //alert('evaluationScorecard is gone!');
 
-        console.log('geolocation_index: ' + geolocation_index);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('geolocation_index: ' + geolocation_index);
+        }
         geolocation.removeAt(geolocation_index); // remove record by index
         geolocation.sync();
         //alert('geolocation is gone!');

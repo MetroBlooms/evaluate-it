@@ -52,8 +52,10 @@ Ext.define('EvaluateIt.controller.Main', {
             view = nav.getStore().getNodeById(id),
 			name;
 
-		console.log('category: ' + category);
-		console.log('view ' + id);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('category: ' + category);
+        	console.log('view ' + id);
+        }
 
         // create filter based on use case
         var listStore = Ext.data.StoreManager.lookup('EvaluationScorecards');
@@ -63,7 +65,9 @@ Ext.define('EvaluateIt.controller.Main', {
 		if (category === 'push') {
 
 			// only display those evaluations deemed as "complete"
-            console.log('we are in: ' + category);
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('we are in: ' + category);
+            }
 
             listStore.filterBy(function(record, id) {
                 if (record.get('noLongerExists') === true || // in EvaluationScorecard model
@@ -77,8 +81,10 @@ Ext.define('EvaluateIt.controller.Main', {
             });
 
 		}
-	
-        console.log('view ' + id);
+
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('view ' + id);
+        }
 
 		this.showView(view);
         this.setCurrentOption(view);

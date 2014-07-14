@@ -24,7 +24,9 @@ Ext.define('EvaluateIt.controller.SiteGeolocation', {
  	},
 
 	onActivate: function() {
-  		console.log('Main container is active');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Main container is active');
+        }
  	},
 
 
@@ -34,14 +36,12 @@ Ext.define('EvaluateIt.controller.SiteGeolocation', {
         sessionStorage.latitude = 0;
         sessionStorage.longitude = 0;
 
-        console.log('Selected a Geolocation from the list');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Selected a Geolocation from the list');
+        }
 
         // set cooordinates to current position
         EvaluateIt.utils.UtilityService.get_position(record);
-
-        // initialize geo_panel components
-        // var panelOption = 1;
-        //EvaluateIt.utils.UtilityService.get_position.render_map(record,panelOption);
 
 	}
 

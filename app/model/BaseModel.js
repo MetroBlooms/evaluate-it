@@ -309,7 +309,12 @@ Ext.define("EvaluateIt.model.BaseModel", {
         var count=1;
         var prop;
         var flatten = function(obj, includePrototype, into, prefix) {
-            if (count++ > 20) {console.log('TOO DEEP RECURSION'); return;} // prevent infinite recursion
+            if (count++ > 20) {
+                if (count++ > 20 && EvaluateIt.config.mode === 'test'){
+                    console.log('TOO DEEP RECURSION');
+                }
+                return;
+            } // prevent infinite recursion
             into = into || {};
             prefix = prefix || "";
 
@@ -348,7 +353,8 @@ Ext.define("EvaluateIt.model.BaseModel", {
         count = count || 0;
         //debugger;
         if (count > 10) {
-            console.log('Too deep recursion in linkAssociations');
+            if (count++ > 20 && EvaluateIt.config.mode === 'test')
+                console.log('Too deep recursion in linkAssociations');
             return;
         }
 
@@ -369,7 +375,7 @@ Ext.define("EvaluateIt.model.BaseModel", {
                 if (associatedRecord) {
                     this[association.getInstanceName()] = associatedRecord;
                     associatedRecord.linkAssociations(includeAssociated, (count+1));
-                } else if (this.get(association.config.foreignKey)) {
+                } else if (this.get(association.config.foreignKey) && EvaluateIt.config.mode === 'test') {
                     console.log('Warning, model association not found ');
                 }
             }
@@ -433,8 +439,10 @@ Ext.define("EvaluateIt.model.BaseModel", {
                         aName.shift();
                     }
                     sFnc=sFnc+'set("'+aName[0]+'","'+values[name]+'")';
-                    console.log('sFnc' + sFnc);
-                    console.log(this.$className);
+                    if (EvaluateIt.config.mode === 'test') {
+                        console.log('sFnc' + sFnc);
+                        console.log(this.$className);
+                    }
                     sFuncs[i]=sFnc;
                     i++;
                 }
@@ -473,8 +481,7 @@ Ext.define("EvaluateIt.model.BaseModel", {
                         //Only write the association if it's an insert, it's specifically required or there are changes
                         if (phantom || writeAllFields || associatedStore.getModifiedRecords().length > 0) {
 
-
-                            //if it's loaded, put it into the association data
+                           //if it's loaded, put it into the association data
                             if (associatedStore.getCount() > 0) {
                                 //we will use this to contain each associated record's data
                                 data[name] = [];

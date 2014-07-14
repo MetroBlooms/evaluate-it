@@ -39,11 +39,15 @@ Ext.define('EvaluateIt.controller.phone.Main', {
     onNavTap: function(nestedList, list, index) {
         var record = list.getStore().getAt(index);
 
-		console.log('bbb ' + record);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('bbb ' + record);
+        }
 
         if (record.isLeaf()) {
 			// append category parameter for use in selection of proper view to render in route through use of filter 
-			console.log('url to route: ' + ' ' + record.toUrl() + '\/' + record.get('category'));
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('url to route: ' + ' ' + record.toUrl() + '\/' + record.get('category'));
+            }
             record =  record.toUrl() + '\/' + record.get('category'); 			
             this.redirectTo(record);
 
@@ -86,8 +90,9 @@ Ext.define('EvaluateIt.controller.phone.Main', {
             initialAnim = layout.getAnimation(),
             newAnim;
 
-
-		console.log('title: ' + title);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('title: ' + title);
+        }
 
         if (anim) {
             layout.setAnimation(anim);
@@ -114,7 +119,9 @@ Ext.define('EvaluateIt.controller.phone.Main', {
      */
     onBackTap: function(nestedList, node) {
 
-		console.log('We are back tappin!');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('We are back tappin!');
+        }
 
         this.getApplication().getHistory().add(Ext.create('Ext.app.Action', {
             url: 'menu/' + node.parentNode.get('id')

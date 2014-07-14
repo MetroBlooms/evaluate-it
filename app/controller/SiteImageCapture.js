@@ -31,7 +31,9 @@ Ext.define('EvaluateIt.controller.SiteImageCapture',{
         );
     },
     onCaptureSuccess: function(uri) {
-        console.log('got foto:'+uri);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('got foto:'+uri);
+        }
         var lostor = Ext.getStore('theImageQueue'),
             selectedImage = document.getElementById('selectedImage');;
         lostor.add({
@@ -45,8 +47,10 @@ Ext.define('EvaluateIt.controller.SiteImageCapture',{
         selectedImage.src = uri;
 
     },
-	onCaptureFailure: function() {
-
-		console.log('capture failure');
+	onCaptureFailure: function(message) {
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('capture failure');
+        }
+        alert('image failure:' + message)
 	}
 });
