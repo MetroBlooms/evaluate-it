@@ -387,7 +387,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 neighborhood: address.get('neighborhood'),
                 county: address.get('county')
             },
-            garden: {}
+            garden: {raingarden: rain_garden}
         };
 
         if (EvaluateIt.config.mode === 'test') {
