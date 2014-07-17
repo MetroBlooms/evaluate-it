@@ -187,7 +187,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                                 if (EvaluateIt.config.mode === 'test') {
                                     console.log(value);
                                 }
-                                alert('Accuracy threshold: ' + value);
+                                alert('Detecting position at accuracy ' + value + '...');
                                 // set accuracy as config variable
                                 EvaluateIt.config.accuracy = value;
                             }
@@ -220,11 +220,16 @@ Ext.define('EvaluateIt.utils.UtilityService', {
              * @type {Number}
              */
             watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
+
+
+
         if (EvaluateIt.config.mode === 'test') {
             console.log('Initialize watchID' + watchID);
         }
 
+        alert('Detecting position at accuracy ' + EvaluateIt.config.accuracy + '...');
         geo_panel.show();
+
 
         /**
          * onSuccess Callback receives PositionSuccess object and writes to sessionStorage/localStorage
