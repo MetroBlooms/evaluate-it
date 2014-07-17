@@ -222,12 +222,10 @@ Ext.define('EvaluateIt.utils.UtilityService', {
             watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
         alert('Detecting position at accuracy ' + EvaluateIt.config.accuracy + '...');
 
-
         if (EvaluateIt.config.mode === 'test') {
             console.log('Initialize watchID' + watchID);
         }
 
-        alert('Detecting position at accuracy ' + EvaluateIt.config.accuracy + '...');
         geo_panel.show();
 
 
