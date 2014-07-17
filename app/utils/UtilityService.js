@@ -187,7 +187,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                                 if (EvaluateIt.config.mode === 'test') {
                                     console.log(value);
                                 }
-                                alert('Detecting position at accuracy ' + value + '...');
+                                alert('Detecting position at accuracy of ' + value + '...');
                                 // set accuracy as config variable
                                 EvaluateIt.config.accuracy = value;
                             }
@@ -220,7 +220,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
              * @type {Number}
              */
             watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
-
+        alert('Detecting position at accuracy ' + EvaluateIt.config.accuracy + '...');
 
 
         if (EvaluateIt.config.mode === 'test') {
