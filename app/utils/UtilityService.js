@@ -244,13 +244,12 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 accuracy = coordinates.accuracy,
                 panelOption;
 
-            //alert('Coordinates captured  ' + accuracy);
             if (EvaluateIt.config.mode === 'test') {
                 console.log('Accuracy: ' + accuracy);
             }
             var geoPanel = Ext.getCmp('geopanel');
             if( geoPanel != null ){
-                geoPanel.setMasked({xtype: 'loadmask', message: "... Reading accuracy: "+accuracy});
+                geoPanel.setMasked({xtype: 'loadmask', message: "Accuracy: "+accuracy});
                 if (EvaluateIt.config.mode === 'test') {
                     console.log('geoPanel.setMasked(loadmask)');
                 }
@@ -279,7 +278,6 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 record.set('timeStamp',timeStamp);
                 Ext.getStore('Geolocations').sync();
 
-//                alert('Success! Location has been set with an accuracy of:' + accuracy);
                 if (EvaluateIt.config.mode === 'test') {
                     console.log('Success watchID:' + watchID);
                 }
@@ -306,9 +304,15 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 }
                 navigator.geolocation.clearWatch(watchID);
                 watchID = null;
-//                alert('GPS stopped!');
                 if (EvaluateIt.config.mode === 'test') {
-                    console.log('Clear watchID after' + watchID);
+                    console.log('Clear watchID after:' + watchID);
+                }
+            }
+            var geoPanel = Ext.getCmp('geopanel');
+            if( geoPanel != null ){
+                geoPanel.setMasked(false);
+                if (EvaluateIt.config.mode === 'test') {
+                    console.log('geoPanel.setMasked(false)');
                 }
             }
         }
