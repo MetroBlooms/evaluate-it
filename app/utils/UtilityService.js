@@ -175,33 +175,6 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                         handler: function() {EvaluateIt.config.accuracy = EvaluateIt.config.accuracyReading + 1;}
                     },
                     {
-                        xtype: 'selectfield',
-                        itemId: 'accuracy',
-                        autoSelect: false,
-                        placeHolder: 'accuracy',
-                        options: [
-                            {text: ''},
-                            {text: 'high',  value: 5},
-                            {text: 'med high',  value: 10},
-                            {text: 'medium',  value: 15},
-                            {text: 'med low',  value: 20},
-                            {text: 'low',  value: 30}
-                        ],
-                        listeners: {
-                            change: function(field, value) {
-                                if (value instanceof Ext.data.Model) {
-                                    value = value.get(field.getValueField());
-                                }
-                                if (EvaluateIt.config.mode === 'test') {
-                                    console.log(value);
-                                }
-                                alert('Detecting position at accuracy of ' + value + '...');
-                                // set accuracy as config variable
-                                EvaluateIt.config.accuracy = value;
-                            }
-                        }
-                    },
-                    {
                         iconCls: 'home',
                         handler: function() {
                             google_map.getMap().panTo(position);
@@ -250,8 +223,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                 timeStamp = new Date(position.timestamp),
                 latitude = coordinates.latitude,
                 longitude =  coordinates.longitude,
-                accuracy = coordinates.accuracy,
-                panelOption;
+                accuracy = coordinates.accuracy;
 
             if (EvaluateIt.config.mode === 'test') {
                 console.log('Accuracy: ' + accuracy);

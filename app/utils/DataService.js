@@ -380,7 +380,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 nominator_name: sessionStorage.firstname + ' ' + sessionStorage.lastname,
                 nominator_email: sessionStorage.email,
                 gardener_name: evaluation.get('name'),
-		raingarden: rain_garden,
+		         raingarden: rain_garden,
                 address: address.get('address'),
                 city: address.get('city'),
                 state: address.get('state'),
