@@ -360,7 +360,8 @@ Ext.define('EvaluateIt.utils.DataService', {
         existing = {
             garden: {
                 garden_id: site.get('remoteSiteId'),
-                name:  site.get('name'),
+                name: evaluation.get('siteMaintainer'),
+                name_of_garden: site.get('name'),
                 no_longer_exists: no_longer_exists,
                 raingarden: rain_garden
             }
@@ -380,6 +381,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 nominator_name: sessionStorage.firstname + ' ' + sessionStorage.lastname,
                 nominator_email: sessionStorage.email,
                 gardener_name: evaluation.get('siteMaintainer'),
+                name_of_garden: site.get('name'),
 		        raingarden: rain_garden,
                 address: address.get('address'),
                 city: address.get('city'),

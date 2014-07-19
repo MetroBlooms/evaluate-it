@@ -87,6 +87,17 @@ Ext.define('EvaluateIt.controller.Evaluation', {
                 }
             });
 
+            values = form.getValues();
+
+            // When rainGarden is null the store is not updated correctly. Explicitly set it false to
+            // get the save to work properly.
+            if (form.getValues().rainGarden === null)
+            {
+                values.rainGarden = false;
+            }
+            record = form.getRecord();
+
+
             if (EvaluateIt.config.mode === 'test') {
                 console.log(record.getData(true));
             } // to see the record
@@ -94,6 +105,9 @@ Ext.define('EvaluateIt.controller.Evaluation', {
             if (EvaluateIt.config.mode === 'test') {
                  console.log(record.getAssociatedData(true));
             } // to see the record associations
+
+
+
             record.save();
 
         }

@@ -95,6 +95,7 @@ Ext.define('EvaluateIt.controller.EvaluationScorecard', {
                     // TODO: display on form
                     alert('SumRating and ranking: ' + sumRating + ' ' + evaluationRating);
 
+
                     form.setValues({
                         sumRating: sumRating
                     })
