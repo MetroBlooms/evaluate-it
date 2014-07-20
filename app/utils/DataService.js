@@ -331,7 +331,7 @@ Ext.define('EvaluateIt.utils.DataService', {
                 special_award_specified: evaluationAward.get('specialAwardSpecified'),
                 evaluator_id: sessionStorage.evaluator_id, // would use remoteEvaluatorId, but if ad hoc this will not exist
                 nate_siegel_award: award.nate_seigel,
-                //date_evaluated: Ext.Date.format(evaluation.get('dateOfEvaluation'), 'm/d/Y'), // formatted as mm/dd/yyyy
+                date_evaluated: evaluation.get('dateOfEvaluation'),
                 comments: evaluation.get('comments'),
                 scoresheet: {
                     color: evaluationScorecard.get('visualImpact'),
