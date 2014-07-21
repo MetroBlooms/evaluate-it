@@ -202,7 +202,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
              * @type {Number}
              */
             watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
-            EvaluateIt.config.accuracy = 70 ; // always start at 1 regardless of user or application changes.
+            EvaluateIt.config.accuracy = 1 ; // always start at 1 regardless of user or application changes.
         alert('Detecting position at accuracy ' + EvaluateIt.config.accuracy + '...');
 
         if (EvaluateIt.config.mode === 'test') {
@@ -354,7 +354,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
                             } catch (e) {
                                 // TODO Auto-generated catch block
                                 //InterruptedException.printStackTrace();
-                                alert('Google maps API issue; please try again');
+                                //alert('Google maps API issue; please try again');
                             }
 
                             var marker = new google.maps.Marker({
