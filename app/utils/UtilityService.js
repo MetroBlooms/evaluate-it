@@ -202,7 +202,7 @@ Ext.define('EvaluateIt.utils.UtilityService', {
              * @type {Number}
              */
             watchID = navigator.geolocation.watchPosition(geo_success, geo_error, options);
-            EvaluateIt.config.accuracy = 1 ; // always start at 1 regardless of user or application changes.
+            EvaluateIt.config.accuracy = 70 ; // always start at 1 regardless of user or application changes.
         alert('Detecting position at accuracy ' + EvaluateIt.config.accuracy + '...');
 
         if (EvaluateIt.config.mode === 'test') {
@@ -303,6 +303,11 @@ Ext.define('EvaluateIt.utils.UtilityService', {
             if (EvaluateIt.config.mode === 'test') {
                 console.log('geo_panel.destroy');
             }
+            // ensures that all components are destroyed
+            for(var i = 0; i < geo_panel.items.length; i++)
+            {
+                geo_panel.remove(geo_panel.items[i], true);
+            }
             geo_panel.destroy();
         }
 
@@ -343,6 +348,14 @@ Ext.define('EvaluateIt.utils.UtilityService', {
 
                     listeners: {
                         maprender: function(comp, map) {
+
+                            try {
+                                Thread.sleep(2500); //a wait of 2500 milliseconds
+                            } catch (e) {
+                                // TODO Auto-generated catch block
+                                //InterruptedException.printStackTrace();
+                                alert('Google maps API issue; please try again');
+                            }
 
                             var marker = new google.maps.Marker({
                                 position: map.center,

@@ -72,6 +72,7 @@ Ext.define('EvaluateIt.controller.Evaluation', {
 
                     if (EvaluateIt.config.mode === 'test') {
                         console.log('URI: ' +  uri + ' ' + now);
+                        alert('URI: ' +  uri + ' ' + now);
                     }
 
                     // update form with URI
