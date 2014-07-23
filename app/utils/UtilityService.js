@@ -352,7 +352,6 @@ Ext.define('EvaluateIt.utils.UtilityService', {
 
                             function sleep(delay)
                             {
-                                alert('sleeping');
                                 var start = new Date().getTime();
                                 while (new Date().getTime() < start + delay);
                             }
