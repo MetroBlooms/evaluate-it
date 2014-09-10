@@ -10,6 +10,7 @@
 *.ap_
 *.dex
 *.cache
+resources/sass/.sass-cache/*
 
 # Packages #
 ############
@@ -43,7 +44,11 @@ Thumbs.db
 *.sencha
 *.senchasdk
 
+boot*
 build.xml
+
+cordova/*
+build/*
 
 # Files with information that should not be made available to the public #
 ######################

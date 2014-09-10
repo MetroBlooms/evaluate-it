@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.profile.Base&#39;, {
+    extend: &#39;Ext.app.Profile&#39;,
+	requires: [&#39;Ext.device.Geolocation&#39;, &#39;Ext.device.Notification&#39;],
+
+    launch: function() {
+        var isBenchmarking = window.location.search.match(/(\?|&amp;)bm/);
+        
+		if (isBenchmarking) {
+            Ext.Animator.on({
+                animationend: &#39;onAnimationEnd&#39;,
+                scope: this
+            });
+
+            this.benchmark = Ext.Viewport.add({
+                style: &#39;background-color: red; color: #FFF&#39;,
+                bottom: 0,
+                right: 0,
+                zIndex: 1000
+            });
+        }
+    },
+
+    onAnimationEnd: function(animator, animation, element) {
+        var delay = (Date.now() - animation.startTime) - animation.getDuration(),
+                benchmark = this.benchmark,
+                item;
+
+        item = benchmark.add({
+            html: element.id + &#39; &lt;b&gt;&#39; + delay + &#39;&lt;/b&gt;&#39;
+        });
+
+        setTimeout(function() {
+            item.destroy();
+        }, 5000);
+    }
+});
+</pre>
+</body>
+</html>

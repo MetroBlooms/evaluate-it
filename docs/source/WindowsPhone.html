@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-viewport-WindowsPhone'>/**
+</span> * @private
+ * Windows Phone version of Viewport.
+ */
+Ext.define(&#39;Ext.viewport.WindowsPhone&#39;, {
+    requires: [],
+
+    alternateClassName: &#39;Ext.viewport.WP&#39;,
+
+    extend: &#39;Ext.viewport.Default&#39;,
+
+    // so one pixel line is displayed on the right side of the screen. Setting width more than 100% fix the issue
+//    config: {
+//        width: &#39;100.2%&#39;,
+//        height: &#39;100.2%&#39;
+//    },
+
+    config: {
+<span id='Ext-viewport-WindowsPhone-cfg-translatable'>        translatable: {
+</span>            translationMethod: &#39;csstransform&#39;
+        }
+    },
+
+<span id='Ext-viewport-WindowsPhone-method-initialize'>    initialize: function () {
+</span>        // There is -ms-user-select CSS property for IE10, but it seems it works only in desktop browser. So we need to prevent selection event.
+        var preventSelection = function(e) {
+            var srcElement = e.srcElement.nodeName.toUpperCase(),
+                selectableElements = [&#39;INPUT&#39;, &#39;TEXTAREA&#39;];
+
+            if (selectableElements.indexOf(srcElement) == -1) {
+                return false;
+            }
+        };
+
+        document.body.addEventListener(&#39;onselectstart&#39;, preventSelection);
+
+        this.callParent(arguments);
+    },
+
+<span id='Ext-viewport-WindowsPhone-method-supportsOrientation'>    supportsOrientation: function() {
+</span>        return false;
+    },
+
+<span id='Ext-viewport-WindowsPhone-method-onResize'>    onResize: function() {
+</span>        this.waitUntil(function() {
+            var oldWidth = this.windowWidth,
+                oldHeight = this.windowHeight,
+                width = this.getWindowWidth(),
+                height = this.getWindowHeight(),
+                currentOrientation = this.getOrientation(),
+                newOrientation = this.determineOrientation();
+
+            return ((oldWidth !== width &amp;&amp; oldHeight !== height) &amp;&amp; currentOrientation !== newOrientation);
+        }, function() {
+            var currentOrientation = this.getOrientation(),
+                newOrientation = this.determineOrientation();
+            this.fireOrientationChangeEvent(newOrientation, currentOrientation);
+
+        }, Ext.emptyFn, 250);
+    }
+});
+</pre>
+</body>
+</html>

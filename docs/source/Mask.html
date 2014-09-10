@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-Mask'>/**
+</span> * A simple class used to mask any {@link Ext.Container}.
+ *
+ * This should rarely be used directly, instead look at the {@link Ext.Container#masked} configuration.
+ *
+ * ## Example
+ *
+ *     @example miniphone
+ *     // Create our container
+ *     var container = Ext.create(&#39;Ext.Container&#39;, {
+ *         html: &#39;My container!&#39;
+ *     });
+ *
+ *     // Add the container to the Viewport
+ *     Ext.Viewport.add(container);
+ *
+ *     // Mask the container
+ *     container.setMasked(true);
+ */
+Ext.define(&#39;Ext.Mask&#39;, {
+    extend: &#39;Ext.Component&#39;,
+    xtype: &#39;mask&#39;,
+    requires: [&#39;Ext.util.InputBlocker&#39;],
+
+    config: {
+<span id='Ext-Mask-cfg-baseCls'>        /**
+</span>         * @cfg
+         * @inheritdoc
+         */
+        baseCls: Ext.baseCSSPrefix + &#39;mask&#39;,
+
+<span id='Ext-Mask-cfg-transparent'>        /**
+</span>         * @cfg {Boolean} transparent True to make this mask transparent.
+         */
+        transparent: false,
+
+<span id='Ext-Mask-cfg-top'>        /**
+</span>         * @cfg
+         * @hide
+         */
+        top: 0,
+
+<span id='Ext-Mask-cfg-left'>        /**
+</span>         * @cfg
+         * @hide
+         */
+        left: 0,
+
+<span id='Ext-Mask-cfg-right'>        /**
+</span>         * @cfg
+         * @hide
+         */
+        right: 0,
+
+<span id='Ext-Mask-cfg-bottom'>        /**
+</span>         * @cfg
+         * @hide
+         */
+        bottom: 0
+    },
+
+<span id='Ext-Mask-event-tap'>    /**
+</span>     * @event tap
+     * A tap event fired when a user taps on this mask
+     * @param {Ext.Mask} this The mask instance
+     * @param {Ext.EventObject} e The event object
+     */
+    initialize: function() {
+        this.callSuper();
+
+        this.element.on(&#39;*&#39;, &#39;onEvent&#39;, this);
+
+        this.on({
+            hide: &#39;onHide&#39;
+        });
+    },
+
+<span id='Ext-Mask-method-onHide'>    onHide: function(){
+</span>        Ext.util.InputBlocker.unblockInputs();
+
+        // Oh how I loves the Android
+        if (Ext.browser.is.AndroidStock4 &amp;&amp; Ext.os.version.getMinor() === 0) {
+            var firstChild = this.element.getFirstChild();
+            if (firstChild) {
+                firstChild.redraw();
+            }
+        }
+    },
+
+<span id='Ext-Mask-method-onEvent'>    onEvent: function(e) {
+</span>        var controller = arguments[arguments.length - 1];
+
+        if (controller.info.eventName === &#39;tap&#39;) {
+            this.fireEvent(&#39;tap&#39;, this, e);
+            return false;
+        }
+
+        if (e &amp;&amp; e.stopEvent) {
+            e.stopEvent();
+        }
+
+        return false;
+    },
+
+<span id='Ext-Mask-method-updateTransparent'>    updateTransparent: function(newTransparent) {
+</span>        this[newTransparent ? &#39;addCls&#39; : &#39;removeCls&#39;](this.getBaseCls() + &#39;-transparent&#39;);
+    }
+});
+</pre>
+</body>
+</html>

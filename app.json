@@ -39,9 +39,10 @@
      *      }
      */
     "js": [
-       	/*{
-			"path": "cordova-2.5.0.js"
-		},*/
+        {
+            "path": "cordova.js",
+            "remote": true
+        },
 		{
             "path": "touch/sencha-touch.js",
             "x-bootstrap": true

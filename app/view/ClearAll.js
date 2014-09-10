@@ -26,21 +26,13 @@ Ext.define('EvaluateIt.view.ClearAll', {
 							Ext.Msg.show({
 								title:'Are you sure?',
 								buttons: Ext.MessageBox.YESNO,
-								//animateTarget: 'mb4',
-								//icon: Ext.MessageBox.WARNING,
+
 								fn: function(buttonId) {
 								
 									if (buttonId === 'yes') {
-										var evaluationsStore = Ext.getStore('SiteEvaluations');
-											evaluatorsStore = Ext.getStore('Evaluators');
-
-										evaluationsStore.removeAll();
-										evaluatorsStore.removeAll();
-										evaluationsStore.sync();
-										evaluatorsStore.sync();
-										alert('Data gone!');
-
-									}
+                                        EvaluateIt.utils.DataService.clear_all();
+                                      	alert('Data gone!');
+                                    }
 									else {
 										alert('Data unscathed!');
 									}	

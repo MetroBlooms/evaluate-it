@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-view-EvaluationAward'>/**
+</span> * Create a list of sites that could be assigned an award when evaluated.
+ * First create a Site model with defined fields, then create a store to contain the data,
+ * finally create the list itself using an xtype widget  (see EvaluateIt.view.EvaluationAwardList),
+ * which gets its filtered data
+ * (on category = &#39;evaluations&#39; by regex for existing address in EvaluateIt.controller.Main) from the store
+ */
+Ext.define(&#39;EvaluateIt.view.EvaluationAward&#39;, {
+		extend: &#39;Ext.Container&#39;,
+<span id='EvaluateIt-view-EvaluationAward-cfg-fullscreen'>      	fullscreen: true,
+</span>		config: {
+<span id='EvaluateIt-view-EvaluationAward-cfg-layout'>			layout: &#39;vbox&#39;,
+</span><span id='EvaluateIt-view-EvaluationAward-cfg-items'>			items: [
+</span>				{
+					xtype : &#39;toolbar&#39;,
+					docked: &#39;top&#39;
+				},
+				{
+					flex: 1,
+					xtype: &#39;evaluationAwardList&#39; //widget reference to EvaluateIt.view.EvaluationList
+
+				}
+			]
+		}
+});
+</pre>
+</body>
+</html>

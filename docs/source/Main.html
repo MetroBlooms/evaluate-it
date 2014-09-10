@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-controller-Main'>/**
+</span> * @class EvaluateIt.controller.Main
+ * @extends Ext.app.Controller
+ *
+ * This is an abstract base class that is extended by both the phone and tablet versions. This controller is
+ * never directly instantiated, it just provides a set of common functionality that the phone and tablet
+ * subclasses both extend.
+ */
+Ext.define(&#39;EvaluateIt.controller.Main&#39;, {
+    extend: &#39;Ext.app.Controller&#39;,
+
+    config: {
+<span id='EvaluateIt-controller-Main-cfg-viewCache'>        /**
+</span>         * @private
+         */
+        viewCache: [],
+
+<span id='EvaluateIt-controller-Main-cfg-refs'>        refs: {
+</span>            nav: &#39;#mainNestedList&#39;,
+            main: &#39;mainview&#39;,
+            toolbar: &#39;#mainNavigationBar&#39;
+        },
+
+<span id='EvaluateIt-controller-Main-cfg-control'>        control: {
+</span>            sourceButton: {
+                tap: &#39;onSourceTap&#39;
+            },
+            nav: {
+                itemtap: &#39;onNavTap&#39;
+            }
+		},
+
+<span id='EvaluateIt-controller-Main-cfg-routes'>        routes: {
+</span>            &#39;option/:id/:category&#39;: &#39;showViewById&#39;,
+            &#39;menu/:id&#39;: &#39;showMenuById&#39;
+        },
+
+
+<span id='EvaluateIt-controller-Main-cfg-currentOption'>        /**
+</span>         * @cfg {Ext.data.Model} currentOption The Option that is currently loaded. This is set whenever showViewById
+         * is called and used by functions like onSourceTap to fetch the source code for the current option.
+         */
+        currentOption: undefined
+    },
+
+<span id='EvaluateIt-controller-Main-method-showViewById'>    /**
+</span>     * Finds a given view by ID and shows it. End-point of the &quot;option/:id&quot; route (viz., leaf in tree store)
+     */
+    showViewById: function (id, category) {
+        var nav = this.getNav(),
+			type,
+            view = nav.getStore().getNodeById(id),
+			name;
+
+		console.log(&#39;category: &#39; + category);
+		console.log(&#39;view &#39; + id);
+
+		// control view selection based on category passed from routing call
+		if (category === &#39;evaluations&#39; || category === &#39;push&#39;) {
+
+			console.log(&#39;what it is: &#39; + category);
+
+			// create filter based on filtered use case	
+			var listStore = Ext.data.StoreManager.lookup(&#39;SiteEvaluations&#39;); 
+			listStore.clearFilter();
+
+			if (category === &#39;evaluations&#39;) { 
+				//listStore.clearFilter();
+				console.log(&#39;we are in: &#39; + category);
+
+<span id='EvaluateIt-controller-Main-property-reg'>                /**
+</span>                 * Regular expression test for valid data
+                 * 
+                 * @type {RegExp}
+                 */
+				var reg = new RegExp(&#39;[A-Za-z0-9_]&#39;,&#39;i&#39;);
+				listStore.filterBy(function(record, id) {
+
+					var address = record.get(&#39;address&#39;);
+   	 				if (reg.test(address)) {
+        				return true;
+					}
+				});
+
+			}
+			// only display those evaluations deemed as &quot;complete&quot;
+			if (category === &#39;push&#39;) {
+				console.log(&#39;we are in: &#39; + category);
+				// nothing to evaluate
+
+				listStore.filterBy(function(record, id) {
+   	 				if (record.get(&#39;noLongerExists&#39;) === true || 
+						(record.get(&#39;useOfColor&#39;) !== null 
+						&amp;&amp; record.get(&#39;varietyAndHealth&#39;) !== null 
+						&amp;&amp; record.get(&#39;design&#39;) !== null 
+						&amp;&amp; record.get(&#39;maintenance&#39;) !== null 
+						&amp;&amp; record.get(&#39;environmentalStewardship&#39;) !== null)) {
+        					return true;
+						}
+				});
+			}
+		
+
+		}
+	
+        console.log(&#39;view &#39; + id);
+
+		this.showView(view);
+        this.setCurrentOption(view);
+        this.hideSheets();
+
+    },
+
+<span id='EvaluateIt-controller-Main-method-createView'>    /**
+</span>     * @private
+     * In the kitchen sink we have a large number of dynamic views. If we were to keep all of them rendered
+     * we&#39;d risk causing the browser to run out of memory, especially on older devices. If we destroy them as
+     * soon as we&#39;re done with them, the app can appear sluggish. Instead, we keep a small number of rendered
+     * views in a viewCache so that we can easily reuse recently used views while destroying those we haven&#39;t
+     * used in a while.
+     * @param {String} name The full class name of the view to create (e.g. &quot;EvaluateIt.view.Forms&quot;)
+     * @return {Ext.Component} The component, which may be from the cache
+     */
+    createView: function (item) {
+        var name = this.getViewName(item),
+            cache = this.getViewCache(),
+            ln = cache.length,
+            limit = item.get(&#39;limit&#39;) || 20,
+            view, i = 0, j, oldView;
+
+        for (; i &lt; ln; i++) {
+            if (cache[i].viewName === name) {
+                return cache[i];
+            }
+        }
+
+        if (ln &gt;= limit) {
+            for (i = 0, j = 0; i &lt; ln; i++) {
+                oldView = cache[i];
+                if (!oldView.isPainted()) {
+                    oldView.destroy();
+                } else {
+                    cache[j++] = oldView;
+                }
+            }
+            cache.length = j;
+        }
+
+        view = Ext.create(name);
+        view.viewName = name;
+        cache.push(view);
+        this.setViewCache(cache);
+
+        return view;
+    },
+
+<span id='EvaluateIt-controller-Main-method-getViewName'>    /**
+</span>     * @private
+     * Returns the full class name of the view to construct for a given Option
+     * @param {EvaluateIt.model.Option item The option
+     * @return {String} The full class name of the view
+     */
+    getViewName: function (item) {
+        var name = item.get(&#39;view&#39;) || item.get(&#39;text&#39;),
+            ns = &#39;EvaluateIt.view.&#39;;
+
+        if (name == &#39;TouchEvents&#39;) {
+            if (this.getApplication().getCurrentProfile().getName() === &#39;Tablet&#39;) {
+                return ns + &#39;tablet.&#39; + name;
+            } else {
+                return ns + &#39;phone.&#39; + name;
+            }
+        } else {
+            return ns + name;
+        }
+    },
+
+<span id='EvaluateIt-controller-Main-method-hideSheets'>    /**
+</span>     * we iterate over all of the floating sheet components and make sure they&#39;re hidden when we
+     * navigate to a new view. This stops things like Picker overlays staying visible when you hit
+     * the browser&#39;s back button
+     */
+    hideSheets: function () {
+        Ext.each(Ext.ComponentQuery.query(&#39;sheet&#39;), function (sheet) {
+            sheet.setHidden(true);
+        });
+    }
+});
+</pre>
+</body>
+</html>

@@ -1,6 +1,8 @@
-// Handle login session tokens
-// from http://miamicoder.com/2012/adding-a-login-screen-to-a-sencha-touch-application-part-2/
-
+/**
+ * Controller for handling session tokens
+ * **See full documented usage** [HERE][1];
+ * [1]: http://miamicoder.com/2012/adding-a-login-screen-to-a-sencha-touch-application-part-2/
+ */
 Ext.define('EvaluateIt.controller.Login', {
     extend: 'Ext.app.Controller',
     config: {
@@ -38,24 +40,20 @@ Ext.define('EvaluateIt.controller.Login', {
 
     onSignInCommand: function (view, username, password) {
 
-        console.log('Username: ' + username + '\n' + 'Password: ' + password);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Username: ' + username + '\n' + 'Password: ' + password);
+        }
 
         var me = this,
             loginView = me.getLoginView(),
-			url =  EvaluateIt.config.protocol;
+			url;
 
-		// select mode of API access
-		if (EvaluateIt.config.mode === 'test') {
-			url += EvaluateIt.config.test;
-		}
-		if (EvaluateIt.config.mode === 'live') {
-			url += EvaluateIt.config.production;
-		}
-
-		url += EvaluateIt.config.domain;
-		url += EvaluateIt.config.login;
-
-		console.log('url: ' + url);
+        // assemble url
+        url = EvaluateIt.utils.DataService.url('login');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(url);
+            console.log('url: ' + url);
+        }
 
         if (username.length === 0 || password.length === 0) {
 
@@ -82,7 +80,9 @@ Ext.define('EvaluateIt.controller.Login', {
 
                 var loginResponse = Ext.JSON.decode(response.responseText);
 
-				console.log('response/message ' + loginResponse.success + ' ' + loginResponse.message + ' ' + loginResponse.sessionToken + ' ' + loginResponse.evaluator_id + ' ' + loginResponse.firstname + ' ' + loginResponse.lastname + ' ' + loginResponse.email); 
+                if (EvaluateIt.config.mode === 'test') {
+                    console.log('response/message ' + loginResponse.success + ' ' + loginResponse.message + ' ' + loginResponse.sessionToken + ' ' + loginResponse.evaluator_id + ' ' + loginResponse.firstname + ' ' + loginResponse.lastname + ' ' + loginResponse.email);
+                }
 
 				alert('Welcome ' + ' ' + loginResponse.firstname + ' ' + loginResponse.lastname + '!');
 
@@ -97,11 +97,15 @@ Ext.define('EvaluateIt.controller.Login', {
 					sessionStorage.lastname =  loginResponse.lastname;
 					sessionStorage.email =  loginResponse.email;
 	
-					sessionStorage.sessionCreatedWhen = new Date(); 
-					console.log('sessionToken' + sessionStorage.sessionToken + ' ' + loginResponse.message);
+					sessionStorage.sessionCreatedWhen = new Date();
+                    if (EvaluateIt.config.mode === 'test') {
+                        console.log(loginResponse);
+                    }
 					me.signInSuccess(loginResponse.message);     //Just simulating success.
                 } else {
-					console.log('sessionToken...' + sessionStorage.sessionToken);
+                    if (EvaluateIt.config.mode === 'test') {
+                        console.log('sessionToken...' + sessionStorage.sessionToken);
+                    }
                     me.signInFailure(loginResponse.message);
                 }
             },
@@ -113,7 +117,9 @@ Ext.define('EvaluateIt.controller.Login', {
     },
 
     signInSuccess: function (message) {
-        console.log('Signed in.');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Signed in.');
+        }
         var loginView = this.getLoginView();
 		loginView.showSignInSucceededMessage(message);
         loginView.setMasked(false);
@@ -121,45 +127,33 @@ Ext.define('EvaluateIt.controller.Login', {
     },
 
     signInFailure: function (message) {
-		console.log('message' + message);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('message' + message);
+        }
         var loginView = this.getLoginView();
         loginView.showSignInFailedMessage(message);
         loginView.setMasked(false);
     },
 
     onSignOffCommand: function () {
-		var	url =  EvaluateIt.config.protocol;
+		var	url = EvaluateIt.utils.DataService.url('logout');
 
-		// select mode of API access
-		if (EvaluateIt.config.mode === 'test') {
-			url += EvaluateIt.config.test;
-		}
-		if (EvaluateIt.config.mode === 'live') {
-			url += EvaluateIt.config.production;
-		}
-
-		url += EvaluateIt.config.domain;
-		url += EvaluateIt.config.logout;
-		url += '?token=';
-		
-		
-        var me = this;
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(url);
+        }
 
         Ext.Ajax.request({
 			cors: true,
 			useDefaultXhrHeader: false,
-            url: url + sessionStorage.sessionToken,
+            url: url,
 			method: 'get',
-            //params: {
-            //    sessionToken: me.sessionToken
-            //},
-            success: function (response) {
-				
-				var logoutResponse = Ext.JSON.decode(response.responseText);
 
+            success: function (response) {
+				var logoutResponse = Ext.JSON.decode(response.responseText);
 				alert('Logoff!!' + logoutResponse.success + ' ' + logoutResponse.message);
             },
             failure: function (response) {
+                var logoutResponse = Ext.JSON.decode(response.responseText);
 				alert('Error in logoff!!' + logoutResponse.success + ' ' + logoutResponse.message);
             }
         });
@@ -167,37 +161,5 @@ Ext.define('EvaluateIt.controller.Login', {
     }
 });
 
-function test_token() {
-	
-	var url = 'http://staging.metroblooms.org/api/scoring/secure?token=' + sessionStorage.sessionToken,
-		testdate = new Date('5/17/2013 14:00'),
-		diff = Math.abs(new Date(sessionStorage.sessionCreatedWhen) - new Date(testdate)),
-		minutes = Math.floor((diff/1000)/60);
-	console.log('url ' + url + ' ' + minutes);
 
-
-	Ext.Ajax.request({
-		cors: true,
-		useDefaultXhrHeader: false,
-		url: url, 
-		method: 'get',
-		success: function (response) {
-
-			var tokenResponse = Ext.JSON.decode(response.responseText);
-
-			console.log('response/message... ' + tokenResponse.success + ' ' + sessionStorage.sessionToken ); 
-
-			if (tokenResponse && !tokenResponse.success) {
-				console.log('Token worked!' + response.responseText);	
-			} else {
-				console.log(tokenResponse.message);	
-			}
-		},
-		failure: function (response) {
-			console.log(response.message + ';;; ' + sessionStorage.sessionToken );
-			
-		}
-	});
-
-}
 

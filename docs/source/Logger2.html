@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.view.touchevent.Logger&#39;, {
+    extend: &#39;Ext.Container&#39;,
+    xtype: &#39;toucheventlogger&#39;,
+    
+    config: {
+        layout: &#39;fit&#39;,
+        items: [
+            {
+                xtype : &#39;toolbar&#39;,
+                docked: &#39;top&#39;,
+                ui    : &#39;light&#39;,
+                title : &#39;Event Log&#39;
+            },
+            {
+                id: &#39;logger&#39;,
+                html: &#39;&lt;span&gt;Try using gestures on the area to the right to see how events are fired.&lt;/span&gt;&#39;,
+                scrollable: true,
+                styleHtmlContent: true
+            }
+        ]
+    },
+    
+<span id='global-method-addLog'>    /**
+</span>     * Adds a log message to the scrollable logging area, scrolls down to ensure the message is visible
+     * @param {String} log The log message
+     */
+    addLog: function(log) {
+        var logger   = Ext.getCmp(&#39;logger&#39;),
+            scroller = logger.getScrollable().getScroller();
+
+        logger.innerHtmlElement.createChild({
+            html: log
+        });
+
+        setTimeout(function() {
+            scroller.scrollTo(0, scroller.getSize().y - scroller.getContainerSize().y);
+        }, 50);
+    }
+});
+</pre>
+</body>
+</html>

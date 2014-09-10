@@ -12,9 +12,11 @@
     class Evaluation {
         comments
         dateOfEvaluation
+        datePostedToRemote
         EvaluationType evaluationType
         noLongerExists
         remoteEvaluationId
+        evaluator_id // from HttpResponse.responseText
         total() // sum over scorecard factors
     }
 
@@ -33,14 +35,17 @@
     }
 
     class EvaluationImage {
-        sourceUri
+        srcUri
     }
 
     class Evaluator {
-        emailAddress
+        // object is non-persistent in sessionStorage
+        evaluator_id
+        email
         firstName
         lastName
-        remoteEvaluatorId
+        sessionToken
+        sessionCreatedWhen
     }
 
     class Geolocation {
@@ -92,7 +97,7 @@
         other bmp
     }
 
-    Site  *--  Address : has 1
+    Site  *--*  Address : has 1
     Site  o--  Evaluation : has many >
     Site  *--  Geolocation : has 1
     Site  --|> SiteMaintainer : has many >

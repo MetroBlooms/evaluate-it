@@ -1,15 +1,31 @@
 Ext.define('EvaluateIt.model.EvaluationScorecard', {
-    extend: 'Ext.data.Model',
-    
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
-        //idProperty: 'id', // use with proxy.SQL 
-	identifier: 'uuid', // use with proxy.localstorage 
+        idProperty: 'id',
         fields: [
             {name: 'id', type: 'int'}, // pk
-            {name: 'score', type: 'int'}, // score: valid value in (0, 4)
-            {name: 'factorType', type: 'int'} // linking id for lookup
+            {name: 'noLongerExists', type: 'boolean'}, // invalid site: nothing to evaluate!
+            {name: 'design', type: 'int'},  // TODO: implement as hasMany from Evaluation (needed for adding other BMP types)
+            {name: 'varietyAndHealth', type: 'int'},
+            {name: 'visualImpact', type: 'int'},
+            {name: 'maintenance', type: 'int'},
+            {name: 'environmentalStewardship', type: 'int'},
+            {name: 'postedToRemote', type: 'int'},
+            {name: 'evaluation_id', type: 'string'}
         ],
-	belongsTo: [{ model: 'EvaluateIt.model.Evaluation', associationKey: 'evaluationId' }]
-
+        proxy: {
+            type: 'localstorage'
+        },
+        belongsTo: [
+            {
+                model: 'EvaluateIt.model.Evaluation',
+                name: 'Evaluation',
+                primaryKey: 'id',
+                foreignKey: 'evaluation_id',
+                foreignStore: 'Evaluations',
+                getterName: 'getEvaluation',
+                setterName: 'setEvaluation'
+            }
+        ]
     }
 });

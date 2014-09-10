@@ -1,3 +1,8 @@
+/**
+ *
+ * Controls writing image uri to data store
+ */
+
 Ext.define('EvaluateIt.controller.SiteImageCapture',{
     extend : 'Ext.app.Controller',
     requires: [
@@ -8,31 +13,44 @@ Ext.define('EvaluateIt.controller.SiteImageCapture',{
             myEvaluationList: 'evaluationList'
         },
         control:{
-            'siteEvaluationForm button[itemId=siteImage]' : {
+            'evaluationForm button[itemId=siteImage]' : {
                 tap : 'openCamera'
             }
         }
     },
     openCamera: function(button,eve){
-        Ext.device.Camera.capture({
-            success: this.onCaptureSuccess,
-			failure: this.onCaptureFailure,
-            scope: this,
-            quality: 50,//for testing having this at 50 does faster uploads
-            source: 'library',
-            destination: 'file'
-        });
+        //Ext.device.Camera.capture
+        navigator.camera.getPicture(
+            this.onCaptureSuccess,
+			this.onCaptureFailure,
+            {
+                quality: 10, // 10 as per http://grandiz.com/phonegap-development/phonegap-file-transfer-error-code-3-solved/
+                sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+                destinationType:  Camera.DestinationType.FILE_URI
+            }
+        );
     },
     onCaptureSuccess: function(uri) {
-        console.log('got foto:'+uri);
-        var lostor = Ext.getStore('theImageQueue');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('got foto:'+uri);
+        }
+        var lostor = Ext.getStore('theImageQueue'),
+            selectedImage = document.getElementById('selectedImage');;
         lostor.add({
             src: uri
         });
         lostor.sync();
-    },
-	onCaptureFailure: function() {
 
-		console.log('capture failure');
+        // display image in form panel
+        selectedImage.style.display = 'block';
+        selectedImage.style.maxWidth = '25%';
+        selectedImage.src = uri;
+
+    },
+	onCaptureFailure: function(message) {
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('capture failure');
+        }
+        alert('image failure:' + message)
 	}
 });

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-layout-FlexBox'>/**
+</span> * @aside guide layouts
+ * @aside video layouts
+ *
+ * AbstractBox is a superclass for the two box layouts:
+ *
+ * * {@link Ext.layout.HBox hbox}
+ * * {@link Ext.layout.VBox vbox}
+ *
+ * FlexBox itself is never used directly, but its subclasses provide flexible arrangement of child components
+ * inside a {@link Ext.Container Container}. For a full overview of layouts check out the
+ * [Layout Guide](#!/guide/layouts).
+ *
+ * ## Horizontal Box
+ *
+ * HBox allows you to easily lay out child components horizontally. It can size items based on a fixed width or a
+ * fraction of the total width available, enabling you to achieve flexible layouts that expand or contract to fill the
+ * space available.
+ *
+ * {@img ../guides/layouts/hbox.jpg}
+ *
+ * See the {@link Ext.layout.HBox HBox layout docs} for more information on using hboxes.
+ *
+ * ## Vertical Box
+ *
+ * VBox allows you to easily lay out child components verticaly. It can size items based on a fixed height or a
+ * fraction of the total height available, enabling you to achieve flexible layouts that expand or contract to fill the
+ * space available.
+ *
+ * {@img ../guides/layouts/vbox.jpg}
+ *
+ * See the {@link Ext.layout.VBox VBox layout docs} for more information on using vboxes.
+ */
+Ext.define(&#39;Ext.layout.FlexBox&#39;, {
+    extend: &#39;Ext.layout.Box&#39;,
+
+    alias: &#39;layout.box&#39;,
+
+    config: {
+<span id='Ext-layout-FlexBox-cfg-align'>        align: &#39;stretch&#39;
+</span>    },
+
+<span id='Ext-layout-FlexBox-property-layoutBaseClass'>    layoutBaseClass: &#39;x-layout-box&#39;,
+</span>
+<span id='Ext-layout-FlexBox-property-itemClass'>    itemClass: &#39;x-layout-box-item&#39;,
+</span>
+<span id='Ext-layout-FlexBox-method-setContainer'>    setContainer: function(container) {
+</span>        this.callSuper(arguments);
+
+        this.monitorSizeFlagsChange();
+    },
+
+<span id='Ext-layout-FlexBox-method-applyOrient'>    applyOrient: function(orient) {
+</span>        //&lt;debug error&gt;
+        if (orient !== &#39;horizontal&#39; &amp;&amp; orient !== &#39;vertical&#39;) {
+            Ext.Logger.error(&quot;Invalid box orient of: &#39;&quot; + orient + &quot;&#39;, must be either &#39;horizontal&#39; or &#39;vertical&#39;&quot;);
+        }
+        //&lt;/debug&gt;
+
+        return orient;
+    },
+
+<span id='Ext-layout-FlexBox-method-updateOrient'>    updateOrient: function(orient, oldOrient) {
+</span>        var container = this.container,
+            delegation = {
+                delegate: &#39;&gt; component&#39;
+            };
+
+        if (orient === &#39;horizontal&#39;) {
+            this.sizePropertyName = &#39;width&#39;;
+        }
+        else {
+            this.sizePropertyName = &#39;height&#39;;
+        }
+
+        container.innerElement.swapCls(&#39;x-&#39; + orient, &#39;x-&#39; + oldOrient);
+
+        if (oldOrient) {
+            container.un(oldOrient === &#39;horizontal&#39; ? &#39;widthchange&#39; : &#39;heightchange&#39;, &#39;onItemSizeChange&#39;, this, delegation);
+            this.redrawContainer();
+        }
+
+        container.on(orient === &#39;horizontal&#39; ? &#39;widthchange&#39; : &#39;heightchange&#39;, &#39;onItemSizeChange&#39;, this, delegation);
+    },
+
+<span id='Ext-layout-FlexBox-method-onItemInnerStateChange'>    onItemInnerStateChange: function(item, isInner) {
+</span>        this.callSuper(arguments);
+
+        var flex, size;
+
+        item.toggleCls(this.itemClass, isInner);
+
+        if (isInner) {
+            flex = item.getFlex();
+            size = item.get(this.sizePropertyName);
+
+            if (flex) {
+                this.doItemFlexChange(item, flex);
+            }
+            else if (size) {
+                this.doItemSizeChange(item, size);
+            }
+        }
+
+        this.refreshItemSizeState(item);
+    },
+
+<span id='Ext-layout-FlexBox-method-refreshItemSizeState'>    refreshItemSizeState: function(item) {
+</span>        var isInner = item.isInnerItem(),
+            container = this.container,
+            LAYOUT_HEIGHT = container.LAYOUT_HEIGHT,
+            LAYOUT_WIDTH = container.LAYOUT_WIDTH,
+            dimension = this.sizePropertyName,
+            layoutSizeFlags = 0,
+            containerSizeFlags = container.getSizeFlags();
+
+        if (isInner) {
+            layoutSizeFlags |= container.LAYOUT_STRETCHED;
+
+            if (this.getAlign() === &#39;stretch&#39;) {
+                layoutSizeFlags |= containerSizeFlags &amp; (dimension === &#39;width&#39; ? LAYOUT_HEIGHT : LAYOUT_WIDTH);
+            }
+
+            if (item.getFlex()) {
+                layoutSizeFlags |= containerSizeFlags &amp; (dimension === &#39;width&#39; ? LAYOUT_WIDTH : LAYOUT_HEIGHT);
+            }
+        }
+
+        item.setLayoutSizeFlags(layoutSizeFlags);
+    },
+
+<span id='Ext-layout-FlexBox-method-refreshAllItemSizedStates'>    refreshAllItemSizedStates: function() {
+</span>        var innerItems = this.container.innerItems,
+            i, ln, item;
+
+        for (i = 0,ln = innerItems.length; i &lt; ln; i++) {
+            item = innerItems[i];
+            this.refreshItemSizeState(item);
+        }
+    },
+
+<span id='Ext-layout-FlexBox-method-onContainerSizeFlagsChange'>    onContainerSizeFlagsChange: function() {
+</span>        this.refreshAllItemSizedStates();
+
+        this.callSuper(arguments);
+    },
+
+<span id='Ext-layout-FlexBox-method-onItemSizeChange'>    onItemSizeChange: function(item, size) {
+</span>        if (item.isInnerItem()) {
+            this.doItemSizeChange(item, size);
+        }
+    },
+
+<span id='Ext-layout-FlexBox-method-doItemSizeChange'>    doItemSizeChange: function(item, size) {
+</span>        if (size) {
+            item.setFlex(null);
+            this.redrawContainer();
+        }
+    },
+
+<span id='Ext-layout-FlexBox-method-onItemFlexChange'>    onItemFlexChange: function(item, flex) {
+</span>        if (item.isInnerItem()) {
+            this.doItemFlexChange(item, flex);
+            this.refreshItemSizeState(item);
+        }
+    },
+
+<span id='Ext-layout-FlexBox-method-doItemFlexChange'>    doItemFlexChange: function(item, flex) {
+</span>        this.setItemFlex(item, flex);
+
+        if (flex) {
+            item.set(this.sizePropertyName, null);
+        }
+        else {
+            this.redrawContainer();
+        }
+    },
+
+<span id='Ext-layout-FlexBox-method-redrawContainer'>    redrawContainer: function() {
+</span>        var container = this.container,
+            renderedTo = container.element.dom.parentNode;
+
+        if (renderedTo &amp;&amp; renderedTo.nodeType !== 11) {
+            container.innerElement.redraw();
+        }
+    },
+
+<span id='Ext-layout-FlexBox-method-setItemFlex'>    /**
+</span>     * Sets the flex of an item in this box layout.
+     * @param {Ext.Component} item The item of this layout which you want to update the flex of.
+     * @param {Number} flex The flex to set on this method
+     */
+    setItemFlex: function(item, flex) {
+        var element = item.element;
+
+        element.toggleCls(&#39;x-flexed&#39;, !!flex);
+
+        if (!flex) {
+            flex = &#39;&#39;;
+        }
+        else {
+            flex = String(flex);
+        }
+
+        if (Ext.browser.is.WebKit) {
+            element.dom.style.setProperty(&#39;-webkit-box-flex&#39;, flex, null);
+        }
+        else if (Ext.browser.is.IE) {
+            element.dom.style.setProperty(&#39;-ms-flex&#39;, flex + &#39; 0 0px&#39;, null);
+        }
+        else {
+            element.dom.style.setProperty(&#39;flex&#39;, flex + &#39; 0 0px&#39;, null);
+        }
+    },
+
+<span id='Ext-layout-FlexBox-method-convertPosition'>    convertPosition: function(position) {
+</span>        var positionMap = this.positionMap;
+
+        if (positionMap.hasOwnProperty(position)) {
+            return positionMap[position];
+        }
+
+        return position;
+    },
+
+<span id='Ext-layout-FlexBox-method-applyAlign'>    applyAlign: function(align) {
+</span>        return this.convertPosition(align);
+    },
+
+<span id='Ext-layout-FlexBox-method-updateAlign'>    updateAlign: function(align, oldAlign) {
+</span>        var container = this.container;
+
+        container.innerElement.swapCls(align, oldAlign, true, &#39;x-align&#39;);
+
+        if (oldAlign !== undefined) {
+            this.refreshAllItemSizedStates();
+        }
+    },
+
+<span id='Ext-layout-FlexBox-method-applyPack'>    applyPack: function(pack) {
+</span>        return this.convertPosition(pack);
+    },
+
+<span id='Ext-layout-FlexBox-method-updatePack'>    updatePack: function(pack, oldPack) {
+</span>        this.container.innerElement.swapCls(pack, oldPack, true, &#39;x-pack&#39;);
+    }
+});
+</pre>
+</body>
+</html>

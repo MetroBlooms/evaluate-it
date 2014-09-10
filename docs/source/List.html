@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-dataview-element-List'>/**
+</span> * @private
+*/
+Ext.define(&#39;Ext.dataview.element.List&#39;, {
+    extend: &#39;Ext.dataview.element.Container&#39;,
+
+<span id='Ext-dataview-element-List-method-updateBaseCls'>    updateBaseCls: function(newBaseCls) {
+</span>        var me = this;
+
+        me.itemClsShortCache = newBaseCls + &#39;-item&#39;;
+
+        me.headerClsShortCache = newBaseCls + &#39;-header&#39;;
+        me.headerClsCache = &#39;.&#39; + me.headerClsShortCache;
+
+        me.headerItemClsShortCache = newBaseCls + &#39;-header-item&#39;;
+
+        me.footerClsShortCache = newBaseCls + &#39;-footer-item&#39;;
+        me.footerClsCache = &#39;.&#39; + me.footerClsShortCache;
+
+        me.labelClsShortCache = newBaseCls + &#39;-item-label&#39;;
+        me.labelClsCache = &#39;.&#39; + me.labelClsShortCache;
+
+        me.disclosureClsShortCache = newBaseCls + &#39;-disclosure&#39;;
+        me.disclosureClsCache = &#39;.&#39; + me.disclosureClsShortCache;
+
+        me.iconClsShortCache = newBaseCls + &#39;-icon&#39;;
+        me.iconClsCache = &#39;.&#39; + me.iconClsShortCache;
+
+        this.callParent(arguments);
+    },
+
+<span id='Ext-dataview-element-List-property-hiddenDisplayCache'>    hiddenDisplayCache: Ext.baseCSSPrefix + &#39;hidden-display&#39;,
+</span>
+<span id='Ext-dataview-element-List-method-getItemElementConfig'>    getItemElementConfig: function(index, data) {
+</span>        var me = this,
+            dataview = me.dataview,
+            itemCls = dataview.getItemCls(),
+            cls = me.itemClsShortCache,
+            config, iconSrc;
+
+        if (itemCls) {
+            cls += &#39; &#39; + itemCls;
+        }
+
+        config = {
+            cls: cls,
+            children: [{
+                cls: me.labelClsShortCache,
+                html: dataview.getItemTpl().apply(data)
+            }]
+        };
+
+        if (dataview.getIcon()) {
+            iconSrc = data.iconSrc;
+            config.children.push({
+                cls: me.iconClsShortCache,
+                style: &#39;background-image: &#39; + iconSrc ? &#39;url(&quot;&#39; + newSrc + &#39;&quot;)&#39; : &#39;&#39;
+            });
+        }
+
+        if (dataview.getOnItemDisclosure()) {
+            config.children.push({
+                cls: me.disclosureClsShortCache + &#39; &#39; + ((data[dataview.getDisclosureProperty()] === false) ? me.hiddenDisplayCache : &#39;&#39;)
+            });
+        }
+        return config;
+    },
+
+<span id='Ext-dataview-element-List-method-updateListItem'>    updateListItem: function(record, item) {
+</span>        var me = this,
+            dataview = me.dataview,
+            extItem = Ext.fly(item),
+            innerItem = extItem.down(me.labelClsCache, true),
+            data = dataview.prepareData(record.getData(true), dataview.getStore().indexOf(record), record),
+            disclosureProperty = dataview.getDisclosureProperty(),
+            hasDisclosureProperty = data &amp;&amp; data.hasOwnProperty(disclosureProperty),
+            iconSrc = data &amp;&amp; data.hasOwnProperty(&#39;iconSrc&#39;),
+            disclosureEl, iconEl;
+
+        innerItem.innerHTML = dataview.getItemTpl().apply(data);
+
+        if (hasDisclosureProperty) {
+            disclosureEl = extItem.down(me.disclosureClsCache);
+            disclosureEl[data[disclosureProperty] === false ? &#39;addCls&#39; : &#39;removeCls&#39;](me.hiddenDisplayCache);
+        }
+
+        if (dataview.getIcon()) {
+            iconEl = extItem.down(me.iconClsCache, true);
+            iconEl.style.backgroundImage = iconSrc ? &#39;url(&quot;&#39; + iconSrc + &#39;&quot;)&#39; : &#39;&#39;;
+        }
+    },
+
+<span id='Ext-dataview-element-List-method-doRemoveHeaders'>    doRemoveHeaders: function() {
+</span>        var me = this,
+            headerClsShortCache = me.headerItemClsShortCache,
+            existingHeaders = me.element.query(me.headerClsCache),
+            existingHeadersLn = existingHeaders.length,
+            i = 0,
+            item;
+
+        for (; i &lt; existingHeadersLn; i++) {
+            item = existingHeaders[i];
+            Ext.fly(item.parentNode).removeCls(headerClsShortCache);
+            Ext.get(item).destroy();
+        }
+    },
+
+<span id='Ext-dataview-element-List-method-doRemoveFooterCls'>    doRemoveFooterCls: function() {
+</span>        var me = this,
+            footerClsShortCache = me.footerClsShortCache,
+            existingFooters = me.element.query(me.footerClsCache),
+            existingFootersLn = existingFooters.length,
+            i = 0;
+
+        for (; i &lt; existingFootersLn; i++) {
+            Ext.fly(existingFooters[i]).removeCls(footerClsShortCache);
+        }
+    },
+
+<span id='Ext-dataview-element-List-method-doAddHeader'>    doAddHeader: function(item, html) {
+</span>        item = Ext.fly(item);
+        if (html) {
+            item.insertFirst(Ext.Element.create({
+                cls: this.headerClsShortCache,
+                html: html
+            }));
+        }
+        item.addCls(this.headerItemClsShortCache);
+    },
+
+<span id='Ext-dataview-element-List-method-destroy'>    destroy: function() {
+</span>        this.doRemoveHeaders();
+        this.callParent();
+    }
+});
+</pre>
+</body>
+</html>

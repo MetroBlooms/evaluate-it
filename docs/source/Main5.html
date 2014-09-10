@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;EvaluateIt.view.phone.Main&#39;, {
+    extend: &#39;Ext.dataview.NestedList&#39;,
+    requires: [&#39;Ext.TitleBar&#39;],
+
+    id: &#39;mainNestedList&#39;,
+
+    config: {
+        fullscreen: true,
+        title: &#39;EvaluateIt!&#39;,
+        useTitleAsBackText: false,
+        layout: {
+            animation: {
+                duration: 250,
+                easing: &#39;ease-in-out&#39;
+            }
+        },
+
+        store: &#39;Options&#39;,
+
+        toolbar: {
+            id: &#39;mainNavigationBar&#39;,
+            xtype : &#39;titlebar&#39;,
+            docked: &#39;top&#39;,
+            title : &#39;EvaluateIt!&#39;
+
+        }
+    }
+});
+</pre>
+</body>
+</html>

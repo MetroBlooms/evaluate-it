@@ -19,7 +19,9 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
         if (record.isLeaf()) {
 			
 			// append category parameter for use in selection of proper view to render in route through use of filter 
-			console.log('url to route: ' + ' ' + record.toUrl() + '\/' + record.get('category'));
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('url to route: ' + ' ' + record.toUrl() + '\/' + record.get('category'));
+            }
             record =  record.toUrl() + '\/' + record.get('category'); 			
 			
 			// call route with model instance name and parameters
@@ -34,7 +36,7 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
      */
     showView: function(item) {
         var nav  = this.getNav(),
-			title  = item.get('text'),
+			mode  =  EvaluateIt.config.mode,
             view = this.createView(item),
             main = this.getMain(),
             anim = item.get('animation'),
@@ -61,9 +63,17 @@ Ext.define('EvaluateIt.controller.tablet.Main', {
 
 	
 		//var title = item.get('text') + ' - ' + name;	
-		console.log('title: ' + title);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('title: ' + mode);
+        }
 
-        this.getToolbar().setTitle(item.get('text'));
+        if (mode === 'live') {
+            mode = '';
+        }
+        if (mode === 'test') {
+            mode = '(in test mode)';
+        }
+        this.getToolbar().setTitle(item.get('text') + ' ' + mode);
     },
 
     showMenuById: Ext.emptyFn

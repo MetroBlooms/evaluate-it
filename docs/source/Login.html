@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-controller-Login'>/**
+</span> * Controller for handling session tokens
+ * **See full documented usage** [HERE][1];
+ * [1]: http://miamicoder.com/2012/adding-a-login-screen-to-a-sencha-touch-application-part-2/
+ */
+Ext.define(&#39;EvaluateIt.controller.Login&#39;, {
+    extend: &#39;Ext.app.Controller&#39;,
+    config: {
+<span id='EvaluateIt-controller-Login-cfg-refs'>        refs: {
+</span>            loginView: &#39;loginview&#39;,
+            pushView: &#39;pushview&#39;,
+			pullView: &#39;pullview&#39; 
+        },
+<span id='EvaluateIt-controller-Login-cfg-control'>        control: {
+</span>            loginView: {
+                signInCommand: &#39;onSignInCommand&#39;
+            },
+			pushView: { 
+                onSignOffCommand: &#39;onSignOffCommand&#39;
+            },
+			pullView: { 
+                onSignOffCommand: &#39;onSignOffCommand&#39;
+            }
+
+        }
+    },
+
+<span id='EvaluateIt-controller-Login-property-sessionToken'>    // Session token
+</span>
+    sessionToken: null,
+
+<span id='EvaluateIt-controller-Login-method-getSlideLeftTransition'>    // Transitions
+</span>    getSlideLeftTransition: function () {
+        return { type: &#39;slide&#39;, direction: &#39;left&#39; };
+    },
+
+<span id='EvaluateIt-controller-Login-method-getSlideRightTransition'>    getSlideRightTransition: function () {
+</span>        return { type: &#39;slide&#39;, direction: &#39;right&#39; };
+    },
+
+<span id='EvaluateIt-controller-Login-method-onSignInCommand'>    onSignInCommand: function (view, username, password) {
+</span>
+        console.log(&#39;Username: &#39; + username + &#39;\n&#39; + &#39;Password: &#39; + password);
+
+        var me = this,
+            loginView = me.getLoginView(),
+			url =  EvaluateIt.config.protocol;
+
+		// select mode of API access
+		if (EvaluateIt.config.mode === &#39;test&#39;) {
+			url += EvaluateIt.config.test;
+		}
+		if (EvaluateIt.config.mode === &#39;live&#39;) {
+			url += EvaluateIt.config.production;
+		}
+
+		url += EvaluateIt.config.domain;
+		url += EvaluateIt.config.login;
+
+		console.log(&#39;url: &#39; + url);
+
+        if (username.length === 0 || password.length === 0) {
+
+            loginView.showSignInFailedMessage(&#39;Please enter your username and password.&#39;);
+            return;
+        }
+
+        loginView.setMasked({
+            xtype: &#39;loadmask&#39;,
+            message: &#39;Signing In...&#39;
+        });
+
+        Ext.Ajax.request({
+
+			cors: true,
+			useDefaultXhrHeader: false,
+            url: url,
+			method: &#39;post&#39;,
+            params: {
+                user: username,
+                pwd: password
+            },
+            success: function (response) {
+
+                var loginResponse = Ext.JSON.decode(response.responseText);
+
+				console.log(&#39;response/message &#39; + loginResponse.success + &#39; &#39; + loginResponse.message + &#39; &#39; + loginResponse.sessionToken + &#39; &#39; + loginResponse.evaluator_id + &#39; &#39; + loginResponse.firstname + &#39; &#39; + loginResponse.lastname + &#39; &#39; + loginResponse.email); 
+
+				alert(&#39;Welcome &#39; + &#39; &#39; + loginResponse.firstname + &#39; &#39; + loginResponse.lastname + &#39;!&#39;);
+
+                if (loginResponse.success) {
+                    // The server will send a token that can be used throughout the app to confirm that the user is authenticated.
+                    me.sessionToken = loginResponse.sessionToken;
+					// TODO: write to sessionStorage
+					sessionStorage.clear();
+					sessionStorage.sessionToken =  me.sessionToken;
+					sessionStorage.evaluator_id =  loginResponse.evaluator_id;
+					sessionStorage.firstname =  loginResponse.firstname;
+					sessionStorage.lastname =  loginResponse.lastname;
+					sessionStorage.email =  loginResponse.email;
+	
+					sessionStorage.sessionCreatedWhen = new Date(); 
+					console.log(&#39;sessionToken&#39; + sessionStorage.sessionToken + &#39; &#39; + loginResponse.message);
+					me.signInSuccess(loginResponse.message);     //Just simulating success.
+                } else {
+					console.log(&#39;sessionToken...&#39; + sessionStorage.sessionToken);
+                    me.signInFailure(loginResponse.message);
+                }
+            },
+            failure: function (response) {
+                me.sessionToken = null;
+                me.signInFailure(&#39;Login failed. Please try again later.&#39;);
+            }
+        });
+    },
+
+<span id='EvaluateIt-controller-Login-method-signInSuccess'>    signInSuccess: function (message) {
+</span>        console.log(&#39;Signed in.&#39;);
+        var loginView = this.getLoginView();
+		loginView.showSignInSucceededMessage(message);
+        loginView.setMasked(false);
+
+    },
+
+<span id='EvaluateIt-controller-Login-method-signInFailure'>    signInFailure: function (message) {
+</span>		console.log(&#39;message&#39; + message);
+        var loginView = this.getLoginView();
+        loginView.showSignInFailedMessage(message);
+        loginView.setMasked(false);
+    },
+
+<span id='EvaluateIt-controller-Login-method-onSignOffCommand'>    onSignOffCommand: function () {
+</span>		var	url =  EvaluateIt.config.protocol;
+
+		// select mode of API access
+		if (EvaluateIt.config.mode === &#39;test&#39;) {
+			url += EvaluateIt.config.test;
+		}
+		if (EvaluateIt.config.mode === &#39;live&#39;) {
+			url += EvaluateIt.config.production;
+		}
+
+		url += EvaluateIt.config.domain;
+		url += EvaluateIt.config.logout;
+		url += &#39;?token=&#39;;
+		
+		
+        var me = this;
+
+        Ext.Ajax.request({
+			cors: true,
+			useDefaultXhrHeader: false,
+            url: url + sessionStorage.sessionToken,
+			method: &#39;get&#39;,
+            //params: {
+            //    sessionToken: me.sessionToken
+            //},
+            success: function (response) {
+				
+				var logoutResponse = Ext.JSON.decode(response.responseText);
+
+				alert(&#39;Logoff!!&#39; + logoutResponse.success + &#39; &#39; + logoutResponse.message);
+            },
+            failure: function (response) {
+				alert(&#39;Error in logoff!!&#39; + logoutResponse.success + &#39; &#39; + logoutResponse.message);
+            }
+        });
+
+    }
+});
+
+function test_token() {
+	
+	var url = &#39;http://staging.metroblooms.org/api/scoring/secure?token=&#39; + sessionStorage.sessionToken,
+		testdate = new Date(&#39;5/17/2013 14:00&#39;),
+		diff = Math.abs(new Date(sessionStorage.sessionCreatedWhen) - new Date(testdate)),
+		minutes = Math.floor((diff/1000)/60);
+	console.log(&#39;url &#39; + url + &#39; &#39; + minutes);
+
+
+	Ext.Ajax.request({
+		cors: true,
+		useDefaultXhrHeader: false,
+		url: url, 
+		method: &#39;get&#39;,
+		success: function (response) {
+
+			var tokenResponse = Ext.JSON.decode(response.responseText);
+
+			console.log(&#39;response/message... &#39; + tokenResponse.success + &#39; &#39; + sessionStorage.sessionToken ); 
+
+			if (tokenResponse &amp;&amp; !tokenResponse.success) {
+				console.log(&#39;Token worked!&#39; + response.responseText);	
+			} else {
+				console.log(tokenResponse.message);	
+			}
+		},
+		failure: function (response) {
+			console.log(response.message + &#39;;;; &#39; + sessionStorage.sessionToken );
+			
+		}
+	});
+
+}
+
+</pre>
+</body>
+</html>

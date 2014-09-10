@@ -1,19 +1,30 @@
 /**
- * Widget, with template to render displayed sites to evaluate 
+ * Widget with template to render displayed sites to evaluate
 */
 
 Ext.define('EvaluateIt.view.EvaluationList', {
-    extend: 'Ext.dataview.List', //'Ext.tab.Panel',
+    extend: 'Ext.List',//'Ext.dataview.List',
 	alias : 'widget.evaluationList',
     config: {
 		width: Ext.os.deviceType == 'Phone' ? null : 300,
 		height: Ext.os.deviceType == 'Phone' ? null : 500,
 		xtype: 'list',
-		store: 'SiteEvaluations', //getRange(0, 9),
+		store: 'Evaluations',
+        /**
+         * Template to display list
+         */
 		itemTpl: [
-			'<div><strong>Address: {address}</strong></div> '
+            '<div>',
+            '<strong>Address: {Site.Address.address}</strong>',
+            '</div> '
 		],
-		variableHeights: false
+        listeners: {
+            select: function(list) {
+                setTimeout(function() {list.deselectAll();},1); // With the timeout we allow the select to finish setting the selected class before deselecting
+                return false; // prevent selection
+            }
+        },
+       	variableHeights: false
     }
 
 }); 

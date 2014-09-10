@@ -3,8 +3,8 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
 
 	config: {
   		profile: Ext.os.deviceType.toLowerCase(),
-  		stores : ['SiteEvaluations'],
-  		models : ['SiteEvaluation'],
+  		stores : ['Evaluations','EvaluationAwards','Sites','Addresses'],
+  		models : ['Evaluation','EvaluationAward','Site','Address'],
 		refs: {
    			myEvaluationAwardList: 'evaluationAwardList'
   		},
@@ -15,46 +15,76 @@ Ext.define('EvaluateIt.controller.EvaluationAward', {
 			},
 			'evaluationAwardForm button[itemId=save]' : {
 				tap : 'onSaveEvaluationAward' 
-			}
+			},
+            'evaluationAwardForm button[itemId=cancel]' : {
+                tap : 'onCancelEvaluationAward'
+            }
 		}	  
 
  	},
 
 	onActivate: function() {
-  		console.log('Main container is active');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Main container is active');
+        }
  	},
 
+    onCancelEvaluationAward: function(button) {
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Button Click for Cancel');
+        }
+        var form = button.up('panel');
+        form.hide();
+        form.destroy();
+    },
+
 	onSaveEvaluationAward: function(button) {
-		console.log('Button Click for Save');
-		var form = button.up('panel');
-		//get the record 
-		var record = form.getRecord();
-		//get the form values
-		var values = form.getValues();
-		//if a new siteEvaluation
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Button Click for Save');
+            //console.log(this.$className);
+            console.log('Button Click for Save');
+        }
+        var form = button.up('panel'),
+        //get the model
+            record = form.getRecord(),
+        //get the form values
+            values = form.getValues( false, false, false, true );
+
 		if(!record){
-			var newRecord = new EvaluateIt.model.SiteEvaluation(values);
-			Ext.getStore('SiteEvaluations').add(newRecord);
+			// something went horribly wrong!
 		}
 		//existing siteEvaluation
 		else {
-			record.set(values);
-		}
-		form.hide();
-		//save the data to the Web local Storage
-		Ext.getStore('SiteEvaluations').sync();
+            if (EvaluateIt.config.mode === 'test') {
+                console.log(record.getData(true)); // to see the record
+            }
+            record.setFlattenedData(values);  // persist the form data back to the record
+            if (EvaluateIt.config.mode === 'test') {
+                console.log(record.getAssociatedData(true));
+            } // to see the record associations
+            record.save();
+        }
+        form.hide();
 
 	},
 
 	onSelectEvaluationAward: function(view, index, target, record, event) {
-		console.log('Selected a Award from the list');
-		var evaluationAwardForm = Ext.Viewport.down('evaluationAwardForm');
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Selected a Award from the list');
+        }
+        var evaluationAwardForm = Ext.widget('evaluationAwardForm');
 
-		if(!evaluationAwardForm){
-			evaluationAwardForm = Ext.widget('evaluationAwardForm');
-		}	 
-		evaluationAwardForm.setRecord(record);
-		evaluationAwardForm.showBy(target);
-	}
+        evaluationAwardForm.setRecord(record);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log(record.$className + ' ' + record.getId())
+        }
+
+        record.get();  // This will instantiate a missing Address hasOne if not already in the data or do nothing if there is one
+        evaluationAwardForm.setValues(record.getFlattenedData(true));
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Award hasOne hierarchy: ' +  Ext.encode(record.getFlattenedData( true )));
+        }
+        evaluationAwardForm.showBy(target);
+    }
 
 });

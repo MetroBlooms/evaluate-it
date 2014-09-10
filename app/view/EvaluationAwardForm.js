@@ -1,5 +1,10 @@
-// TODO: add remaining evaluation eementss (based on requirements)
-
+/**
+ * Form panel view for selecting evaluation award
+ * Binds to model and store in EvaluateIt.controller.EvaluationAward
+ *
+ *
+ * TODO: set height/width for tablet, rename alias, etc. to fit normalized model
+ */
 Ext.define('EvaluateIt.view.EvaluationAwardForm', {
 	extend: 'Ext.form.Panel',
 	alias : 'widget.evaluationAwardForm',
@@ -12,18 +17,17 @@ Ext.define('EvaluateIt.view.EvaluationAwardForm', {
     ],
 	config: {
 	 
-	// We give it a left and top property to make it floating by default
-		left: 0,
+
+         // We give it a left and top property to make it floating by default
+       	left: 0,
 		top: 0,
 
-		// Make it modal so you can click the mask to hide the overlay
-		modal: true,
+        //Make it modal so you can click the mask to hide the overlay
+       	modal: true,
 		hideOnMaskTap: true,
 
-		// Set the width and height of the panel
-		//width: 400,
-		//height: 330,
-		width: Ext.os.deviceType == 'Phone' ?  screen.width : 350,
+        // Set the width and height of the panel
+       	width: Ext.os.deviceType == 'Phone' ?  screen.width : 350,
 		height: Ext.os.deviceType == 'Phone' ?  screen.height : 500,
 		scrollable: true,
 	 	layout: {
@@ -35,12 +39,10 @@ Ext.define('EvaluateIt.view.EvaluationAwardForm', {
 			labelWrap: true
 		},
 		items: [
-			{	
-       			xtype: 'textfield',
-		   		name: 'address',
-		   		readOnly: true 
-			},   
-			{
+
+            // Awards given as per evaluation rules on instrument
+            // TODO: create enumeration
+         	{
 				xtype: 'selectfield',
 				itemId: 'awardId',
 				name: 'awardId',
@@ -70,7 +72,12 @@ Ext.define('EvaluateIt.view.EvaluationAwardForm', {
 				xtype: 'button',
 				itemId: 'save',
 				text: 'Save'
-			}
+			},
+            {
+                xtype: 'button',
+                itemId: 'cancel',
+                text: 'Cancel'
+            }
             
         ]
     }

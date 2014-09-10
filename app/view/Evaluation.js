@@ -1,9 +1,12 @@
 /**
- * Create a list of sites to evaluate.
- * First create a SiteEvaluation model with defined fields, then create a store to contain
- * the data, finally create the list itself, which gets its filtered data (on category = 'evaluations' by regex for existing address in Main.js) from the store
+ * Create a list of sites that could evaluated.
+ * First create a Site model with defined fields,
+ * then create a store to contain the data,
+ * finally create the list itself using an xtype widget (see EvaluateIt.view.EvaluationList),
+ * which gets its filtered data
+ * (on category = 'evaluations' by regex for existing address in EvaluateIt.controller.Main) from the store
+ *
  */
-
 Ext.define('EvaluateIt.view.Evaluation', {
 		extend: 'Ext.Container',
       	fullscreen: true,
@@ -16,7 +19,7 @@ Ext.define('EvaluateIt.view.Evaluation', {
 				},
 				{
 					flex: 1,
-					xtype: 'evaluationList' //widget reference to EvaluateIt.view.EvaluationList
+                   	xtype: 'evaluationList' //widget reference to EvaluateIt.view.EvaluationList
 
 				}
 			]

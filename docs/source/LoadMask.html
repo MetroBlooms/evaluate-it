@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-LoadMask'>/**
+</span> * A simple class used to mask any {@link Ext.Container}.
+ *
+ * This should rarely be used directly, instead look at the {@link Ext.Container#masked} configuration.
+ *
+ * ## Example
+ *
+ *     @example miniphone
+ *     Ext.Viewport.add({
+ *         masked: {
+ *            xtype: &#39;loadmask&#39;
+ *         }
+ *     });
+ *
+ * You can customize the loading {@link #message} and whether or not you want to show the {@link #indicator}:
+ *
+ *     @example miniphone
+ *     Ext.Viewport.add({
+ *         masked: {
+ *            xtype: &#39;loadmask&#39;,
+ *            message: &#39;A message..&#39;,
+ *            indicator: false
+ *         }
+ *     });
+ *
+ */
+Ext.define(&#39;Ext.LoadMask&#39;, {
+    extend: &#39;Ext.Mask&#39;,
+    xtype: &#39;loadmask&#39;,
+
+    config: {
+<span id='Ext-LoadMask-cfg-message'>        /**
+</span>         * @cfg {String} message
+         * The text to display in a centered loading message box.
+         * @accessor
+         */
+        message: &#39;Loading...&#39;,
+
+<span id='Ext-LoadMask-cfg-cls'>        /**
+</span>         * @cfg {String} cls
+         * The CSS Class for this component
+         * @accessor
+         */
+        cls: Ext.baseCSSPrefix + &#39;loading-mask&#39;,
+
+<span id='Ext-LoadMask-cfg-messageCls'>        /**
+</span>         * @cfg {String} messageCls
+         * The CSS class to apply to the loading message element.
+         * @accessor
+         */
+        messageCls: Ext.baseCSSPrefix + &#39;mask-message&#39;,
+
+<span id='Ext-LoadMask-cfg-indicator'>        /**
+</span>         * @cfg {Boolean} indicator
+         * True to show the loading indicator on this {@link Ext.LoadMask}.
+         * @accessor
+         */
+        indicator: true
+    },
+
+<span id='Ext-LoadMask-method-getTemplate'>    getTemplate: function() {
+</span>        var prefix = Ext.baseCSSPrefix;
+
+        return [
+            {
+                //it needs an inner so it can be centered within the mask, and have a background
+                reference: &#39;innerElement&#39;,
+                cls: prefix + &#39;mask-inner&#39;,
+                children: [
+                    //the elements required for the CSS loading {@link #indicator}
+                    {
+                        reference: &#39;indicatorElement&#39;,
+                        cls: prefix + &#39;loading-spinner-outer&#39;,
+                        children: [
+                            {
+                                cls: prefix + &#39;loading-spinner&#39;,
+                                children: [
+                                    { tag: &#39;span&#39;, cls: prefix + &#39;loading-top&#39; },
+                                    { tag: &#39;span&#39;, cls: prefix + &#39;loading-right&#39; },
+                                    { tag: &#39;span&#39;, cls: prefix + &#39;loading-bottom&#39; },
+                                    { tag: &#39;span&#39;, cls: prefix + &#39;loading-left&#39; }
+                                ]
+                            }
+                        ]
+                    },
+                    //the element used to display the {@link #message}
+                    {
+                        reference: &#39;messageElement&#39;
+                    }
+                ]
+            }
+        ];
+    },
+
+<span id='Ext-LoadMask-method-updateMessage'>    /**
+</span>     * Updates the message element with the new value of the {@link #message} configuration
+     * @private
+     */
+    updateMessage: function(newMessage) {
+        var cls = Ext.baseCSSPrefix + &#39;has-message&#39;;
+
+        if (newMessage) {
+            this.addCls(cls);
+        } else {
+            this.removeCls(cls);
+        }
+
+        this.messageElement.setHtml(newMessage);
+    },
+
+<span id='Ext-LoadMask-method-updateMessageCls'>    /**
+</span>     * Replaces the cls of the message element with the value of the {@link #messageCls} configuration.
+     * @private
+     */
+    updateMessageCls: function(newMessageCls, oldMessageCls) {
+        this.messageElement.replaceCls(oldMessageCls, newMessageCls);
+    },
+
+<span id='Ext-LoadMask-method-updateIndicator'>    /**
+</span>     * Shows or hides the loading indicator when the {@link #indicator} configuration is changed.
+     * @private
+     */
+    updateIndicator: function(newIndicator) {
+        this[newIndicator ? &#39;removeCls&#39; : &#39;addCls&#39;](Ext.baseCSSPrefix + &#39;indicator-hidden&#39;);
+    }
+
+}, function() {
+    //&lt;deprecated product=touch since=2.0&gt;
+    this.override({
+        constructor: function(config, other) {
+            if (typeof other !== &quot;undefined&quot;) {
+                config = other;
+
+                Ext.Logger.deprecate(&quot;You no longer need to pass an element to create a Ext.LoadMask. &quot; +
+                    &quot;It is a component and can be shown using the Ext.Container.masked configuration.&quot;, this);
+            }
+
+            if (config) {
+<span id='Ext-LoadMask-cfg-msg'>                /**
+</span>                 * @member Ext.LoadMask
+                 * @cfg {String} msg The message to display on the {@link Ext.LoadMask}
+                 * @deprecated 2.0.0 Please use the {@link #message} configuration
+                 */
+                if (config.hasOwnProperty(&#39;msg&#39;)) {
+                    config.message = config.msg;
+                    Ext.Logger.deprecate(&quot;&#39;msg&#39; config is deprecated, please use &#39;message&#39; config instead&quot;, this);
+                    delete config.msg;
+                }
+
+<span id='Ext-LoadMask-cfg-msgCls'>                /**
+</span>                 * @member Ext.LoadMask
+                 * @cfg {String} msgCls The message cls used on the element which displays the {@link #message}
+                 * @deprecated 2.0.0 Please use the {@link #messageCls} configuration
+                 */
+                if (config.hasOwnProperty(&#39;msgCls&#39;)) {
+                    config.messageCls = config.msgCls;
+                    Ext.Logger.deprecate(&quot;&#39;msgCls&#39; config is deprecated, please use &#39;messageCls&#39; config instead&quot;, this);
+                    delete config.msgCls;
+                }
+
+<span id='Ext-LoadMask-cfg-store'>                /**
+</span>                 * @cfg {Ext.data.Store} store
+                 * Optional Store to which the mask is bound. The mask is displayed when a load request is issued, and
+                 * hidden on either load success, or load fail.
+                 * @removed 2.0.0 You can no longer bind a store to a {@link Ext.LoadMask}
+                 */
+                if (config.hasOwnProperty(&#39;store&#39;)) {
+                    Ext.Logger.deprecate(&quot;&#39;store&#39; config has been removed. You can no longer bind a store to a Ext.LoadMask&quot;, this);
+                    delete config.store;
+                }
+            }
+
+            this.callParent([config]);
+        },
+
+<span id='Ext-LoadMask-method-bindStore'>        /**
+</span>         * Changes the data store bound to this LoadMask.
+         * @param {Ext.data.Store} store The store to bind to this LoadMask
+         * @removed 2.0.0 You can no longer bind a store to a {@link Ext.LoadMask}.
+         */
+        bindStore: function() {
+            Ext.Logger.deprecate(&quot;You can no longer bind a store to a Ext.LoadMask&quot;, this);
+        }
+    });
+    //&lt;/deprecated&gt;
+});
+</pre>
+</body>
+</html>

@@ -2,7 +2,7 @@ Ext.define('EvaluateIt.store.ImageQueue',{
 	extend: 'Ext.data.Store',
 	xtype:'imagesqueue',
 	requires:['Ext.data.proxy.LocalStorage'],
-config: {
+    config: {
 		fields:['src'],
 		storeId:'theImageQueue',
 		autoLoad:true,

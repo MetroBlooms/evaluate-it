@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-plugin-SortableList'>/**
+</span> * @class Ext.plugin.SortableList
+ * @extends Ext.Component
+ * Description
+ */
+Ext.define(&#39;Ext.plugin.SortableList&#39;, {
+    extend: &#39;Ext.Component&#39;,
+
+    alias: &#39;plugin.sortablelist&#39;,
+
+    mixins: [&#39;Ext.mixin.Bindable&#39;],
+
+    config: {
+<span id='Ext-plugin-SortableList-cfg-list'>        list: null,
+</span><span id='Ext-plugin-SortableList-cfg-handleSelector'>        handleSelector: &#39;.&#39; + Ext.baseCSSPrefix + &#39;list-sortablehandle&#39;
+</span>    },
+
+<span id='Ext-plugin-SortableList-method-init'>    init: function(list) {
+</span>        this.setList(list);
+    },
+
+<span id='Ext-plugin-SortableList-method-updateList'>    updateList: function(list) {
+</span>        if (list) {
+            if (list.initialized) {
+                this.attachListeners();
+            }
+            else {
+                list.on({
+                    initialize: &#39;attachListeners&#39;,
+                    scope: this,
+                    single: true
+                });
+            }
+        }
+    },
+
+<span id='Ext-plugin-SortableList-method-attachListeners'>    attachListeners: function() {
+</span>        var list = this.getList(),
+            scrollerElement = list.getScrollable().getScroller().getContainer();
+
+        this.scrollerElement = scrollerElement;
+
+        scrollerElement.onBefore({
+            dragstart: &#39;onScrollerDragStart&#39;,
+            scope: this
+        });
+    },
+
+<span id='Ext-plugin-SortableList-method-onScrollerDragStart'>    onScrollerDragStart: function(e, target) {
+</span>        if (Ext.DomQuery.is(target, this.getHandleSelector())) {
+            if (!this.animating) {
+                this.onDragStart(e, target);
+            }
+            return false;
+        }
+    },
+
+<span id='Ext-plugin-SortableList-method-onDragStart'>    onDragStart: function(e) {
+</span>        var row = Ext.getCmp(e.getTarget(&#39;.&#39; + Ext.baseCSSPrefix + &#39;list-item&#39;).id),
+            list = this.getList(),
+            store = list.getStore();
+
+        this.scrollerElement.on({
+            drag: &#39;onDrag&#39;,
+            dragend: &#39;onDragEnd&#39;,
+            scope: this
+        });
+
+        this.positionMap = list.getItemMap();
+        this.listStore = store;
+        this.previousIndexDistance = 0;
+
+        this.dragRow = row;
+        this.dragRecord = row.getRecord();
+
+        this.dragRowIndex = this.currentDragRowIndex = row.$dataIndex;
+        this.dragRowHeight = this.positionMap.getItemHeight(this.dragRowIndex);
+
+        if (list.getInfinite()) {
+            this.startTranslate = this.positionMap.map[this.dragRowIndex];
+        } else {
+            row.translate(0, 0);
+            this.startTranslate = 0;
+        }
+
+        row.addCls(Ext.baseCSSPrefix + &#39;list-item-dragging&#39;);
+    },
+
+<span id='Ext-plugin-SortableList-method-onDrag'>    onDrag: function(e) {
+</span>        var list = this.getList(),
+            listItems = list.listItems,
+            collection = list.getStore().data,
+            dragRow = this.dragRow,
+            dragRecordKey = collection.getKey(dragRow.getRecord()),
+            listItemInfo = list.getListItemInfo(),
+            positionMap = this.positionMap,
+            distance = 0,
+            i, item, ln, targetItem, targetIndex, itemIndex,
+            swapIndex, swapPosition, record, swapKey, draggingUp;
+
+        this.dragRowPosition = this.startTranslate + e.deltaY;
+        dragRow.translate(0, this.dragRowPosition);
+
+        targetIndex = positionMap.findIndex(this.dragRowPosition + (this.dragRowHeight / 2));
+        targetItem = list.getItemAt(targetIndex);
+
+        if (targetItem) {
+            distance = targetIndex - this.currentDragRowIndex;
+
+            if (distance !== 0) {
+                draggingUp = (distance &lt; 0);
+
+                for (i = 0, ln = Math.abs(distance); i &lt; ln; i++) {
+                    if (draggingUp) {
+                        swapIndex = this.currentDragRowIndex - i;
+                        item = list.getItemAt(swapIndex - 1);
+                    } else {
+                        swapIndex = this.currentDragRowIndex + i;
+                        item = list.getItemAt(swapIndex + 1);
+                    }
+
+                    swapPosition = positionMap.map[swapIndex];
+
+                    item.translate(0, swapPosition);
+
+                    record = item.getRecord();
+                    swapKey = collection.getKey(record);
+
+                    Ext.Array.remove(collection.items, record);
+                    Ext.Array.remove(collection.all, record);
+                    collection.items.splice(swapIndex, 0, record);
+                    collection.all.splice(swapIndex, 0, record);
+                    collection.indices[dragRecordKey] = collection.indices[swapKey];
+                    collection.indices[swapKey] = swapIndex;
+
+                    list.updateListItem(item, swapIndex, listItemInfo);
+                    item.$position = swapPosition;
+                }
+
+                itemIndex = listItems.indexOf(dragRow);
+                Ext.Array.remove(listItems, dragRow);
+                listItems.splice(itemIndex + distance, 0, dragRow);
+
+                dragRow.$dataIndex = targetIndex;
+                dragRow.$position = positionMap.map[targetIndex];
+
+                this.currentDragRowIndex = targetIndex;
+            }
+        }
+    },
+
+<span id='Ext-plugin-SortableList-method-onDragEnd'>    onDragEnd: function() {
+</span>        var me = this,
+            row = this.dragRow,
+            list = this.getList(),
+            listItemInfo = list.getListItemInfo(),
+            position = row.$position;
+
+        this.scrollerElement.un({
+            drag: &#39;onDrag&#39;,
+            dragend: &#39;onDragEnd&#39;,
+            scope: this
+        });
+
+        this.animating = true;
+
+        row.getTranslatable().on(&#39;animationend&#39;, function() {
+            row.removeCls(Ext.baseCSSPrefix + &#39;list-item-dragging&#39;);
+
+            list.updateListItem(row, row.$dataIndex, listItemInfo);
+            row.$position = position;
+
+            list.fireEvent(&#39;dragsort&#39;, list, row, this.currentDragRowIndex, this.dragRowIndex);
+            this.animating = false;
+        }, me, {single: true});
+
+        row.translate(0, position, {duration: 100});
+    }
+});</pre>
+</body>
+</html>

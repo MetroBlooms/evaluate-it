@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='EvaluateIt-view-PushForm'>/**
+</span> * Viewport utilized in EvaluateIt.controller.Push
+ *
+ *
+ * TODO: set height/width for tablet, rename alias, etc. to fit normalized model
+ */
+Ext.define(&#39;EvaluateIt.view.PushForm&#39;, {
+	extend: &#39;Ext.form.Panel&#39;,
+	alias : &#39;widget.pushForm&#39;,
+	requires: [
+        &#39;Ext.form.Panel&#39;,
+        &#39;Ext.form.FieldSet&#39;,
+        &#39;Ext.field.Number&#39;,
+        &#39;Ext.field.DatePicker&#39;,
+        &#39;Ext.field.Select&#39;,
+        &#39;Ext.field.Hidden&#39;
+    ],
+	config: {
+
+<span id='EvaluateIt-view-PushForm-cfg-left'>        //We give it a left and top property to make it floating by default
+</span>       	left: 0,
+<span id='EvaluateIt-view-PushForm-cfg-top'>		top: 0,
+</span>
+
+<span id='EvaluateIt-view-PushForm-cfg-modal'>        //Make it modal so you can click the mask to hide the overlay
+</span>     	modal: true,
+<span id='EvaluateIt-view-PushForm-cfg-hideOnMaskTap'>		hideOnMaskTap: true,
+</span>
+<span id='EvaluateIt-view-PushForm-cfg-width'>        // Set the width and height of the panel
+</span>        // TODO: set height/width for tablet
+		width: Ext.os.deviceType == &#39;Phone&#39; ?  screen.width : 350,
+<span id='EvaluateIt-view-PushForm-cfg-height'>		height: Ext.os.deviceType == &#39;Phone&#39; ?  screen.height : 500,
+</span><span id='EvaluateIt-view-PushForm-cfg-scrollable'>		scrollable: true,
+</span><span id='EvaluateIt-view-PushForm-cfg-layout'>	 	layout: {
+</span>			type: &#39;vbox&#39;
+		},
+<span id='EvaluateIt-view-PushForm-cfg-defaults'>		defaults: {
+</span>			margin: &#39;0 0 5 0&#39;,
+			labelWidth: &#39;40%&#39;,
+			labelWrap: true
+		},
+<span id='EvaluateIt-view-PushForm-cfg-items'>		items: [
+</span>			{
+				xtype: &#39;textfield&#39;, 
+				name: &#39;address&#39;,
+				readOnly: true
+			},
+			{
+				xtype: &#39;button&#39;,
+				itemId: &#39;save&#39;,
+				text: &#39;Push to server&#39;
+			}
+            
+        ]
+    }
+});
+
+
+</pre>
+</body>
+</html>

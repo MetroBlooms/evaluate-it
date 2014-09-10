@@ -1,16 +1,28 @@
 Ext.define('EvaluateIt.model.Geolocation', {
-    extend: 'Ext.data.Model',
-    
+    extend: 'EvaluateIt.model.BaseModel',
     config: {
-	 //idProperty: 'id', // use with proxy.SQL 
-	identifier: 'uuid', // use with proxy.localstorage 
+        idProperty: 'id',
         fields: [
+            {name: 'id', type: 'int'}, // pk
             {name: 'latitude', type: 'float'},
             {name: 'longitude', type: 'float'},
             {name: 'accuracy', type: 'float'},
-            {name: 'datestamp', type: 'string'}
+            {name: 'site_id', type: 'string'},
+            {name: 'timeStamp', type: 'string'}
         ],
-	belongsTo: [{ model: 'EvaluateIt.model.Site', associationKey: 'siteId' }]
-
+        proxy: {
+            type: 'localstorage'
+        },
+        belongsTo: [
+            {
+                model: 'EvaluateIt.model.Site',
+                name: 'Site',
+                primaryKey: 'id',
+                foreignKey: 'site_id',
+                foreignStore: 'Sites',
+                getterName: 'getSite',
+                setterName: 'setSite'
+            }
+        ]
     }
 });

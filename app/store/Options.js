@@ -1,8 +1,8 @@
 /**
- * Menu structure of app using tree store data structure
- * Roots are defined by function; leaves are end points for navigating to specified views 
+ * Self firing function with menu structure of app using tree store data structure
+ * Roots are defined by function; leaves are end points for navigating to specified views
+ *
 **/
-
 (function () {
 
     var root = {
@@ -15,9 +15,9 @@
                 cls: 'launchscreen',
                 items: [
 					{
-                        text: 'SiteGeneral',
+                        text: 'Site',
                         leaf: true,
-                        id: 'siteGeneral',
+                        id: 'Site',
             			category: 'evaluations'
                     }, 
                     {
@@ -26,18 +26,19 @@
                         id: 'evaluation',
             			category: 'evaluations'
                     },
-					{
+                    {
+                        text: 'EvaluationScorecard',
+                        leaf: true,
+                        id: 'evaluationScorecard',
+                        category: 'evaluations'
+                    },
+                    {
                         text: 'EvaluationAward',
                         leaf: true,
                         id: 'evaluationAward',
             			category: 'evaluations'
                     },  
 					{
-                        text: 'Geoposition',
-                        leaf: true,
-                        id: 'geoposition'
-                    },
-                    {
                         text: 'SiteGeolocation',
                         leaf: true,
                         id: 'siteGeolocation',
@@ -82,6 +83,12 @@
                 text: 'RemoveRecord',
                 leaf: true,
                 id: 'removeRecord'
+            },
+            // switch environments
+            {
+                text: 'SetEnvironment',
+                leaf: true,
+                id: 'setEnvironment'
             }
         ]
     });

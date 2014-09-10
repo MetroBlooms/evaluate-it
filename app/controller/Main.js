@@ -52,53 +52,39 @@ Ext.define('EvaluateIt.controller.Main', {
             view = nav.getStore().getNodeById(id),
 			name;
 
-		console.log('category: ' + category);
-		console.log('view ' + id);
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('category: ' + category);
+        	console.log('view ' + id);
+        }
+
+        // create filter based on use case
+        var listStore = Ext.data.StoreManager.lookup('EvaluationScorecards');
+        listStore.clearFilter();
 
 		// control view selection based on category passed from routing call
-		if (category === 'evaluations' || category === 'push') {
+		if (category === 'push') {
 
-			console.log('what it is: ' + category);
-
-			// create filter based on filtered use case	
-			var listStore = Ext.data.StoreManager.lookup('SiteEvaluations'); 
-			listStore.clearFilter();
-
-			if (category === 'evaluations') { 
-				//listStore.clearFilter();
-				console.log('we are in: ' + category);
-
-				var reg = new RegExp('[A-Za-z0-9_]','i');
-				listStore.filterBy(function(record, id) {
-
-					var address = record.get('address');
-   	 				if (reg.test(address)) {
-        				return true;
-					}
-				});
-
-			}
 			// only display those evaluations deemed as "complete"
-			if (category === 'push') {
-				console.log('we are in: ' + category);
-				// nothing to evaluate
+            if (EvaluateIt.config.mode === 'test') {
+                console.log('we are in: ' + category);
+            }
 
-				listStore.filterBy(function(record, id) {
-   	 				if (record.get('noLongerExists') === true || 
-						(record.get('useOfColor') !== null 
-						&& record.get('varietyAndHealth') !== null 
-						&& record.get('design') !== null 
-						&& record.get('maintenance') !== null 
-						&& record.get('environmentalStewardship') !== null)) {
-        					return true;
-						}
-				});
-			}
-		
+            listStore.filterBy(function(record, id) {
+                if (record.get('noLongerExists') === true || // in EvaluationScorecard model
+                    (record.get('useOfColor') !== null // in EvaluationScorecard model
+                    && record.get('varietyAndHealth') !== null
+                    && record.get('design') !== null
+                    && record.get('maintenance') !== null
+                    && record.get('environmentalStewardship') !== null)) {
+                        return true;
+                    }
+            });
 
 		}
-	
-        console.log('view ' + id);
+
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('view ' + id);
+        }
 
 		this.showView(view);
         this.setCurrentOption(view);

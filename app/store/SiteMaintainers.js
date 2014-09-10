@@ -1,13 +1,8 @@
 Ext.define('EvaluateIt.store.SiteMaintainers', {
-    extend: 'Ext.data.Store',
-    requires: ['EvaluateIt.model.SiteMaintainer'],
+    extend: 'EvaluateIt.store.BaseStore',
+    alias: 'store.SiteMaintainers',
     config:{
         model: 'EvaluateIt.model.SiteMaintainer',
-	storeId: 'siteMaintainers'/*,
-	proxy: {
-           type: "localstorage"//,
-           //database: 'Yo'
-        },
-        autoLoad: true*/
+	    autoLoad: true
     }
 });
