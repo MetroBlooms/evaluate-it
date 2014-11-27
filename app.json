@@ -1,4 +1,21 @@
 {
+    "builds": {
+        //"web": {"default": true},
+        "native": {
+            "packager": "cordova",
+            "cordova" : {
+                "config": {
+                    // Uncomment the line below and add the platforms you wish to build for
+                    "platforms": "android",
+
+                    "id": "org.metroblooms.EvaluateIt",
+                    "name": "EvaluateIt"
+                }
+            }
+        }
+    },
+
+                
     /**
      * The application's namespace, used by Sencha Command to generate classes
      */
@@ -8,7 +25,17 @@
      * The file path to this application's front HTML document, relative to this app.json file
      */
     "indexHtmlPath": "index.html",
-
+	"build": {
+		"native": {
+			"id": "org.metroblooms.EvaluateIt",
+			"packager": "cordova",
+			"cordova" : {
+				"config": {
+						"platforms": "android"
+					}
+			}
+		}
+},
     /**
      * The absolute URL to this application in development environment, i.e: the URL to run this application
      * on your web browser during development, e.g: "http://localhost/myapp/index.html".
