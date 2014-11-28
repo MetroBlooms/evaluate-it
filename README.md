@@ -35,7 +35,7 @@ Setting up development environment:
 
 * Copy app.js (one that I e-mailed you; see note about app.js below) into ~/development/evaluate-it
 
-* Copy contents of app.js from here https://raw.githubusercontent.com/MetroBlooms/evaluate-it/development/app.json into ~/development/evaluate-it/app.json
+* Copy contents of app.json from here https://raw.githubusercontent.com/MetroBlooms/evaluate-it/development/app.json into ~/development/evaluate-it/app.json
 
 * Test build app by running command: 
 
