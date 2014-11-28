@@ -14,6 +14,11 @@ Setting up development environment:
 
 * <a href="http://www.sencha.com/products/touch/license/">Download and install Sencha Touch SDK - OpenSource/GPL license version located under the section "Working in Open Source?"</a>
 
+* Make sure JAVA_HOME environment variable is set by issuing the following commands:
+
+   * ln /PATH_TO_JAVA/../PATH_TO_JAVA_VIRTUAL_MACHINE_VERSION/Home /PATH_TO_JAVA/Home
+   * Add line "Export JAVA_HOME=/PATH_TO_JAVA/Home" to either ~/.profile or ~/.bashrc 
+
 * <a href="http://www.sencha.com/products/sencha-cmd/">Download and install Sencha command utility</a>   
 
 * clone repo in directory of your choice (e.g., ~/development) by issuing the commands: 
