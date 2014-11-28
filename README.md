@@ -10,7 +10,7 @@ Test Platform: Web (see TODO)
 
 Deployment instructions:
 
-*  <a href="http://www.sencha.com/products/touch/license/">Download and install Sencha Touch SDK - OpenSource/GPL license version located under the section "Working in Open Source?"</a>
+*  <a href="http://www.sencha.com/products/touch/license/">Download and install Sencha Touch SDK - OpenSource/GPL license version located under the section Working in Open Source?</a>
 
 *  <a href=" http://www.sencha.com/products/sencha-cmd/">Download and install Sencha command utility</a>   
 
