@@ -6,7 +6,7 @@
             "cordova" : {
                 "config": {
                     // Uncomment the line below and add the platforms you wish to build for
-                    "platforms": "android",
+                    "platforms": "android ios",
 
                     "id": "org.metroblooms.EvaluateIt",
                     "name": "EvaluateIt"
@@ -31,7 +31,7 @@
 			"packager": "cordova",
 			"cordova" : {
 				"config": {
-						"platforms": "android"
+						"platforms": "android ios"
 					}
 			}
 		}

@@ -1,4 +1,4 @@
-Cross platform mobile app built using Sencha Touch 2.3.1 framework 
+Cross platform mobile app built using Sencha Touch 2.4.1 framework and Sench CMD 5.0.3.324 
 
 **This project obsoletes evaluate-it-jqm.**
 
@@ -9,43 +9,32 @@ Credits: <a href="http://dev.sencha.com/deploy/touch/examples/production/kitchen
 Test Platform: Web (see TODO)
 
 Deployment instructions:
-*  <a href="http://www.sencha.com/products/touch/download/">Download and install Sencha Touch SDK - OpenSource/GPL license version</a>
-*  <a href="http://www.sencha.com/products/sencha-cmd/download">Download and install Sencha command utility</a>   
+
+*  <a href="http://www.sencha.com/products/touch/license/">Download and install Sencha Touch SDK - OpenSource/GPL license version located under the section "Working in Open Source?"</a>
+
+*  <a href=" http://www.sencha.com/products/sencha-cmd/">Download and install Sencha command utility</a>   
+
 *  clone repo in directory of your choice (/path/to/app/, e.g.~/development)
-*  cd to Sencha Touch SDK directory (e.g., ~/Library/Javascript/sencha/touch-2.3.1)
-*  sencha generate app EvaluateIt ~/development/evaluate-it
+
+*  Copy touch-2.4.1 SDK folder from download to system and then cd to SDK directory(e.g., ~/Library/Javascript/sencha/touch-2.4.1)
+
+* Delete app.js and app.json in the folder ~/development/evaluate-it
+
+*  Generate app by running the command: sencha generate app EvaluateIt ~/development/evaluate-it
+
 *  cd ~/development/evaluate-it
-*  vi app.js (modify as per below)
-*  vi .sencha/app/sencha.cfg (add '${app.dir}/lib/plugin' to app.classpath as per line below)
 
-    app.classpath=${app.dir}/app.js,${app.dir}/app,${app.dir}/lib/plugin
+*  app.json
+
 *  drop app.js (one that I e-mailed you; see note about app.js below) into ~/development/evaluate-it
-*  sencha app build testing
-*  Download and install <a href="http://phonegap.com/download/#">Phonegap</a> for your desired environment
-*  Configure your native development environment
 
-**note: I am running Cordova version 2.5.0 for this project, since it was the most stable version at the time of testing. Version 2.6.0 had several issues that would break the application, and 2.7.0 was an unknown. You will need to install the appropriate cordova library based on your mobile OS (See http://docs.phonegap.com/en/2.7.0/guide_getting-started_index.md.html#Getting%20Started%20Guides for platform specific details).**
+*  Test build app by running command: sencha app build testing
 
-Testing via browser: Start script localHttpServerStart.sh (simple Python Web server) in ./evaluate-it folder and connect via URL http://localhost:8000 (note: Sencha Touch does not support Firefox)
+*  Configure Cordova environment (DETAILS FORTHCOMING)
 
 **Any time significant changes have been made to the code base, run 'sencha app build testing' to check for errors or warnings**
 
-TODO: 
-*  Add detailed description 
-*  Add directions for bundling Phonegap builds for Android/iOS deployment
-
-**Currently using kludge for Android and iOS; implement and test more uniform solution: https://github.com/bricemason/sencha-cordova-builder**
-
-*  Add unit and integration tests (using Jasmine)
-*  Add normalized model (see comments in app/model/SiteEvaluation.js)
-*  Switch to Nokia maps API
-*  Fix image upload issues on iOS
-*  Add multi-image binding to single evluation
-*  Improve style and form flow
-*  Add user selected geopositioning accuracy
-*  Etc.
-
-Note: You will need to configure the global URL variables for the AJAX calls in the configuration file app.js (not included in this repository, but necessary to run the application. app.js configuration is listed below). You can also use this file for other sensitive configuration data storage. 
+Note: Global URL variables for the AJAX calls are in the configuration file app.js (not included in this repository, but necessary to run the application. app.js configuration is listed below). You can also use this file for other sensitive configuration data storage. 
 
 	// app.js
 
