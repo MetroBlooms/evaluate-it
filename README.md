@@ -8,29 +8,38 @@ Credits: <a href="http://dev.sencha.com/deploy/touch/examples/production/kitchen
 
 Test Platform: Web (see TODO)
 
-Deployment instructions:
+Setting up development environment: 
 
-*  <a href="http://www.sencha.com/products/touch/license/">Download and install Sencha Touch SDK - OpenSource/GPL license version located under the section "Working in Open Source?"</a>
+* <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Download and install Oracle Java JDK (minimal version of 1.7)</a>
 
-*  <a href="http://www.sencha.com/products/sencha-cmd/">Download and install Sencha command utility</a>   
+* <a href="http://www.sencha.com/products/touch/license/">Download and install Sencha Touch SDK - OpenSource/GPL license version located under the section "Working in Open Source?"</a>
 
-*  clone repo in directory of your choice (/path/to/app/, e.g.~/development)
+* <a href="http://www.sencha.com/products/sencha-cmd/">Download and install Sencha command utility</a>   
 
-*  Copy touch-2.4.1 SDK folder from download to system and then cd to SDK directory (e.g., ~/Library/Javascript/sencha/touch-2.4.1)
+* clone repo in directory of your choice (e.g., ~/development) by issuing the commands: 
+
+cd ~/development
+git clone https://github.com/MetroBlooms/evaluate-it.git
+
+* Copy touch-2.4.1 SDK folder from download to system folder (e.g., ~/Library/Javascript/sencha/touch-2.4.1)
 
 * Delete app.js and app.json in the folder ~/development/evaluate-it
 
-*  Generate app by running the command: sencha generate app EvaluateIt ~/development/evaluate-it
+* cd  ~/Library/Javascript/sencha/touch-2.4.1
 
-*  cd ~/development/evaluate-it
+* Generate app by running the command: 
+sencha generate app EvaluateIt ~/development/evaluate-it
 
-*  drop app.js (one that I e-mailed you; see note about app.js below) into ~/development/evaluate-it
+* cd ~/development/evaluate-it
+
+* Copy app.js (one that I e-mailed you; see note about app.js below) into ~/development/evaluate-it
 
 * Copy contents of app.js from here https://raw.githubusercontent.com/MetroBlooms/evaluate-it/development/app.json into ~/development/evaluate-it/app.json
 
-*  Test build app by running command: sencha app build testing
+* Test build app by running command: 
+sencha app build testing
 
-*  Configure Cordova environment (DETAILS FORTHCOMING)
+* Configure Cordova environment (DETAILS FORTHCOMING)
 
 **Any time significant changes have been made to the code base, run 'sencha app build testing' to check for errors or warnings**
 
