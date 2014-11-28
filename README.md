@@ -18,8 +18,8 @@ Setting up development environment:
 
 * clone repo in directory of your choice (e.g., ~/development) by issuing the commands: 
 
-cd ~/development
-git clone https://github.com/MetroBlooms/evaluate-it.git
+   * cd ~/development
+   * git clone https://github.com/MetroBlooms/evaluate-it.git
 
 * Copy touch-2.4.1 SDK folder from download to system folder (e.g., ~/Library/Javascript/sencha/touch-2.4.1)
 
@@ -28,7 +28,8 @@ git clone https://github.com/MetroBlooms/evaluate-it.git
 * cd  ~/Library/Javascript/sencha/touch-2.4.1
 
 * Generate app by running the command: 
-sencha generate app EvaluateIt ~/development/evaluate-it
+
+   * sencha generate app EvaluateIt ~/development/evaluate-it
 
 * cd ~/development/evaluate-it
 
@@ -37,7 +38,8 @@ sencha generate app EvaluateIt ~/development/evaluate-it
 * Copy contents of app.js from here https://raw.githubusercontent.com/MetroBlooms/evaluate-it/development/app.json into ~/development/evaluate-it/app.json
 
 * Test build app by running command: 
-sencha app build testing
+
+   * sencha app build testing
 
 * Configure Cordova environment (DETAILS FORTHCOMING)
 
