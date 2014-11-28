@@ -16,7 +16,7 @@ Deployment instructions:
 
 *  clone repo in directory of your choice (/path/to/app/, e.g.~/development)
 
-*  Copy touch-2.4.1 SDK folder from download to system and then cd to SDK directory(e.g., ~/Library/Javascript/sencha/touch-2.4.1)
+*  Copy touch-2.4.1 SDK folder from download to system and then cd to SDK directory (e.g., ~/Library/Javascript/sencha/touch-2.4.1)
 
 * Delete app.js and app.json in the folder ~/development/evaluate-it
 
@@ -24,9 +24,9 @@ Deployment instructions:
 
 *  cd ~/development/evaluate-it
 
-*  app.json
-
 *  drop app.js (one that I e-mailed you; see note about app.js below) into ~/development/evaluate-it
+
+* Copy contents of app.js from here https://raw.githubusercontent.com/MetroBlooms/evaluate-it/development/app.json into ~/development/evaluate-it/app.json
 
 *  Test build app by running command: sencha app build testing
 
