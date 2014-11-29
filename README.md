@@ -2,13 +2,13 @@ Cross platform mobile app built using Sencha Touch 2.4.1 framework and Sench CMD
 
 **This project obsoletes evaluate-it-jqm.**
 
-Use: Garden/Raingarden evaluation tool developed for use by <a href="http://www.metroblooms.org">Metro Blooms</a>
+Use: Raingarden evaluation tool developed for use by <a href="http://www.metroblooms.org">Metro Blooms</a>
 
 Credits: <a href="http://dev.sencha.com/deploy/touch/examples/production/kitchensink/">Sencha Touch Kitchensink</a>  
 
-Test Platform: Web (see TODO)
+Test Platform: Web, Android/iOS Emulation` 
 
-Setting up development environment: 
+*Setting up development environment:*
 
 * <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Download and install Oracle Java JDK (minimal version of 1.7)</a>
 
@@ -40,17 +40,46 @@ Setting up development environment:
 
 * Copy app.js (one that I e-mailed you; see note about app.js below) into ~/development/evaluate-it
 
-* Copy contents of app.json from here https://raw.githubusercontent.com/MetroBlooms/evaluate-it/development/app.json into ~/development/evaluate-it/app.json
+* Copy contents of app.json from here <a href="https://raw.githubusercontent.com/MetroBlooms/evaluate-it/development/app.json" /a> into ~/development/evaluate-it/app.json
 
 * Test build app by running command: 
 
    * sencha app build testing
 
-* Configure Cordova environment (DETAILS FORTHCOMING)
+*Configure Cordova environment:*
+
+* <a href="http://nodejs.org/download/">Click here to install Node.js</a>
+
+* Install Cordova by issuing the command:
+
+   * npm install -g cordova
+
+* For iOS development issue the command:
+
+   * npm install -g ios-sim and npm install -g ios-deploy
+
+* <a href="http://developer.android.com/sdk/index.html">For Android development click here to download the SDK</a>
+
+	* Set the environment variables ANDROID_BIN, ANDROID_HOME and ANDROID_SDK_ROOT in ~/.bashrc
+
+* Install the Cordova plugins as per <a href="http://docs.sencha.com/touch/2.3.0/#!/guide/cordova" /a> 
+
+* Enable Cordova native packaging by issuing the commands:
+
+   * cd ~/development/evaluate-it
+   * sencha cordova init org.metroblooms.EvaluateIt EvaluateIt
+
+* You are now ready for development and testing through either:
+
+   * Webstorm IDE for Web development and Web developer tools for debugging (in Chrome or Safari, since Firefox does not support Webikit SQL)
+
+   * Device emulation (platforms configured in app.json)a, by running the command: 
+
+      * sencha app build --run native
 
 **Any time significant changes have been made to the code base, run 'sencha app build testing' to check for errors or warnings**
 
-Note: Global URL variables for the AJAX calls are in the configuration file app.js (not included in this repository, but necessary to run the application. app.js configuration is listed below). You can also use this file for other sensitive configuration data storage. 
+NB: Global URL variables for the AJAX calls are in the configuration file app.js (not included in this repository, but necessary to run the application. app.js configuration is listed below). You can also use this file for other sensitive configuration data storage. 
 
 	// app.js
 
