@@ -62,7 +62,7 @@ Test Platform: Web, Android/iOS Emulation`
 
 	* Set the environment variables ANDROID_BIN, ANDROID_HOME and ANDROID_SDK_ROOT in ~/.bashrc
 
-* Install the following Cordova plugins:
+* Install the following Cordova plugins by issuing the following commands:
 
    * Camera: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device-motion.git
    * Device: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git
@@ -78,7 +78,7 @@ Test Platform: Web, Android/iOS Emulation`
 
 **You are now ready for development and testing through either:**
 
-   * Webstorm IDE for Web development and Web developer tools for debugging (in Chrome or Safari, since Firefox does not support Webikit SQL)
+   * Webstorm IDE for Web development and Web developer tools for debugging (in Chrome or Safari, since Firefox does not support Webkit SQL)
 
    * Device emulation (platforms configured in app.json)a, by running the command: 
 
