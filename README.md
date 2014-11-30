@@ -40,7 +40,7 @@ Test Platform: Web, Android/iOS Emulation`
 
 * Copy app.js (one that I e-mailed you; see note about app.js below) into ~/development/evaluate-it
 
-* Copy contents of app.json from here <a href="https://raw.githubusercontent.com/MetroBlooms/evaluate-it/development/app.json" /a> into ~/development/evaluate-it/app.json
+* Copy contents of app.json from here into <a href="https://raw.githubusercontent.com/MetroBlooms/evaluate-it/development/app.json" /a>  ~/development/evaluate-it/app.json
 
 * Test build app by running command: 
 
@@ -62,14 +62,21 @@ Test Platform: Web, Android/iOS Emulation`
 
 	* Set the environment variables ANDROID_BIN, ANDROID_HOME and ANDROID_SDK_ROOT in ~/.bashrc
 
-* Install the Cordova plugins as per <a href="http://docs.sencha.com/touch/2.3.0/#!/guide/cordova" /a> 
+* Install the following Cordova plugins:
+
+   * Camera: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device-motion.git
+   * Device: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git
+   * File: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git
+   * File Transfer: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file-transfer.git
+   * Geolocation: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-geolocation.git
+   * Media: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media.git
 
 * Enable Cordova native packaging by issuing the commands:
 
    * cd ~/development/evaluate-it
    * sencha cordova init org.metroblooms.EvaluateIt EvaluateIt
 
-* You are now ready for development and testing through either:
+**You are now ready for development and testing through either:**
 
    * Webstorm IDE for Web development and Web developer tools for debugging (in Chrome or Safari, since Firefox does not support Webikit SQL)
 
