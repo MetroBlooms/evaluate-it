@@ -60,7 +60,16 @@ Test Platform: Web, Android/iOS Emulation`
 
 * <a href="http://developer.android.com/sdk/index.html">For Android development click here to download the SDK</a>
 
-	* Set the environment variables ANDROID_BIN, ANDROID_HOME and ANDROID_SDK_ROOT in ~/.bashrc
+	* Set the environment variables in ~/.bashrc, ~/.profile or ~/.bash_profile:
+
+	  * # Cordova command line tools for Android SDK ----------------------
+export PATH=${PATH}:/Library/Android/adt-bundle/sdk/platform-tools:/Library/Android/adt-bundle/sdk/tools:/Library/Android/adt-bundle/sdk/build-tools
+
+      * ANDROID_HOME:  export ANDROID_HOME="/Library/Android/adt-bundle/sdk"
+      * ANDROID_BIN: export ANDROID_BIN=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/build-tools           
+      * ANDROID_SDK_ROOT: export ANDROID_SDK_ROOT=$ANDROID_HOME
+ 
+NB: /Library/Android/adt-bundle/sdk/platform-tools is Mac OS X specific. YYMV
 
 * Install the following Cordova plugins by issuing the following commands:
 
@@ -74,7 +83,7 @@ Test Platform: Web, Android/iOS Emulation`
 * Enable Cordova native packaging by issuing the commands:
 
    * cd ~/development/evaluate-it
-   * sencha cordova init org.metroblooms.EvaluateIt EvaluateIt
+   * sencha cordova init org.metroblooms.evaluate-it EvaluateIt
 
 **You are now ready for development and testing through either:**
 
