@@ -8,7 +8,7 @@
                     // Uncomment the line below and add the platforms you wish to build for
                     "platforms": "android ios",
 
-                    "id": "org.metroblooms.EvaluateIt",
+                    "id": "org.metroblooms.evaluate-it",
                     "name": "EvaluateIt"
                 }
             }
@@ -27,7 +27,8 @@
     "indexHtmlPath": "index.html",
 	"build": {
 		"native": {
-			"id": "org.metroblooms.EvaluateIt",
+			"id": "org.metroblooms.evaluate-it",
+			"name": "EvaluateIt"
 			"packager": "cordova",
 			"cordova" : {
 				"config": {
