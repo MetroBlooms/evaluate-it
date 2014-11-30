@@ -58,18 +58,20 @@ Test Platform: Web, Android/iOS Emulation`
 
    * npm install -g ios-sim and npm install -g ios-deploy
 
-* <a href="http://developer.android.com/sdk/index.html">For Android development click here to download the SDK</a>
+* <a href="http://developer.android.com/sdk/index.html">For Android development click here to download the SDK (only install command line tools; do not use the Eclipse plugin; Ubuntu may have the option of doing the install via apt-get)</a>
 
 	* Set the environment variables in ~/.bashrc, ~/.profile or ~/.bash_profile:
 
 	  * # Cordova command line tools for Android SDK ----------------------
-export PATH=${PATH}:/Library/Android/adt-bundle/sdk/platform-tools:/Library/Android/adt-bundle/sdk/tools:/Library/Android/adt-bundle/sdk/build-tools
+export PATH=${PATH}:<path to Android SDK>/adt-bundle/sdk/platform-tools:<path to Android SDK>/adt-bundle/sdk/tools:<path to Android SDK>/adt-bundle/sdk/build-tools
 
-      * ANDROID_HOME:  export ANDROID_HOME="/Library/Android/adt-bundle/sdk"
+      * ANDROID_HOME:  export ANDROID_HOME="<path to Android SDK>/adt-bundle/sdk"
       * ANDROID_BIN: export ANDROID_BIN=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/build-tools           
       * ANDROID_SDK_ROOT: export ANDROID_SDK_ROOT=$ANDROID_HOME
  
-NB: /Library/Android/adt-bundle/sdk/platform-tools is Mac OS X specific. YYMV
+* Install Ant build tools:
+
+   * brew install ant (Ubuntu: sudo apt-get install ant)
 
 * Install the following Cordova plugins by issuing the following commands:
 
