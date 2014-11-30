@@ -54,7 +54,7 @@ Test Platform: Web, Android/iOS Emulation`
 
    * npm install -g cordova
 
-* For iOS development issue the command:
+* For iOS development issue the command (NB: you will need to have Xtools and the Xtools command line utilities installed):
 
    * npm install -g ios-sim and npm install -g ios-deploy
 
