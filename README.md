@@ -62,7 +62,7 @@ Test Platform: Web, Android/iOS Emulation`
 
 	* Set the environment variables in ~/.bashrc, ~/.profile or ~/.bash_profile:
 
-	  * # Cordova command line tools for Android SDK ----------------------
+	  * \# Cordova command line tools for Android SDK ----------------------
 export PATH=${PATH}:<path to Android SDK>/adt-bundle/sdk/platform-tools:<path to Android SDK>/adt-bundle/sdk/tools:<path to Android SDK>/adt-bundle/sdk/build-tools
 
       * ANDROID_HOME:  export ANDROID_HOME="<path to Android SDK>/adt-bundle/sdk"
