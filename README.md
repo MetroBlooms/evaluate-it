@@ -6,7 +6,7 @@ Use: Raingarden evaluation tool developed for use by <a href="http://www.metrobl
 
 Credits: <a href="http://dev.sencha.com/deploy/touch/examples/production/kitchensink/">Sencha Touch Kitchensink</a>  
 
-Test Platform: Web, Android/iOS Emulation` 
+Test Platform: Web, Android/iOS Emulation 
 
 *Setting up development environment:*
 
@@ -92,7 +92,7 @@ Test Platform: Web, Android/iOS Emulation`
 
    * Webstorm IDE for Web development and Web developer tools for debugging (in Chrome or Safari, since Firefox does not support Webkit SQL)
 
-   * Device emulation (platforms configured in app.json)a, by running the command: 
+   * Device emulation (platforms configured in app.json) by running the command: 
 
       * sencha app build --run native
 
