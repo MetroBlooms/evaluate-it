@@ -55,36 +55,36 @@ Ext.define('EvaluateIt.controller.Login', {
             console.log('url: ' + url);
         }
 
-        if (username.length === 0 || password.length === 0) {
+       /* if (username.length === 0 || password.length === 0) {
 
-            loginView.showSignInFailedMessage('Please enter your username and password.');
+            loginview.showsigninfailedmessage('please enter your username and password.');
             return;
-        }
+        }*/
 
-        loginView.setMasked({
+        loginview.setmasked({
             xtype: 'loadmask',
-            message: 'Signing In...'
+            message: 'signing in...'
         });
 
-        Ext.Ajax.request({
+        ext.ajax.request({
 
 			cors: true,
-			useDefaultXhrHeader: false,
+			usedefaultxhrheader: false,
             url: url,
-			method: 'post',
-            params: {
+            jsondata: {
                 user: username,
-                pwd: password
+                password: password
             },
+            disablecaching: false,
             success: function (response) {
 
-                var loginResponse = Ext.JSON.decode(response.responseText);
+                var loginresponse = ext.json.decode(response.responsetext);
 
-                if (EvaluateIt.config.mode === 'test') {
-                    console.log('response/message ' + loginResponse.success + ' ' + loginResponse.message + ' ' + loginResponse.sessionToken + ' ' + loginResponse.evaluator_id + ' ' + loginResponse.firstname + ' ' + loginResponse.lastname + ' ' + loginResponse.email);
+                if (evaluateit.config.mode === 'test') {
+                    console.log('response/message ' + loginresponse.success + ' ' + loginresponse.message + ' ' + loginresponse.sessiontoken + ' ' + loginresponse.evaluator_id + ' ' + loginresponse.firstname + ' ' + loginresponse.lastname + ' ' + loginresponse.email);
                 }
 
-				alert('Welcome ' + ' ' + loginResponse.firstname + ' ' + loginResponse.lastname + '!');
+				alert('welcome ' + ' ' + loginresponse.firstname + ' ' + loginresponse.lastname + '!');
 
                 if (loginResponse.success) {
                     // The server will send a token that can be used throughout the app to confirm that the user is authenticated.

@@ -19,7 +19,15 @@ Ext.define('EvaluateIt.utils.DataService', {
     // utilize API as per web site standard
         // value set via {EvaluateIt.config} in app.js
 
-        if (EvaluateIt.config.mode === 'test') {
+        var url =  EvaluateIt.config.protocol;
+
+        url += EvaluateIt.config.host;
+
+        url += EvaluateIt.config.token;
+
+        console.log('url: ' + url);
+
+      /*  if (EvaluateIt.config.mode === 'test') {
             console.log('Service test:' + param);
         }
 
@@ -64,7 +72,8 @@ Ext.define('EvaluateIt.utils.DataService', {
         }
         if (param === 'existing' || param === 'new' || param === 'pull' || param === 'logout' || param === 'file') {
             url += '?token=' + sessionStorage.sessionToken
-        }
+        }*/
+
         return url;
     },
 

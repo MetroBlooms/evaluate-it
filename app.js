@@ -55,7 +55,9 @@ Ext.application({
         EvaluateIt.config = {
 
 			protocol: 'http://',
-			domain: 'localhost:5000',
+			host: '127.0.0.1:5000',
+            test_me: '/api/resource',
+            token: '/api/token',
 			dev: '/api/dev',
 			live: '/api/live',
 			login: '/api/auth/login',
