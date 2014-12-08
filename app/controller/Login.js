@@ -136,25 +136,52 @@ Ext.define('EvaluateIt.controller.Login', {
     },
 
     onSignOffCommand: function () {
-		var	url = EvaluateIt.utils.DataService.url('logout');
+
+        url = EvaluateIt.utils.DataService.url('login');
+
+        url += EvaluateIt.config.test_me;
 
         if (EvaluateIt.config.mode === 'test') {
-            console.log(url);
+            console.log('token: ' + sessionStorage.sessionToken);
+            console.log('url: ' + url);
         }
-
         Ext.Ajax.request({
-			cors: true,
-			useDefaultXhrHeader: false,
-            url: url,
-			method: 'get',
 
+            cors: true,
+            useDefaultXhrHeader: false,
+            url: url,
+            params: {
+                user: 'eyJhbGciOiJIUzI1NiIsImV4cCI6MTQxODAwNTIzOCwiaWF0IjoxNDE4MDA0NjM4fQ.eyJpZCI6Mn0.3JE0LiC4gsxjBqkWkVqBi1Te8dF0pGhFscNz1-llRYU',
+                password: 'unknown'
+            },
+            disableCaching: false,
             success: function (response) {
-				var logoutResponse = Ext.JSON.decode(response.responseText);
-				alert('Logoff!!' + logoutResponse.success + ' ' + logoutResponse.message);
+
+                var loginResponse = Ext.JSON.decode(response.responseText);
+
+                if (EvaluateIt.config.mode === 'test') {
+                    console.log(loginResponse.token);
+                }
+
+                if (response.status === 200) {
+                    // The server will send a token that can be used throughout the app to confirm that the user is authenticated.
+                    sessionToken = loginResponse.token;
+                    // TODO: write to sessionStorage
+                    //sessionStorage.sessionToken =  me.sessionToken;
+
+                    if (EvaluateIt.config.mode === 'test') {
+                        console.log(sessionToken);
+                    }
+                } else {
+                    if (EvaluateIt.config.mode === 'test') {
+                        console.log('sessionToken...' + sessionToken);
+                    }
+                    console.log(loginResponse.message);
+                }
             },
             failure: function (response) {
-                var logoutResponse = Ext.JSON.decode(response.responseText);
-				alert('Error in logoff!!' + logoutResponse.success + ' ' + logoutResponse.message);
+                //me.sessionToken = null;
+                //me.signInFailure('Login failed. Please try again later.');
             }
         });
 

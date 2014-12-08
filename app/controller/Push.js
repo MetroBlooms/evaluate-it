@@ -53,6 +53,9 @@ Ext.define('EvaluateIt.controller.Push', {
 		loginForm.showBy(button);*/
 
         url = EvaluateIt.utils.DataService.url('login');
+
+        url += EvaluateIt.config.token;
+
         if (EvaluateIt.config.mode === 'test') {
             console.log(url);
             console.log('url: ' + url);
@@ -79,7 +82,7 @@ Ext.define('EvaluateIt.controller.Push', {
                     // The server will send a token that can be used throughout the app to confirm that the user is authenticated.
                     sessionToken = loginResponse.token;
 					// TODO: write to sessionStorage
-					//sessionStorage.sessionToken =  me.sessionToken;
+					sessionStorage.sessionToken =  sessionToken;
 
                     if (EvaluateIt.config.mode === 'test') {
                         console.log(sessionToken);

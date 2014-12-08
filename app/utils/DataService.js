@@ -23,7 +23,7 @@ Ext.define('EvaluateIt.utils.DataService', {
 
         url += EvaluateIt.config.host;
 
-        url += EvaluateIt.config.token;
+        //url += EvaluateIt.config.token;
 
         console.log('url: ' + url);
 
