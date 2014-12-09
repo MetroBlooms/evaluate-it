@@ -139,7 +139,9 @@ Ext.define('EvaluateIt.controller.Login', {
 
         url = EvaluateIt.utils.DataService.url('login');
 
-        url += EvaluateIt.config.test_me;
+        url += '/protected/';
+        //url += '/';
+        //url += EvaluateIt.config.token;
 
         if (EvaluateIt.config.mode === 'test') {
             console.log('token: ' + sessionStorage.sessionToken);
@@ -150,9 +152,9 @@ Ext.define('EvaluateIt.controller.Login', {
             cors: true,
             useDefaultXhrHeader: false,
             url: url,
-            params: {
-                user: 'eyJhbGciOiJIUzI1NiIsImV4cCI6MTQxODAwNTIzOCwiaWF0IjoxNDE4MDA0NjM4fQ.eyJpZCI6Mn0.3JE0LiC4gsxjBqkWkVqBi1Te8dF0pGhFscNz1-llRYU',
-                password: 'unknown'
+            headers: {
+                'X-Auth-Token':'JohnDoe:John'
+
             },
             disableCaching: false,
             success: function (response) {
