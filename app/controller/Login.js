@@ -153,7 +153,7 @@ Ext.define('EvaluateIt.controller.Login', {
             useDefaultXhrHeader: false,
             url: url,
             headers: {
-                'X-Auth-Token':'JohnDoe:John'
+                'X-Auth-Token':'gms'
 
             },
             disableCaching: false,
