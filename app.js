@@ -32,6 +32,7 @@ Ext.application({
             'Ext.device.Camera',
 			'Ext.Map',
         	'EvaluateIt.utils.UtilityService',
+            'EvaluateIt.utils.Base64',
             'EvaluateIt.utils.DataService',
             'Ext.data.proxy.Sql'
 	],

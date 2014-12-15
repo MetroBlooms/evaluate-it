@@ -55,7 +55,7 @@ build/*
 
 # Files with information that should not be made available to the public #
 ######################
-app.js
+#app.js
 
 archive/*
 

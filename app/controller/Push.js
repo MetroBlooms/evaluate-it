@@ -63,6 +63,7 @@ Ext.define('EvaluateIt.controller.Push', {
         Ext.Ajax.request({
 
 			cors: true,
+            type: 'GET',
 			useDefaultXhrHeader: false,
             url: url,
             jsonData: {
@@ -77,6 +78,8 @@ Ext.define('EvaluateIt.controller.Push', {
                 if (EvaluateIt.config.mode === 'test') {
                     console.log(loginResponse.token);
                 }
+
+                sessionStorage.sessionToken = loginResponse.token;
 
                 if (response.status === 200) {
                     // The server will send a token that can be used throughout the app to confirm that the user is authenticated.

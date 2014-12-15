@@ -140,6 +140,10 @@ Ext.define('EvaluateIt.controller.Login', {
         url = EvaluateIt.utils.DataService.url('login');
 
         url += '/protected/';
+
+        auth = sessionStorage.sessionToken + ':unknown';
+
+        hash = 'Basic ' + EvaluateIt.utils.Base64.encode(auth);
         //url += '/';
         //url += EvaluateIt.config.token;
 
@@ -147,14 +151,43 @@ Ext.define('EvaluateIt.controller.Login', {
             console.log('token: ' + sessionStorage.sessionToken);
             console.log('url: ' + url);
         }
+
+        Ext.Ajax.on('beforerequest', (function(klass, request) {
+            return request.headers.xhr = {Authorization : hash};
+        }), this);
+
+        /*Ext.define('myAjax', {
+            extend: 'Ext.data.Connection',
+            singleton: true,
+            constructor : function(config){
+                this.callParent([config]);
+                this.on("beforerequest", function(){
+                    console.info("beforerequest");
+                    xhr.setRequestHeader ("Authorization", "Basic XXXXXX");
+                });
+                this.on("requestcomplete", function(){
+                    console.info("requestcomplete");
+                });
+            }
+        });
+
+        myAjax.request({
+            url: 'get-nodes.php',
+            success: function(response){
+                console.info("response");
+            }
+        });*/
+
+
         Ext.Ajax.request({
 
             cors: true,
             useDefaultXhrHeader: false,
             url: url,
             headers: {
-                'X-Auth-Token':'gms'
-
+                //'X-Auth-Token': sessionStorage.sessionToken + ':none'
+                'Accept': 'application/json',
+                Authorization : hash
             },
             disableCaching: false,
             success: function (response) {
