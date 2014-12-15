@@ -153,7 +153,7 @@ Ext.define('EvaluateIt.controller.Login', {
         }
 
         Ext.Ajax.on('beforerequest', (function(klass, request) {
-            return request.headers.xhr = {Authorization : hash};
+            return request.headers.Authorization = hash;
         }), this);
 
         /*Ext.define('myAjax', {
