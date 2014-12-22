@@ -139,7 +139,7 @@ Ext.define('EvaluateIt.controller.Login', {
 
         url = EvaluateIt.utils.DataService.url('login');
 
-        url += '/protected/';
+        url += '/api/resource';
 
         auth = sessionStorage.sessionToken + ':unknown';
 
@@ -179,15 +179,35 @@ Ext.define('EvaluateIt.controller.Login', {
         });*/
 
 
+        obj = {
+            site: {
+                id: '37251',
+                site_name: 'TestSite',
+                address: {
+                    'address': '1234 Blaisdell Ave',
+                    'city': 'Minneapolis',
+                    'state': 'MN',
+                    'zip': '55456',
+                    'neighborhood': 'Kingfield',
+                    'county': 'Hennepin',
+                },
+                geolocation: {
+                    latitude :  '41.6544',
+                    longitude :  '73.3322',
+                    accuracy: '45'
+                }
+            }
+        }
+
+
         Ext.Ajax.request({
 
             cors: true,
             useDefaultXhrHeader: false,
             url: url,
+            jsonData: obj,
             headers: {
-                //'X-Auth-Token': sessionStorage.sessionToken + ':none'
-                'Accept': 'application/json',
-                Authorization : hash
+                'Accept': 'application/json'
             },
             disableCaching: false,
             success: function (response) {
@@ -195,21 +215,17 @@ Ext.define('EvaluateIt.controller.Login', {
                 var loginResponse = Ext.JSON.decode(response.responseText);
 
                 if (EvaluateIt.config.mode === 'test') {
-                    console.log(loginResponse.token);
+                    console.log('Success!');
                 }
 
                 if (response.status === 200) {
-                    // The server will send a token that can be used throughout the app to confirm that the user is authenticated.
-                    sessionToken = loginResponse.token;
-                    // TODO: write to sessionStorage
-                    //sessionStorage.sessionToken =  me.sessionToken;
 
                     if (EvaluateIt.config.mode === 'test') {
-                        console.log(sessionToken);
+                        console.log('in resource!');
                     }
                 } else {
                     if (EvaluateIt.config.mode === 'test') {
-                        console.log('sessionToken...' + sessionToken);
+                        console.log('sessionToken...' + sessionStorage.sessionToken);
                     }
                     console.log(loginResponse.message);
                 }

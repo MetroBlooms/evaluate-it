@@ -12,6 +12,8 @@
 *.cache
 resources/sass/.sass-cache/*
 
+.sencha_backup/*
+
 touch/*
 .idea/*
 native/*
