@@ -12,6 +12,14 @@
 *.cache
 resources/sass/.sass-cache/*
 
+.sencha_backup/*
+
+touch/*
+native/*
+cordova/*
+.idea/*
+android/*
+
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
@@ -52,7 +60,7 @@ build/*
 
 # Files with information that should not be made available to the public #
 ######################
-#app.js
+app.js
 
 archive/*
 

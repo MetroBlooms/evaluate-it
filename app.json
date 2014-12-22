@@ -28,7 +28,7 @@
 	"build": {
 		"native": {
 			"id": "org.metroblooms.evaluate-it",
-			"name": "EvaluateIt"
+			"name": "EvaluateIt",
 			"packager": "cordova",
 			"cordova" : {
 				"config": {
