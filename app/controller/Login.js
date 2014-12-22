@@ -137,15 +137,30 @@ Ext.define('EvaluateIt.controller.Login', {
 
     onSignOffCommand: function () {
 
-        url = EvaluateIt.utils.DataService.url('login');
+        var url = EvaluateIt.utils.DataService.url('login'),
+            auth = sessionStorage.sessionToken + ':unknown',
+            hash = 'Basic ' + EvaluateIt.utils.Base64.encode(auth),
+            obj = {
+                site: {
+                    "id": "37251",
+                    "site_name": "TestSite",
+                    "address": {
+                        "address": "1234 Blaisdell Ave",
+                        "city": "Minneapolis",
+                        "state": "MN",
+                        "zip": "55456",
+                        "neighborhood": "Kingfield",
+                        "county": "Hennepin"
+                    },
+                    "geolocation": {
+                        "latitude":  "41.6544",
+                        "longitude":  "73.3322",
+                        "accuracy": "45"
+                    }
+                }
+            };
 
         url += '/api/resource';
-
-        auth = sessionStorage.sessionToken + ':unknown';
-
-        hash = 'Basic ' + EvaluateIt.utils.Base64.encode(auth);
-        //url += '/';
-        //url += EvaluateIt.config.token;
 
         if (EvaluateIt.config.mode === 'test') {
             console.log('token: ' + sessionStorage.sessionToken);
@@ -155,50 +170,6 @@ Ext.define('EvaluateIt.controller.Login', {
         Ext.Ajax.on('beforerequest', (function(klass, request) {
             return request.headers.Authorization = hash;
         }), this);
-
-        /*Ext.define('myAjax', {
-            extend: 'Ext.data.Connection',
-            singleton: true,
-            constructor : function(config){
-                this.callParent([config]);
-                this.on("beforerequest", function(){
-                    console.info("beforerequest");
-                    xhr.setRequestHeader ("Authorization", "Basic XXXXXX");
-                });
-                this.on("requestcomplete", function(){
-                    console.info("requestcomplete");
-                });
-            }
-        });
-
-        myAjax.request({
-            url: 'get-nodes.php',
-            success: function(response){
-                console.info("response");
-            }
-        });*/
-
-
-        obj = {
-            site: {
-                "id": "37251",
-                "site_name": "TestSite",
-                "address": {
-                    "address": "1234 Blaisdell Ave",
-                    "city": "Minneapolis",
-                    "state": "MN",
-                    "zip": "55456",
-                    "neighborhood": "Kingfield",
-                    "county": "Hennepin"
-                },
-                "geolocation": {
-                    "latitude" :  "41.6544",
-                    "longitude" :  "73.3322",
-                    "accuracy": "45"
-                }
-            }
-        }
-
 
         Ext.Ajax.request({
 
