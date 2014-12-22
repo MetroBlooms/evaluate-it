@@ -181,20 +181,20 @@ Ext.define('EvaluateIt.controller.Login', {
 
         obj = {
             site: {
-                id: '37251',
-                site_name: 'TestSite',
-                address: {
-                    'address': '1234 Blaisdell Ave',
-                    'city': 'Minneapolis',
-                    'state': 'MN',
-                    'zip': '55456',
-                    'neighborhood': 'Kingfield',
-                    'county': 'Hennepin',
+                "id": "37251",
+                "site_name": "TestSite",
+                "address": {
+                    "address": "1234 Blaisdell Ave",
+                    "city": "Minneapolis",
+                    "state": "MN",
+                    "zip": "55456",
+                    "neighborhood": "Kingfield",
+                    "county": "Hennepin"
                 },
-                geolocation: {
-                    latitude :  '41.6544',
-                    longitude :  '73.3322',
-                    accuracy: '45'
+                "geolocation": {
+                    "latitude" :  "41.6544",
+                    "longitude" :  "73.3322",
+                    "accuracy": "45"
                 }
             }
         }
