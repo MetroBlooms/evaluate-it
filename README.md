@@ -25,6 +25,7 @@ Test Platform: Web, Android/iOS Emulation
 
    * cd ~/development
    * git clone https://github.com/MetroBlooms/evaluate-it.git
+   * git checkout development
 
 * Copy touch-2.4.1 SDK folder from download to system folder (e.g., ~/Library/Javascript/sencha/touch-2.4.1)
 
@@ -35,8 +36,11 @@ Test Platform: Web, Android/iOS Emulation
 * Generate app by running the command: 
 
    * sencha generate app EvaluateIt ~/development/evaluate-it
-
+   * cd ~/development/evaluate-it
+ 
 * cd ~/development/evaluate-it
+   * replace index.html with the old index.html
+   * sencha app refresh
 
 * Copy app.js (one that I e-mailed you; see note about app.js below) into ~/development/evaluate-it
 
@@ -74,19 +78,22 @@ Test Platform: Web, Android/iOS Emulation
 
    * brew install ant (Ubuntu: sudo apt-get install ant)
 
+* Enable Cordova native packaging by issuing the commands:
+
+   * cd ~/development/evaluate-it
+   * sencha cordova init org.metroblooms.evaluate-it EvaluateIt
+
 * Install the following Cordova plugins by issuing the following commands:
 
+   * cd cordova
    * Camera: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device-motion.git
    * Device: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git
    * File: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git
    * File Transfer: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-file-transfer.git
    * Geolocation: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-geolocation.git
    * Media: cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-media.git
+   * cd ../
 
-* Enable Cordova native packaging by issuing the commands:
-
-   * cd ~/development/evaluate-it
-   * sencha cordova init org.metroblooms.evaluate-it EvaluateIt
 
 **You are now ready for development and testing through either:**
 
