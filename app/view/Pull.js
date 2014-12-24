@@ -37,7 +37,9 @@ Ext.define('EvaluateIt.view.Pull', {
                         handler: function() {
                             var panel = Ext.getCmp('Pull'),
 								json = [],
-                                url;
+                                auth = sessionStorage.sessionToken + ':unknown',
+                                hash = 'Basic ' + EvaluateIt.utils.Base64.encode(auth),
+                                url = EvaluateIt.utils.DataService.url('login');
 
                             panel.getParent().setMasked({
                                 xtype: 'loadmask',
@@ -45,16 +47,25 @@ Ext.define('EvaluateIt.view.Pull', {
                             });
 
                             // assemble url
-                            url = EvaluateIt.utils.DataService.url('pull');
+                            url += '/api/htsql';
                             if (EvaluateIt.config.mode === 'test') {
                                 console.log(url);
                             }
 
+                            Ext.Ajax.on('beforerequest', (function(klass, request) {
+                                return request.headers.Authorization = hash;
+                            }), this);
+
+
                             // cross domain access cors request for data
                            	Ext.Ajax.request({
-								cors: true,
-								url : url,
-								useDefaultXhrHeader: false,
+                                cors: true,
+                                useDefaultXhrHeader: false,
+                                url: url,
+                                headers: {
+                                    'Accept': 'application/json'
+                                },
+                                disableCaching: false,
 								success: function (response) {
 								   json = Ext.decode(response.responseText);
                                    // parse object into model

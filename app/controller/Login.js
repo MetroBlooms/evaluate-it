@@ -156,6 +156,14 @@ Ext.define('EvaluateIt.controller.Login', {
                         "latitude":  "41.6544",
                         "longitude":  "73.3322",
                         "accuracy": "45"
+                    },
+                    "person": {
+                        "type": "evaluator",
+                        "first_name": "me"
+                    },
+                    "evaluation": {
+                        "comments":  "A test...",
+                        "exists": true
                     }
                 }
             };
