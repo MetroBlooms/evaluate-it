@@ -41,6 +41,7 @@ Ext.define('EvaluateIt.view.Pull', {
                                 hash = 'Basic ' + EvaluateIt.utils.Base64.encode(auth),
                                 url = EvaluateIt.utils.DataService.url('login');
 
+
                             panel.getParent().setMasked({
                                 xtype: 'loadmask',
                                 message: 'Loading...'
@@ -56,6 +57,13 @@ Ext.define('EvaluateIt.view.Pull', {
                                 return request.headers.Authorization = hash;
                             }), this);
 
+                            var records = [];
+
+                            var store  = Ext.create('Ext.data.Store',{
+                                fields : ['id','address'],
+                                data: records,
+                                paging : false
+                            });
 
                             // cross domain access cors request for data
                            	Ext.Ajax.request({
@@ -67,12 +75,38 @@ Ext.define('EvaluateIt.view.Pull', {
                                 },
                                 disableCaching: false,
 								success: function (response) {
-								   json = Ext.decode(response.responseText);
-                                   // parse object into model
-                                   EvaluateIt.utils.DataService.pull(json);
-                                   panel.setHtml(response.responseText);
-                                   panel.getParent().unmask();
-								   //console.log('data: ' + response.responseText);
+                                    json = Ext.decode(response.responseText);
+
+                                    // if we have a valid json object, then process it
+                                    if(json !== null &&  typeof (json) !==  'undefined'){
+
+                                        // loop through the data to load into store
+                                        Ext.each(json.address, function(obj){
+                                            //add the records to the array
+                                            records.push({
+                                                id: obj.id,
+                                                address: obj.address
+                                            })
+                                            console.log('address ' + obj.address);
+                                        });
+                                        //update the store with the data that we got
+                                        store.add(records);
+                                    }
+
+                                    store.load();
+
+                                    console.log(store.getData(true)); // get object structure
+
+                                    // write to template
+                                    panel.setData(store);
+                                    var tpl = new Ext.XTemplate(
+                                        '<tpl for=".">',
+                                           // '<div>{[values.address[0].id]}, {[values.address[0].address]}</div>',
+                                            '<div>DATA: {[values.id]}, {data.address}</div>',
+                                        '</tpl>'
+                                    );
+                                    panel.setHtml(tpl.apply(store));
+                                    panel.getParent().unmask();
 								},
 								fail: function (e, jqxhr, settings, exception) {
                                     if (EvaluateIt.config.mode === 'test') {
