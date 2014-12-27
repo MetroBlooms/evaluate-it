@@ -43,15 +43,17 @@ Ext.define('EvaluateIt.view.Pull', {
                                 url = EvaluateIt.utils.DataService.url('login'),
                                 store = Ext.create('Ext.data.Store',{
                                     fields : [
-                                        'id',
-                                        'site_name',
+                                        'site',
+                                            {name: 'site_name', type:'string'},
+                                            {name: 'id', type: 'int'},
                                         'address',
                                             {name:'city',type: 'string'},
                                             {name:'state',type: 'string'},
                                         'geoposition',
                                             {name:'latitude', type: 'float'},
                                             {name:'longitude',type: 'float'},
-                                            {name:'accuracy',type: 'iint'}
+                                            {name:'accuracy',type: 'int'},
+                                        'comments'
                                     ],
                                     data: records,
                                     paging : false
@@ -90,22 +92,25 @@ Ext.define('EvaluateIt.view.Pull', {
                                     if(json !== null &&  typeof (json) !==  'undefined'){
 
                                         // loop through data to load into store
-                                        Ext.each(json.site, function(obj){
+                                        Ext.each(json.evaluation, function(obj){
                                             // add records to array
                                             records.push({
-                                                id: obj.id,
-                                                site_name: obj.site_name,
+                                                comments: obj.comments,
+                                                site: {
+                                                    id: obj.id,
+                                                    site_name: obj.site.site_name,
+                                                },
                                                 address: {
-                                                    address: obj.address.address,
-                                                    state: obj.address.state
+                                                    address: obj.site.address.address,
+                                                    state: obj.site.address.state
                                                 },
                                                 geoposition: {
-                                                    latitude: obj.geoposition.latitude,
-                                                    longitude: obj.geoposition.longitude,
-                                                    accuracy: obj.geoposition.accuracy
+                                                    latitude: obj.site.geoposition.latitude,
+                                                    longitude: obj.site.geoposition.longitude,
+                                                    accuracy: obj.site.geoposition.accuracy
                                                 }
                                             })
-                                            console.log('address ' + obj.address.address + 'latitude ' + obj.geoposition.latitude);
+                                            console.log('address ' + obj.site.address.address + 'latitude ' + obj.site.geoposition.latitude);
                                         });
                                         //update store with data
                                         store.add(records);
@@ -120,8 +125,9 @@ Ext.define('EvaluateIt.view.Pull', {
                                     panel.setData(store);
                                     var tpl = new Ext.XTemplate(
                                         '<tpl for=".">',
+                                            'Evaluation: {data.comments}',
                                             '<div class="site">',
-                                                'Site: {data.id}, {data.site_name}',
+                                                'Site: {data.site.id}, {data.site.site_name}',
                                           //      '<tpl for="address">',
                                                     '<div class="address" style="padding: 0 0 10px 20px;">',
                                                         '<li>Address:</li>',
