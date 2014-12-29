@@ -43,16 +43,23 @@ Ext.define('EvaluateIt.view.Pull', {
                                 url = EvaluateIt.utils.DataService.url('login'),
                                 store = Ext.create('Ext.data.Store',{
                                     fields : [
-                                        'site',
+                                        'site',[
                                             {name: 'site_name', type:'string'},
-                                            {name: 'id', type: 'int'},
-                                        'address',
+                                            {name: 'id', type: 'int'}
+                                        ],
+                                        'address',[
                                             {name:'city',type: 'string'},
-                                            {name:'state',type: 'string'},
-                                        'geoposition',
+                                            {name:'state',type: 'string'}
+                                        ],
+                                        'geoposition',[
                                             {name:'latitude', type: 'float'},
                                             {name:'longitude',type: 'float'},
                                             {name:'accuracy',type: 'int'},
+                                        ],
+                                        'evaluator',[
+                                            {name:'first_name',type: 'string'},
+                                            {name:'type',type: 'string'},
+                                        ],
                                         'comments'
                                     ],
                                     data: records,
@@ -65,7 +72,7 @@ Ext.define('EvaluateIt.view.Pull', {
                             });
 
                             // url for endpoint
-                            url += '/api/htsql';
+                            url += '/api/htsql/1/2';
                             if (EvaluateIt.config.mode === 'test') {
                                 console.log(url);
                             }
@@ -97,7 +104,7 @@ Ext.define('EvaluateIt.view.Pull', {
                                             records.push({
                                                 comments: obj.comments,
                                                 site: {
-                                                    id: obj.id,
+                                                    id: obj.site.id,
                                                     site_name: obj.site.site_name,
                                                 },
                                                 address: {
@@ -108,9 +115,13 @@ Ext.define('EvaluateIt.view.Pull', {
                                                     latitude: obj.site.geoposition.latitude,
                                                     longitude: obj.site.geoposition.longitude,
                                                     accuracy: obj.site.geoposition.accuracy
+                                                },
+                                                evaluator: {
+                                                    first_name: obj.evaluator.first_name,
+                                                    type: obj.evaluator.type
                                                 }
                                             })
-                                            console.log('address ' + obj.site.address.address + 'latitude ' + obj.site.geoposition.latitude);
+                                            console.log('test ' + obj.comments + 'address ' + obj.site.address.address + 'latitude ' + obj.site.geoposition.latitude);
                                         });
                                         //update store with data
                                         store.add(records);
@@ -138,8 +149,13 @@ Ext.define('EvaluateIt.view.Pull', {
                                           //      '<tpl for="geoposition">',
                                                     '<div class="geoposition" style="padding: 0 0 10px 20px;">',
                                                         '<li>Geoposition:</li>',
-                                                        '<li>{data.geoposition.latitude}</li>',
-                                                        '<li>{data.geoposition.longitude}</li>',
+                                                        '<li>latitude: {data.geoposition.latitude}</li>',
+                                                        '<li>longitude: {data.geoposition.longitude}</li>',
+                                                    '</div>',
+                                                    '<div class="geoposition" style="padding: 0 0 10px 20px;">',
+                                                        '<li>Person:</li>',
+                                                        '<li>name: {data.evaluator.first_name}</li>',
+                                                        '<li>type: {data.evaluator.type}</li>',
                                                     '</div>',
                                            //     '</tpl>',
                                             '</div>',

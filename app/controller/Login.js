@@ -140,7 +140,7 @@ Ext.define('EvaluateIt.controller.Login', {
         var url = EvaluateIt.utils.DataService.url('login'),
             auth = sessionStorage.sessionToken + ':unknown',
             hash = 'Basic ' + EvaluateIt.utils.Base64.encode(auth),
-            obj = {
+            obj = /*{
                 site: {
                     "id": "37251",
                     "site_name": "TestSite",
@@ -163,6 +163,33 @@ Ext.define('EvaluateIt.controller.Login', {
                     },
                     "evaluation": {
                         "comments":  "A test...",
+                        "exists": true
+                    }
+                }
+            };*/
+            {
+                site: {
+                    "id": "37251",
+                    "site_name": "TestSite 2",
+                    "address": {
+                        "address": "1235 Blaisdell Ave",
+                        "city": "Minneapolis",
+                        "state": "MN",
+                        "zip": "55456",
+                        "neighborhood": "Kingfield",
+                        "county": "Hennepin"
+                    },
+                    "geolocation": {
+                        "latitude":  "41.6544",
+                        "longitude":  "73.3323",
+                        "accuracy": "46"
+                    },
+                    "person": {
+                        "type": "evaluator",
+                        "first_name": "you"
+                    },
+                    "evaluation": {
+                        "comments":  "Another test...",
                         "exists": true
                     }
                 }
