@@ -66,15 +66,11 @@ Ext.define('EvaluateIt.controller.Login', {
             message: 'signing in...'
         });
 
-        ext.ajax.request({
+        Ext.Ajax.request({
 
 			cors: true,
 			usedefaultxhrheader: false,
             url: url,
-            jsondata: {
-                user: username,
-                password: password
-            },
             disablecaching: false,
             success: function (response) {
 
@@ -135,6 +131,8 @@ Ext.define('EvaluateIt.controller.Login', {
         loginView.setMasked(false);
     },
 
+
+    // test basic HTTP auth with token and JSON POST
     onSignOffCommand: function () {
 
         var url = EvaluateIt.utils.DataService.url('login'),

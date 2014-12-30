@@ -26,6 +26,9 @@ Ext.define('EvaluateIt.controller.Push', {
 			'container button[itemId=loginButton]': {
 				tap: 'onLoginPush' 
 			},
+            'container button[itemId=testButton]': {
+                tap: 'onTest'
+            },
 			'container button[itemId=logoutPush]': {
 				tap: 'onLogoutPush' 
 			}
@@ -40,17 +43,17 @@ Ext.define('EvaluateIt.controller.Push', {
 		
  	},
 
-	onLoginPush: function(button) {
+    onLoginPush: function(button) {
         /*if (EvaluateIt.config.mode === 'test') {
-            console.log('Button Click');
-        }
-		var loginForm = Ext.Viewport.down('login');
-		//create widget if it doesn't exist
-		if(!loginForm){
-			loginForm = Ext.widget('loginview');
-		} 
-		loginForm.reset();
-		loginForm.showBy(button);*/
+         console.log('Button Click');
+         }
+         var loginForm = Ext.Viewport.down('login');
+         //create widget if it doesn't exist
+         if(!loginForm){
+         loginForm = Ext.widget('loginview');
+         }
+         loginForm.reset();
+         loginForm.showBy(button);*/
 
         url = EvaluateIt.utils.DataService.url('login');
 
@@ -62,14 +65,10 @@ Ext.define('EvaluateIt.controller.Push', {
         }
         Ext.Ajax.request({
 
-			cors: true,
+            cors: true,
             type: 'GET',
-			useDefaultXhrHeader: false,
+            useDefaultXhrHeader: false,
             url: url,
-            jsonData: {
-                user: 'gms',
-                password: 'python'
-            },
             disableCaching: false,
             success: function (response) {
 
@@ -84,8 +83,8 @@ Ext.define('EvaluateIt.controller.Push', {
                 if (response.status === 200) {
                     // The server will send a token that can be used throughout the app to confirm that the user is authenticated.
                     sessionToken = loginResponse.token;
-					// TODO: write to sessionStorage
-					sessionStorage.sessionToken =  sessionToken;
+                    // TODO: write to sessionStorage
+                    sessionStorage.sessionToken =  sessionToken;
 
                     if (EvaluateIt.config.mode === 'test') {
                         console.log(sessionToken);
@@ -102,6 +101,24 @@ Ext.define('EvaluateIt.controller.Push', {
                 //me.signInFailure('Login failed. Please try again later.');
             }
         });
+
+    },
+
+    // test auth token connect
+    onTest: function(button) {
+        if (EvaluateIt.config.mode === 'test') {
+            console.log('Button Click');
+        }
+		var testForm; //= Ext.Viewport.down('login');
+		//create widget if it doesn't exist
+		if(!testForm){
+			testForm = Ext.widget('testview');
+		} 
+		testForm.reset();
+		testForm.showBy(button);
+
+        sessionStorage.criterion1 = null;
+        sessionStorage.criterion2 = null;
 
 	},
 

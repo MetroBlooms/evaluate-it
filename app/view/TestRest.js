@@ -3,7 +3,7 @@
  *
  * TODO: Implement normalized model
  */
-Ext.define('EvaluateIt.view.Pull', {
+Ext.define('EvaluateIt.view.TestRest', {
     extend: 'Ext.Container',
 	alias: 'widget.pullview',
     config: {
@@ -32,6 +32,15 @@ Ext.define('EvaluateIt.view.Pull', {
 						iconCls: 'arrow_right',
 						iconMask: true 
 					},
+                    {
+                        xtype: 'button',
+                        itemId: 'testButton',
+                        text: 'DynamicForm',
+                        iconCls: 'arrow_right',
+                        iconMask: true
+                    },
+
+                    // test htsql as reporting tool
                     {
                         text: 'HTSQLTest',
                         handler: function() {
@@ -72,7 +81,9 @@ Ext.define('EvaluateIt.view.Pull', {
                             });
 
                             // url for endpoint
-                            url += '/api/htsql/1/2';
+
+                            var criterion = 'id=' + sessionStorage.criterion1 + '|'  +'evaluator_id=' + sessionStorage.criterion2;
+                            url += '/api/htsql/' + criterion;
                             if (EvaluateIt.config.mode === 'test') {
                                 console.log(url);
                             }

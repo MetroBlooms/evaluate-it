@@ -120,7 +120,7 @@ Ext.application({
         'EvaluationScorecardForm',
         'EvaluationScorecardList',
 		'Login',
-        'Pull',
+        'TestRest',
 		'Push',
 		'PushForm',
 		'PushList',
@@ -128,7 +128,8 @@ Ext.application({
 		'RemoveRecordList',
         'SetEnvironment',
 		'SiteGeolocation',
-		'SiteGeolocationList'
+		'SiteGeolocationList',
+        'Test'
     ],
 
 	models: [ 
