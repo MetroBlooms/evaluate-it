@@ -168,9 +168,9 @@ Ext.define('EvaluateIt.controller.Login', {
             {
                 site: {
                     "id": "37251",
-                    "site_name": "TestSite 2",
+                    "site_name": "TestSite 4",
                     "address": {
-                        "address": "1235 Blaisdell Ave",
+                        "address": "1239 Blaisdell Ave",
                         "city": "Minneapolis",
                         "state": "MN",
                         "zip": "55456",
@@ -178,13 +178,13 @@ Ext.define('EvaluateIt.controller.Login', {
                         "county": "Hennepin"
                     },
                     "geolocation": {
-                        "latitude":  "41.6544",
+                        "latitude":  "40.6544",
                         "longitude":  "73.3323",
                         "accuracy": "46"
                     },
                     "person": {
                         "type": "evaluator",
-                        "first_name": "you"
+                        "first_name": "zee"
                     },
                     "evaluation": {
                         "comments":  "Another test...",

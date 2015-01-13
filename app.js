@@ -51,7 +51,16 @@ Ext.application({
                 document.body.style.marginTop = "20px";
                 Ext.Viewport.setHeight(Ext.Viewport.getWindowHeight() - 20);
             }
-        })
+        });
+
+       /* Ext.Ajax.on('beforerequest', (function(klass, request) {
+            return disablecaching = false;
+        }), this);*/
+
+        // test dynamic load of select control in Test view
+        localStorage.clear();
+        localStorage.description = 'Test';
+        localStorage.value = 1;
 
         EvaluateIt.config = {
 
@@ -139,6 +148,7 @@ Ext.application({
 		'Evaluation',
 		'EvaluationAward',
 		'EvaluationScorecard',
+        'FactorTest',
        	'Geolocation',
         'Option',
 		'Site',
@@ -149,7 +159,6 @@ Ext.application({
     // Options.js contains the tree data for our main navigation NestedList; fires as a anonymous function
     stores: [
 
-
 		'ImageQueue',
 		'Addresses',
         'BaseStore',
@@ -157,6 +166,7 @@ Ext.application({
 		'EvaluationAwards',
 		'EvaluationScorecards',
        	'Geolocations',
+        'FactorTests',
         'Options',
         'Sites',
 		'SiteMaintainers'

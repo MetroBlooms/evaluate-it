@@ -56,6 +56,15 @@ Ext.define('EvaluateIt.view.Test', {
                         itemId: 'criterion2TextField',
                         name: 'criterion2TextField',
                         required: true
+                    },
+                    {
+                        xtype: 'selectfield',
+                        label: 'Select Test',
+                        labelWrap: true,
+                        required: true,
+                        displayField: 'description',
+                        valueField: 'value',
+                        store: 'FactorTests'
                     }
                 ]
             },

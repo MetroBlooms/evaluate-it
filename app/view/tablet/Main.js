@@ -38,16 +38,7 @@ Ext.define('EvaluateIt.view.tablet.Main', {
                 id: 'mainNavigationBar',
                 xtype : 'titlebar',
                 docked: 'top',
-                title : 'EvaluateIt!'/*,
-                items: {
-                    xtype : 'button',
-                    id: 'viewSourceButton',
-                    hidden: true,
-                    align : 'right',
-                    ui    : 'action',
-                    action: 'viewSource',
-                    text  : 'Source'
-                }*/
+                title : 'EvaluateIt!'
             }
         ]
     }
