@@ -1,1 +1,1 @@
-Test Ajax calls with new REST API: https://github.com/MetroBlooms/REST-API
+Test Ajax calls with new RESTful API: https://github.com/MetroBlooms/REST-API
