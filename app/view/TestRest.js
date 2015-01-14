@@ -5,7 +5,7 @@
  */
 Ext.define('EvaluateIt.view.TestRest', {
     extend: 'Ext.Container',
-	alias: 'widget.pullview',
+    alias: 'widget.pullview',
     config: {
         scrollable: true,
         items: [
@@ -18,20 +18,20 @@ Ext.define('EvaluateIt.view.TestRest', {
                 docked: 'top',
                 xtype: 'toolbar',
                 items: [
-					{
-						xtype: 'button',
-						itemId: 'loginButton',
-						text: 'BasicAuthTest',
-						iconCls: 'arrow_right',
-						iconMask: true 
-					},
-					{
-						xtype: 'button',
-						itemId: 'logOutButton',
-						text: 'TokenAuthPOST',
-						iconCls: 'arrow_right',
-						iconMask: true 
-					},
+                    {
+                        xtype: 'button',
+                        itemId: 'loginButton',
+                        text: 'BasicAuthTest',
+                        iconCls: 'arrow_right',
+                        iconMask: true
+                    },
+                    {
+                        xtype: 'button',
+                        itemId: 'logOutButton',
+                        text: 'TokenAuthPOST',
+                        iconCls: 'arrow_right',
+                        iconMask: true
+                    },
                     {
                         xtype: 'button',
                         itemId: 'testButton',
@@ -45,7 +45,7 @@ Ext.define('EvaluateIt.view.TestRest', {
                         text: 'HTSQLTest',
                         handler: function() {
                             var panel = Ext.getCmp('Pull'),
-								json = [],
+                                json = [],
                                 records = [],
                                 auth = sessionStorage.sessionToken + ':unknown',
                                 hash = 'Basic ' + EvaluateIt.utils.Base64.encode(auth),
@@ -88,6 +88,14 @@ Ext.define('EvaluateIt.view.TestRest', {
                                 console.log(url);
                             }
 
+                            if (EvaluateIt.config.mode === 'test') {
+                                FactorStore = Ext.getStore('FactorTests');
+                                factorTest = FactorStore.findRecord('description', 'Test');
+                                console.log(factorTest.getData(true));
+                                console.log('Test is: ' + factorTest.get('description'));
+                            }
+
+
                             // send auth header before Ajax request to disable auth form
                             Ext.Ajax.on('beforerequest', (function(klass, request) {
                                 return request.headers.Authorization = hash;
@@ -95,7 +103,7 @@ Ext.define('EvaluateIt.view.TestRest', {
 
 
                             // cross domain access cors request for data
-                           	Ext.Ajax.request({
+                            Ext.Ajax.request({
                                 cors: true,
                                 useDefaultXhrHeader: false,
                                 url: url,
@@ -103,7 +111,7 @@ Ext.define('EvaluateIt.view.TestRest', {
                                     'Accept': 'application/json'
                                 },
                                 disableCaching: false,
-								success: function (response) {
+                                success: function (response) {
                                     json = Ext.decode(response.responseText);
 
                                     // if we have a valid json object we process it
@@ -147,40 +155,40 @@ Ext.define('EvaluateIt.view.TestRest', {
                                     panel.setData(store);
                                     var tpl = new Ext.XTemplate(
                                         '<tpl for=".">',
-                                            'Evaluation: {data.comments}',
-                                            '<div class="site">',
-                                                'Site: {data.site.id}, {data.site.site_name}',
-                                          //      '<tpl for="address">',
-                                                    '<div class="address" style="padding: 0 0 10px 20px;">',
-                                                        '<li>Address:</li>',
-                                                        '<li>{data.address.address}</li>',
-                                                        '<li>{data.address.state}</li>',
-                                                    '</div>',
-                                          //      '</tpl>',
-                                          //      '<tpl for="geoposition">',
-                                                    '<div class="geoposition" style="padding: 0 0 10px 20px;">',
-                                                        '<li>Geoposition:</li>',
-                                                        '<li>latitude: {data.geoposition.latitude}</li>',
-                                                        '<li>longitude: {data.geoposition.longitude}</li>',
-                                                    '</div>',
-                                                    '<div class="geoposition" style="padding: 0 0 10px 20px;">',
-                                                        '<li>Person:</li>',
-                                                        '<li>name: {data.evaluator.first_name}</li>',
-                                                        '<li>type: {data.evaluator.type}</li>',
-                                                    '</div>',
-                                           //     '</tpl>',
-                                            '</div>',
+                                        'Evaluation: {data.comments}',
+                                        '<div class="site">',
+                                        'Site: {data.site.id}, {data.site.site_name}',
+                                        //      '<tpl for="address">',
+                                        '<div class="address" style="padding: 0 0 10px 20px;">',
+                                        '<li>Address:</li>',
+                                        '<li>{data.address.address}</li>',
+                                        '<li>{data.address.state}</li>',
+                                        '</div>',
+                                        //      '</tpl>',
+                                        //      '<tpl for="geoposition">',
+                                        '<div class="geoposition" style="padding: 0 0 10px 20px;">',
+                                        '<li>Geoposition:</li>',
+                                        '<li>latitude: {data.geoposition.latitude}</li>',
+                                        '<li>longitude: {data.geoposition.longitude}</li>',
+                                        '</div>',
+                                        '<div class="geoposition" style="padding: 0 0 10px 20px;">',
+                                        '<li>Person:</li>',
+                                        '<li>name: {data.evaluator.first_name}</li>',
+                                        '<li>type: {data.evaluator.type}</li>',
+                                        '</div>',
+                                        //     '</tpl>',
+                                        '</div>',
                                         '</tpl>'
                                     );
                                     panel.setHtml(tpl.apply(store));
                                     panel.getParent().unmask();
-								},
-								fail: function (e, jqxhr, settings, exception) {
+                                },
+                                fail: function (e, jqxhr, settings, exception) {
                                     if (EvaluateIt.config.mode === 'test') {
                                         console.log(e);
                                     }
-								}
-							});
+                                }
+                            });
                         }
                     }
                 ]
