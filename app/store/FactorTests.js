@@ -11,7 +11,7 @@ Ext.define('EvaluateIt.store.FactorTests', {
             url: 'http://127.0.0.1:5000/api/factor',
             reader: {
                 type: 'json',
-                root: 'factor'
+                rootProperty: 'factor'
             }
         }
     }
