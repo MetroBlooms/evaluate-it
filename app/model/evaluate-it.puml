@@ -1,0 +1,111 @@
+@startuml
+
+    class Address {
+        address
+        city
+        county
+        neighborhood
+        state
+        zipcode
+    }
+
+    class Evaluation {
+        comments
+        dateOfEvaluation
+        datePostedToRemote
+        EvaluationType evaluationType
+        noLongerExists
+        remoteEvaluationId
+        evaluator_id // from HttpResponse.responseText
+        total() // sum over scorecard factors
+    }
+
+    class EvaluationAward {
+        AwardType awardType
+        specialAwardSpecified
+    }
+
+    class EvaluationScorecard {
+        FactorType factorType
+        score
+    }
+
+    class EvaluationFeature {
+        FeatureType featureType
+    }
+
+    class EvaluationImage {
+        srcUri
+    }
+
+    class Evaluator {
+        // object is non-persistent in sessionStorage
+        evaluator_id
+        email
+        firstName
+        lastName
+        sessionToken
+        sessionCreatedWhen
+    }
+
+    class Geolocation {
+       accuracy
+       latitude
+       longitude
+       timestamp
+    }
+
+    class Site {
+        remoteSiteId
+        siteName
+    }
+
+    class SiteMaintainer {
+        emailAddress
+        firstName
+        lastName
+    }
+
+    enum AwardType {
+        Alley Garden
+        Boulevard Garden
+        Business Garden or Raingarden
+        Congregation Garden or Raingarden
+        Nate Siegel
+        Public & Schoolyard Garden or Raingarden
+        Residential Garden or Raingarden
+        Special
+    }
+
+    enum EvaluationType {
+        bmp
+        garden
+    }
+
+    enum FactorType {
+        Design = 3
+        Environmental stewardship = 5
+        Maintenance = 4
+        Plant variety and health = 2
+        Visual impact = 1
+    }
+
+    enum FeatureType {
+        raingarden
+        rain barrel
+        permeable paver
+        other bmp
+    }
+
+    Site  *--*  Address : has 1
+    Site  o--  Evaluation : has many >
+    Site  *--  Geolocation : has 1
+    Site  --|> SiteMaintainer : has many >
+
+    Evaluation  o-- EvaluationAward : has 1 >
+    Evaluation  *-- EvaluationScorecard : has 5 >
+    Evaluation  o-- EvaluationFeature : has many >
+    Evaluation  o-- EvaluationImage: has many >
+    Evaluator  --|>  Evaluation : performs >
+
+@enduml

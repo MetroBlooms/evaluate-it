@@ -1,0 +1,67 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.apk
+*.ap_
+*.dex
+*.cache
+resources/sass/.sass-cache/*
+
+docs/*
+
+.sencha_backup/*
+
+touch/*
+.idea/*
+native/*
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+#*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+*.swp
+*.~lock*
+*.sencha
+*.senchasdk
+
+boot*
+build.xml
+
+cordova/*
+build/*
+
+# Files with information that should not be made available to the public #
+######################
+#app.js
+
+archive/*
+
+# assets/www/index__.html
+# assets/www/index_.html
